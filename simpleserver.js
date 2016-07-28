@@ -1,7 +1,7 @@
 var server = require('http').createServer(handler)
 var fs = require('fs')
 
-server.listen(80)
+server.listen(8080)
 
 function handler(request, response) {
     fs.readFile(__dirname + '/index.html',
