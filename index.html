@@ -1,4 +1,36 @@
-<h1> Hello World! </h1>
-<script>
-  console.log("Hello Console!")
-</script>
+<head>
+  <style>
+    html, body {
+      overflow: hidden;
+    }
+  </style>
+  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.6.3/fabric.min.js"></script>
+</head>
+<body>
+  <canvas id="rootCanvas" width="500" height="500" ></canvas>
+  <script>
+
+    var rootCanvas = document.getElementById('rootCanvas');
+    rootCanvas.width = document.body.clientWidth;
+    rootCanvas.height = document.body.clientHeight;
+
+    var rootContext = rootCanvas.getContext('2d');
+    var canvas = new fabric.Canvas('rootCanvas');
+
+
+    function addLeaf(){
+      console.log("addLeaf")
+      var rect = new fabric.Rect({
+        left: event.clientX - 10,
+        top: event.clientY - 10,
+        fill: 'red',
+        width: 20,
+        height: 20
+        });
+
+    canvas.add(rect);
+    }
+    window.addEventListener('dblclick', function(){addLeaf(event);});
+
+  </script>
+</body>
