@@ -1,5 +1,18 @@
 // Should simply be the loop which renders content to screen, the DOM applied to elements in each object
 
+function addLeaf(event){
+      textree.push({
+        sizeXY: [100,300],
+        positionXY: [event.clientX,event.clientY],
+        contents: "",
+        id: Math.floor(Date.now())
+      })
+      updateDOM()
+      updateStyle()
+   
+    }
+
+
 
   function updateDOM(){
       for(var i = 0; i < textree.length; i++){

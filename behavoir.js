@@ -6,10 +6,24 @@
     window.addEventListener('mousedown', function(){mousedownDispatch(event);});
     window.addEventListener('mouseup', function(){
             window.removeEventListener('mousemove', dragLeaf)
+            updateProperty(textree, activeElement, "sizeXY", [event.clientX, event.clientY]) 
     })
+
+    function updateProperty(whichtree, whichleaf, propertyName, newValue){
+        console.log(
+            whichtree.filter(grabLeafById)
+        )
+
+        function grabLeafById(obj) {
+            console.log(obj)
+            if(obj.id == whichleaf) {
+                return obj
+            }
+        }
+    }
   
     function dblclickDispatch(event){
-      if(event.target.tagName == "BODY") addLeaf(event)
+      if(event.target.tagName == "BODY") addLeaf(event) //addLeaf exists in structree.js
       else console.log(event.target.id)
     }
 
@@ -24,7 +38,7 @@
     }
 
     function dragLeaf(event){
-        console.log(event.clientX + ":" + event.clientY)
+        console.log(textree[activeElement])
         document.getElementById(activeElement).style.left = event.clientX;
         document.getElementById(activeElement).style.top = event.clientY;
     }
@@ -34,17 +48,5 @@
     on mouse move, update the values on the determined context
     on MouseUp, release the info
     */
-
-    function addLeaf(event){
-      textree.push({
-        sizeXY: [100,300],
-        positionXY: [event.clientX,event.clientY],
-        contents: "",
-        id: Math.floor(Date.now())
-      })
-      updateDOM()
-      updateStyle()
-   
-    }
 
 
