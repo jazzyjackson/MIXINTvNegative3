@@ -12,6 +12,9 @@
 
   <script>
     var textree = [];
+    var latestID = 0; //May update this to search for id among map when dealing with nonlinear trees
+    window.addEventListener('dblclick', function(){addLeaf(event);});
+    
 
 
     function addLeaf(event){
@@ -24,15 +27,23 @@
       updateDOM()
     }
 
-      function updateDOM(){
-          for(var i = 0; i < textree.length; i++){
-            console.log(textree[i]);
-          }
-      }
+
+  function updateDOM(){
+      for(var i = 0; i < textree.length; i++){
+        if(textree[i].id > latestID){ //so basically, if this leaf hasn't been drawn yet, draw it!
+          console.log(textree[i].id) 
+          latestID = textree[i].id
+        }
+      } 
+    }
+
+    /*  
+    One MouseDown: determine what the context is, text body? left edge / right edge / corner, etc? background? Graph port?
+    on mouse move, update the values on the determined context
+    on MouseUp, release the info
+    */
 
 
-
-    window.addEventListener('dblclick', function(){addLeaf(event);});
   </script>
 
 </body>
