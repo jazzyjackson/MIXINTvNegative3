@@ -1,95 +1,14 @@
 <html>
 <head>
  <link rel="stylesheet" href="./styletree.css">
+ <script type="text/javascript" src="./setup.js"></script>
+ <script type="text/javascript" src="./behavoir.js"></script>
+ <script type="text/javascript" src="./structree.js"></script>
+
+
 </head>
 <body>
  
-
-
-
-  <script>
-    var styleSheet = document.styleSheets[0]
-  //  console.log(document.he)
-    var branches// create an object with an entry for each id, and as the value of that property, a list of child nodes
-    var roots// create an object with an entry for each id, and as a value of that property, a list of parent nodes
-    var textree = []
-    var latestDOMID = 0 //May update this to search for id among map when dealing with nonlinear trees
-    var latestStyleID = 0
-    var activeElement = null
-    window.addEventListener('dblclick', function(){dblclickDispatch(event);});
-    window.addEventListener('mousedown', function(){mousedownDispatch(event);});
-    window.addEventListener('mouseup', function(){
-            window.removeEventListener('mousemove', dragLeaf)
-    })
-  
-    function dblclickDispatch(event){
-      if(event.target.tagName == "BODY") addLeaf(event)
-      else console.log(event.target.id)
-    }
-
-    function mousedownDispatch(event){
-      if(event.target.tagName != "BODY"){
-        activeElement = event.target.id
-        console.log(event.target.id)
-        
-        window.addEventListener('mousemove', dragLeaf)
-      }
-
-    }
-
-    function dragLeaf(event){
-        console.log(event.clientX + ":" + event.clientY)
-        document.getElementById(activeElement).style.left = event.clientX;
-        document.getElementById(activeElement).style.top = event.clientY;
-    }
-
-    function removeDragListener(){
-    }
-
-
-    function addLeaf(event){
-      textree.push({
-        sizeXY: [100,300],
-        positionXY: [event.clientX,event.clientY],
-        contents: "",
-        id: Math.floor(Date.now())
-      })
-      updateDOM()
-      updateStyle()
-   
-    }
-
-
-  function updateDOM(){
-      for(var i = 0; i < textree.length; i++){
-        if(textree[i].id > latestDOMID){ //so basically, if this leaf hasn't been drawn yet, draw it!
-          console.log(textree[i].id) 
-          latestDOMID = textree[i].id
-          document.body.appendChild(document.createElement("div"))
-          document.getElementsByTagName("div")[i].id = "Leaf" + String(textree[i].id) 
-          document.getElementsByTagName("div")[i].className = "freshLeaf"
-        }
-      } 
-    }
-
-    function updateStyle(){
-      for(var i = 0; i < textree.length; i++){
-        if(textree[i].id > latestStyleID){
-          styleSheet.insertRule("#Leaf" + textree[i].id + " { top: " + textree[i].positionXY[1] + "; left: " + textree[i].positionXY[0] + ";}",0)
-          console.log("#" + textree[i].id + " { top:" + textree[i].positionXY[1] + "; left: " + textree[i].positionXY[0] + ";}")
-          latestStyleID = textree[i].id
-        }
-      }
-    }
-
-    /*  
-    One MouseDown: determine what the context is, text body? left edge / right edge / corner, etc? background? Graph port?
-    on mouse move, update the values on the determined context
-    on MouseUp, release the info
-    */
-
-
-  </script>
 
 </body>
 
