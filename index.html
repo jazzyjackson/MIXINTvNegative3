@@ -4,33 +4,47 @@
       overflow: hidden;
     }
   </style>
-  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.6.3/fabric.min.js"></script>
 </head>
 <body>
-  <canvas id="rootCanvas" width="500" height="500" ></canvas>
+ 
+
+
+
   <script>
-
-    var rootCanvas = document.getElementById('rootCanvas');
-    rootCanvas.width = document.body.clientWidth;
-    rootCanvas.height = document.body.clientHeight;
-
-    var rootContext = rootCanvas.getContext('2d');
-    var canvas = new fabric.Canvas('rootCanvas');
+    var textree = [];
 
 
-    function addLeaf(){
-      console.log("addLeaf")
-      var rect = new fabric.Rect({
-        left: event.clientX - 10,
-        top: event.clientY - 10,
-        fill: 'red',
-        width: 20,
-        height: 20
-        });
-
-    canvas.add(rect);
+    function addLeaf(event){
+      textree.push({
+        sizeXY: [100,300],
+        positionXY: [event.clientX,event.clientY],
+        contents: "",
+        id: Math.floor(event.timeStamp)
+      })
+      updateDOM()
     }
-    window.addEventListener('dblclick', function(){addLeaf(event);});
 
+      function updateDOM(){
+          for(var i = 0; i < textree.length; i++){
+            console.log(textree[i]);
+          }
+      }
+
+
+
+    window.addEventListener('dblclick', function(){addLeaf(event);});
   </script>
+
 </body>
+
+<!--
+  Implementation steps:
+  Double click to append div to DOM
+  fresh div is a text input
+  upon deselecting the div (ESC or click on background) swap an input for a span
+  
+  single click and drag changes relative position
+  double click swaps span for input
+  right click and dragging on the background move all items
+  scrolling scales, oooo
+  -->
