@@ -10,16 +10,9 @@
     })
 
     function updateProperty(whichtree, whichleaf, propertyName, newValue){
-        console.log(
-            whichtree.filter(grabLeafById)
-        )
-
-        function grabLeafById(obj) {
-            console.log(obj)
-            if(obj.id == whichleaf) {
-                return obj
-            }
-        }
+     // console.log(whichtree.filter(grabLeafById)) 
+      function grabLeafById(obj) { if(obj.id == whichleaf) return obj } // why do I get obj is not defined when this comes before filter?
+ 
     }
   
     function dblclickDispatch(event){
@@ -28,17 +21,21 @@
     }
 
     function mousedownDispatch(event){
-      if(event.target.tagName != "BODY"){
+      if(event.target.className == "freshLeaf"){
         activeElement = event.target.id
         console.log(event.target.id)
-        
         window.addEventListener('mousemove', dragLeaf)
       }
+     // if(event.target.className == "inlet" || event.target.className == "outlet") console.log(event.target.)
+
+    }
+
+    function createLine(targetNode){ // append an svg element, with an M point at the center of the inlet/outlet, it's endpoint to be calculated on MouseMove
 
     }
 
     function dragLeaf(event){
-        console.log(textree[activeElement])
+       // console.log(activeElement)
         document.getElementById(activeElement).style.left = event.clientX;
         document.getElementById(activeElement).style.top = event.clientY;
     }
