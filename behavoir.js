@@ -26,7 +26,7 @@
         console.log(event.target.id)
         window.addEventListener('mousemove', dragLeaf)
       }
-     // if(event.target.className == "inlet" || event.target.className == "outlet") console.log(event.target.)
+      if(event.target.className == "inlet" || event.target.className == "outlet") console.log(event.target.parentNode.id)
 
     }
 
@@ -45,5 +45,4 @@
     on mouse move, update the values on the determined context
     on MouseUp, release the info
     */
-
 

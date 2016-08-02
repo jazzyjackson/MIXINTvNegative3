@@ -20,16 +20,15 @@ div {
     border: 1px black solid;
     border-radius: 5px;
     background: black;
-    z-index: -1;
 
 }
-.freshLeaf span:last-child {
+.outlet {
     left: 294px;
     top: 45px;
 
 }
 
-.freshLeaf span:first-child {
+.inlet{
     left: -6px;
     top: 45px;
 
