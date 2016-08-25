@@ -16,7 +16,14 @@ function addNewLeafTo(event){
 
 function updateStyle(event){
    if(activeElement !== null && editMode === false){
-      activeElement.style = "left: " + (Number(activeElement.style.left.slice(0,-2)) + event.movementX) + "; top: " + (Number(activeElement.style.top.slice(0,-2)) + event.movementY) + ";"
+        if(activeElement.tagName == 'BODY' || activeElement.tagName == 'HTML'){
+            activeElement = document.body;
+            activeElement.style = "margin-left: " + (Number(activeElement.style.marginLeft.slice(0,-2)) + event.movementX) + "; margin-top: " + (Number(activeElement.style.marginTop.slice(0,-2)) + event.movementY) + ";"
+            console.log(activeElement.style.marginLeft);
+        } else { 
+            activeElement.style = "left: " + (Number(activeElement.style.left.slice(0,-2)) + event.movementX) + "; top: " + (Number(activeElement.style.top.slice(0,-2)) + event.movementY) + ";"
+            console.log(activeElement.style.left);
+        }
      //  console.log("left: " + (Number(activeElement.style.left.slice(0,-2)) + event.movementX) + "; top: " + (Number(activeElement.style.top.slice(0,-2)) + event.movementY) + ";")
    }
      //    console.log(event)
