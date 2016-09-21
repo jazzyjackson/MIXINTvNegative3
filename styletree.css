@@ -1,3 +1,7 @@
+body {
+  position: relative;
+}
+
 div {
     width: 300px;
     min-height: 50px;
@@ -6,15 +10,13 @@ div {
     margin: 10px;
     /* border-radius: 5px; */
     padding: 5px;
-    position: relative;
     background-color: #FFF;
-}
-
-div > div {
-    position: relative;
+    position: absolute;
     top: 0px;
     left: 300px;
+
 }
+
 
 body {
     background-color: #DDD;
@@ -26,13 +28,3 @@ body {
     border: 5px solid #FBF;
 }
 
-div > textarea, div > span {
-  position: relative;
-  resize: none;
-  outline: none;
-  width: 100%;
-  border: none;
-  float: left;
-  overflow: visible;
-  
-}
