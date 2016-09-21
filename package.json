@@ -1,0 +1,25 @@
+{
+  "name": "textrees",
+  "version": "1.0.0",
+  "description": "A localhost that lets end users define style and behavior of remote data",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jazzyjackson/textree.git"
+  },
+  "author": "Colten Jackson",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/jazzyjackson/textree/issues"
+  },
+  "homepage": "https://github.com/jazzyjackson/textree#readme",
+  "dependencies": {
+    "express": "^4.14.0",
+    "nodemon": "^1.10.2",
+    "socket.io": "^1.4.8"
+  }
+}

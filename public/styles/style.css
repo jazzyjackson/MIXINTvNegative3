@@ -1,0 +1,14 @@
+body {
+  background-color: #eeF;
+  background-image: url("/images/backgroundtile.png");
+  background-repeat: repeat;
+  background-size: 1.2%
+
+}
+
+.textool {
+  background-color: rgba(0,0,0,0.5);
+  width: 400px;
+  height: 250px;
+  position: absolute;
+}
