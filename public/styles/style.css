@@ -6,6 +6,10 @@ body {
 
 }
 
+h5 {
+  margin: 0 0 7px 0;
+}
+
 .textool {
   background-color: rgba(0,0,0,0.5);
   background: linear-gradient(to bottom, black 10%, rgba(0,0,0,0.5) 10%);
