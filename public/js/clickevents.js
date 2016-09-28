@@ -3,7 +3,8 @@ var updatePos;
 var allContent = document.documentElement;
 
 allContent.addEventListener('dblclick', function(event){
-  if(event.path.length <= 4){ //only addTexTool if body or higher (document where there is no body) is clicked
+  event.preventDefault();
+  if(event.path.length <= 4){ //only addTerminal if body or higher (document where there is no body) is clicked. Top of the path is Window -> Document -
     addTerminal(event);
   }
 })
@@ -85,7 +86,7 @@ function Leaf(xPos, yPos){
 
   this.element.addEventListener('touchmove', function(event){
     event.preventDefault();
-    if(updatePos,document.activeElement){
+    if(updatePos){
       updatePos(convertTouchToMouse(event), document.activeElement);
     }
   });
@@ -126,8 +127,8 @@ function createUpdatePos(event){
       theLastY === undefined ? theLastY = moveEvent.clientY : moveEvent.clientX - theLastX;
       var currentXpos = Number(element.style.left.slice(0,-2)); //slicing off the last 2 characters gets rid of 'px', allowing casting to number
       var currentYpos = Number(element.style.top.slice(0,-2));
-      element.style.left = (currentXpos + Math.floor(movementX)) + 'px';
-      element.style.top = (currentYpos + Math.floor(movementY)) + 'px';
+      element.style.left = (currentXpos + Math.floor(movementX)) + 'px'; //touch events have way too many significant digits,
+      element.style.top = (currentYpos + Math.floor(movementY)) + 'px'; // flooring the number for consistency with mouse events, which report integers
 
 
       if(currentYpos == 0){ console.log(event);}
@@ -139,5 +140,3 @@ function createUpdatePos(event){
   return enclosedUpdatePos;
 };
 
-function touchToMovement(touchEvent, element){}; //touch events don't have movementX / Y properties, just current X Y position
-                                                 //should have a touch history maybe? Something better than global variables to track last touch

@@ -28,10 +28,12 @@ h5 {
   color: #fff;
   overflow-y: scroll;
 }
+div:focus {
+  z-index: 2;
+}
 
 .terminal:focus {
   background-color: rgba(0,0,200,0.8);
-  z-index: 2;
   /*  terminal headers have zindex 1 to float above promps and results, but clicking and dragging needs to be on top of those, so, 2*/
 }
 
