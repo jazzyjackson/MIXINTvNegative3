@@ -7,25 +7,43 @@ body {
 }
 
 h5 {
-  margin: 0 0 7px 0;
+  margin: 0;
+  padding: 15px 0 5px 0;
+  width: 100%;
+  text-align: center;
+  display: inline-block;
+  background: black;
+  position: absolute;
+  top: -10px;
+  left: 0;
+  z-index: 1;
 }
 
-.textool {
+.terminal {
   background-color: rgba(0,0,0,0.5);
   background: linear-gradient(to bottom, black 10%, rgba(0,0,0,0.5) 10%);
   width: 400px;
   height: 250px;
-  position: absolute;
   padding: 5px;
   color: #fff;
+  overflow-y: scroll;
 }
 
-.textool:focus {
+.terminal:focus {
   background-color: rgba(0,0,200,0.8);
-  z-index: 1;
+  z-index: 2;
+  /*  terminal headers have zindex 1 to float above promps and results, but clicking and dragging needs to be on top of those, so, 2*/
 }
 
-.textool p {
+.terminal p {
   margin: 0;
   line-height: 1.5em;
+  font-family: monospace;
+}
+.terminal p:first-of-type {
+  margin-top: 1.5em;
+}
+
+.terminal::-webkit-scrollbar {
+  display: none;
 }

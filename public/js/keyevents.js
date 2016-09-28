@@ -5,13 +5,32 @@ document.documentElement.addEventListener('keydown', function(){
     } else if((event.keyCode >= 48 && event.keyCode <= 90)||(event.keyCode >= 186 && event.keyCode <= 222)||(event.code == "Space")) {
       document.activeElement.lastChild.innerHTML += event.key;
     } else if(event.key == 'Enter'){
-      console.log(document.activeElement.lastChild.innerHTML.split('&gt;')[1]);
-      var prompt = document.createElement('p');
-      prompt.innerHTML = document.activeElement.prompt;
-      document.activeElement.appendChild(prompt);
+      handleInput(document.activeElement)
     }
   }
 });
+
+function handleInput(aTerminal){
+    var query = document.activeElement.lastChild.innerHTML.split('&gt;')[1];
+    
+    console.log(query);
+    
+    var result = document.createElement('p');
+    
+    try {
+      result.innerHTML = eval(query);
+    } catch(e) {
+      result.innerHTML = e;
+    }
+    
+    document.activeElement.appendChild(result);
+    var prompt = document.createElement('p');
+    prompt.innerHTML = document.activeElement.prompt;
+    document.activeElement.appendChild(prompt);
+    
+    document.activeElement.scrollTop = document.activeElement.scrollHeight;
+    
+}
 
 
   /*
