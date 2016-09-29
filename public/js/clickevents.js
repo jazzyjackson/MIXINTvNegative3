@@ -1,18 +1,17 @@
 var updatePos;
-
 var allContent = document.documentElement;
 
 allContent.addEventListener('dblclick', function(event){
-  event.preventDefault();
-  if(event.path.length <= 4){ //only addTerminal if body or higher (document where there is no body) is clicked. Top of the path is Window -> Document -
-    addTerminal(event);
+  socketize(event);
+  if(document.activeElement.class != 'terminal'){ //only addTerminal if body or higher (document where there is no body) is clicked. Top of the path is Window -> Document -
+    addTerminal(event.clientX, event.clientY);
   }
 })
 
 
 allContent.addEventListener('mouseup', function(event){
+  socketize(event);
   if(updatePos) updatePos = undefined;
-
 })
 
 allContent.addEventListener('touchcancel', function(event){
@@ -31,8 +30,8 @@ function convertTouchToMouse(event){
 }
 
 
-function addTerminal(event){
-  var aTerminal = new Terminal(event.clientX, event.clientY);
+function addTerminal(posX, posY){
+  var aTerminal = new Terminal(posX, posY);
   document.body.appendChild(aTerminal.element);
   aTerminal.element.focus();
   console.log(aTerminal.element);
@@ -53,11 +52,11 @@ function Circle(xPos,yPos,radius,color){
   this.element.style.borderRadius = diameter;
   this.element.style.background = background;
 
+  this.element.id = 'circle' + document.getElementsByClassName('circle').length;
   function an8bitrandom(){
     return Math.floor(Math.random() * 255);
   }
 }
-
 
 
 function Leaf(xPos, yPos){
@@ -70,24 +69,29 @@ function Leaf(xPos, yPos){
   this.element.addEventListener('mousemove', function(event){
     event.preventDefault();
     if(event.buttons && updatePos){
-      updatePos(event, document.activeElement);
+      socketize(event, document.activeElement.id);
+      updatePos(event.clientX, event.clientY, document.activeElement.id);
     }
   })
 
   this.element.addEventListener('mousedown', function(event){
-    updatePos = createUpdatePos(event.clientX, event.clientY);
+    socketize(event);
+    updatePos = createUpdatePos(event.clientX, event.clientY, document.activeElement.id);
   })
 
   this.element.addEventListener('touchstart', function(event){
-    updatePos = createUpdatePos(convertTouchToMouse(event));
-    console.log(event);
-    this.focus();
+      var convertedEvent = convertTouchToMouse(event);
+      socketize(event);
+      updatePos = createUpdatePos(convertedEvent.clientX, convertedEvent.clientY, document.activeElement.id);
+      this.focus();
   });
 
   this.element.addEventListener('touchmove', function(event){
     event.preventDefault();
     if(updatePos){
-      updatePos(convertTouchToMouse(event), document.activeElement);
+      var convertedEvent = convertTouchToMouse(event);
+      updatePos(convertedEvent.clientX, convertedEvent.clientY, document.activeElement.id);
+      socketize(event, document.activeElement.id);
     }
   });
   
@@ -114,17 +118,18 @@ function Terminal(xPos, yPos){
 }
 
 
-function createUpdatePos(event){
+function createUpdatePos(clientX, clientY){
   var theLastX = event.clientX;
   var theLastY = event.clientY;
-  var enclosedUpdatePos = function(moveEvent, element){
+  var enclosedUpdatePos = function(clientX, clientY, elementId){
+      element = document.getElementById(elementId);
+      
+      var movementX = clientX - theLastX;
+      var movementY = clientY - theLastY;
+      theLastX = clientX;
+      theLastY = clientY;
 
-      var movementX = moveEvent.clientX - theLastX;
-      var movementY = moveEvent.clientY - theLastY;
-      theLastX = moveEvent.clientX;
-      theLastY = moveEvent.clientY;
-
-      theLastY === undefined ? theLastY = moveEvent.clientY : moveEvent.clientX - theLastX;
+      //theLastY === undefined ? theLastY = moveEvent.clientY : moveEvent.clientX - theLastX;
       var currentXpos = Number(element.style.left.slice(0,-2)); //slicing off the last 2 characters gets rid of 'px', allowing casting to number
       var currentYpos = Number(element.style.top.slice(0,-2));
       element.style.left = (currentXpos + Math.floor(movementX)) + 'px'; //touch events have way too many significant digits,
@@ -132,11 +137,11 @@ function createUpdatePos(event){
 
 
       if(currentYpos == 0){ console.log(event);}
+  }
     //  console.log(event);
     //  console.log(currentXpos);
     //  console.log(currentYpos);
    // console.log(movementX, movementY);
-  }
   return enclosedUpdatePos;
 };
 

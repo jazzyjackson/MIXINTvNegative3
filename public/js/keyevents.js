@@ -1,5 +1,5 @@
 document.documentElement.addEventListener('keydown', function(){
-  if(document.activeElement.className === 'terminal'){
+  if(document.activeElement.className === 'terminal '){
     if(event.key == 'Backspace'){
       document.activeElement.lastChild.innerHTML = document.activeElement.lastChild.innerHTML.slice(0, -1)
     } else if((event.keyCode >= 48 && event.keyCode <= 90)||(event.keyCode >= 186 && event.keyCode <= 222)||(event.code == "Space")) {
