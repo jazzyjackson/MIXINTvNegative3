@@ -3,7 +3,7 @@ var allContent = document.documentElement;
 
 allContent.addEventListener('dblclick', function(event){
   socketize(event);
-  if(document.activeElement.class != 'terminal'){ //only addTerminal if body or higher (document where there is no body) is clicked. Top of the path is Window -> Document -
+  if(document.activeElement.className != 'terminal'){ //only addTerminal if body or higher (document where there is no body) is clicked. Top of the path is Window -> Document -
     addTerminal(event.clientX, event.clientY);
   }
 })
@@ -106,16 +106,35 @@ function Leaf(xPos, yPos){
 
 function Terminal(xPos, yPos){
   Leaf.call(this, xPos, yPos);
+  this.element.history = 0; //0 is most recent, negative numbers go back in time
   this.element.id = "root" + document.getElementsByTagName('DIV').length;
   this.element.className = 'terminal';
   this.element.prompt = 'localhost/' + this.element.id + " > ";
   var terminalHeader = document.createElement('h5');
   terminalHeader.innerText = "root";
   var prompt = document.createElement('p');
+  prompt.className = 'prompt';
   prompt.innerHTML = this.element.prompt;
   this.element.appendChild(terminalHeader);
   this.element.appendChild(prompt);
+  this.element.shiftHistory = function(increment){
+      console.log(this.history);
+      var listOfPrompts = this.getElementsByClassName('prompt');
+      if(increment === -1 && this.history > 1){
+        this.history += increment;
+        this.lastChild.innerHTML = listOfPrompts[listOfPrompts.length - (1 + this.history)].innerHTML;
+      } else if(increment === 1 && this.history < listOfPrompts.length - 1){
+        console.log(this.history, listOfPrompts.length);
+        this.history += increment;
+        this.lastChild.innerHTML = listOfPrompts[listOfPrompts.length - (1 + this.history)].innerHTML;
+      } else if(increment === -1 && this.history == 1){
+        this.lastChild.innerHTML = this.prompt;
+        this.history += increment;
+      }
+    }
 }
+
+
 
 
 function createUpdatePos(clientX, clientY){

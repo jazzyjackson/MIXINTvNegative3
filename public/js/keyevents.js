@@ -1,22 +1,31 @@
 document.documentElement.addEventListener('keydown', function(){
-  if(document.activeElement.className === 'terminal '){
+  if(document.activeElement.className === 'terminal'){
+    var terminal = document.activeElement;
     if(event.key == 'Backspace'){
-      document.activeElement.lastChild.innerHTML = document.activeElement.lastChild.innerHTML.slice(0, -1)
+      terminal.lastChild.innerHTML = terminal.lastChild.innerHTML.slice(0, -1)
     } else if((event.keyCode >= 48 && event.keyCode <= 90)||(event.keyCode >= 186 && event.keyCode <= 222)||(event.code == "Space")) {
-      document.activeElement.lastChild.innerHTML += event.key;
+      terminal.lastChild.innerHTML += event.key;
     } else if(event.key == 'Enter'){
-      handleInput(document.activeElement)
+      handleInput(terminal)
+    } else if(event.key == 'ArrowUp'){
+      event.preventDefault();
+      terminal.shiftHistory(1); //back in time, maxxing out at length of child nodes.
+    } else if(event.key == 'ArrowDown'){
+      event.preventDefault();
+      terminal.shiftHistory(-1); //forward in time, maxxing out at 0
     }
   }
 });
 
 function handleInput(aTerminal){
+    aTerminal.history = 0;
+    console.log(aTerminal);
     var query = document.activeElement.lastChild.innerHTML.split('&gt;')[1];
     
     console.log(query);
     
     var result = document.createElement('p');
-    
+    result.className = "result";
     try {
       result.innerHTML = eval(query);
     } catch(e) {
@@ -25,6 +34,7 @@ function handleInput(aTerminal){
     
     document.activeElement.appendChild(result);
     var prompt = document.createElement('p');
+    prompt.className = "prompt";
     prompt.innerHTML = document.activeElement.prompt;
     document.activeElement.appendChild(prompt);
     
