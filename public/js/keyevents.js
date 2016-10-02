@@ -1,4 +1,4 @@
-document.documentElement.addEventListener('keydown', function(){
+document.documentElement.addEventListener('keydown', function(event){
   if(document.activeElement.className === 'terminal'){
     var terminal = document.activeElement;
     if(event.key == 'Backspace'){
@@ -21,13 +21,12 @@ function handleInput(aTerminal){
     aTerminal.history = 0;
     console.log(aTerminal);
     var query = document.activeElement.lastChild.innerHTML.split('&gt;')[1];
-    
     console.log(query);
-    
     var result = document.createElement('p');
     result.className = "result";
     try {
-      result.innerHTML = eval(query);
+      var localEval = function(){return eval(query)}; 
+      result.innerHTML = localEval.call(document.activeElement);
     } catch(e) {
       result.innerHTML = e;
     }

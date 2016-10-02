@@ -138,8 +138,8 @@ function Terminal(xPos, yPos){
 
 
 function createUpdatePos(clientX, clientY){
-  var theLastX = event.clientX;
-  var theLastY = event.clientY;
+  var theLastX = clientX;
+  var theLastY = clientY;
   var enclosedUpdatePos = function(clientX, clientY, elementId){
       element = document.getElementById(elementId);
       
