@@ -1,21 +1,27 @@
 document.documentElement.addEventListener('keydown', function(event){
   if(document.activeElement.className === 'terminal'){
+    event.preventDefault();
     var terminal = document.activeElement;
-    if(event.key == 'Backspace'){
-      terminal.lastChild.innerHTML = terminal.lastChild.innerHTML.slice(0, -1)
-    } else if((event.keyCode >= 48 && event.keyCode <= 90)||(event.keyCode >= 186 && event.keyCode <= 222)||(event.code == "Space")) {
-      terminal.lastChild.innerHTML += event.key;
-    } else if(event.key == 'Enter'){
-      handleInput(terminal)
-    } else if(event.key == 'ArrowUp'){
-      event.preventDefault();
-      terminal.shiftHistory(1); //back in time, maxxing out at length of child nodes.
-    } else if(event.key == 'ArrowDown'){
-      event.preventDefault();
-      terminal.shiftHistory(-1); //forward in time, maxxing out at 0
-    }
+	socketize(event, terminal.id);
+    handleKeystroke(event.key, event.keyCode, terminal.id);
   }
 });
+
+function handleKeystroke(aKeystroke, aKeyCode, aTarget){
+	var terminal = document.getElementById(aTarget);
+    if(aKeystroke== 'Backspace'){
+      terminal.lastChild.innerHTML = terminal.lastChild.innerHTML.slice(0, -1)
+    } else if((aKeyCode>= 48 && aKeyCode<= 90)||(aKeyCode>= 186 && aKeyCode<= 222)||(aKeystroke == " ")) {
+      terminal.lastChild.innerHTML += aKeystroke;
+    } else if(aKeystroke== 'Enter'){
+      handleInput(terminal)
+    } else if(aKeystroke== 'ArrowUp'){
+      event.preventDefault();
+      terminal.shiftHistory(1); //back in time, maxxing out at length of child nodes.
+    } else if(aKeystroke== 'ArrowDown'){
+      terminal.shiftHistory(-1); //forward in time, maxxing out at 0
+    }
+}
 
 function handleInput(aTerminal){
     aTerminal.history = 0;

@@ -107,7 +107,7 @@ function Leaf(xPos, yPos){
 function Terminal(xPos, yPos){
   Leaf.call(this, xPos, yPos);
   this.element.history = 0; //0 is most recent, negative numbers go back in time
-  this.element.id = "root" + document.getElementsByTagName('DIV').length;
+  this.element.id = "root" + document.getElementsByClassName('terminal').length;
   this.element.className = 'terminal';
   this.element.prompt = 'localhost/' + this.element.id + " > ";
   var terminalHeader = document.createElement('h5');
