@@ -42,7 +42,7 @@ function Circle(xPos,yPos,radius,color){
   
   var defaultRadius = 50;
   var defaultColor = 'rgba(' + an8bitrandom() + ',' + an8bitrandom() + ',' + an8bitrandom() + ',' + Math.random() + ')';
-  this.element.className = 'circle';
+  this.element.className += ' circle'; //addClassName circle to existing
   var diameter = radius ? (radius * 2) : (defaultRadius * 2);
   diameter = diameter + "px"
   var background = color ? color : defaultColor;
@@ -70,20 +70,21 @@ function Leaf(xPos, yPos){
   var entityHeader = document.createElement('h5');
   entityHeader.innerText = "root";
 
-  this.element.appendChild(entityHeader);
-
-  this.element.addEventListener('mousemove', function(event){
+  document.documentElement.addEventListener('mousemove', function(event){
     event.preventDefault();
     if(event.buttons && updatePos){
+			console.log('shouldmove');
       socketize(event, document.activeElement.id);
       updatePos(event.clientX, event.clientY, document.activeElement.id);
     }
   })
 
-  this.element.addEventListener('mousedown', function(event){
+  entityHeader.addEventListener('mousedown', function(event){
     socketize(event);
     updatePos = createUpdatePos(event.clientX, event.clientY, document.activeElement.id);
   })
+
+  this.element.appendChild(entityHeader);
 
   this.element.addEventListener('touchstart', function(event){
       var convertedEvent = convertTouchToMouse(event);
