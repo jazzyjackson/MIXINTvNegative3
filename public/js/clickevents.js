@@ -12,6 +12,7 @@ allContent.addEventListener('dblclick', function(event){
 allContent.addEventListener('mouseup', function(event){
   socketize(event);
   if(updatePos) updatePos = undefined;
+  document.documentElement.removeEventListener('mousemove', handleMove);
 })
 
 allContent.addEventListener('touchcancel', function(event){
@@ -58,6 +59,13 @@ function Circle(xPos,yPos,radius,color){
   }
 }
 
+function handleMove(event){
+  if(event.buttons && updatePos){
+		socketize(event, document.activeElement.id);
+		updatePos(event.clientX, event.clientY, document.activeElement.id);
+	}
+};
+
 
 function Leaf(xPos, yPos){
   this.element = document.createElement('div');
@@ -70,16 +78,9 @@ function Leaf(xPos, yPos){
   var entityHeader = document.createElement('h5');
   entityHeader.innerText = "root";
 
-  document.documentElement.addEventListener('mousemove', function(event){
-    event.preventDefault();
-    if(event.buttons && updatePos){
-			console.log('shouldmove');
-      socketize(event, document.activeElement.id);
-      updatePos(event.clientX, event.clientY, document.activeElement.id);
-    }
-  })
 
   entityHeader.addEventListener('mousedown', function(event){
+    document.documentElement.addEventListener('mousemove', handleMove);
     socketize(event);
     updatePos = createUpdatePos(event.clientX, event.clientY, document.activeElement.id);
   })
