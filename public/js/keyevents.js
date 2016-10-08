@@ -1,24 +1,24 @@
 document.documentElement.addEventListener('keydown', function(event){
-  if(document.activeElement.className === 'terminal'){
+  if(document.activeElement.className.indexOf('terminal') !== -1){
     event.preventDefault();
     var terminal = document.activeElement;
-	socketize(event, terminal.id);
+	  socketize(event, terminal.id);
     handleKeystroke(event.key, event.keyCode, terminal.id);
   }
 });
 
 function handleKeystroke(aKeystroke, aKeyCode, aTarget){
 	var terminal = document.getElementById(aTarget);
-    if(aKeystroke== 'Backspace'){
+    if(aKeystroke == 'Backspace'){
       terminal.lastChild.innerHTML = terminal.lastChild.innerHTML.slice(0, -1)
-    } else if((aKeyCode>= 48 && aKeyCode<= 90)||(aKeyCode>= 186 && aKeyCode<= 222)||(aKeystroke == " ")) {
+    } else if( (aKeyCode >= 48 && aKeyCode <= 90) || (aKeyCode >= 186 && aKeyCode <= 222) || (aKeystroke == " ")) {
       terminal.lastChild.innerHTML += aKeystroke;
-    } else if(aKeystroke== 'Enter'){
+    } else if(aKeystroke == 'Enter'){
       handleInput(terminal)
-    } else if(aKeystroke== 'ArrowUp'){
-      event.preventDefault();
+    } else if(aKeystroke == 'ArrowUp'){
+			console.log(terminal);
       terminal.shiftHistory(1); //back in time, maxxing out at length of child nodes.
-    } else if(aKeystroke== 'ArrowDown'){
+    } else if(aKeystroke == 'ArrowDown'){
       terminal.shiftHistory(-1); //forward in time, maxxing out at 0
     }
 }
@@ -35,6 +35,7 @@ function handleInput(aTerminal){
       result.innerHTML = localEval.call(document.activeElement);
     } catch(e) {
       result.innerHTML = e;
+			console.log(e);
     }
     
     document.activeElement.appendChild(result);
@@ -78,3 +79,4 @@ function handleInput(aTerminal){
     activeElement = null;
   }
   */
+console.log(document.getElementsByTagName('script'));

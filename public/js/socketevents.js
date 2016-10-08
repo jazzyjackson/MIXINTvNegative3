@@ -34,3 +34,4 @@ function socketize(anEvent, optActiveElement){
 }
 
 
+console.log(document.getElementsByTagName('script'));

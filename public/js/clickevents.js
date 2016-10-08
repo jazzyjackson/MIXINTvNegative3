@@ -51,7 +51,7 @@ function Circle(xPos,yPos,radius,color){
   this.element.style.width = diameter;
   this.element.style.borderRadius = diameter;
   this.element.style.background = background;
-
+  console.log(this.constructor);
   this.element.id = 'circle' + document.getElementsByClassName('circle').length;
   function an8bitrandom(){
     return Math.floor(Math.random() * 255);
@@ -65,6 +65,12 @@ function Leaf(xPos, yPos){
   this.element.style.top = yPos + 'px';
   this.element.tabIndex = 1;
   this.element.style.position = 'absolute';
+  this.element.className = 'leaf';
+
+  var entityHeader = document.createElement('h5');
+  entityHeader.innerText = "root";
+
+  this.element.appendChild(entityHeader);
 
   this.element.addEventListener('mousemove', function(event){
     event.preventDefault();
@@ -96,8 +102,6 @@ function Leaf(xPos, yPos){
   });
   
   this.element.addEventListener('scroll', function(event){
-    console.log(event);
-    console.log(event.target.scrollHeight - event.target.clientHeight);
     event.target.firstChild.style.top = event.target.scrollTop - 10;
   })
 
@@ -108,14 +112,11 @@ function Terminal(xPos, yPos){
   Leaf.call(this, xPos, yPos);
   this.element.history = 0; //0 is most recent, negative numbers go back in time
   this.element.id = "root" + document.getElementsByClassName('terminal').length;
-  this.element.className = 'terminal';
+  this.element.className += ' terminal'; //addClass terminal to existing className
   this.element.prompt = 'localhost/' + this.element.id + " > ";
-  var terminalHeader = document.createElement('h5');
-  terminalHeader.innerText = "root";
-  var prompt = document.createElement('p');
+    var prompt = document.createElement('p');
   prompt.className = 'prompt';
   prompt.innerHTML = this.element.prompt;
-  this.element.appendChild(terminalHeader);
   this.element.appendChild(prompt);
   this.element.shiftHistory = function(increment){
       console.log(this.history);
@@ -148,19 +149,12 @@ function createUpdatePos(clientX, clientY){
       theLastX = clientX;
       theLastY = clientY;
 
-      //theLastY === undefined ? theLastY = moveEvent.clientY : moveEvent.clientX - theLastX;
-      var currentXpos = Number(element.style.left.slice(0,-2)); //slicing off the last 2 characters gets rid of 'px', allowing casting to number
-      var currentYpos = Number(element.style.top.slice(0,-2));
+      var currentXpos = parseInt(element.style.left); //slicing off the last 2 characters gets rid of 'px', allowing casting to number
+      var currentYpos = parseInt(element.style.top);
       element.style.left = (currentXpos + Math.floor(movementX)) + 'px'; //touch events have way too many significant digits,
       element.style.top = (currentYpos + Math.floor(movementY)) + 'px'; // flooring the number for consistency with mouse events, which report integers
-
-
-      if(currentYpos == 0){ console.log(event);}
   }
-    //  console.log(event);
-    //  console.log(currentXpos);
-    //  console.log(currentYpos);
-   // console.log(movementX, movementY);
   return enclosedUpdatePos;
 };
 
+console.log(document.currentScript);
