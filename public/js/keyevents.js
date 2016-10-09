@@ -1,6 +1,8 @@
+document.documentElement.addEventListener('paste', handlePaste);
 document.documentElement.addEventListener('keydown', function(event){
-  if(document.activeElement.className.indexOf('terminal') !== -1){
-    event.preventDefault();
+  //IF you're typing in a terminal, AND you're not holding down the CTRL key.
+  if(document.activeElement.className.indexOf('terminal') !== -1 && !event.ctrlKey){
+    event.preventDefault(); //I don't remember why this is here.
     var terminal = document.activeElement;
 	  socketize(event, terminal.id);
     handleKeystroke(event.key, event.keyCode, terminal.id);
@@ -47,6 +49,11 @@ function handleInput(aTerminal){
     document.activeElement.scrollTop = document.activeElement.scrollHeight;
     
 }
+
+function handlePaste(event){
+	console.log(event);
+}
+
 
 
   /*

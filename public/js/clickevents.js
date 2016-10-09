@@ -2,18 +2,19 @@ var updatePos;
 var allContent = document.documentElement;
 
 allContent.addEventListener('dblclick', function(event){
-  socketize(event);
-  if(document.activeElement.className != 'terminal'){ //only addTerminal if body or higher (document where there is no body) is clicked. Top of the path is Window -> Document -
+	console.log(event);
+  if(event.target.tagName === 'HTML' || event.target.tagName === 'BODY'){//only addTerminal if body or higher (document where there is no body) is clicked. Top of the path is Window -> Document -
+    socketize(event);
     addTerminal(event.clientX, event.clientY);
   }
-})
+});
 
 
 allContent.addEventListener('mouseup', function(event){
   socketize(event);
   if(updatePos) updatePos = undefined;
   document.documentElement.removeEventListener('mousemove', handleMove);
-})
+});
 
 allContent.addEventListener('touchcancel', function(event){
     updatePos = undefined;
@@ -57,6 +58,10 @@ function Circle(xPos,yPos,radius,color){
   function an8bitrandom(){
     return Math.floor(Math.random() * 255);
   }
+  var header = this.element.getElementsByClassName('entityHeader')[0];
+  header.innerText = "Circle";
+
+  
 }
 
 function handleMove(event){
@@ -77,6 +82,7 @@ function Leaf(xPos, yPos){
 
   var entityHeader = document.createElement('h5');
   entityHeader.innerText = "root";
+  entityHeader.className = 'entityHeader';
 
 
   entityHeader.addEventListener('mousedown', function(event){
