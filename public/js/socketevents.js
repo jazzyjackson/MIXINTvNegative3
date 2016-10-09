@@ -16,9 +16,8 @@ socket.on('event', function(event){
         
     case 'mousemove': remoteUpdatePos(event.clientX, event.clientY, event.targetId); break;
     case 'touchmove': remoteUpdatePos(event.clientX, event.clientY, event.targetId); break; 
-	case 'keydown': handleKeystroke(event.key, event.keyCode, event.targetId); break;
+    case 'keydown': handleKeystroke(event.key, event.keyCode, event.targetId); break;
   }
-
 });
   
 function socketize(anEvent, optActiveElement){
@@ -30,8 +29,8 @@ function socketize(anEvent, optActiveElement){
       clientX: anEvent.clientX,
       clientY: anEvent.clientY,
       targetId: optActiveElement
-    })
-}
+    });
+};
 
 
 console.log(document.getElementsByTagName('script'));

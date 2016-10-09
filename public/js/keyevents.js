@@ -1,4 +1,3 @@
-document.documentElement.addEventListener('paste', handlePaste);
 document.documentElement.addEventListener('keydown', function(event){
   //IF you're typing in a terminal, AND you're not holding down the CTRL key.
   if(document.activeElement.className.indexOf('terminal') !== -1 && !event.ctrlKey){
@@ -10,7 +9,9 @@ document.documentElement.addEventListener('keydown', function(event){
 });
 
 function handleKeystroke(aKeystroke, aKeyCode, aTarget){
-	var terminal = document.getElementById(aTarget);
+    console.log(aTarget);
+    var terminal = document.getElementById(aTarget);
+    console.log(terminal);
     if(aKeystroke == 'Backspace'){
       terminal.lastChild.innerHTML = terminal.lastChild.innerHTML.slice(0, -1)
     } else if( (aKeyCode >= 48 && aKeyCode <= 90) || (aKeyCode >= 186 && aKeyCode <= 222) || (aKeystroke == " ")) {
@@ -28,30 +29,25 @@ function handleKeystroke(aKeystroke, aKeyCode, aTarget){
 function handleInput(aTerminal){
     aTerminal.history = 0;
     console.log(aTerminal);
-    var query = document.activeElement.lastChild.innerHTML.split('&gt;')[1];
+    var query = aTerminal.lastChild.innerHTML.split('&gt;')[1];
     console.log(query);
     var result = document.createElement('p');
     result.className = "result";
     try {
       var localEval = function(){return eval(query)}; 
-      result.innerHTML = localEval.call(document.activeElement);
+      result.innerHTML = localEval.call(aTerminal);
     } catch(e) {
       result.innerHTML = e;
-			console.log(e);
+      console.log(e);
     }
     
-    document.activeElement.appendChild(result);
+    aTerminal.appendChild(result);
     var prompt = document.createElement('p');
     prompt.className = "prompt";
-    prompt.innerHTML = document.activeElement.prompt;
-    document.activeElement.appendChild(prompt);
+    prompt.innerHTML = aTerminal.prompt;
+    aTerminal.appendChild(prompt);
+    aTerminal.scrollTop = aTerminal.scrollHeight;
     
-    document.activeElement.scrollTop = document.activeElement.scrollHeight;
-    
-}
-
-function handlePaste(event){
-	console.log(event);
 }
 
 
@@ -86,4 +82,3 @@ function handlePaste(event){
     activeElement = null;
   }
   */
-console.log(document.getElementsByTagName('script'));
