@@ -13,10 +13,10 @@ app.use(express.static(__dirname+ '/public'));
 //})
 
 io.on('connection', function(socket){
-    console.log('connection');
     socket.on('event', function (data){
         socket.broadcast.emit('event',data);
-        console.log(data);
     })
+    //events to implement: identityRequest, timeRequest
 })
-
+// socket.client.conn.remoteAddress reports the Public IP of the origin of the message
+// socket.id reports the socket ID of the origin of the message. 
