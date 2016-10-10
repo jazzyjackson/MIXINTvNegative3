@@ -31,7 +31,7 @@ socket.on('identityResponse', function(socket){
 	var roundTripTime = Date.now() - socket.placeHolderId; 
 	var requestElement = document.getElementById(socket.placeHolderId);
   requestElement.className = 'result';
-	requestElement.innerHTML = socket.ipaddress;	
+	requestElement.innerHTML = (socket.ipaddress === '1') ? 'localhost' : socket.ipaddress;	
 });
 
 function whatami(aLeaf){

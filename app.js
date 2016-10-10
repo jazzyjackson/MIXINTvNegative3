@@ -3,6 +3,7 @@ var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
+var identities = {};
 server.listen(3000);
 
 
@@ -13,6 +14,7 @@ app.use(express.static(__dirname+ '/public'));
 //})
 
 io.on('connection', function(socket){
+		identities[socket.id] = {ip: socket.client.conn.remoteAddress.split(':').slice(-1)[0], name: null};
     socket.on('event', function (data){
         socket.broadcast.emit('event',data);
     });
@@ -20,10 +22,12 @@ io.on('connection', function(socket){
 		socket.on('identityRequest', function(req){
 			//I think each client's identity request will come in separately, when one user asks whoami and hits enter, the local browser will evaluate that and emit an identity request, so this message shouldn't be broadcast.
 			//req is the incoming message. socket is the particular connection.	
+			console.log(identities[socket.id]);
 			socket.emit('identityResponse', {
 				placeHolderId: req.placeHolderId,
-				ipaddress: socket.client.conn.remoteAddress,
-				socketid: socket.id
+				socketid: socket.id,
+				ipaddress: identities[socket.id].ip,
+				name: identities[socket.id].name
 			});
 		})
 
