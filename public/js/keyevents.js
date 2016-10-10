@@ -30,18 +30,18 @@ function handleInput(aTerminal){
     aTerminal.history = 0;
     console.log(aTerminal);
     var query = aTerminal.lastChild.innerHTML.split('&gt;')[1];
-    console.log(query);
-    var result = document.createElement('p');
-    result.className = "result";
-    try {
-      var localEval = function(){return eval(query)}; 
-      result.innerHTML = localEval.call(aTerminal);
-    } catch(e) {
-      result.innerHTML = e;
-      console.log(e);
-    }
-    
+    console.log(query); 
+    //Trim whitespace, split on space, check if that first result is in the list of keywords. If it is, return (or call) the property of that name. Else, run the whole phrase as a query
+    var result;
+		var potentialCommand = query.trim().split(' ')[0]; //even for empty strings or strings with no spaces, the result of trim().split() will be an array with at least one element. 
+		if(customCommands[potentialCommand]){
+			result = customCommands[potentialCommand](aTerminal);
+		} else {
+      result = evaluate(aTerminal, query); 
+		}
+
     aTerminal.appendChild(result);
+    result.className += " result";
     var prompt = document.createElement('p');
     prompt.className = "prompt";
     prompt.innerHTML = aTerminal.prompt;
@@ -50,7 +50,19 @@ function handleInput(aTerminal){
     
 }
 
-
+function evaluate(aTerminal, aQuery){
+		var result = createResult();
+		result.className = 'result';
+    try {
+      var localEval = function(){return eval(aQuery)}; 
+      result.innerHTML = localEval.call(aTerminal);
+			return result;
+    } catch(e) {
+			console.log(e);
+			result.innerHTML = e;
+			return result;
+    }
+}
 
   /*
   if(event.target.tagName == 'DIV' && editMode === false){

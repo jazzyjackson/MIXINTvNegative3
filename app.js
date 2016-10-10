@@ -15,8 +15,28 @@ app.use(express.static(__dirname+ '/public'));
 io.on('connection', function(socket){
     socket.on('event', function (data){
         socket.broadcast.emit('event',data);
-    })
+    });
+
+		socket.on('identityRequest', function(req){
+			//I think each client's identity request will come in separately, when one user asks whoami and hits enter, the local browser will evaluate that and emit an identity request, so this message shouldn't be broadcast.
+			//req is the incoming message. socket is the particular connection.	
+			socket.emit('identityResponse', {
+				placeHolderId: req.placeHolderId,
+				ipaddress: socket.client.conn.remoteAddress,
+				socketid: socket.id
+			});
+		})
+
+
+		socket.on('timeRequest', function(req){
+			socket.emit('timeResponse', {
+				placeHolderId: req.placeHolderId,
+				serverTime: Date()
+			})
+		})
+
     //events to implement: identityRequest, timeRequest
 })
+
 // socket.client.conn.remoteAddress reports the Public IP of the origin of the message
 // socket.id reports the socket ID of the origin of the message. 
