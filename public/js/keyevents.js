@@ -9,9 +9,7 @@ document.documentElement.addEventListener('keydown', function(event){
 });
 
 function handleKeystroke(aKeystroke, aKeyCode, aTarget){
-    console.log(aTarget);
     var terminal = document.getElementById(aTarget);
-    console.log(terminal);
     if(aKeystroke == 'Backspace'){
       terminal.lastChild.innerHTML = terminal.lastChild.innerHTML.slice(0, -1)
     } else if( (aKeyCode >= 48 && aKeyCode <= 90) || (aKeyCode >= 186 && aKeyCode <= 222) || (aKeystroke == " ")) {
@@ -28,14 +26,13 @@ function handleKeystroke(aKeystroke, aKeyCode, aTarget){
 
 function handleInput(aTerminal){
     aTerminal.history = 0;
-    console.log(aTerminal);
     var query = aTerminal.lastChild.innerHTML.split('&gt;')[1];
-    console.log(query); 
     //Trim whitespace, split on space, check if that first result is in the list of keywords. If it is, return (or call) the property of that name. Else, run the whole phrase as a query
     var result;
 		var potentialCommand = query.trim().split(' ')[0]; //even for empty strings or strings with no spaces, the result of trim().split() will be an array with at least one element. 
 		if(customCommands[potentialCommand]){
-			result = customCommands[potentialCommand](aTerminal);
+      potentialArguments = query.trim().split(' ').slice(1); // returns an empty array if no args, otherwise, arguments are passed as an array
+			result = customCommands[potentialCommand](aTerminal,potentialArguments);
 		} else {
       result = evaluate(aTerminal, query); 
 		}

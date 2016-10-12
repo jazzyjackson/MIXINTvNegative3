@@ -2,16 +2,31 @@ var express = require('express');
 var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
+var serverlogging = require('morgan');
+var bodyParser = require('body-parser')
+app.use( bodyParser.json() );       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+  extended: true
+})); 
+
+
+
 
 var identities = {};
 server.listen(3000);
 
-
+app.use(serverlogging('dev'));
 app.use(express.static(__dirname+ '/public'));
 //app.get('/', function(req,res){
 //    res.sendfile('./public/index.html');
 //    
 //})
+
+app.post('/', function(req,res,next){
+	console.log(req.body.content);
+	res.send(req.body.content);
+})
+
 
 io.on('connection', function(socket){
 		identities[socket.id] = {ip: socket.client.conn.remoteAddress.split(':').slice(-1)[0], name: null};

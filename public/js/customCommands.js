@@ -3,14 +3,47 @@ var customCommands = {
 	whatami: whatami,
 	whereami: whereami, 
 	howami: howami, 
-	whenami: whenami
+	whenami: whenami,
+	rename: rename,
+	save: save
 };
 
-function createResult(){
+function rename(aTerminal, ArrArray){
+	var newId;
+	var targetElement = aTerminal;
+	switch(ArrArray.length){
+		case 1: newId = ArrArray[0]; break;
+		case 2: newId = ArrArray[1]; targetElement = document.getElementById(ArrArray[0]); break;
+		default: return createResult('error result', 'rename takes one or two arguments.');
+	}
+	console.log(newId);
+	var oldId = targetElement.id;
+	targetElement.id = newId;
+	targetElement.childNodes[0].innerText = targetElement.id;
+	targetElement.prompt = 'localhost/' + targetElement.id + " > ";
+	return createResult('result', oldId + ' has been renamed to ' + aTerminal.id);
+}
+
+function save(aTerminal, ArrArray){
+	if(ArrArray.length == 0){
+		return createResult ('error result', 'save takes on argument, a divs ID');
+	}
+	persist = new XMLHttpRequest();
+	persist.addEventListener('load', function(){
+		console.log(persist.responseText);
+	})
+	persist.open("POST", 'http://' + window.location.host);
+    persist.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	persist.send('content=' + encodeURIComponent(aTerminal.outerHTML));
+	console.log(encodeURIComponent(aTerminal.outerHTML));
+	return createResult('result','gonna have to do some callback action');
+}
+
+function createResult(className, innerText){
   var placeHolder = document.createElement('p');
-	placeHolder.className = 'request';
+	placeHolder.className = className ? className : 'result'; //default className
 	placeHolder.id = Date.now();
-	placeHolder.innerHTML = ' ';
+	placeHolder.innerHTML = innerText ? innerText : ' '; // default innerText
   return placeHolder;
 }
 
@@ -22,7 +55,7 @@ function whoami(aLeaf){
 //received, the id will be returned as a part of the 
 //payload so that the information can be stuffed back
 //into the placeholder correspondant with that id.
-	var placeHolder = createResult();
+	var placeHolder = createResult('query');
 	socket.emit('identityRequest', {placeHolderId: placeHolder.id});	
 	return placeHolder;
 }
@@ -35,20 +68,13 @@ socket.on('identityResponse', function(socket){
 });
 
 function whatami(aLeaf){
-	var result = createResult();
-	result.className = 'result';
-	result.innerText = aLeaf.id + ' is a ' + aLeaf.toString() + ' with classes "' + aLeaf.className + '"';
-	return result;
-//grab class name. id. just attributes of the terminal. 
+	return createResult('result', aLeaf.id + ' is a ' + aLeaf.toString() + ' with classes "' + aLeaf.className + '"');
+	//grab class name. id. just attributes of the terminal. 
 }
 
 function whereami(aLeaf){
-	var result = createResult();
-	result.className = 'result';
-
-	result.innerText =  aLeaf.id + " is " + aLeaf.style.left + " from the left and " + aLeaf.style.top + " from the top of its parent element, " + aLeaf.parentElement.tagName + ".";
-	return result;
-//just grab x y coordinates. Maybe find oneself in the dom. Which child?
+	return createResult('result', aLeaf.id + " is " + aLeaf.style.left + " from the left and " + aLeaf.style.top + " from the top of its parent element, " + aLeaf.parentElement.tagName + ".");
+	//just grab x y coordinates. Maybe find oneself in the dom. Which child?
 }
 
 function howami(aLeaf){
@@ -56,7 +82,7 @@ function howami(aLeaf){
 }
 
 function whenami(){
-	var placeHolder = createResult();
+	var placeHolder = createResult('query');
 	socket.emit('timeRequest', {placeHolderId: placeHolder.id});	
 	return placeHolder;
 }
@@ -64,7 +90,7 @@ function whenami(){
 socket.on('timeResponse', function(socket){
 	var roundTripTime = Date.now() - socket.placeHolderId; //currenttime in ms was used for id.
 	var requestElement = document.getElementById(socket.placeHolderId);
-  requestElement.className = 'result';
+  	requestElement.className = 'result';
 	requestElement.innerHTML = 'Server time is: ' + socket.serverTime;	
 	var localtimeResult = requestElement.cloneNode();
 	var roundtripResult = requestElement.cloneNode();

@@ -2,7 +2,6 @@ var updatePos;
 var allContent = document.documentElement;
 
 allContent.addEventListener('dblclick', function(event){
-	console.log(event);
   if(event.target.tagName === 'HTML' || event.target.tagName === 'BODY'){//only addTerminal if body or higher (document where there is no body) is clicked. Top of the path is Window -> Document -
     socketize(event);
     addTerminal(event.clientX, event.clientY);
@@ -36,7 +35,6 @@ function addTerminal(posX, posY){
   var aTerminal = new Terminal(posX, posY);
   document.body.appendChild(aTerminal.element);
   aTerminal.element.focus();
-  console.log(aTerminal.element);
 }
 
 function Circle(xPos,yPos,radius,color){
@@ -59,13 +57,14 @@ function Circle(xPos,yPos,radius,color){
     return Math.floor(Math.random() * 255);
   }
   var header = this.element.getElementsByClassName('entityHeader')[0];
-  header.innerText = "Circle";
+  header.innerText = this.element.id;
 
   
 }
 
 function handleMove(event){
   if(event.buttons && updatePos){
+    event.preventDefault();
 		socketize(event, document.activeElement.id);
 		updatePos(event.clientX, event.clientY, document.activeElement.id);
 	}
@@ -73,6 +72,9 @@ function handleMove(event){
 
 
 function Leaf(xPos, yPos){
+  xPos || (xPos = 50);
+  yPos || (yPos = 50);
+
   this.element = document.createElement('div');
   this.element.style.left = xPos + 'px';
   this.element.style.top = yPos + 'px';
@@ -81,7 +83,7 @@ function Leaf(xPos, yPos){
   this.element.className = 'leaf';
 
   var entityHeader = document.createElement('h5');
-  entityHeader.innerText = "root";
+  entityHeader.innerText = "header was not set in constructor";
   entityHeader.className = 'entityHeader';
 
 
@@ -122,6 +124,7 @@ function Terminal(xPos, yPos){
   this.element.id = "root" + document.getElementsByClassName('terminal').length;
   this.element.className += ' terminal'; //addClass terminal to existing className
   this.element.prompt = 'localhost/' + this.element.id + " > ";
+  this.element.childNodes[0].innerText = this.element.id;
     var prompt = document.createElement('p');
   prompt.className = 'prompt';
   prompt.innerHTML = this.element.prompt;
@@ -142,6 +145,7 @@ function Terminal(xPos, yPos){
       }
     }
 }
+
 
 
 

@@ -6,7 +6,13 @@ body {
 
 }
 
+.leaf {
+   color: #fff;
+
+}
+
 .leaf h5 {
+ 
   margin: 0;
   padding: 15px 0 5px 0;
   width: 100%;
@@ -28,7 +34,6 @@ body {
   width: 400px;
   height: 250px;
   padding: 5px;
-  color: #fff;
   overflow-y: scroll;
   isolation: isolated; /* maintain proper stacking even with zindexed header */
 }
@@ -60,4 +65,7 @@ div:focus {
 	background-color: white;
 }
 
+.draggingHappening {
+  user-select: none;
+}
 
