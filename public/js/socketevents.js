@@ -1,6 +1,6 @@
 var remoteUpdatePos;
 
-var socket = io(window.location.href);
+var socket = io(window.location.host);
 socket.on('event', function(event){
   console.log(event);
   switch(event.type){

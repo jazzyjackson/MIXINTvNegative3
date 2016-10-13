@@ -33,8 +33,10 @@ function convertTouchToMouse(event){
 
 function addTerminal(posX, posY){
   var aTerminal = new Terminal(posX, posY);
+  console.log(aTerminal.element);
   document.body.appendChild(aTerminal.element);
   aTerminal.element.focus();
+
 }
 
 function Circle(xPos,yPos,radius,color){
@@ -85,24 +87,27 @@ function Leaf(xPos, yPos){
   var entityHeader = document.createElement('h5');
   entityHeader.innerText = "header was not set in constructor";
   entityHeader.className = 'entityHeader';
+  this.element.appendChild(entityHeader);
+  initLeafListeners(this.element);
 
+}
 
+function initLeafListeners(aLeafElement){
+  var entityHeader = aLeafElement.getElementsByClassName('entityHeader')[0];
   entityHeader.addEventListener('mousedown', function(event){
     document.documentElement.addEventListener('mousemove', handleMove);
     socketize(event);
     updatePos = createUpdatePos(event.clientX, event.clientY, document.activeElement.id);
   })
 
-  this.element.appendChild(entityHeader);
-
-  this.element.addEventListener('touchstart', function(event){
+  aLeafElement.addEventListener('touchstart', function(event){
       var convertedEvent = convertTouchToMouse(event);
       socketize(event);
       updatePos = createUpdatePos(convertedEvent.clientX, convertedEvent.clientY, document.activeElement.id);
-      this.focus();
-  });
+      aLeafElement.focus();
+});
 
-  this.element.addEventListener('touchmove', function(event){
+  aLeafElement.addEventListener('touchmove', function(event){
     event.preventDefault();
     if(updatePos){
       var convertedEvent = convertTouchToMouse(event);
@@ -111,10 +116,9 @@ function Leaf(xPos, yPos){
     }
   });
   
-  this.element.addEventListener('scroll', function(event){
+  aLeafElement.addEventListener('scroll', function(event){
     event.target.firstChild.style.top = event.target.scrollTop - 10;
   })
-
 }
 
 
@@ -123,11 +127,11 @@ function Terminal(xPos, yPos){
   this.element.history = 0; //0 is most recent, negative numbers go back in time
   this.element.id = "root" + document.getElementsByClassName('terminal').length;
   this.element.className += ' terminal'; //addClass terminal to existing className
-  this.element.prompt = 'localhost/' + this.element.id + " > ";
+  this.element.setAttribute('prompt', 'localhost/' + this.element.id + " > ");
   this.element.childNodes[0].innerText = this.element.id;
-    var prompt = document.createElement('p');
+  var prompt = document.createElement('p');
   prompt.className = 'prompt';
-  prompt.innerHTML = this.element.prompt;
+  prompt.innerHTML = this.element.getAttribute('prompt');
   this.element.appendChild(prompt);
   this.element.shiftHistory = function(increment){
       console.log(this.history);
@@ -169,4 +173,11 @@ function createUpdatePos(clientX, clientY){
   return enclosedUpdatePos;
 };
 
-console.log(document.currentScript);
+window.onload = function(){
+  var listOfLeaves = document.getElementsByClassName('leaf');
+  listOfLeaves = Array.prototype.slice.call(listOfLeaves);
+  listOfLeaves.forEach(function(leaf){
+    initLeafListeners(leaf)
+    console.log(leaf);
+  });
+}

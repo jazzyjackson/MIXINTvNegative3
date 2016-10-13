@@ -1,6 +1,9 @@
 var express = require('express');
 var app = express();
 var server = require('http').Server(app);
+
+var fs = require('fs')
+
 var io = require('socket.io')(server);
 var serverlogging = require('morgan');
 var bodyParser = require('body-parser')
@@ -17,14 +20,23 @@ server.listen(3000);
 
 app.use(serverlogging('dev'));
 app.use(express.static(__dirname+ '/public'));
+app.use(express.static(__dirname + '/public/savedTrees'));
 //app.get('/', function(req,res){
 //    res.sendfile('./public/index.html');
 //    
 //})
 
 app.post('/', function(req,res,next){
-	console.log(req.body.content);
-	res.send(req.body.content);
+	var htmlString = req.body.content;
+	var fileName = req.body.fileName;
+	console.log(htmlString, fileName)
+	fs.writeFile(__dirname + '/public/savedTrees/' + fileName, htmlString, function(err){
+		if(err){
+			res.status(400).send(err);
+		} else {
+			res.status(200).send(fileName + ' written successfully');
+		}
+	})
 })
 
 

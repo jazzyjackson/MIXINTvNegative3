@@ -20,23 +20,40 @@ function rename(aTerminal, ArrArray){
 	var oldId = targetElement.id;
 	targetElement.id = newId;
 	targetElement.childNodes[0].innerText = targetElement.id;
-	targetElement.prompt = 'localhost/' + targetElement.id + " > ";
+	targetElement.setAttribute('prompt', 'localhost/' + targetElement.id + " > ");
 	return createResult('result', oldId + ' has been renamed to ' + aTerminal.id);
 }
 
 function save(aTerminal, ArrArray){
-	if(ArrArray.length == 0){
+	if(ArrArray.length > 0){
 		return createResult ('error result', 'save takes on argument, a divs ID');
 	}
+
+	var requestElement = createResult('request','Attempting to send file, waiting on response');
+	requestElement.id = Date.now();
+
 	persist = new XMLHttpRequest();
 	persist.addEventListener('load', function(){
 		console.log(persist.responseText);
+		var starttime = requestElement.id;
+		var roundTripTime = Date.now() - starttime;
+		requestElement.innerText = persist.responseText + ' in ' + roundTripTime + 'ms';
+		requestElement.className = 'result';
+		if(window.history.pushState){
+			window.history.pushState({},null,'/savedTrees/' + aTerminal.id + '.html');
+		}
 	})
 	persist.open("POST", 'http://' + window.location.host);
     persist.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	persist.send('content=' + encodeURIComponent(aTerminal.outerHTML));
-	console.log(encodeURIComponent(aTerminal.outerHTML));
-	return createResult('result','gonna have to do some callback action');
+	persist.send(
+		'content=' + encodeURIComponent(document.body.outerHTML) +
+		'&fileName=' + aTerminal.id + '.html'
+	);
+
+	return requestElement;
+
+
+
 }
 
 function createResult(className, innerText){

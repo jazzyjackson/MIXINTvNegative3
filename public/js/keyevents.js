@@ -41,7 +41,7 @@ function handleInput(aTerminal){
     result.className += " result";
     var prompt = document.createElement('p');
     prompt.className = "prompt";
-    prompt.innerHTML = aTerminal.prompt;
+    prompt.innerHTML = aTerminal.getAttribute('prompt');
     aTerminal.appendChild(prompt);
     aTerminal.scrollTop = aTerminal.scrollHeight;
     
