@@ -22,6 +22,8 @@ function handleKeystroke(aKeystroke, aKeyCode, aTarget){
     } else if(aKeystroke == 'ArrowDown'){
       terminal.shiftHistory(-1); //forward in time, maxxing out at 0
     }
+    terminal.scrollTop = terminal.scrollHeight;
+
 }
 
 function handleInput(aTerminal){

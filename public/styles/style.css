@@ -1,41 +1,53 @@
 body {
-  background-color: #eeF;
-  background-image: url("/images/backgroundtile.png");
+  /*background-color: #eeF;*/
+  background-image: url("/images/backgrounddot.png");
   background-repeat: repeat;
-  background-size: 12px;
+  background-size:15px;
 
 }
 
 .leaf {
-   color: #fff;
-
+   /*color: #fff;*/
+   border: 1px solid black;
 }
 
-.leaf h5 {
- 
+.leaf h3 {
+  border: 1px solid black;
   margin: 0;
-  padding: 15px 0 5px 0;
+  padding: 5px 0 5px 0;
   width: 100%;
   text-align: center;
   display: inline-block;
-  background: black;
+  background: white;
   position: absolute;
-  top: -10px;
+  top: -2em;
   left: 0;
-  z-index: 1;
+  /*z-index: 1;*/
+  /* oh shit, does being position absolute implicitely place it above unpositioned elements? */
   /*  terminal headers have zindex 1 to float above promps and results. 
    *  To prevent the header from stacking on top of other elements 
    *   Each terminal has its stacking context isolated*/
+}
+
+.terminal h3 {
+  /*Make terminals impervious to leaf headers being hidden*/
+  visibility: visible;
+  top: -10px;
+  border: none;
+  border-bottom: 1px solid black;
+  padding: 15px 0 5px 0;
 
 }
 
 .terminal {
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(255,255,255,1);
   width: 400px;
   height: 250px;
   padding: 5px;
   overflow-y: scroll;
-  isolation: isolated; /* maintain proper stacking even with zindexed header */
+/*  isolation: isolated; */ /*turns out this is not a thing*/ /* maintain proper stacking even with zindexed header */
+  font-family: 'VT323', monospace;
+
 }
 
 div:focus {
@@ -43,13 +55,14 @@ div:focus {
 }
 
 .terminal:focus {
-  background-color: rgba(0,0,200,0.8);
+  /*background-color: rgba(0,0,200,0.3);*/
+  box-shadow: 5px 5px 20px black;
 }
 
 .terminal p {
   margin: 0;
   line-height: 1.5em;
-  font-family: monospace;
+
 }
 .terminal p:first-of-type {
   margin-top: 1.5em;
@@ -62,7 +75,7 @@ div:focus {
 .request {
 	width: 100%;
 	height: 1.5em;
-	background-color: white;
+	background-color: black;
 }
 
 .draggingHappening {

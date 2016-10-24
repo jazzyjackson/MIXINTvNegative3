@@ -5,8 +5,45 @@ var customCommands = {
 	howami: howami, 
 	whenami: whenami,
 	rename: rename,
-	save: save
+	save: save,
+	ls: ls,
+	list: ls,
+	files: ls
 };
+
+function buildDirDisplay(fileObj){
+	var resultString = '';
+	for(each in fileObj){
+		console.log(each);
+		console.log(fileObj[each])
+			switch(fileObj[each]){
+				case 'directory': resultString += '🗁 ' + each + '\n'; break;
+				case 'text': resultString += '🗎 ' + each + '\n'; break;
+				case 'image': resultString += '🖻 ' + each + '\n'; break;
+			}
+	}
+	console.log(resultString);
+	return resultString;
+}
+function ls(aTerminal, ArrArray){
+	var requestElement = createResult('request', 'Looking for files...');
+	requestElement.id = Date.now();
+	persist = new XMLHttpRequest();
+	persist.addEventListener('load', function(){
+		 var result = buildDirDisplay(JSON.parse(persist.responseText));
+		//use the response from the server as the innerText of the element attached to the terminal
+		requestElement.innerText = result;
+		//change the class of the element from request to result
+		requestElement.className = 'result';
+		aTerminal.scrollTop = aTerminal.scrollHeight;
+
+	})
+	persist.open("POST", 'http://' + window.location.host + '/fs');
+  persist.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	persist.send('pathname=' + ArrArray[0]);
+
+	return requestElement;
+}
 
 function rename(aTerminal, ArrArray){
 	var newId;
@@ -43,7 +80,7 @@ function save(aTerminal, ArrArray){
 			window.history.pushState({},null,'/savedTrees/' + aTerminal.id + '.html');
 		}
 	})
-	persist.open("POST", 'http://' + window.location.host);
+	persist.open("POST", 'http://' + window.location.host + '/savethis');
     persist.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 	persist.send(
 		'content=' + encodeURIComponent(document.body.outerHTML) +
@@ -115,5 +152,6 @@ socket.on('timeResponse', function(socket){
 	roundtripResult.innerHTML = 'Round trip time to ' + window.location.host + ' was ' + roundTripTime + 'ms.';
 	requestElement.parentNode.insertBefore(localtimeResult, requestElement);
 	requestElement.parentNode.insertBefore(roundtripResult, localtimeResult);
+	requestElement.parentNode.scrollTop = requestElement.parentNode.scrollHeight;
 });
 

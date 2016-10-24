@@ -8,6 +8,30 @@ allContent.addEventListener('dblclick', function(event){
   }
 });
 
+function Circle(xPos,yPos,radius,color){
+  Leaf.call(this, xPos, yPos);
+  
+  var defaultRadius = 50;
+  var defaultColor = 'rgba(' + an8bitrandom() + ',' + an8bitrandom() + ',' + an8bitrandom() + ',' + Math.random() + ')';
+  this.element.className += ' circle'; //addClassName circle to existing
+  var diameter = radius ? (radius * 2) : (defaultRadius * 2);
+  diameter = diameter + "px"
+  var background = color ? color : defaultColor;
+  
+  this.element.style.height = diameter;
+  this.element.style.width = diameter;
+  this.element.style.borderRadius = diameter;
+  this.element.style.background = background;
+  console.log(this.constructor);
+  this.element.id = 'circle' + document.getElementsByClassName('circle').length;
+  function an8bitrandom(){
+    return Math.floor(Math.random() * 255);
+  }
+  var header = this.element.getElementsByClassName('entityHeader')[0];
+  header.innerText = this.element.id;
+}
+
+
 
 allContent.addEventListener('mouseup', function(event){
   socketize(event);
@@ -39,30 +63,6 @@ function addTerminal(posX, posY){
 
 }
 
-function Circle(xPos,yPos,radius,color){
-  Leaf.call(this, xPos, yPos);
-  
-  var defaultRadius = 50;
-  var defaultColor = 'rgba(' + an8bitrandom() + ',' + an8bitrandom() + ',' + an8bitrandom() + ',' + Math.random() + ')';
-  this.element.className += ' circle'; //addClassName circle to existing
-  var diameter = radius ? (radius * 2) : (defaultRadius * 2);
-  diameter = diameter + "px"
-  var background = color ? color : defaultColor;
-  
-  this.element.style.height = diameter;
-  this.element.style.width = diameter;
-  this.element.style.borderRadius = diameter;
-  this.element.style.background = background;
-  console.log(this.constructor);
-  this.element.id = 'circle' + document.getElementsByClassName('circle').length;
-  function an8bitrandom(){
-    return Math.floor(Math.random() * 255);
-  }
-  var header = this.element.getElementsByClassName('entityHeader')[0];
-  header.innerText = this.element.id;
-
-  
-}
 
 function handleMove(event){
   if(event.buttons && updatePos){
@@ -84,7 +84,7 @@ function Leaf(xPos, yPos){
   this.element.style.position = 'absolute';
   this.element.className = 'leaf';
 
-  var entityHeader = document.createElement('h5');
+  var entityHeader = document.createElement('h3');
   entityHeader.innerText = "header was not set in constructor";
   entityHeader.className = 'entityHeader';
   this.element.appendChild(entityHeader);
@@ -154,6 +154,8 @@ function Terminal(xPos, yPos){
 
 
 
+
+
 function createUpdatePos(clientX, clientY){
   var theLastX = clientX;
   var theLastY = clientY;
@@ -178,6 +180,7 @@ window.onload = function(){
   listOfLeaves = Array.prototype.slice.call(listOfLeaves);
   listOfLeaves.forEach(function(leaf){
     initLeafListeners(leaf)
+    leaf.scrollTop = leaf.scrollHeight;
     console.log(leaf);
   });
 }
