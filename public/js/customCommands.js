@@ -8,8 +8,31 @@ var customCommands = {
 	save: save,
 	ls: ls,
 	list: ls,
-	files: ls
+	files: ls,
+	create: create
 };
+
+function create(aTerminal, ArrArray){
+	let newEntity = ArrArray[0];
+	let pathname = '/js/' + newEntity + '.js';
+	let newScript = document.createElement('script');
+	newScript.setAttribute('src', pathname);
+	document.head.appendChild(newScript);
+
+	//loading the script is asynchronous, the constructor cannot be called immediately
+
+	let timerID = setInterval(function(){
+			if(window[newEntity]){
+			let newConstructor = new window[newEntity]();
+			let newComponent = newConstructor.render();
+			document.body.appendChild(newComponent);
+			clearInterval(timerID);
+		}
+	}, 10)
+
+	return createResult('result','circle.js added to document.head');
+
+}
 
 function buildDirDisplay(fileObj){
 	var resultString = '';
