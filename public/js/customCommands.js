@@ -43,6 +43,7 @@ function create(aTerminal, ArrArray){
 			}
 			clearInterval(timerID);
 		},1000)
+
 	} else {
 		let newConstructor = eval(`new ${newEntity}`)
 		let newComponent = newConstructor.render()
@@ -72,6 +73,7 @@ function buildDirDisplay(fileObj){
 function ls(aTerminal, ArrArray){
 	var requestElement = createResult('request', 'Looking for files...');
 	requestElement.id = Date.now();
+	
 	persist = new XMLHttpRequest();
 	persist.addEventListener('load', function(){
 		 var result = buildDirDisplay(JSON.parse(persist.responseText));
@@ -98,38 +100,48 @@ function rename(aTerminal, ArrArray){
 		default: return createResult('error result', 'rename takes one or two arguments.');
 	}
 	console.log(newId);
-	var oldId = targetElement.id;
+	try {
+		var oldId = targetElement.id;
+	} catch(e) {
+		console.error(`${ArrArray[0]} doesn't appear to an element. Use an existing id.`)
+		console.error(e);
+		return createResult('result', `${ArrArray[0]} doesn't appear to an element. Use an existing id.`);
+	}
 	targetElement.id = newId;
 	targetElement.childNodes[0].innerText = targetElement.id;
 	targetElement.setAttribute('prompt', 'localhost/' + targetElement.id + " > ");
-	return createResult('result', oldId + ' has been renamed to ' + aTerminal.id);
+	return createResult('result', oldId + ' has been renamed to ' + targetElement.id);
 }
 
-function save(aTerminal, ArrArray){
+function save(aTerminal, ArrArray, isLocal){
+	console.log(arguments)
 	if(ArrArray.length > 0){
 		return createResult ('error result', 'save takes on argument, a divs ID');
 	}
-
+	
 	var requestElement = createResult('request','Attempting to send file, waiting on response');
-	requestElement.id = Date.now();
-
-	persist = new XMLHttpRequest();
-	persist.addEventListener('load', function(){
-		console.log(persist.responseText);
-		var starttime = requestElement.id;
-		var roundTripTime = Date.now() - starttime;
-		requestElement.innerText = persist.responseText + ' in ' + roundTripTime + 'ms';
-		requestElement.className = 'result';
-		if(window.history.pushState){
-			window.history.pushState({},null,'/savedTrees/' + aTerminal.id + '.html');
-		}
-	})
-	persist.open("POST", 'http://' + window.location.host + '/savethis');
-    persist.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	persist.send(
-		'content=' + encodeURIComponent(document.documentElement.innerHTML) +
-		'&fileName=' + aTerminal.id + '.html'
-	);
+	requestElement.setAttribute('createdAt', Date.now())
+	requestElement.id = String(aTerminal.id) + aTerminal.childNodes.length;
+  if(isLocal){
+		persist = new XMLHttpRequest();
+		persist.addEventListener('load', function(){
+			console.log(persist.responseText);
+			var starttime = requestElement.getAttribute('createdAt')
+			var roundTripTime = Date.now() - starttime;
+			requestElement.innerText = persist.responseText + ' in ' + roundTripTime + 'ms';
+			requestElement.className = 'result';
+			if(window.history.pushState){
+				window.history.pushState({},null,'/savedTrees/' + aTerminal.id + '.html');
+			}
+			appendResult(requestElement.innerText, requestElement.id);
+		})
+		persist.open("POST", 'http://' + window.location.host + '/savethis');
+			persist.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		persist.send(
+			'content=' + encodeURIComponent(document.documentElement.innerHTML) +
+			'&fileName=' + aTerminal.id + '.html'
+		);
+	}
 
 	return requestElement;
 

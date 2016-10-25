@@ -1,8 +1,8 @@
 var remoteUpdatePos;
 
 var socket = io(window.location.host);
+
 socket.on('event', function(event){
-  console.log(event);
   switch(event.type){
 
     case 'dblclick': addTerminal(event.clientX, event.clientY); break;
@@ -16,18 +16,30 @@ socket.on('event', function(event){
         
     case 'mousemove': remoteUpdatePos(event.clientX, event.clientY, event.targetId); break;
     case 'touchmove': remoteUpdatePos(event.clientX, event.clientY, event.targetId); break; 
-    case 'keydown': handleKeystroke(event.key, event.keyCode, event.targetId); break;
+    case 'keydown': handleKeystroke(event.key, event.keyCode, event.targetId, false); break;
   }
-});
+})
+
+socket.on('filesaveResult', data => {
+  updateTerminal(data.responseText, data.aTarget)
+})
   
 function socketize(anEvent, optActiveElement){
-    socket.emit('event', {
-      type: anEvent.type,
+  socket.emit('event', {
+    type: anEvent.type,
 	  key: anEvent.key,	
 	  keyCode: anEvent.keyCode,
-      buttons: anEvent.buttons,
-      clientX: anEvent.clientX,
-      clientY: anEvent.clientY,
-      targetId: optActiveElement
-    });
-};
+    buttons: anEvent.buttons,
+    clientX: anEvent.clientX,
+    clientY: anEvent.clientY,
+    targetId: optActiveElement
+  })
+}
+
+//called from within the POST callback in customCommands, save
+function appendResult(responseText, aTarget){
+  socket.emit('filesaveResult', {
+    responseText,
+    aTarget
+  })
+}

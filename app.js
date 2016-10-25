@@ -82,7 +82,10 @@ app.post('/fs', function(req,res,next){
 io.on('connection', function(socket){
 		identities[socket.id] = {ip: socket.client.conn.remoteAddress.split(':').slice(-1)[0], name: null};
     socket.on('event', function (data){
-        socket.broadcast.emit('event',data);
+      socket.broadcast.emit('event',data);
+    });
+		socket.on('filesaveResult', function (data){
+      socket.broadcast.emit('filesaveResult',data);
     });
 
 		socket.on('identityRequest', function(req){

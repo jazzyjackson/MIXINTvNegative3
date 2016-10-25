@@ -80,9 +80,6 @@ function initLeafListeners(aLeafElement){
   })
 }
 
-
-
-
 function createUpdatePos(clientX, clientY){
   var theLastX = clientX;
   var theLastY = clientY;
