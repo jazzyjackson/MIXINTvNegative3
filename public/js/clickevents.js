@@ -34,7 +34,6 @@ function convertTouchToMouse(event){
 
 function addTerminal(posX, posY){
   var aTerminal = new Terminal(posX, posY);
-  console.log(aTerminal.element);
   document.body.appendChild(aTerminal.element);
   aTerminal.element.focus();
 
@@ -104,34 +103,29 @@ function Terminal(xPos, yPos){
   this.element.history = 0; //0 is most recent, negative numbers go back in time
   this.element.id = "root" + document.getElementsByClassName('terminal').length;
   this.element.className += ' terminal'; //addClass terminal to existing className
-  this.element.setAttribute('prompt', 'localhost/' + this.element.id + " > ");
+  this.element.setAttribute('protoPrompt', 'localhost/' + this.element.id + " > ");
   this.element.childNodes[0].innerText = this.element.id;
-  var prompt = document.createElement('p');
+  let protoPrompt = this.element.getAttribute('protoPrompt');
+  let prompt = document.createElement('p');
   prompt.className = 'prompt';
-  prompt.innerHTML = this.element.getAttribute('prompt');
+  prompt.innerHTML = this.element.getAttribute('protoPrompt');
+
   this.element.appendChild(prompt);
   this.element.shiftHistory = function(increment){
-      console.log(this.history);
       var listOfPrompts = this.getElementsByClassName('prompt');
       if(increment === -1 && this.history > 1){
         this.history += increment;
         this.lastChild.innerHTML = listOfPrompts[listOfPrompts.length - (1 + this.history)].innerHTML;
       } else if(increment === 1 && this.history < listOfPrompts.length - 1){
-        console.log(this.history, listOfPrompts.length);
         this.history += increment;
         this.lastChild.innerHTML = listOfPrompts[listOfPrompts.length - (1 + this.history)].innerHTML;
       } else if(increment === -1 && this.history == 1){
-        this.lastChild.innerHTML = this.prompt;
+        console.log(protoPrompt)
+        this.lastChild.innerHTML = protoPrompt;
         this.history += increment;
       }
     }
 }
-
-
-
-
-
-
 
 function createUpdatePos(clientX, clientY){
   var theLastX = clientX;

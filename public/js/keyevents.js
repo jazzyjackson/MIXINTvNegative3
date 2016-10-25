@@ -1,4 +1,5 @@
 document.documentElement.addEventListener('keydown', function(event){
+  console.log(event);
   //IF you're typing in a terminal, AND you're not holding down the CTRL key.
   if(document.activeElement.className.indexOf('terminal') !== -1 && !event.ctrlKey){
     event.preventDefault(); //I don't remember why this is here.
@@ -17,7 +18,6 @@ function handleKeystroke(aKeystroke, aKeyCode, aTarget){
     } else if(aKeystroke == 'Enter'){
       handleInput(terminal)
     } else if(aKeystroke == 'ArrowUp'){
-			console.log(terminal);
       terminal.shiftHistory(1); //back in time, maxxing out at length of child nodes.
     } else if(aKeystroke == 'ArrowDown'){
       terminal.shiftHistory(-1); //forward in time, maxxing out at 0
@@ -43,7 +43,7 @@ function handleInput(aTerminal){
     result.className += " result";
     var prompt = document.createElement('p');
     prompt.className = "prompt";
-    prompt.innerHTML = aTerminal.getAttribute('prompt');
+    prompt.innerHTML = aTerminal.getAttribute('protoPrompt');
     aTerminal.appendChild(prompt);
     aTerminal.scrollTop = aTerminal.scrollHeight;
     

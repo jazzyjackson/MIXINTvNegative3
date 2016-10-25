@@ -14,23 +14,44 @@ var customCommands = {
 
 function create(aTerminal, ArrArray){
 	let newEntity = ArrArray[0];
-	let pathname = '/js/' + newEntity + '.js';
-	let newScript = document.createElement('script');
-	newScript.setAttribute('src', pathname);
-	document.head.appendChild(newScript);
+	let result = createResult('query', 'Waiting for constructor to be available');
 
-	//loading the script is asynchronous, the constructor cannot be called immediately
+	if(window[newEntity] === undefined){
+		let pathname = '/js/constructors/' + newEntity + '.js';
+		let newScript = document.createElement('script');
+		newScript.setAttribute('src', pathname);
+		document.head.appendChild(newScript);
 
-	let timerID = setInterval(function(){
+		//loading the script is asynchronous, the constructor cannot be called immediately
+
+		let timerID = setInterval(() => {
 			if(window[newEntity]){
-			let newConstructor = new window[newEntity]();
-			let newComponent = newConstructor.render();
-			document.body.appendChild(newComponent);
-			clearInterval(timerID);
-		}
-	}, 10)
+				let newConstructor = eval(`new ${newEntity}`);
+				let newComponent = newConstructor.render();
+				document.body.appendChild(newComponent);
+				clearInterval(timerID);
+				result.innerText = `Constructor retrieved and invoked, ${newComponent.id} added to DOM`
+			}
+		}, 10)
 
-	return createResult('result','circle.js added to document.head');
+
+		setTimeout(()=>{
+			if(!window[newEntity]){
+				console.log(`Stop trying to make ${newEntity} happen, it's not going to happen`)
+				result.innerText = `I couldn't find a constructor for ${newEntity}`
+				document.head.removeChild(newScript);
+			}
+			clearInterval(timerID);
+		},1000)
+	} else {
+		let newConstructor = eval(`new ${newEntity}`)
+		let newComponent = newConstructor.render()
+		document.body.appendChild(newComponent)
+		result.innerText = `Constructor invoked, ${newComponent.id} added to DOM`
+	}
+
+
+	return result;
 
 }
 
