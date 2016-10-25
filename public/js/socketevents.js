@@ -31,6 +31,3 @@ function socketize(anEvent, optActiveElement){
       targetId: optActiveElement
     });
 };
-
-
-console.log(document.getElementsByTagName('script'));

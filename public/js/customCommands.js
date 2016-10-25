@@ -127,7 +127,7 @@ function save(aTerminal, ArrArray){
 	persist.open("POST", 'http://' + window.location.host + '/savethis');
     persist.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 	persist.send(
-		'content=' + encodeURIComponent(document.body.outerHTML) +
+		'content=' + encodeURIComponent(document.documentElement.innerHTML) +
 		'&fileName=' + aTerminal.id + '.html'
 	);
 

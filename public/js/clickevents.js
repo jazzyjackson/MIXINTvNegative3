@@ -1,44 +1,27 @@
+/* It's necessary to place mouse move and mouse touch events on the document 
+ * otherwise if the element doesn't keep the pace and falls out from under the cursor,
+ * the events would stop fires.
+ * This way, movements continue to update until mouse/finger is lifted */
+
+//
 var updatePos;
 var allContent = document.documentElement;
 
-allContent.addEventListener('dblclick', function(event){
-  if(event.target.tagName === 'HTML' || event.target.tagName === 'BODY'){//only addTerminal if body or higher (document where there is no body) is clicked. Top of the path is Window -> Document -
-    socketize(event);
-    addTerminal(event.clientX, event.clientY);
-  }
-});
 
-
-
-allContent.addEventListener('mouseup', function(event){
+allContent.addEventListener('mouseup', event => {
   socketize(event);
   if(updatePos) updatePos = undefined;
   document.documentElement.removeEventListener('mousemove', handleMove);
 });
 
-allContent.addEventListener('touchcancel', function(event){
-    updatePos = undefined;
-
-});
-allContent.addEventListener('touchend', function(event){
-    updatePos = undefined;
-
-});
+allContent.addEventListener('touchcancel', event => updatePos = undefined);
+allContent.addEventListener('touchend',  event => updatePos = undefined);
 
 function convertTouchToMouse(event){
   event.clientX = event.touches[0].clientX;
   event.clientY = event.touches[0].clientY;
   return event;
 }
-
-
-function addTerminal(posX, posY){
-  var aTerminal = new Terminal(posX, posY);
-  document.body.appendChild(aTerminal.element);
-  aTerminal.element.focus();
-
-}
-
 
 function handleMove(event){
   if(event.buttons && updatePos){
@@ -98,34 +81,7 @@ function initLeafListeners(aLeafElement){
 }
 
 
-function Terminal(xPos, yPos){
-  Leaf.call(this, xPos, yPos);
-  this.element.history = 0; //0 is most recent, negative numbers go back in time
-  this.element.id = "root" + document.getElementsByClassName('terminal').length;
-  this.element.className += ' terminal'; //addClass terminal to existing className
-  this.element.setAttribute('protoPrompt', 'localhost/' + this.element.id + " > ");
-  this.element.childNodes[0].innerText = this.element.id;
-  let protoPrompt = this.element.getAttribute('protoPrompt');
-  let prompt = document.createElement('p');
-  prompt.className = 'prompt';
-  prompt.innerHTML = this.element.getAttribute('protoPrompt');
 
-  this.element.appendChild(prompt);
-  this.element.shiftHistory = function(increment){
-      var listOfPrompts = this.getElementsByClassName('prompt');
-      if(increment === -1 && this.history > 1){
-        this.history += increment;
-        this.lastChild.innerHTML = listOfPrompts[listOfPrompts.length - (1 + this.history)].innerHTML;
-      } else if(increment === 1 && this.history < listOfPrompts.length - 1){
-        this.history += increment;
-        this.lastChild.innerHTML = listOfPrompts[listOfPrompts.length - (1 + this.history)].innerHTML;
-      } else if(increment === -1 && this.history == 1){
-        console.log(protoPrompt)
-        this.lastChild.innerHTML = protoPrompt;
-        this.history += increment;
-      }
-    }
-}
 
 function createUpdatePos(clientX, clientY){
   var theLastX = clientX;
