@@ -146,6 +146,8 @@ function save(aTerminal, ArrArray, isLocal){
 			let roundTripTime = Date.now() - starttime;
 			requestElement.innerText = result + ' in ' + roundTripTime + 'ms';
 			requestElement.className = 'result';
+			appendResult(requestElement.innerText, requestElement.id);
+
 		})
 	}
 	return requestElement;
