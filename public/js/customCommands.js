@@ -56,16 +56,20 @@ function create(aTerminal, ArrArray){
 
 }
 
-function buildDirDisplay(fileObj){
-	var resultString = '';
+function buildDirDisplay(resObj){
+	let fileObj = resObj.result;
+	let pathname = resObj.pathname;
+	let resultString = '';
 	for(each in fileObj){
 		console.log(each);
 		console.log(fileObj[each])
-		switch(fileObj[each]){
-			case 'directory': resultString += '🗁 ' + each + '\n'; break;
-			case 'text': resultString += '🗎 ' + each + '\n'; break;
-			case 'image': resultString += '🖻 ' + each + '\n'; break;
-		}
+		// switch(fileObj[each]){
+		// 	case 'directory': resultString += `<p class='fs directory' title="${pathname + each}"> 🗁  ${each}  </p>`; break;
+		// 	case 'text': resultString += `<p class='fs text'> 🗎  ${each}  </p>`; break;
+		// 	case 'image': resultString += `<p class='fs image'> 🖻  ${each}  </p>`; break;
+		// }
+		resultString += `<p class="fs ${fileObj[each]}" title="${pathname + each}"> ${each} </p> `
+		//This could probably refactored to not have to deal with switchcase, but I think I like the verbosity
 	}
 	console.log(resultString);
 	return resultString;
@@ -83,9 +87,10 @@ function ls(aTerminal, ArrArray){
 		}
 	})
 	.then(res => res.json())
-	.then(result => {
-		let dirString = buildDirDisplay(result);
-		requestElement.innerText = dirString;
+	.then(resObj => {
+		console.log(resObj);
+		let dirString = buildDirDisplay(resObj);
+		requestElement.innerHTML = dirString;
 		requestElement.className = 'result';
 		aTerminal.scrollTop = aTerminal.scrollHeight;
 	})

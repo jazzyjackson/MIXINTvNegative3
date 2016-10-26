@@ -41,11 +41,10 @@ app.post('/savethis', function(req,res,next){
 
 app.post('/fs', function(req,res,next){
 
-	var pathname = '';
+	var pathname = '/';
 	if(req.body.pathname !== 'undefined'){
 			pathname = req.body.pathname;
 	} 
-	console.log(pathname);
 	fs.readdir(__dirname + '/' + pathname, function(err, files){
 		if(err){
 			res.status(400).send(err);
@@ -69,8 +68,9 @@ app.post('/fs', function(req,res,next){
 					}
 				}
 			}
-			console.log(result);
-			res.status(200).json(result);
+			console.log(pathname, result);
+
+			res.status(200).json({pathname, result});
 		// fileArr = fileArr.slice(1, fileArr.length - 1); //git rid of brackets
 		// fileArr = fileArr.split(','); //convert to array
 		// fileArr = fileArr.map(function(aFileName){return aFileName.slice(1,aFileName.length -1)});

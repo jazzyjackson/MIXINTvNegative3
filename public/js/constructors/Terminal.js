@@ -74,12 +74,17 @@ function handleInput(aTerminal,isLocal){
 
     aTerminal.appendChild(result);
     result.className += " result";
+
+    initPrompt(aTerminal);
+    
+}
+
+function initPrompt(aTerminal){
     var prompt = document.createElement('p');
     prompt.className = "prompt";
     prompt.innerHTML = aTerminal.getAttribute('protoPrompt');
     aTerminal.appendChild(prompt);
     aTerminal.scrollTop = aTerminal.scrollHeight;
-    
 }
 
 function evaluate(aTerminal, aQuery){
