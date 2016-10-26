@@ -3008,7 +3008,7 @@ function onFocus(cm, e) {
   if (!cm.state.focused) {
     signal(cm, "focus", cm, e)
     cm.state.focused = true
-    addClass(cm.display.wrapper, "CodeMirror-focused")
+    addClass(cm.display.wrapper.parentElement, "CodeMirror-focused")
     
     // This test prevents this from firing when a context
     // menu is closed (since the input reset would kill the
@@ -3027,7 +3027,7 @@ function onBlur(cm, e) {
   if (cm.state.focused) {
     signal(cm, "blur", cm, e)
     cm.state.focused = false
-    rmClass(cm.display.wrapper, "CodeMirror-focused")
+    rmClass(cm.display.wrapper.parentElement, "CodeMirror-focused")
   }
   clearInterval(cm.display.blinker)
   setTimeout(function () { if (!cm.state.focused) { cm.display.shift = false } }, 150)
