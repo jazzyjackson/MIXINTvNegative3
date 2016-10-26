@@ -13,7 +13,7 @@ function Terminal(xPos, yPos){
 }
 
 function updateTerminal(result, targetId){
-  console.log('updating target ' + targetId + ' with ' + result);
+  // console.log('updating target ' + targetId + ' with ' + result);
   let spanToUpdate = document.getElementById(targetId);
   spanToUpdate.innerText = result; 
   spanToUpdate.className = 'result';
@@ -21,7 +21,6 @@ function updateTerminal(result, targetId){
 
 function shiftHistory(increment){
   let history = Number(this.getAttribute('history'));
-  console.log(this)
   let protoPrompt = this.getAttribute('protoPrompt');
   var listOfPrompts = this.getElementsByClassName('prompt');
   if(increment === -1 && history > 1){
@@ -33,7 +32,6 @@ function shiftHistory(increment){
     this.lastChild.innerHTML = listOfPrompts[listOfPrompts.length - (1 + history)].innerHTML;
     this.setAttribute('history',history)
   } else if(increment === -1 && history == 1){
-    console.log(protoPrompt)
     this.lastChild.innerHTML = protoPrompt;
     history += increment;
     this.setAttribute('history',history)

@@ -61,17 +61,8 @@ function buildDirDisplay(resObj){
 	let pathname = resObj.pathname;
 	let resultString = '';
 	for(each in fileObj){
-		console.log(each);
-		console.log(fileObj[each])
-		// switch(fileObj[each]){
-		// 	case 'directory': resultString += `<p class='fs directory' title="${pathname + each}"> 🗁  ${each}  </p>`; break;
-		// 	case 'text': resultString += `<p class='fs text'> 🗎  ${each}  </p>`; break;
-		// 	case 'image': resultString += `<p class='fs image'> 🖻  ${each}  </p>`; break;
-		// }
 		resultString += `<p class="fs ${fileObj[each]}" title="${pathname + each}"> ${each} </p> `
-		//This could probably refactored to not have to deal with switchcase, but I think I like the verbosity
 	}
-	console.log(resultString);
 	return resultString;
 }
 
@@ -88,7 +79,6 @@ function ls(aTerminal, ArrArray){
 	})
 	.then(res => res.json())
 	.then(resObj => {
-		console.log(resObj);
 		let dirString = buildDirDisplay(resObj);
 		requestElement.innerHTML = dirString;
 		addDblClickListeners(requestElement);
@@ -107,7 +97,6 @@ function rename(aTerminal, ArrArray){
 		case 2: newId = ArrArray[1]; targetElement = document.getElementById(ArrArray[0]); break;
 		default: return createResult('error result', 'rename takes one or two arguments.');
 	}
-	console.log(newId);
 	try {
 		var oldId = targetElement.id;
 	} catch(e) {
@@ -122,7 +111,6 @@ function rename(aTerminal, ArrArray){
 }
 
 function save(aTerminal, ArrArray, isLocal){
-	console.log(arguments)
 	if(ArrArray.length > 0){
 		return createResult ('error result', 'save does not take arguments');
 	}
@@ -239,24 +227,27 @@ socket.on('timeResponse', function(socket){
 	requestElement.parentNode.scrollTop = requestElement.parentNode.scrollHeight;
 });
 
-function goToClickedFolder(event){
+function runFile(event){
 	let targetTerminal = event.path.filter(el => el.className && el.className.includes('terminal'))[0];
 	let targetPath = event.target.title;
 
-	let prompt = targetTerminal.getAttribute('protoPrompt');
-	targetTerminal.lastChild.innerText = `${prompt} ls ${targetPath}`
+	if(event.target.className && event.target.className.includes('directory')){
+		let prompt = targetTerminal.getAttribute('protoPrompt');
+		targetTerminal.lastChild.innerText = `${prompt} ls ${targetPath}`
+	}
 
 	if(event.type === 'dblclick'){
-		socket.emit('remoteGoToFile', { terminal: targetTerminal.id, func: 'ls', path: targetPath});
-		let listResult = ls(targetTerminal, [targetPath]);
-		targetTerminal.appendChild(listResult);
-		initPrompt(targetTerminal);
+		if(event.target.className && event.target.className.includes('directory')){
+			socket.emit('remoteRunFile', { terminal: targetTerminal.id, func: 'ls', path: targetPath});
+			let listResult = ls(targetTerminal, [targetPath]);
+			targetTerminal.appendChild(listResult);
+			initPrompt(targetTerminal);
+		}
 	}
 }
 
 function addDblClickListeners(directoryElement){
-	let listoffolders = Array.from(directoryElement.getElementsByClassName('directory'));
-	listoffolders.forEach(el => el.addEventListener('dblclick', goToClickedFolder));
-	listoffolders.forEach(el => el.addEventListener('click', goToClickedFolder));
-
+	let listOfFiles = Array.from(directoryElement.getElementsByClassName('fs'));
+	listOfFiles.forEach(el => el.addEventListener('dblclick', runFile));
+	listOfFiles.forEach(el => el.addEventListener('click', runFile));
 }

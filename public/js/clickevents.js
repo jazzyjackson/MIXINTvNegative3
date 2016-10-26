@@ -106,7 +106,7 @@ window.onload = function(){
   listOfLeaves.forEach(function(leaf){
     initLeafListeners(leaf)
     leaf.scrollTop = leaf.scrollHeight;
-    console.log(leaf);
+    // console.log(leaf);
   });
   if(typeof CodeMirror === 'function'){
     let mirrors = Array.from(document.getElementsByClassName('codemirrorContainer'))

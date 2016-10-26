@@ -20,7 +20,7 @@ socket.on('event', function(event){
   }
 })
 
-socket.on('remoteGoToFile', data => {
+socket.on('remoteRunFile', data => {
   let targetTerminal = document.getElementById(data.terminal);
   let pathname = data.path;
 

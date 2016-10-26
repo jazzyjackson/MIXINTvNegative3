@@ -29,7 +29,6 @@ app.use(express.static(__dirname + '/public/savedTrees'));
 app.post('/savethis', function(req,res,next){
 	var htmlString = req.body.content;
 	var fileName = req.body.fileName;
-	console.log(htmlString, fileName)
 	fs.writeFile(__dirname + '/public/savedTrees/' + fileName, htmlString, function(err){
 		if(err){
 			res.status(400).send(err);
@@ -69,7 +68,6 @@ app.post('/fs', function(req,res,next){
 					}
 				}
 			}
-			console.log(pathname, result);
 
 			res.status(200).json({pathname, result});
 		// fileArr = fileArr.slice(1, fileArr.length - 1); //git rid of brackets
@@ -97,14 +95,14 @@ io.on('connection', function(socket){
 		socket.on('filesaveResult', function (data){
       socket.broadcast.emit('filesaveResult',data);
     });
-		socket.on('remoteGoToFile', function(data){
-			socket.broadcast.emit('remoteGoToFile', data)
+		socket.on('remoteRunFile', function(data){
+			socket.broadcast.emit('remoteRunFile', data)
 		})
 
 		socket.on('identityRequest', function(req){
 			//I think each client's identity request will come in separately, when one user asks whoami and hits enter, the local browser will evaluate that and emit an identity request, so this message shouldn't be broadcast.
 			//req is the incoming message. socket is the particular connection.	
-			console.log(identities[socket.id]);
+			// console.log(identities[socket.id]);
 			socket.emit('identityResponse', {
 				placeHolderId: req.placeHolderId,
 				socketid: socket.id,
