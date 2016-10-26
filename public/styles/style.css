@@ -30,7 +30,7 @@ body {
 }
 
 .codemirror .codeMirror{
-  height: 100%;
+  height: Calc(100% - 2em);
   isolation: isolate;
 }
 .codemirror h3{
