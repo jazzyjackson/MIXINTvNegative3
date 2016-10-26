@@ -75,10 +75,16 @@ body {
 .terminal p {
   margin: 0;
   line-height: 1.5em;
-
 }
-.terminal p:first-of-type {
+
+.terminal > p:first-of-type {
   margin-top: 1.5em;
+}
+.terminal .fs {
+  border: 2px solid transparent;
+}
+.terminal .fs:hover {
+  border: 2px solid lightblue;
 }
 
 .terminal::-webkit-scrollbar {
@@ -95,3 +101,12 @@ body {
   user-select: none;
 }
 
+.fs.directory::before {
+  content: '🗁';
+}
+.fs.text::before {
+  content: '🗎';
+}
+.fs.image::before {
+  content: '🖻';
+}
