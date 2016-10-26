@@ -96,7 +96,7 @@ function evaluate(aTerminal, aQuery){
     }
 }
 
-document.documentElement.addEventListener('keyup', function(event){
+document.documentElement.addEventListener('keydown', function(event){
   //IF you're typing in a terminal, AND you're not holding down the CTRL key.
   if(document.activeElement.className.indexOf('terminal') !== -1 && !event.ctrlKey){
     event.preventDefault(); //I don't remember why this is here.
