@@ -29,11 +29,16 @@ body {
    *   Each terminal has its stacking context isolated*/
 }
 
-.codemirror .codeMirror{
+.codemirrorContainer {
+  overflow: hidden;
+}
+.codemirrorContainer .codeMirror{
   height: Calc(100% - 2em);
   isolation: isolate;
 }
-.codemirror h3{
+
+
+.codemirrorContainer h3{
   position: static;
   top: 0;
   left: 0;

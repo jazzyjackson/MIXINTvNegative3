@@ -108,4 +108,11 @@ window.onload = function(){
     leaf.scrollTop = leaf.scrollHeight;
     console.log(leaf);
   });
+  if(typeof CodeMirror === 'function'){
+    let mirrors = Array.from(document.getElementsByClassName('codemirrorContainer'))
+    mirrors.forEach(mirrorContainer => {
+      let textArea = mirrorContainer.getElementsByTagName('TEXTAREA')[0];
+      mirrorContainer.cm = CodeMirror.fromTextArea(textArea, {lineNumbers: true});
+    })
+  }
 }

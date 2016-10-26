@@ -11,20 +11,21 @@ function Codemirror(xPos,yPos,optStringInit){
   document.head.appendChild(jsModeInlucde);
 
   Leaf.call(this, xPos, yPos)
-  this.element.className += ' codemirror'
+  this.element.className += ' codemirrorContainer'
   var codemirrorList = document.getElementsByClassName('codemirror')
-  this.element.id = 'CodeMirror' + codemirrorList.length;
+  this.element.id = 'untitled' + codemirrorList.length;
   var header = this.element.getElementsByClassName('entityHeader')[0];
   header.innerText = this.element.id;
   this.element.style.width = '400px';
   this.element.style.height = '400px';
+  var codeText = document.createElement('textarea');
+  this.element.appendChild(codeText);
 
   setTimeout(()=>{
-    var codeMirror = CodeMirror(this.element, {
+    this.element.cm = CodeMirror.fromTextArea(codeText, {
       mode: "javascript",
       lineNumbers: true
     });
-    console.log(codeMirror)
   },100)
 
   this.render = function(){

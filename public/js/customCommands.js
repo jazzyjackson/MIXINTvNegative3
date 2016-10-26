@@ -116,12 +116,19 @@ function rename(aTerminal, ArrArray){
 function save(aTerminal, ArrArray, isLocal){
 	console.log(arguments)
 	if(ArrArray.length > 0){
-		return createResult ('error result', 'save takes on argument, a divs ID');
+		return createResult ('error result', 'save does not take arguments');
 	}
+	/* SOOOOO HACCCKYYYYY */
+	saveCodeMirrorContent();
+	let deadTree = document.documentElement.innerHTML;
+	let liveTree = document.createElement('html');
+	liveTree.innerHTML = deadTree;
+	collapseCodeMirrors(liveTree);
 	
 	var requestElement = createResult('request','Attempting to send file, waiting on response');
 	requestElement.setAttribute('createdAt', Date.now())
 	requestElement.id = String(aTerminal.id) + aTerminal.childNodes.length;
+
   if(isLocal){
 		persist = new XMLHttpRequest();
 		persist.addEventListener('load', function(){
@@ -138,7 +145,7 @@ function save(aTerminal, ArrArray, isLocal){
 		persist.open("POST", 'http://' + window.location.host + '/savethis');
 			persist.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		persist.send(
-			'content=' + encodeURIComponent(document.documentElement.innerHTML) +
+			'content=' + encodeURIComponent(liveTree.innerHTML) +
 			'&fileName=' + aTerminal.id + '.html'
 		);
 	}
@@ -147,6 +154,23 @@ function save(aTerminal, ArrArray, isLocal){
 
 
 
+}
+function saveCodeMirrorContent(){
+		let mirrors = Array.from(document.getElementsByClassName('codemirrorContainer'));
+		mirrors.forEach(aMirrorContainer => {
+			let cm = aMirrorContainer.cm;
+			cm.save();
+			let textArea = aMirrorContainer.getElementsByTagName('TEXTAREA')[0];
+			textArea.innerHTML = textArea.value;
+		})
+}
+
+function collapseCodeMirrors(liveTree){
+	let mirrors = Array.from(liveTree.getElementsByClassName('codemirrorContainer'));
+	mirrors.forEach(aMirrorContainer => {
+		let cm = aMirrorContainer.getElementsByClassName('CodeMirror')[0];
+		cm.remove();
+	})
 }
 
 function createResult(className, innerText){
