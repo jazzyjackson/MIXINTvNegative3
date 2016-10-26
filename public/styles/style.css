@@ -62,16 +62,8 @@ body {
 
 }
 
-div:focus {
-  /*CodeMirror scrollbars are all the way up at zindex 7*/
-  z-index: 10; /* Any element with focus should stack on top of all other elements */
-}
-.CodeMirror-focused {
+.CodeMirror-focused, div:focus {
   z-index: 10;
-}
-
-.terminal:focus {
-  /*background-color: rgba(0,0,200,0.3);*/
   box-shadow: 5px 5px 20px black;
 }
 
