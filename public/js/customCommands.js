@@ -61,32 +61,34 @@ function buildDirDisplay(fileObj){
 	for(each in fileObj){
 		console.log(each);
 		console.log(fileObj[each])
-			switch(fileObj[each]){
-				case 'directory': resultString += '🗁 ' + each + '\n'; break;
-				case 'text': resultString += '🗎 ' + each + '\n'; break;
-				case 'image': resultString += '🖻 ' + each + '\n'; break;
-			}
+		switch(fileObj[each]){
+			case 'directory': resultString += '🗁 ' + each + '\n'; break;
+			case 'text': resultString += '🗎 ' + each + '\n'; break;
+			case 'image': resultString += '🖻 ' + each + '\n'; break;
+		}
 	}
 	console.log(resultString);
 	return resultString;
 }
+
 function ls(aTerminal, ArrArray){
 	var requestElement = createResult('request', 'Looking for files...');
 	requestElement.id = Date.now();
 	
-	persist = new XMLHttpRequest();
-	persist.addEventListener('load', function(){
-		 var result = buildDirDisplay(JSON.parse(persist.responseText));
-		//use the response from the server as the innerText of the element attached to the terminal
-		requestElement.innerText = result;
-		//change the class of the element from request to result
+	fetch('http://' + window.location.host + '/fs', {
+		method: 'POST',
+		body: 'pathname=' + ArrArray[0],
+		headers: {
+			"Content-Type": "application/x-www-form-urlencoded"
+		}
+	})
+	.then(res => res.json())
+	.then(result => {
+		let dirString = buildDirDisplay(result);
+		requestElement.innerText = dirString;
 		requestElement.className = 'result';
 		aTerminal.scrollTop = aTerminal.scrollHeight;
-
 	})
-	persist.open("POST", 'http://' + window.location.host + '/fs');
-  persist.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	persist.send('pathname=' + ArrArray[0]);
 
 	return requestElement;
 }
@@ -130,29 +132,23 @@ function save(aTerminal, ArrArray, isLocal){
 	requestElement.id = String(aTerminal.id) + aTerminal.childNodes.length;
 
   if(isLocal){
-		persist = new XMLHttpRequest();
-		persist.addEventListener('load', function(){
-			console.log(persist.responseText);
-			var starttime = requestElement.getAttribute('createdAt')
-			var roundTripTime = Date.now() - starttime;
-			requestElement.innerText = persist.responseText + ' in ' + roundTripTime + 'ms';
-			requestElement.className = 'result';
-			if(window.history.pushState){
-				window.history.pushState({},null,'/savedTrees/' + aTerminal.id + '.html');
-			}
-			appendResult(requestElement.innerText, requestElement.id);
+		fetch('http://' + window.location.host + '/savethis', {
+			method: 'POST',
+			headers: {
+				"Content-Type": "application/x-www-form-urlencoded"
+			},
+			body: ('content=' + encodeURIComponent(liveTree.innerHTML) +
+			      '&fileName=' + aTerminal.id + '.html')
 		})
-		persist.open("POST", 'http://' + window.location.host + '/savethis');
-			persist.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		persist.send(
-			'content=' + encodeURIComponent(liveTree.innerHTML) +
-			'&fileName=' + aTerminal.id + '.html'
-		);
+		.then(res => res.text())
+		.then(result => {
+			let starttime = requestElement.getAttribute('createdAt')
+			let roundTripTime = Date.now() - starttime;
+			requestElement.innerText = result + ' in ' + roundTripTime + 'ms';
+			requestElement.className = 'result';
+		})
 	}
-
 	return requestElement;
-
-
 
 }
 function saveCodeMirrorContent(){
