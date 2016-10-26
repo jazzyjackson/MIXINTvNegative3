@@ -37,6 +37,7 @@ function Leaf(xPos, yPos){
   yPos || (yPos = 50);
 
   this.element = document.createElement('div');
+
   this.element.style.left = xPos + 'px';
   this.element.style.top = yPos + 'px';
   this.element.tabIndex = 1;

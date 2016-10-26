@@ -29,6 +29,18 @@ body {
    *   Each terminal has its stacking context isolated*/
 }
 
+.codemirror .codeMirror{
+  height: 100%;
+  isolation: isolate;
+}
+.codemirror h3{
+  position: static;
+  top: 0;
+  left: 0;
+  border: none;
+  border-bottom: 1px solid black;
+}
+
 .terminal h3 {
   /*Make terminals impervious to leaf headers being hidden*/
   visibility: visible;
@@ -51,7 +63,11 @@ body {
 }
 
 div:focus {
-  z-index: 2; /* Any element with focus should stack on top of all other elements */
+  /*CodeMirror scrollbars are all the way up at zindex 7*/
+  z-index: 10; /* Any element with focus should stack on top of all other elements */
+}
+.CodeMirror-focused {
+  z-index: 10;
 }
 
 .terminal:focus {
