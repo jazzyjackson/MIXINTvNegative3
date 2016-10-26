@@ -20,6 +20,19 @@ socket.on('event', function(event){
   }
 })
 
+socket.on('remoteGoToFile', data => {
+  let targetTerminal = document.getElementById(data.terminal);
+  let pathname = data.path;
+
+  let evalResult = window[data.func](targetTerminal, [pathname]);
+
+	let prompt = targetTerminal.getAttribute('protoPrompt');
+	targetTerminal.lastChild.innerText = `${prompt} ls ${pathname}`
+
+  targetTerminal.appendChild(evalResult);
+  initPrompt(targetTerminal);
+})
+
 socket.on('filesaveResult', data => {
   updateTerminal(data.responseText, data.aTarget)
 })

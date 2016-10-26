@@ -43,8 +43,9 @@ app.post('/fs', function(req,res,next){
 
 	var pathname = '/';
 	if(req.body.pathname !== 'undefined'){
-			pathname = req.body.pathname;
+			pathname = addSlashesIfNeedBe(req.body.pathname);
 	} 
+	
 	fs.readdir(__dirname + '/' + pathname, function(err, files){
 		if(err){
 			res.status(400).send(err);
@@ -76,6 +77,15 @@ app.post('/fs', function(req,res,next){
 		// fileArr = fileArr.map(function(aFileName){return aFileName.slice(1,aFileName.length -1)});
 		}
 	})
+	function addSlashesIfNeedBe(aFilePath){
+		if(aFilePath[0] !== '/'){
+			aFilePath = '/' + aFilePath;
+		}
+		if(aFilePath[aFilePath.length - 1] !== '/'){
+			aFilePath += '/'
+		}
+		return aFilePath;
+	}
 })
 
 
@@ -87,6 +97,9 @@ io.on('connection', function(socket){
 		socket.on('filesaveResult', function (data){
       socket.broadcast.emit('filesaveResult',data);
     });
+		socket.on('remoteGoToFile', function(data){
+			socket.broadcast.emit('remoteGoToFile', data)
+		})
 
 		socket.on('identityRequest', function(req){
 			//I think each client's identity request will come in separately, when one user asks whoami and hits enter, the local browser will evaluate that and emit an identity request, so this message shouldn't be broadcast.

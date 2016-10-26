@@ -12,6 +12,8 @@ body {
 }
 
 .leaf h3 {
+    font-family: 'VT323', monospace;
+
   border: 1px solid black;
   margin: 0;
   padding: 5px 0 5px 0;
@@ -28,7 +30,9 @@ body {
    *  To prevent the header from stacking on top of other elements 
    *   Each terminal has its stacking context isolated*/
 }
-
+.CodeMirror {
+  font-family: 'VT323', monospace !important; /*CodeMirror css overrides this unless I attach codemirror above this, which, maybe I should*/
+}
 .codemirrorContainer {
   overflow: hidden;
 }

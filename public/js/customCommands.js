@@ -91,6 +91,7 @@ function ls(aTerminal, ArrArray){
 		console.log(resObj);
 		let dirString = buildDirDisplay(resObj);
 		requestElement.innerHTML = dirString;
+		addDblClickListeners(requestElement);
 		requestElement.className = 'result';
 		aTerminal.scrollTop = aTerminal.scrollHeight;
 	})
@@ -238,3 +239,24 @@ socket.on('timeResponse', function(socket){
 	requestElement.parentNode.scrollTop = requestElement.parentNode.scrollHeight;
 });
 
+function goToClickedFolder(event){
+	let targetTerminal = event.path.filter(el => el.className && el.className.includes('terminal'))[0];
+	let targetPath = event.target.title;
+
+	let prompt = targetTerminal.getAttribute('protoPrompt');
+	targetTerminal.lastChild.innerText = `${prompt} ls ${targetPath}`
+
+	if(event.type === 'dblclick'){
+		socket.emit('remoteGoToFile', { terminal: targetTerminal.id, func: 'ls', path: targetPath});
+		let listResult = ls(targetTerminal, [targetPath]);
+		targetTerminal.appendChild(listResult);
+		initPrompt(targetTerminal);
+	}
+}
+
+function addDblClickListeners(directoryElement){
+	let listoffolders = Array.from(directoryElement.getElementsByClassName('directory'));
+	listoffolders.forEach(el => el.addEventListener('dblclick', goToClickedFolder));
+	listoffolders.forEach(el => el.addEventListener('click', goToClickedFolder));
+
+}
