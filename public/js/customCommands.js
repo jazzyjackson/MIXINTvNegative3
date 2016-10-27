@@ -80,9 +80,11 @@ function ls(aTerminal, ArrArray){
 	.then(res => res.json())
 	.then(resObj => {
 		let dirString = buildDirDisplay(resObj);
+		requestElement.innerHTML = 'dirString Placeholder'; //setting the innerHTML of an empty element is sketch, apparently!
 		requestElement.innerHTML = dirString;
+
 		addDblClickListeners(requestElement);
-		requestElement.className = 'result';
+		requestElement.className = 'result directoryContainer';
 		aTerminal.scrollTop = aTerminal.scrollHeight;
 	})
 
@@ -116,10 +118,10 @@ function save(aTerminal, ArrArray, isLocal){
 	}
 	/* SOOOOO HACCCKYYYYY */
 	saveCodeMirrorContent();
-	let deadTree = document.documentElement.innerHTML;
+	let deadTree = document.documentElement.innerHTML; //a dead tree is a string
 	let liveTree = document.createElement('html');
-	liveTree.innerHTML = deadTree;
-	collapseCodeMirrors(liveTree);
+	liveTree.innerHTML = deadTree; //but the string is brought back into a DOM. Zombie tree, really.
+	collapseCodeMirrors(liveTree); //traverse the zombie tree, modifying before saving.
 	
 	var requestElement = createResult('request','Attempting to send file, waiting on response');
 	requestElement.setAttribute('createdAt', Date.now())
@@ -166,7 +168,7 @@ function collapseCodeMirrors(liveTree){
 }
 
 function createResult(className, innerText){
-  var placeHolder = document.createElement('p');
+  var placeHolder = document.createElement('div');
 	placeHolder.className = className ? className : 'result'; //default className
 	placeHolder.id = Date.now();
 	placeHolder.innerHTML = innerText ? innerText : ' '; // default innerText

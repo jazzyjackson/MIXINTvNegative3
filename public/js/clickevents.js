@@ -101,13 +101,21 @@ function createUpdatePos(clientX, clientY){
 };
 
 window.onload = function(){
-  var listOfLeaves = document.getElementsByClassName('leaf');
-  listOfLeaves = Array.prototype.slice.call(listOfLeaves);
-  listOfLeaves.forEach(function(leaf){
+  //reattach all the click and drag listeners to all elements
+  var listOfLeaves = Array.from(document.getElementsByClassName('leaf'));
+  listOfLeaves.forEach(leaf => {
     initLeafListeners(leaf)
     leaf.scrollTop = leaf.scrollHeight;
     // console.log(leaf);
   });
+  //reattach eventlisteners to any directory folders inside the terminals
+  var listOfDirContainers = Array.from(document.getElementsByClassName('directoryContainer'));
+  listOfDirContainers.forEach(aDirectoryContainer => {
+    addDblClickListeners(aDirectoryContainer)
+  })
+
+  //if there are codemirrors, re-instantiate them with fromTextArea
+  //if codemirrors weren't used, then codemirror.js won't be on the DOM and CodeMirror will be undefiend
   if(typeof CodeMirror === 'function'){
     let mirrors = Array.from(document.getElementsByClassName('codemirrorContainer'))
     mirrors.forEach(mirrorContainer => {
