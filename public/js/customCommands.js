@@ -167,7 +167,7 @@ function save(aTerminal, ArrArray, isLocal){
 			requestElement.innerText = result + ' in ' + roundTripTime + 'ms';
 			requestElement.className = 'result';
 			appendResult(requestElement.innerText, requestElement.id);
-
+			window.history.pushState({},null, 'http://' + window.location.host + '/savedTrees/' + aTerminal.id + '.html' )
 		})
 	}
 	return requestElement;
