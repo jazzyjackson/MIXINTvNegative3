@@ -64,8 +64,9 @@ function handleInput(aTerminal,isLocal){
     var result;
 		var potentialCommand = query.trim().split(' ')[0]; //even for empty strings or strings with no spaces, the result of trim().split() will be an array with at least one element. 
 		if(customCommands[potentialCommand]){
-      potentialArguments = query.trim().split(' ').slice(1); // returns an empty array if no args, otherwise, arguments are passed as an array
-			result = customCommands[potentialCommand](aTerminal,potentialArguments,isLocal); //calls the function, should return an Element
+      let potentialArguments = query.trim().split(' ').slice(1); // returns an empty array if no args, otherwise, arguments are passed as an array
+      console.log(potentialArguments)
+    	result = customCommands[potentialCommand](aTerminal,potentialArguments,isLocal); //calls the function, should return an Element
 		} else {
       result = evaluate(aTerminal, query); 
 		}

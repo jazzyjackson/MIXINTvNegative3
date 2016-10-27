@@ -38,6 +38,19 @@ app.post('/savethis', function(req,res,next){
 	})
 })
 
+app.get('/readFile', (req,res,next) => {
+	console.log(req.query.pathname)
+	let pathname = addSlashesIfNeedBe(req.query.pathname);
+	
+	fs.readFile(__dirname + pathname, 'utf8',function(err,data){
+		if(err){
+			res.status(400).send(err);
+		} else {
+			res.json(data);
+		}
+	})
+})
+
 app.post('/fs', function(req,res,next){
 
 	var pathname = '/';
@@ -75,15 +88,7 @@ app.post('/fs', function(req,res,next){
 		// fileArr = fileArr.map(function(aFileName){return aFileName.slice(1,aFileName.length -1)});
 		}
 	})
-	function addSlashesIfNeedBe(aFilePath){
-		if(aFilePath[0] !== '/'){
-			aFilePath = '/' + aFilePath;
-		}
-		if(aFilePath[aFilePath.length - 1] !== '/'){
-			aFilePath += '/'
-		}
-		return aFilePath;
-	}
+	
 })
 
 
@@ -122,5 +127,15 @@ io.on('connection', function(socket){
     //events to implement: identityRequest, timeRequest
 })
 
+
+function addSlashesIfNeedBe(aFilePath){
+		if(aFilePath[0] !== '/'){
+			aFilePath = '/' + aFilePath;
+		}
+		if(aFilePath[aFilePath.length - 1] !== '/'){
+			aFilePath += '/'
+		}
+		return aFilePath;
+	}
 // socket.client.conn.remoteAddress reports the Public IP of the origin of the message
 // socket.id reports the socket ID of the origin of the message. 

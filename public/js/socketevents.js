@@ -23,11 +23,12 @@ socket.on('event', function(event){
 socket.on('remoteRunFile', data => {
   let targetTerminal = document.getElementById(data.terminal);
   let pathname = data.path;
+  let func = data.func
 
-  let evalResult = window[data.func](targetTerminal, [pathname]);
+  let evalResult = window[func](targetTerminal, [pathname]);
 
 	let prompt = targetTerminal.getAttribute('protoPrompt');
-	targetTerminal.lastChild.innerText = `${prompt} ls ${pathname}`
+	targetTerminal.lastChild.innerText = `${prompt} ${func} ${pathname}`
 
   targetTerminal.appendChild(evalResult);
   initPrompt(targetTerminal);

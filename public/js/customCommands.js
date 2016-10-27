@@ -9,61 +9,28 @@ var customCommands = {
 	ls: ls,
 	list: ls,
 	files: ls,
-	create: create
+	create: create,
+	open: open
 };
 
-function create(aTerminal, ArrArray){
-	let newEntity = ArrArray[0];
-	let result = createResult('query', 'Waiting for constructor to be available');
+function open(aTerminal, ArrArray){
+	var requestElement = createResult('request', 'Looking for files...');
+	requestElement.id = Date.now();
+	let pathname = ArrArray[0];
+	fetch('http://' + window.location.host + '/readFile' + '?pathname='+encodeURIComponent(pathname))
+	.then(res => {
+		console.log(res)
+		return res.json();
+	})
+	.then(resObj => {
+		console.log(resObj);
+		create(aTerminal, ['Codemirror',resObj,pathname])
+		requestElement.className = 'result';
+		requestElement.innerText = 'Maybe it worked';
+	})
 
-	if(window[newEntity] === undefined){
-		let pathname = '/js/constructors/' + newEntity + '.js';
-		let newScript = document.createElement('script');
-		newScript.setAttribute('src', pathname);
-		document.head.appendChild(newScript);
+	return requestElement;
 
-		//loading the script is asynchronous, the constructor cannot be called immediately
-
-		let timerID = setInterval(() => {
-			if(window[newEntity]){
-				let newConstructor = eval(`new ${newEntity}`);
-				let newComponent = newConstructor.render();
-				document.body.appendChild(newComponent);
-				clearInterval(timerID);
-				result.innerText = `Constructor retrieved and invoked, ${newComponent.id} added to DOM`
-			}
-		}, 10)
-
-
-		setTimeout(()=>{
-			if(!window[newEntity]){
-				console.log(`Stop trying to make ${newEntity} happen, it's not going to happen`)
-				result.innerText = `I couldn't find a constructor for ${newEntity}`
-				document.head.removeChild(newScript);
-			}
-			clearInterval(timerID);
-		},1000)
-
-	} else {
-		let newConstructor = eval(`new ${newEntity}`)
-		let newComponent = newConstructor.render()
-		document.body.appendChild(newComponent)
-		result.innerText = `Constructor invoked, ${newComponent.id} added to DOM`
-	}
-
-
-	return result;
-
-}
-
-function buildDirDisplay(resObj){
-	let fileObj = resObj.result;
-	let pathname = resObj.pathname;
-	let resultString = '';
-	for(each in fileObj){
-		resultString += `<p class="fs ${fileObj[each]}" title="${pathname + each}"> ${each} </p> `
-	}
-	return resultString;
 }
 
 function ls(aTerminal, ArrArray){
@@ -90,6 +57,63 @@ function ls(aTerminal, ArrArray){
 
 	return requestElement;
 }
+
+//OPEN will call create, passing the terminal, + ['CodeMirror','String of file'] as arg.
+function create(aTerminal, ArrArray){
+	let newEntity = ArrArray[0];
+	let result = createResult('query', 'Waiting for constructor to be available');
+	console.log(arguments);
+	if(window[newEntity] === undefined){
+		let pathname = '/js/constructors/' + newEntity + '.js';
+		let newScript = document.createElement('script');
+		newScript.setAttribute('src', pathname);
+		document.head.appendChild(newScript);
+
+		//loading the script is asynchronous, the constructor cannot be called immediately
+
+		let timerID = setInterval(() => {
+			if(window[newEntity]){
+				let newConstructor = new window[newEntity](ArrArray[1],ArrArray[2])
+				let newComponent = newConstructor.render();
+				document.body.appendChild(newComponent);
+				clearInterval(timerID);
+				result.innerText = `Constructor retrieved and invoked, ${newComponent.id} added to DOM`
+			}
+		}, 10)
+
+
+		setTimeout(()=>{
+			if(!window[newEntity]){
+				console.log(`Stop trying to make ${newEntity} happen, it's not going to happen`)
+				result.innerText = `I couldn't find a constructor for ${newEntity}`
+				document.head.removeChild(newScript);
+			}
+			clearInterval(timerID);
+		},1000)
+
+	} else {
+	//	let newConstructor = eval(`new ${newEntity}`)
+		let newConstructor = new window[newEntity](ArrArray[1],ArrArray[2])
+		let newComponent = newConstructor.render() //an array of things after the name of the thing
+		document.body.appendChild(newComponent)
+		result.innerText = `Constructor invoked, ${newComponent.id} added to DOM`
+	}
+
+
+	return result;
+
+}
+
+function buildDirDisplay(resObj){
+	let fileObj = resObj.result;
+	let pathname = resObj.pathname;
+	let resultString = '';
+	for(each in fileObj){
+		resultString += `<p class="fs ${fileObj[each]}" title="${pathname + each}"> ${each} </p> `
+	}
+	return resultString;
+}
+
 
 function rename(aTerminal, ArrArray){
 	var newId;
@@ -232,11 +256,13 @@ socket.on('timeResponse', function(socket){
 function runFile(event){
 	let targetTerminal = event.path.filter(el => el.className && el.className.includes('terminal'))[0];
 	let targetPath = event.target.title;
+	let prompt = targetTerminal.getAttribute('protoPrompt');
 
 	if(event.target.className && event.target.className.includes('directory')){
-		let prompt = targetTerminal.getAttribute('protoPrompt');
 		targetTerminal.lastChild.innerText = `${prompt} ls ${targetPath}`
-	}
+	} else if(event.target.className && event.target.className.includes('text')){
+		targetTerminal.lastChild.innerText = `${prompt} open ${targetPath}`
+	} 
 
 	if(event.type === 'dblclick'){
 		if(event.target.className && event.target.className.includes('directory')){
@@ -244,9 +270,18 @@ function runFile(event){
 			let listResult = ls(targetTerminal, [targetPath]);
 			targetTerminal.appendChild(listResult);
 			initPrompt(targetTerminal);
+		} else if(event.target.className && event.target.className.includes('text')){
+			socket.emit('remoteRunFile', { terminal: targetTerminal.id, func: 'open', path: targetPath});
+			let fileOpenResult = open(targetTerminal, [targetPath]);
+			targetTerminal.appendChild(fileOpenResult);
+			initPrompt(targetTerminal);
 		}
 	}
+
+
 }
+
+
 
 function addDblClickListeners(directoryElement){
 	let listOfFiles = Array.from(directoryElement.getElementsByClassName('fs'));

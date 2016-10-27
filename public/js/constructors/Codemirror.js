@@ -1,4 +1,5 @@
-function Codemirror(xPos,yPos,optStringInit){
+function Codemirror(optStringInit,optFileName){
+  console.log("From inside codemirror: ", optStringInit)
   let cssInclude = document.createElement('link')
   cssInclude.setAttribute('rel', 'stylesheet');
   cssInclude.setAttribute('href', '/lib/codemirror.css')
@@ -10,15 +11,18 @@ function Codemirror(xPos,yPos,optStringInit){
   jsModeInlucde.setAttribute('src', '/lib/mode/javascript/javascript.js')
   document.head.appendChild(jsModeInlucde);
 
-  Leaf.call(this, xPos, yPos)
+  Leaf.call(this)
   this.element.className += ' codemirrorContainer'
   var codemirrorList = document.getElementsByClassName('codemirror')
-  this.element.id = 'untitled' + codemirrorList.length;
+  this.element.id = optFileName ? optFileName : ('untitled' + codemirrorList.length);
   var header = this.element.getElementsByClassName('entityHeader')[0];
   header.innerText = this.element.id;
   this.element.style.width = '400px';
   this.element.style.height = '400px';
   var codeText = document.createElement('textarea');
+  if(optStringInit){
+    codeText.value = optStringInit;
+  }
   this.element.appendChild(codeText);
 
   setTimeout(()=>{
