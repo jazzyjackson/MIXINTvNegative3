@@ -121,6 +121,10 @@ window.onload = function(){
     mirrors.forEach(mirrorContainer => {
       let textArea = mirrorContainer.getElementsByTagName('TEXTAREA')[0];
       mirrorContainer.cm = CodeMirror.fromTextArea(textArea, {lineNumbers: true});
+      mirrorContainer.cm.on('change',broadcastEdits);
+      mirrorContainer.cm.on('cursorActivity',broadcastPos) //Will pass the cm object  
+
+
     })
   }
 }

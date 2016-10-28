@@ -60,13 +60,13 @@ app.post('/fs', function(req,res,next){
 	
 	fs.readdir(__dirname + '/' + pathname, function(err, files){
 		if(err){
-			res.status(400).send(err);
+			res.status(204).send(err);
 		} else {
 			var result = {};
 			for(each in files){
 				var oneFile = files[each];
 				if(oneFile[0] != '.'){             //if it's not hidden
-					if(oneFile.indexOf('.') === -1){ //and it there's no extension
+					if(oneFile.indexOf('.') === -1){ //and if there's no extension
 						result[files[each]] = 'directory';
 					} else {
 						switch(oneFile.split('.')[1]){
@@ -103,6 +103,13 @@ io.on('connection', function(socket){
 		socket.on('remoteRunFile', function(data){
 			socket.broadcast.emit('remoteRunFile', data)
 		})
+		socket.on('cursorActivity', function(data){
+			socket.broadcast.emit('cursorActivity', data)
+		})
+		socket.on('mirrorChange', function(data){
+			socket.broadcast.emit('mirrorChange', data)
+		})
+		
 
 		socket.on('identityRequest', function(req){
 			//I think each client's identity request will come in separately, when one user asks whoami and hits enter, the local browser will evaluate that and emit an identity request, so this message shouldn't be broadcast.

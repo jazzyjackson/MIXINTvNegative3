@@ -50,6 +50,8 @@ function socketize(anEvent, optActiveElement){
   })
 }
 
+
+
 //called from within the POST callback in customCommands, save
 function appendResult(responseText, aTarget){
   socket.emit('filesaveResult', {
