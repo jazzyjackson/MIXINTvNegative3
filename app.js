@@ -42,9 +42,14 @@ app.post('/savethis', function(req,res,next){
 app.get('/readFile', (req,res,next) => {
 	console.log(req.query.pathname)
 	let pathname = addSlashesIfNeedBe(req.query.pathname);
-	
+	console.log(req.query.pathname);
+	console.log(pathname);
+	console.log(__dirname);
+	console.log(path.join(__dirname, pathname));
+
 	fs.readFile(path.join(__dirname, pathname), 'utf8' ,function(err,data){
 		if(err){
+			console.log(err)
 			res.status(400).send(err);
 		} else {
 			res.json(data);
