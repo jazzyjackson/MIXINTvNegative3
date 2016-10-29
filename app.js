@@ -30,7 +30,7 @@ app.use(express.static(__dirname + '/public/savedTrees'));
 app.post('/savethis', function(req,res,next){
 	var htmlString = req.body.content;
 	var fileName = req.body.fileName;
-	fs.writeFile(path.join(__dirname, '/public/savedTrees/' + fileName), htmlString, function(err){
+	fs.writeFile(path.join(__dirname, '/public/savedTrees/', fileName), htmlString, function(err){
 		if(err){
 			res.status(400).send(err);
 		} else {
