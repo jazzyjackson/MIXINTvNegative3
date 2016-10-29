@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express();
 var server = require('http').Server(app);
+var path = require('path');
 
 var fs = require('fs')
 
@@ -16,7 +17,7 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 
 
 var identities = {};
-server.listen(3000);
+server.listen(80);
 
 app.use(serverlogging('dev'));
 app.use(express.static(__dirname+ '/public'));
@@ -29,7 +30,7 @@ app.use(express.static(__dirname + '/public/savedTrees'));
 app.post('/savethis', function(req,res,next){
 	var htmlString = req.body.content;
 	var fileName = req.body.fileName;
-	fs.writeFile(__dirname + '/public/savedTrees/' + fileName, htmlString, function(err){
+	fs.writeFile(path.join(__dirname, '/public/savedTrees/' + fileName), htmlString, function(err){
 		if(err){
 			res.status(400).send(err);
 		} else {
@@ -42,7 +43,7 @@ app.get('/readFile', (req,res,next) => {
 	console.log(req.query.pathname)
 	let pathname = addSlashesIfNeedBe(req.query.pathname);
 	
-	fs.readFile(__dirname + pathname, 'utf8',function(err,data){
+	fs.readFile(path.join(__dirname, pathname), 'utf8' ,function(err,data){
 		if(err){
 			res.status(400).send(err);
 		} else {
@@ -58,7 +59,7 @@ app.post('/fs', function(req,res,next){
 			pathname = addSlashesIfNeedBe(req.body.pathname);
 	} 
 	
-	fs.readdir(__dirname + '/' + pathname, function(err, files){
+	fs.readdir(path.join(__dirname,pathname), function(err, files){
 		if(err){
 			res.status(204).send(err);
 		} else {
