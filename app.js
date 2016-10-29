@@ -41,7 +41,7 @@ app.post('/savethis', function(req,res,next){
 
 app.get('/readFile', (req,res,next) => {
 	console.log(req.query.pathname)
-	//let pathname = addSlashesIfNeedBe(req.query.pathname);
+	let pathname = req.query.pathname;
 	console.log(req.query.pathname);
 	console.log(pathname);
 	console.log(__dirname);
