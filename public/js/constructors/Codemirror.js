@@ -1,17 +1,6 @@
 function Codemirror(optStringInit,optFileName){
-  if(typeof CodeMirror === "undefined"){
-    let cssInclude = document.createElement('link')
-    cssInclude.setAttribute('rel', 'stylesheet');
-    cssInclude.setAttribute('href', '/lib/codemirror.css')
-    document.head.appendChild(cssInclude);
-    let jsInclude = document.createElement('script')
-    jsInclude.setAttribute('src', '/lib/codemirror.js')
-    jsInclude.setAttribute('defer','true');
-    document.head.appendChild(jsInclude);
-    let jsModeInlucde = document.createElement('script')
-    jsModeInlucde.setAttribute('src', '/lib/mode/javascript/javascript.js')
-    document.head.appendChild(jsModeInlucde);
-  }
+
+  console.log(optFileName)
 
   Leaf.call(this)
   this.element.className += ' codemirrorContainer'
@@ -26,21 +15,72 @@ function Codemirror(optStringInit,optFileName){
     codeText.value = optStringInit;
   }
   this.element.appendChild(codeText);
-  
-  //this.element.addEventListener('keydown',broadcastEdits)
+  if(typeof CodeMirror === 'undefined'){
+    let cssInclude = document.createElement('link')
+    cssInclude.setAttribute('rel', 'stylesheet');
+    cssInclude.setAttribute('href', '/lib/codemirror.css')
+  //  document.head.appendChild(cssInclude);
+    let jsInclude = document.createElement('script')
+    jsInclude.setAttribute('src', '/lib/codemirror.js')
+    jsInclude.setAttribute('defer','true');
 
-  setTimeout(()=>{
-    this.element.cm = CodeMirror.fromTextArea(codeText, {
-      mode: "javascript",
-      lineNumbers: true
-    });
-   this.element.cm.on('change',broadcastEdits) //Will pass the cm object
-},100)
+    let jsModeInclude = document.createElement('script')
+    jsModeInclude.setAttribute('src', '/lib/mode/javascript/javascript.js')
+    jsModeInclude.setAttribute('defer','true');
+
+    promiseToAppend(cssInclude)
+    .then(()=>promiseToAppend(jsInclude))
+    .then(()=> promiseToAppend(jsModeInclude))
+    .then(()=> {
+      this.element.cm = CodeMirror.fromTextArea(codeText, {
+        lineNumbers: true
+      });
+      this.element.cm.on('change',broadcastEdits)
+    })
+    .catch(console.log.bind(console))
+  } else {
+    setTimeout(()=>{
+      this.element.cm = CodeMirror.fromTextArea(codeText, {
+        lineNumbers: true
+      });
+      this.element.cm.on('change',broadcastEdits)
+    },10)
+  }
 
   this.render = function(){
     return this.element;
   }
+
 }
+
+function promiseToAppend(aTag){
+  return new Promise((resolve,reject)=>{
+    Promise.race([tryToAppend(aTag),timeout(1000)])
+    .then((appendSuccess)=>{
+      if(appendSuccess){
+        resolve('loaded successfully');
+      } else {
+        reject('failed to load');
+      }
+    })
+  })
+}
+
+function tryToAppend(aTag){
+  return new Promise(function(resolve){
+    aTag.addEventListener('load',()=>resolve(true))
+       document.head.appendChild(aTag);
+  })
+}
+
+function timeout(ms){
+  return new Promise((resolve)=>{
+    setTimeout(()=>resolve(false),ms)
+  })
+}
+
+
+
 
 // Peripheral functions for codeMirror. Codemirror sync events.
 /* There are two types of events to handle:
