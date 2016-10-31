@@ -29,7 +29,7 @@ function Codemirror(optStringInit,optFileName){
     jsModeInclude.setAttribute('defer','true');
 
     promiseToAppend(cssInclude)
-    .then(()=>promiseToAppend(jsInclude))
+    .then(()=> promiseToAppend(jsInclude))
     .then(()=> promiseToAppend(jsModeInclude))
     .then(()=> {
       this.element.cm = CodeMirror.fromTextArea(codeText, {
@@ -39,6 +39,8 @@ function Codemirror(optStringInit,optFileName){
     })
     .catch(console.log.bind(console))
   } else {
+    //setTimeout mysteriously fixes an issue where codmirror css
+    //fails to be be applied to subsequent codemirror divs
     setTimeout(()=>{
       this.element.cm = CodeMirror.fromTextArea(codeText, {
         lineNumbers: true
@@ -47,9 +49,7 @@ function Codemirror(optStringInit,optFileName){
     },10)
   }
 
-  this.render = function(){
-    return this.element;
-  }
+  this.render = () => this.element;
 
 }
 
@@ -69,7 +69,7 @@ function promiseToAppend(aTag){
 function tryToAppend(aTag){
   return new Promise(function(resolve){
     aTag.addEventListener('load',()=>resolve(true))
-       document.head.appendChild(aTag);
+    document.head.appendChild(aTag);
   })
 }
 
@@ -122,3 +122,13 @@ socket.on('mirrorChange', data => {
   let theMirror = leaf.cm
   theMirror.getDoc().replaceRange(newContent,changeFrom,changeTo)
 })
+
+window.onload = ()=>{
+    let mirrors = Array.from(document.getElementsByClassName('codemirrorContainer'))
+    mirrors.forEach(mirrorContainer => {
+      let textArea = mirrorContainer.getElementsByTagName('TEXTAREA')[0];
+      mirrorContainer.cm = CodeMirror.fromTextArea(textArea, {lineNumbers: true});
+      mirrorContainer.cm.on('change',broadcastEdits);
+      mirrorContainer.cm.on('cursorActivity',broadcastPos) //Will pass the cm object  
+    })
+}
