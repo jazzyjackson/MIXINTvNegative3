@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 
 
 var identities = {};
-server.listen(3000);
+server.listen( process.env.PORT || 3000);
 
 app.use(serverlogging('dev'));
 app.use(express.static(__dirname+ '/public'));
