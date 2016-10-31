@@ -116,15 +116,5 @@ window.onload = function(){
 
   //if there are codemirrors, re-instantiate them with fromTextArea
   //if codemirrors weren't used, then codemirror.js won't be on the DOM and CodeMirror will be undefiend
-  if(typeof CodeMirror === 'function'){
-    let mirrors = Array.from(document.getElementsByClassName('codemirrorContainer'))
-    mirrors.forEach(mirrorContainer => {
-      let textArea = mirrorContainer.getElementsByTagName('TEXTAREA')[0];
-      mirrorContainer.cm = CodeMirror.fromTextArea(textArea, {lineNumbers: true});
-      mirrorContainer.cm.on('change',broadcastEdits);
-      mirrorContainer.cm.on('cursorActivity',broadcastPos) //Will pass the cm object  
 
-
-    })
-  }
 }
