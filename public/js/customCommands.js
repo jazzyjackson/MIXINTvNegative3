@@ -12,7 +12,8 @@ var customCommands = {
 	create: create,
 	open: open,
 	git: exec,
-	mkdir: exec
+	mkdir: exec,
+	touch: exec
 
 };
 
