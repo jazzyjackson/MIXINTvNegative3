@@ -12,7 +12,9 @@ var customCommands = {
 	create: create,
 	open: open,
 	git: exec,
-	mkdir: exec
+	mkdir: exec,
+	touch: exec
+
 };
 
 function exec(aTerminal, ArrArray,options){
@@ -30,6 +32,9 @@ function exec(aTerminal, ArrArray,options){
 		.then(resObj => {
 			requestElement.className = 'result'
 			requestElement.innerText = resObj.err ? resObj.err : resObj.stdout;
+			if(requestElement.innerText = ""){
+				requestElement.innerText = 'The command ran without error or output'
+			}
 		})
 		console.log(command)
 		return requestElement;
