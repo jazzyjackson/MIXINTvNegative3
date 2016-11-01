@@ -90,7 +90,7 @@ app.post('/fs', (req,res,next)=>{
 					if(oneFile.indexOf('.') === -1){ //and if there's no extension
 						result[files[each]] = 'directory';
 					} else {
-						switch(oneFile.split('.')[1]){
+						switch(oneFile.split('.')[1].toLowerCase()){
 							case 'js': result[files[each]] = 'text'; break;
 							case 'css': result[files[each]] = 'text'; break;
 							case 'html': result[files[each]] = 'text'; break;

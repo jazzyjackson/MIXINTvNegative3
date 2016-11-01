@@ -4,13 +4,16 @@ function Terminal(xPos, yPos){
   this.element.id = "root" + document.getElementsByClassName('terminal').length;
   this.element.className += ' terminal'; //addClass terminal to existing className
   this.element.setAttribute('protoPrompt', 'localhost/' + this.element.id + " > ");
-  this.element.childNodes[0].innerText = this.element.id;
+  this.entityHeader.innerText = this.element.id;
   let protoPrompt = this.element.getAttribute('protoPrompt');
   let prompt = document.createElement('p');
   prompt.className = 'prompt';
   prompt.innerHTML = this.element.getAttribute('protoPrompt');
   this.element.appendChild(prompt);
-  this.render = function(){return this.element}
+}
+
+Terminal.prototype.render = function(){
+  return this.element;
 }
 
 function updateTerminal(result, targetId){
