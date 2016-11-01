@@ -30,6 +30,7 @@ function exec(aTerminal, ArrArray,options){
 		})
 		.then(res => res.json())
 		.then(resObj => {
+			console.log(resObj)
 			requestElement.className = 'result'
 			requestElement.innerText = resObj.err ? resObj.err : resObj.stdout;
 			if(requestElement.innerText === ""){
@@ -94,6 +95,7 @@ function create(aTerminal, ArrArray){
 		let pathname = '/js/constructors/' + newEntity + '.js';
 		let newScript = document.createElement('script');
 		newScript.setAttribute('src', pathname);
+		newScript.setAttribute('defer','true')
 		document.head.appendChild(newScript);
 
 		//loading the script is asynchronous, the constructor cannot be called immediately
