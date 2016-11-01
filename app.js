@@ -41,9 +41,10 @@ app.post('/savethis', (req,res,next)=>{
 	})
 })
 
+
 app.post('/exec', (req,res,next)=>{
 	let command = req.body.command;
-	if(command.indexOf('git') === 0 || command.indexOf('mkdir') === 0){
+	if(aCustomCommandMatches(command)){
 		exec(command, (err,stdout,stderr)=>{
 			res.status(200).json({err,stdout,stderr});
 		})
@@ -167,3 +168,9 @@ function addSlashesIfNeedBe(aFilePath){
 	}
 // socket.client.conn.remoteAddress reports the Public IP of the origin of the message
 // socket.id reports the socket ID of the origin of the message. 
+
+//Probably ought to be a utility or something
+function aCustomCommandMatches(aPostedCommand){
+	let arrValid = ['git','mkdir','touch'];
+	return arrValid.some(validCommand => aPostedCommand.indexOf(validCommand) === 0)
+}
