@@ -12,9 +12,7 @@ var customCommands = {
 	create: create,
 	open: open,
 	git: exec,
-	mkdir: exec,
-	touch: exec
-
+	mkdir: exec
 };
 
 function exec(aTerminal, ArrArray,options){

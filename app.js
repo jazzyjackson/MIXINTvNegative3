@@ -43,10 +43,14 @@ app.post('/savethis', (req,res,next)=>{
 
 app.post('/exec', (req,res,next)=>{
 	let command = req.body.command;
+	if(command.indexOf('git') === 0 || command.indexOf('mkdir') === 0){
+		exec(command, (err,stdout,stderr)=>{
+			res.status(200).json({err,stdout,stderr});
+		})
+	} else {
+		res.status(403).send();
+	}
 	console.log(command)
-	exec(command, (err,stdout,stderr)=>{
-		res.status(200).json({err,stdout,stderr});
-	})
 })
 
 app.get('/readFile', (req,res,next) => {
