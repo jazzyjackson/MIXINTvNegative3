@@ -10,6 +10,7 @@ function Terminal(xPos, yPos){
   prompt.className = 'prompt';
   prompt.innerHTML = this.element.getAttribute('protoPrompt');
   this.element.appendChild(prompt);
+  this.render = function(){return this.element}
 }
 
 function updateTerminal(result, targetId){

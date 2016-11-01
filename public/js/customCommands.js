@@ -123,9 +123,13 @@ function create(aTerminal, ArrArray){
 	} else {
 	//	let newConstructor = eval(`new ${newEntity}`)
 		let newConstructor = new window[newEntity](ArrArray[1],ArrArray[2])
-		let newComponent = newConstructor.render() //an array of things after the name of the thing
-		document.body.appendChild(newComponent)
-		result.innerText = `Constructor invoked, ${newComponent.id} added to DOM`
+		try{
+			let newComponent = newConstructor.render() //an array of things after the name of the thing
+			document.body.appendChild(newComponent)
+			result.innerText = `Constructor invoked, ${newComponent.id} added to DOM`
+		}catch(e){
+			result.innerText = `Couldn't find constructor for ${newEntity}`
+		}
 	}
 
 
