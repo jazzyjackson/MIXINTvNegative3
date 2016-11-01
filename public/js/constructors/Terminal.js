@@ -40,14 +40,14 @@ function shiftHistory(increment){
 }
 
 
-function handleKeystroke(aKeystroke, aKeyCode, aTarget, isLocal){
+function handleKeystroke(aKeystroke, aKeyCode, aTarget, options){
     var terminal = document.getElementById(aTarget);
     if(aKeystroke == 'Backspace'){
       terminal.lastChild.innerHTML = terminal.lastChild.innerHTML.slice(0, -1)
     } else if( (aKeyCode >= 48 && aKeyCode <= 90) || (aKeyCode >= 186 && aKeyCode <= 222) || (aKeystroke == " ")) {
       terminal.lastChild.innerHTML += aKeystroke;
     } else if(aKeystroke == 'Enter'){
-      handleInput(terminal, isLocal)
+      handleInput(terminal, options)
     } else if(aKeystroke == 'ArrowUp'){
       shiftHistory.call(terminal, 1); //back in time, maxxing out at length of child nodes.
     } else if(aKeystroke == 'ArrowDown'){
@@ -57,7 +57,7 @@ function handleKeystroke(aKeystroke, aKeyCode, aTarget, isLocal){
 }
 
 // for some commands it is necessary to know if the keystroke was local or remote. isLocal carries this info.
-function handleInput(aTerminal,isLocal){
+function handleInput(aTerminal,options){
     aTerminal.history = 0;
     var query = aTerminal.lastChild.innerHTML.split('&gt;')[1];
     //Trim whitespace, split on space, check if that first result is in the list of keywords. If it is, return (or call) the property of that name. Else, run the whole phrase as a query
@@ -65,8 +65,11 @@ function handleInput(aTerminal,isLocal){
 		var potentialCommand = query.trim().split(' ')[0]; //even for empty strings or strings with no spaces, the result of trim().split() will be an array with at least one element. 
 		if(customCommands[potentialCommand]){
       let potentialArguments = query.trim().split(' ').slice(1); // returns an empty array if no args, otherwise, arguments are passed as an array
-      console.log(potentialArguments)
-    	result = customCommands[potentialCommand](aTerminal,potentialArguments,isLocal); //calls the function, should return an Element
+      console.log(potentialArguments)                                       
+      //This is kind of a mess. When I added a general exec command for whitelisted serverside CLI tools (git, mkdir, ffmpeg, touch), I decided I needed to know which command was run,
+      //But so far all my other commands are set to expect arguments as an array. Since I need to know the requested command inside the general exec function inside customCommands.js,
+      //I roll up the options passed to handleInput (right now, just if a command was executed locally or remotely) with an object contained potentialCommand, destructured es6 style.
+    	result = customCommands[potentialCommand](aTerminal,potentialArguments,Object.assign({potentialCommand},options)); //calls the function, should return an Element
 		} else {
       result = evaluate(aTerminal, query); 
 		}
@@ -106,7 +109,7 @@ document.documentElement.addEventListener('keydown', function(event){
     event.preventDefault(); //I don't remember why this is here.
     var terminal = document.activeElement;
 	  socketize(event, terminal.id);
-    handleKeystroke(event.key, event.keyCode, terminal.id, true);
+    handleKeystroke(event.key, event.keyCode, terminal.id, {isLocal: true});
   }
 });
 

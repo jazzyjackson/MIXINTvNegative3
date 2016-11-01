@@ -1,13 +1,15 @@
-var express = require('express');
-var app = express();
-var server = require('http').Server(app);
-var path = require('path');
 
-var fs = require('fs')
+const express = require('express');
+const app = express();
+const server = require('http').Server(app);
+const path = require('path');
 
-var io = require('socket.io')(server);
-var serverlogging = require('morgan');
-var bodyParser = require('body-parser')
+const fs = require('fs')
+const exec = require('child_process').exec
+
+const io = require('socket.io')(server);
+const serverlogging = require('morgan');
+const bodyParser = require('body-parser')
 app.use( bodyParser.json() );       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
@@ -27,7 +29,7 @@ app.use(express.static(__dirname + '/public/savedTrees'));
 //    
 //})
 
-app.post('/savethis', function(req,res,next){
+app.post('/savethis', (req,res,next)=>{
 	var htmlString = req.body.content;
 	var fileName = req.body.fileName;
 	fs.writeFile(path.join(__dirname, '/public/savedTrees/', fileName), htmlString, function(err){
@@ -36,6 +38,14 @@ app.post('/savethis', function(req,res,next){
 		} else {
 			res.status(200).send(fileName + ' written successfully');
 		}
+	})
+})
+
+app.post('/exec', (req,res,next)=>{
+	let command = req.body.command;
+	console.log(command)
+	exec(command, (err,stdout,stderr)=>{
+		res.status(200).json({err,stdout,stderr});
 	})
 })
 
@@ -57,7 +67,7 @@ app.get('/readFile', (req,res,next) => {
 	})
 })
 
-app.post('/fs', function(req,res,next){
+app.post('/fs', (req,res,next)=>{
 
 	var pathname = '/';
 	if(req.body.pathname !== 'undefined'){

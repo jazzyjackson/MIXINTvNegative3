@@ -10,8 +10,31 @@ var customCommands = {
 	list: ls,
 	files: ls,
 	create: create,
-	open: open
+	open: open,
+	git: exec,
+	mkdir: exec
+
 };
+
+function exec(aTerminal, ArrArray,options){
+
+		let requestElement = createResult('request', 'Running command on server...');
+		let command = options.potentialCommand + ' ' + ArrArray.join(' ');
+		fetch(`http://${window.location.host}/exec`, {
+			method: 'POST',
+			body: 'command=' + encodeURIComponent(command),
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded'
+			}
+		})
+		.then(res => res.json())
+		.then(resObj => {
+			requestElement.className = 'result'
+			requestElement.innerText = resObj.err ? resObj.err : resObj.stdout;
+		})
+		console.log(command)
+		return requestElement;
+}
 
 function open(aTerminal, ArrArray){
 	var requestElement = createResult('request', 'Looking for files...');
@@ -41,7 +64,7 @@ function ls(aTerminal, ArrArray){
 		method: 'POST',
 		body: 'pathname=' + ArrArray[0],
 		headers: {
-			"Content-Type": "application/x-www-form-urlencoded"
+			'Content-Type': 'application/x-www-form-urlencoded'
 		}
 	})
 	.then(res => res.json())
@@ -136,7 +159,7 @@ function rename(aTerminal, ArrArray){
 	return createResult('result', oldId + ' has been renamed to ' + targetElement.id);
 }
 
-function save(aTerminal, ArrArray, isLocal){
+function save(aTerminal, ArrArray, options){
 	if(ArrArray.length > 0){
 		return createResult ('error result', 'save does not take arguments');
 	}
@@ -151,7 +174,7 @@ function save(aTerminal, ArrArray, isLocal){
 	requestElement.setAttribute('createdAt', Date.now())
 	requestElement.id = String(aTerminal.id) + aTerminal.childNodes.length;
 
-  if(isLocal){
+  if(options.isLocal){
 		fetch('http://' + window.location.host + '/savethis', {
 			method: 'POST',
 			headers: {
