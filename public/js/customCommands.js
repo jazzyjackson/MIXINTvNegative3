@@ -32,7 +32,7 @@ function exec(aTerminal, ArrArray,options){
 		.then(resObj => {
 			requestElement.className = 'result'
 			requestElement.innerText = resObj.err ? resObj.err : resObj.stdout;
-			if(requestElement.innerText = ""){
+			if(requestElement.innerText === ""){
 				requestElement.innerText = 'The command ran without error or output'
 			}
 		})
