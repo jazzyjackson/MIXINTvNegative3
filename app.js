@@ -171,6 +171,6 @@ function addSlashesIfNeedBe(aFilePath){
 
 //Probably ought to be a utility or something
 function aCustomCommandMatches(aPostedCommand){
-	let arrValid = ['git','mkdir','touch'];
+	let arrValid = ['git status','git fetch','git pull','mkdir','touch'];
 	return arrValid.some(validCommand => aPostedCommand.indexOf(validCommand) === 0)
 }
