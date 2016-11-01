@@ -94,13 +94,13 @@ function timeout(ms){
  * When an edit is made, the line number and the string are broadcast
  * clients will clear the marktext, insert the line, and re-mark the text. 
  */
-// function broadcastPos(theMirror){
-//   let lineOfCursor = theMirror.getDoc().getCursor().line;
-//   let mirrorContainer = theMirror.display.wrapper.parentElement.id;
-//   socket.emit('cursorActivity',{lineOfCursor, mirrorContainer});
-//   // mark = theMirror.markText({line:lineOfCursor,ch:0},{line:lineOfCursor+1,ch:0},{css: 'background: lightblue',readOnly: true})
-//   // console.log(lineOfCursor);
-// }
+function broadcastPos(theMirror){
+  let lineOfCursor = theMirror.getDoc().getCursor().line;
+  let mirrorContainer = theMirror.display.wrapper.parentElement.id;
+  socket.emit('cursorActivity',{lineOfCursor, mirrorContainer});
+  // mark = theMirror.markText({line:lineOfCursor,ch:0},{line:lineOfCursor+1,ch:0},{css: 'background: lightblue',readOnly: true})
+  // console.log(lineOfCursor);
+}
 
 //this is fired on change
 function broadcastEdits(theMirror,changeObj){
@@ -123,12 +123,21 @@ socket.on('mirrorChange', data => {
   theMirror.getDoc().replaceRange(newContent,changeFrom,changeTo)
 })
 
-window.onload = ()=>{
+console.log(document.readyState)
+
+window.addEventListener('load', ()=>{
+  
+  console.log(document.readyState)
+
+    console.log('codemirror.js loaded')
     let mirrors = Array.from(document.getElementsByClassName('codemirrorContainer'))
+    console.log(mirrors);
     mirrors.forEach(mirrorContainer => {
       let textArea = mirrorContainer.getElementsByTagName('TEXTAREA')[0];
       mirrorContainer.cm = CodeMirror.fromTextArea(textArea, {lineNumbers: true});
       mirrorContainer.cm.on('change',broadcastEdits);
       mirrorContainer.cm.on('cursorActivity',broadcastPos) //Will pass the cm object  
     })
-}
+})
+
+console.log(document.readyState)

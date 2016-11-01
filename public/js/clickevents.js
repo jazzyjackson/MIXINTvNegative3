@@ -100,7 +100,7 @@ function createUpdatePos(clientX, clientY){
   return enclosedUpdatePos;
 };
 
-window.onload = function(){
+window.addEventListener('load', ()=>{
   //reattach all the click and drag listeners to all elements
   var listOfLeaves = Array.from(document.getElementsByClassName('leaf'));
   listOfLeaves.forEach(leaf => {
@@ -116,5 +116,4 @@ window.onload = function(){
 
   //if there are codemirrors, re-instantiate them with fromTextArea
   //if codemirrors weren't used, then codemirror.js won't be on the DOM and CodeMirror will be undefiend
-
-}
+})
