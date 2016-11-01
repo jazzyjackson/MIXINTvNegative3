@@ -15,11 +15,11 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
 })); 
 
+let port = process.env.PORT || 3000;
 
-
-
+console.log(`Listening on ${port}`);
 var identities = {};
-server.listen( process.env.PORT || 3000);
+server.listen(port);
 
 app.use(serverlogging('dev'));
 app.use(express.static(__dirname+ '/public'));
