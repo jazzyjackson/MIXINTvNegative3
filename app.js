@@ -93,6 +93,7 @@ app.post('/fs', (req,res,next)=>{
 							case 'js': result[files[each]] = 'text'; break;
 							case 'css': result[files[each]] = 'text'; break;
 							case 'html': result[files[each]] = 'text'; break;
+							case 'txt': result[files[each]] = 'text'; break;
 							case 'svg': result[files[each]] = 'image'; break;
 							case 'png': result[files[each]] = 'image'; break;
 							case 'jpg': result[files[each]] = 'image'; break;
