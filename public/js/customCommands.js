@@ -7,12 +7,12 @@ var customCommands = {
 	rename: rename,
 	save: save,
 	list: ls,
-	ls: ls,
 	files: ls,
 	create: create,
 	open: open,
 	git: exec,
 	mkdir: exec,
+	ls: exec,
 	touch: exec,
 	pwd: exec,
 	cd: exec
