@@ -20,6 +20,7 @@ var customCommands = {
 
 };
 
+
 function exec(aTerminal, ArrArray,options){
 
 		let requestElement = createResult('request', 'Running command on server...');

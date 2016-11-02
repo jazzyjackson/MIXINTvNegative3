@@ -45,14 +45,26 @@ app.post('/savethis', (req,res,next)=>{
 app.post('/exec', (req,res,next)=>{
 	let command = req.body.command;
 	if(aCustomCommandMatches(command)){
-		exec(command, (err,stdout,stderr)=>{
-			res.status(200).json({err,stdout,stderr});
-		})
+		//cd is a special case, running it doesn't work, process.chdir has to be used instead
+		if(command.indexOf('cd') === 0){
+			try{
+				process.chdir(command.split(' ')[1]);
+				res.status(200).json({stdout: process.cwd()})
+			} catch(e){
+				res.status(404).json({err: 'cd errored out'})
+			}
+		} else {
+			exec(command, (err,stdout,stderr)=>{
+				res.status(200).json({err,stdout,stderr});
+			})
+		}
 	} else {
 		res.status(403).send();
 	}
 	console.log(command)
 })
+
+
 
 app.get('/readFile', (req,res,next) => {
 	console.log(req.query.pathname)
