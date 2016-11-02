@@ -40,6 +40,7 @@ function exec(aTerminal, ArrArray,options){
 			if(requestElement.innerText === ""){
 				requestElement.innerText = 'The command ran without error or output'
 			}
+			aTerminal.scrollTop = aTerminal.scrollHeight;
 		})
 		console.log(command)
 		return requestElement;
@@ -59,6 +60,8 @@ function open(aTerminal, ArrArray){
 		create(aTerminal, ['Codemirror',resObj,pathname])
 		requestElement.className = 'result';
 		requestElement.innerText = 'Maybe it worked';
+		aTerminal.scrollTop = aTerminal.scrollHeight;
+
 	})
 
 	return requestElement;
