@@ -59,7 +59,7 @@ app.post('/exec', (req,res,next)=>{
 			})
 		}
 	} else {
-		res.status(403).send();
+		res.status(403).json({err: `"${command}" has not been whitelisted to run serverside`});
 	}
 	console.log(command)
 })
