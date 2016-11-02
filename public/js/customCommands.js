@@ -6,14 +6,17 @@ var customCommands = {
 	whenami: whenami,
 	rename: rename,
 	save: save,
-	ls: ls,
 	list: ls,
 	files: ls,
 	create: create,
 	open: open,
 	git: exec,
 	mkdir: exec,
-	touch: exec
+	touch: exec,
+	ls: exec,
+	pwd: exec,
+	cd: exec
+	
 
 };
 
