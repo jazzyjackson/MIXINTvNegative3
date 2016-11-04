@@ -15,6 +15,7 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
 })); 
 
+
 let port = process.env.PORT || 3000;
 
 console.log(`Listening on ${port}`);
@@ -24,6 +25,7 @@ server.listen(port);
 app.use(serverlogging('dev'));
 app.use(express.static(__dirname+ '/public'));
 app.use(express.static(__dirname + '/public/savedTrees'));
+app.use(express.static(path.join(__dirname, 'public/savedTrees'),{index:false,extensions:['html']}));
 //app.get('/', function(req,res){
 //    res.sendfile('./public/index.html');
 //    
