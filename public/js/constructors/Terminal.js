@@ -17,10 +17,12 @@ Terminal.prototype.render = function(){
 }
 
 function updateTerminal(result, targetId){
-  // console.log('updating target ' + targetId + ' with ' + result);
+  //boolean guards are necessary because the socket.emit(fileSaveUpdate is invoked whether the command save was run or ctrl s was hit, and when ctrl s is hit, a new element is not appended to the terminal.)  
   let spanToUpdate = document.getElementById(targetId);
-  spanToUpdate.innerText = result; 
-  spanToUpdate.className = 'result';
+  spanToUpdate && (spanToUpdate.innerText = result);
+  console.log(result)
+  window.history.pushState({},null, 'http://' + window.location.host + '/savedTrees/' + targetId + '.html' )
+  spanToUpdate && (spanToUpdate.className = 'result');
 }
 
 function shiftHistory(increment){

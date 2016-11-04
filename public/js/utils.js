@@ -100,3 +100,21 @@ window.addEventListener('load', ()=>{
   //if there are codemirrors, re-instantiate them with fromTextArea
   //if codemirrors weren't used, then codemirror.js won't be on the DOM and CodeMirror will be undefiend
 })
+
+document.documentElement.addEventListener('keydown',(event)=>{
+  if(event.ctrlKey && event.key == 's'){
+    event.preventDefault();
+    try {
+    saveShortcut();
+    } catch (e){
+      console.log(e);
+    }
+  }
+})
+
+function saveShortcut() { 
+  let termArr = Array.from(document.getElementsByClassName('terminal')); 
+  termArr = termArr.filter(each => window.location.pathname.includes(each.id)); 
+  terminalMatchesPath = termArr[0]; 
+  save(terminalMatchesPath, [], { isLocal: true }) 
+}

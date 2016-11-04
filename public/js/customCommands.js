@@ -207,6 +207,7 @@ function save(aTerminal, ArrArray, options){
 			requestElement.innerText = result + ' in ' + roundTripTime + 'ms';
 			requestElement.className = 'result';
 			appendResult(requestElement.innerText, requestElement.id);
+			console.log(requestElement.innerText)
 			window.history.pushState({},null, 'http://' + window.location.host + '/savedTrees/' + aTerminal.id + '.html' )
 		})
 	}
