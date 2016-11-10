@@ -38,7 +38,8 @@ app.post('/savethis', (req,res,next)=>{
 		if(err){
 			res.status(400).send(err);
 		} else {
-			res.status(200).send(fileName + ' written successfully');
+			let {size} = fs.statSync(path.join(__dirname, '/public/savedTrees/', fileName));
+			res.status(200).send(formatBytes(size,1) + ' written successfully to ' + fileName);
 		}
 	})
 })
@@ -187,4 +188,14 @@ function addSlashesIfNeedBe(aFilePath){
 function aCustomCommandMatches(aPostedCommand){
 	let arrValid = ['git status','git fetch','git pull','mkdir','touch','pwd','cd','ls'];
 	return arrValid.some(validCommand => aPostedCommand.indexOf(validCommand) === 0)
+}
+
+//OK this one I ripped off stackoverflow: http://stackoverflow.com/questions/15900485/correct-way-to-convert-size-in-bytes-to-kb-mb-gb-in-javascript#18650828
+function formatBytes(bytes,decimals) {
+   if(bytes == 0) return '0 Byte';
+   var k = 1000; // or 1024 for binary
+   var dm = decimals + 1 || 3;
+   var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+   var i = Math.floor(Math.log(bytes) / Math.log(k));
+   return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
 }
