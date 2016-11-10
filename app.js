@@ -132,19 +132,25 @@ app.post('/fs', (req,res,next)=>{
 io.on('connection', function(socket){
 		identities[socket.id] = {ip: socket.client.conn.remoteAddress.split(':').slice(-1)[0], name: null};
     socket.on('event', function (data){
-      socket.broadcast.emit('event',data);
+      socket.broadcast.to(identities[socket.id].room).emit('event',data);
     });
 		socket.on('filesaveResult', function (data){
-      socket.broadcast.emit('filesaveResult',data);
+      socket.broadcast.to(identities[socket.id].room).emit('filesaveResult',data);
     });
 		socket.on('remoteRunFile', function(data){
-			socket.broadcast.emit('remoteRunFile', data)
+			socket.broadcast.to(identities[socket.id].room).emit('remoteRunFile', data)
 		})
 		socket.on('cursorActivity', function(data){
-			socket.broadcast.emit('cursorActivity', data)
+			socket.broadcast.to(identities[socket.id].room).emit('cursorActivity', data)
 		})
 		socket.on('mirrorChange', function(data){
-			socket.broadcast.emit('mirrorChange', data)
+			socket.broadcast.to(identities[socket.id].room).emit('mirrorChange', data)
+		})
+
+		socket.on('subscribe', function(data){
+			socket.join(data.room);
+			identities[socket.id].room = data.room;
+			console.log(identities[socket.id])
 		})
 		
 

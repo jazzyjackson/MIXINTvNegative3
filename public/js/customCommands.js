@@ -307,24 +307,33 @@ socket.on('timeResponse', function(socket){
 });
 
 function runFile(event){
+	//targetTerminal determines what the container element of a file is, for purposes of appending the result and socketizing the target to sync others
+	//event.path returns an array of elements the event bubbled up through, from the event.target to the window. Filter it down to one element. 
+	// This will work as long as you don't have a terminal within a terminal 
 	let targetTerminal = event.path.filter(el => el.className && el.className.includes('terminal'))[0];
+	//the title attribute of the event target is the pathname of the file displayed.
 	let targetPath = event.target.title;
+	//this is for generating the equivelant command that could be typed. Maybe I should just generate that text as if it were typed and execute???
 	let prompt = targetTerminal.getAttribute('protoPrompt');
-
+  //Huh. open FILE is like create Codemirror FILETEXT. prints ls when re-executing list...
 	if(event.target.className && event.target.className.includes('directory')){
 		targetTerminal.lastChild.innerText = `${prompt} ls ${targetPath}`
 	} else if(event.target.className && event.target.className.includes('text')){
 		targetTerminal.lastChild.innerText = `${prompt} open ${targetPath}`
 	} 
 
+	//Oh yeah, it does these things whether you single clicked or double clicked, but then checks for double click before executing.
 	if(event.type === 'dblclick'){
 		if(event.target.className && event.target.className.includes('directory')){
+			//socketizing with custom command (which I belive is just bounced), and the socket object includes the id of the terminal, the name of a function, and a pathname.
 			socket.emit('remoteRunFile', { terminal: targetTerminal.id, func: 'ls', path: targetPath});
+			//Similar action, just different if you're opening or listing. runs ls - oh, from here ls is just a shortcut for the function name, not a property of the customCommands object.'
 			let listResult = ls(targetTerminal, [targetPath]);
 			targetTerminal.appendChild(listResult);
 			initPrompt(targetTerminal);
 		} else if(event.target.className && event.target.className.includes('text')){
 			socket.emit('remoteRunFile', { terminal: targetTerminal.id, func: 'open', path: targetPath});
+
 			let fileOpenResult = open(targetTerminal, [targetPath]);
 			targetTerminal.appendChild(fileOpenResult);
 			initPrompt(targetTerminal);

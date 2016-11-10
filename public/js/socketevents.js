@@ -1,6 +1,8 @@
 var remoteUpdatePos;
 
-var socket = io(window.location.host);
+var socket = io();
+
+socket.emit('subscribe',{room: location.toString()});
 
 socket.on('event', function(event){
   switch(event.type){
@@ -35,6 +37,7 @@ socket.on('remoteRunFile', data => {
 })
 
 socket.on('filesaveResult', data => {
+  console.log(data)
   updateTerminal(data.responseText, data.aTarget)
 })
   
