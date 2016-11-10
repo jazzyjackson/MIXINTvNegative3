@@ -36,7 +36,10 @@ function exec(aTerminal, ArrArray,options){
 		.then(resObj => {
 			console.log(resObj)
 			requestElement.className = 'result'
-			requestElement.innerText = resObj.err ? resObj.err : resObj.stdout;
+			requestElement.innerText = resObj.stdout ? resObj.stdout : ( resObj.stderr ? resObj.stderr : resObj.err)
+			if(!resObj.stdout){
+				requestElement.style.color = 'red';
+			}
 			if(requestElement.innerText === ""){
 				requestElement.innerText = 'The command ran without error or output'
 			}
