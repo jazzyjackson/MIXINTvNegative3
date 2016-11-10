@@ -209,11 +209,20 @@ function save(aTerminal, ArrArray, options){
 			appendResult(requestElement.innerText, requestElement.id);
 			console.log(requestElement.innerText)
 			window.history.pushState({},null, 'http://' + window.location.host + '/savedTrees/' + aTerminal.id + '.html' )
+			updateTitleText(aTerminal.id);
 		})
 	}
 	return requestElement;
 
 }
+function updateTitleText(newName){
+		let possibleCurrentTitle = document.getElementsByTagName('TITLE')[0];
+		if(!possibleCurrentTitle){
+			possibleCurrentTitle = document.head.appendChild(document.createElement('title'));
+		}
+		possibleCurrentTitle.innerText = newName;
+}
+
 function saveCodeMirrorContent(){
 		let mirrors = Array.from(document.getElementsByClassName('codemirrorContainer'));
 		mirrors.forEach(aMirrorContainer => {
