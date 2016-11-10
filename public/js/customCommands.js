@@ -37,7 +37,7 @@ function exec(aTerminal, ArrArray,options){
 			console.log(resObj)
 			requestElement.className = 'result'
 			requestElement.innerText = resObj.stdout ? resObj.stdout : ( resObj.stderr ? resObj.stderr : resObj.err)
-			if(!resObj.stdout){
+			if(resObj.stderr || resObj.err){
 				requestElement.style.color = 'red';
 			}
 			if(requestElement.innerText === ""){
