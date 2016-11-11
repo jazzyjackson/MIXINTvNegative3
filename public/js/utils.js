@@ -113,6 +113,10 @@ document.documentElement.addEventListener('keydown',(event)=>{
 })
 
 function saveShortcut() { 
+  //Ugh. Ugly workaround if you hit ctrl s when a codemirror is focused. Before saving, 
+  //grab elements with classname CodeMirror-focused and remove it from classes
+  let possiblyFocusedCM = document.getElementsByClassName('CodeMirror-focused')[0];
+  possiblyFocusedCM && (possiblyFocusedCM.className = possiblyFocusedCM.className.replace(/CodeMirror-focused/,''));
   let termArr = Array.from(document.getElementsByClassName('terminal')); 
   termArr = termArr.filter(each => window.location.pathname.includes(each.id)); 
   terminalMatchesPath = termArr[0]; 

@@ -211,14 +211,15 @@ function save(aTerminal, ArrArray, options){
 			let starttime = requestElement.getAttribute('createdAt')
 			let roundTripTime = Date.now() - starttime;
 			//append that time to the string placed inside the resulting div (overwriting previous message 'attempting to save') and swap out className for result. Allows for conditional styling.
+			console.log(result + ' in ' + roundTripTime + 'ms');
 			requestElement.innerText = result + ' in ' + roundTripTime + 'ms';
 			requestElement.className = 'result';
 			//appendResult is a socket creator. Fires a message named filesaveresult, payload is the innerText plus the id of the request element...
 			appendResult(requestElement.innerText, requestElement.id, aTerminal.id);
 			console.log(requestElement.innerText)
-			
-			window.location = `http://${window.location.host}/savedTrees/${aTerminal.id}.html`;
-			
+
+			window.history.pushState({},null,`http://${window.location.host}/savedTrees/${aTerminal.id}.html`)
+			fireSubscribe();
 			//sets documnent.head text tag inner text to current terminal id. 
 			updateTitleText(aTerminal.id);
 		})

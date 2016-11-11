@@ -27,7 +27,8 @@ function updateTerminal(result, requestElementId, aTerminalId){
   //or a new user went to that url, then the rooms wouldnt be the same. 
   //So unless I can think of something better I'm forcing a page reload when saving. 
   //pretty inefficient though, to have to wait around for that to finish.
-	window.location = `http://${window.location.host}/savedTrees/${aTerminalId}.html`;
+  window.history.pushState({},null,`http://${window.location.host}/savedTrees/${aTerminalId}.html`)
+  fireSubscribe();
   spanToUpdate && (spanToUpdate.className = 'result');
 }
 

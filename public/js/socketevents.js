@@ -2,7 +2,12 @@ var remoteUpdatePos;
 
 var socket = io();
 
-socket.emit('subscribe',{room: location.toString()});
+function fireSubscribe(){
+  socket.emit('subscribe',{room: location.toString()});
+}
+fireSubscribe();
+//fireSubscribe is called when the script is first loaded and anytime the document is saved, 
+//or any other action that changes the url, since url is used as the socket room name
 
 socket.on('event', function(event){
   switch(event.type){
