@@ -120,8 +120,8 @@ window.addEventListener('load', ()=>{
     addDblClickListeners(aDirectoryContainer)
   })
 
-  document.body.style.height = window.innerHeight;
-  document.body.style.width = window.innerWidth;
+  document.body.style.height = innerHeight;
+  document.body.style.width = innerWidth;
 
   //if there are codemirrors, re-instantiate them with fromTextArea
   //if codemirrors weren't used, then codemirror.js won't be on the DOM and CodeMirror will be undefiend
