@@ -45,7 +45,6 @@ function exec(aTerminal, ArrArray,options){
 			}
 			aTerminal.scrollTop = aTerminal.scrollHeight;
 		})
-		console.log(command)
 		return requestElement;
 }
 
@@ -54,10 +53,7 @@ function open(aTerminal, ArrArray){
 	requestElement.id = Date.now();
 	let pathname = ArrArray[0];
 	fetch('http://' + window.location.host + '/readFile' + '?pathname='+encodeURIComponent(pathname))
-	.then(res => {
-		console.log(res)
-		return res.json();
-	})
+	.then(res => res.json())
 	.then(resObj => {
 		console.log(resObj);
 		create(aTerminal, ['Codemirror',resObj,pathname])
@@ -100,7 +96,6 @@ function ls(aTerminal, ArrArray){
 function create(aTerminal, ArrArray){
 	let newEntity = ArrArray[0];
 	let result = createResult('query', 'Waiting for constructor to be available');
-	console.log(arguments);
 	if(window[newEntity] === undefined){
 		let pathname = '/js/constructors/' + newEntity + '.js';
 		let newScript = document.createElement('script');
@@ -194,7 +189,14 @@ function save(aTerminal, ArrArray, options){
 	requestElement.setAttribute('createdAt', Date.now())
 	//builds a unique id from the terminals id and the number of nodes (which should only get bigger). 
 	requestElement.id = String(aTerminal.id) + aTerminal.childNodes.length;
-	//this id is used when receiving a sync'd response from remote commands. it refers to the element that will say 'Attempting to send...'
+
+  //OK so at this time, 'save' was just invoked as a command. The request element has not yet been handed back to the command reducer so its not on the real DOM yet.
+	//So in order to get the result of this operation saved to disk, we gotta:
+	//take the zombie tree before its saved, 
+	//grab the terminal the terminal in the zombie tree with the same id as the live tree from which it was invokved
+	//append the requestElement (via ref passed to function, it doesnt exist on the zombie tree yet)
+	appendSaveTime(liveTree,aTerminal.id,requestElement)
+
   //save is called with an options object. When invoked with keystroke, isLocal is true, when invoked via socket message, isLocal is false or undefined.
 	if(options.isLocal){
 		fetch('http://' + window.location.host + '/savethis', {
@@ -211,13 +213,10 @@ function save(aTerminal, ArrArray, options){
 			let starttime = requestElement.getAttribute('createdAt')
 			let roundTripTime = Date.now() - starttime;
 			//append that time to the string placed inside the resulting div (overwriting previous message 'attempting to save') and swap out className for result. Allows for conditional styling.
-			console.log(result + ' in ' + roundTripTime + 'ms');
-			requestElement.innerText = result + ' in ' + roundTripTime + 'ms';
+			requestElement.innerText = `${result} in ${roundTripTime}ms`;
 			requestElement.className = 'result';
 			//appendResult is a socket creator. Fires a message named filesaveresult, payload is the innerText plus the id of the request element...
 			appendResult(requestElement.innerText, requestElement.id, aTerminal.id);
-			console.log(requestElement.innerText)
-
 			window.history.pushState({},null,`http://${window.location.host}/savedTrees/${aTerminal.id}.html`)
 			fireSubscribe();
 			//sets documnent.head text tag inner text to current terminal id. 
@@ -228,6 +227,28 @@ function save(aTerminal, ArrArray, options){
 	return requestElement;
 
 }
+
+function collapseCodeMirrors(liveTree){
+	let mirrors = Array.from(liveTree.getElementsByClassName('codemirrorContainer'));
+	mirrors.forEach(aMirrorContainer => {
+		let cm = aMirrorContainer.getElementsByClassName('CodeMirror')[0];
+		cm.remove();
+	})
+}
+
+function appendSaveTime(liveTree,updateTerminalId,elementToClone){
+	//BOGUS! getElementById only works when you have a document, and an html element is NOT a document
+	// let terminalToAppendTo = liveTree.getElementById(updateTerminalId)
+	// I'll use querySelector instead
+	let terminalToAppendTo = liveTree.querySelector(`#${updateTerminalId}`)
+	let fileToSaveSize = formatBytes(liveTree.innerHTML.length,-1);
+	//it screwed things up to try modifing the element that was being attached to the actualy dom. bad move in an async world. clone it instead.
+	let elementToAppend = elementToClone.cloneNode();
+	elementToAppend.innerText = `${fileToSaveSize} written successfully to ${updateTerminalId}.html at ${new Date()}`;
+	terminalToAppendTo.appendChild(elementToAppend);
+	initPrompt(terminalToAppendTo)
+}
+
 function updateTitleText(newName){
 		let possibleCurrentTitle = document.getElementsByTagName('TITLE')[0];
 		if(!possibleCurrentTitle){
@@ -246,13 +267,6 @@ function saveCodeMirrorContent(){
 		})
 }
 
-function collapseCodeMirrors(liveTree){
-	let mirrors = Array.from(liveTree.getElementsByClassName('codemirrorContainer'));
-	mirrors.forEach(aMirrorContainer => {
-		let cm = aMirrorContainer.getElementsByClassName('CodeMirror')[0];
-		cm.remove();
-	})
-}
 
 function createResult(className, innerText){
   var placeHolder = document.createElement('div');

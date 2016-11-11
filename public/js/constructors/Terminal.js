@@ -21,12 +21,7 @@ function updateTerminal(result, requestElementId, aTerminalId){
   let spanToUpdate = document.getElementById(requestElementId);
   //if the spantoupdate exists, set its innerText to the payload of the fileSaveResult socket emitter.
   spanToUpdate && (spanToUpdate.innerText = result);
-  console.log(result)
-  //Preiously used window history push state to set the url without reloading the page, 
-  //but then the room name wouldnt match the url, and if a user refreshed, 
-  //or a new user went to that url, then the rooms wouldnt be the same. 
-  //So unless I can think of something better I'm forcing a page reload when saving. 
-  //pretty inefficient though, to have to wait around for that to finish.
+
   window.history.pushState({},null,`http://${window.location.host}/savedTrees/${aTerminalId}.html`)
   fireSubscribe();
   spanToUpdate && (spanToUpdate.className = 'result');
@@ -82,7 +77,8 @@ function handleInput(aTerminal,options){
       //This is kind of a mess. When I added a general exec command for whitelisted serverside CLI tools (git, mkdir, ffmpeg, touch), I decided I needed to know which command was run,
       //But so far all my other commands are set to expect arguments as an array. Since I need to know the requested command inside the general exec function inside customCommands.js,
       //I roll up the options passed to handleInput (right now, just if a command was executed locally or remotely) with an object contained potentialCommand, destructured es6 style.
-    	result = customCommands[potentialCommand](aTerminal,potentialArguments,Object.assign({potentialCommand},options)); //calls the function, should return an Element
+    	
+      result = customCommands[potentialCommand](aTerminal,potentialArguments,Object.assign({potentialCommand},options)); //calls the function, should return an Element
 		} else {
       result = evaluate(aTerminal, query); 
 		}

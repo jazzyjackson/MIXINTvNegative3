@@ -43,7 +43,6 @@ socket.on('remoteRunFile', data => {
 
 socket.on('filesaveResult', data => {
   //emit('filesaveResult') is fired from within customCommands, when a save result is triggered locally. The result of the post is socketized along with the id of the element that is waiting for a response 
-  console.log(data)
   //updateTerminal exists in Terminal.js
   updateTerminal(data.responseText, data.requestElementId, data.aTerminalId)
 })
