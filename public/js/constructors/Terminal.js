@@ -130,8 +130,8 @@ document.documentElement.addEventListener('keydown', function(event){
 //   }
 // });
 
-function addTerminal(posX, posY){
-  var aTerminal = new Terminal(posX, posY);
-  document.body.appendChild(aTerminal.element);
-  aTerminal.element.focus();
-}
+// function addTerminal(posX, posY){
+//   var aTerminal = new Terminal(posX, posY);
+//   document.body.appendChild(aTerminal.element);
+//   aTerminal.element.focus();
+// }
