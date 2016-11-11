@@ -24,9 +24,16 @@ allContent.addEventListener('mousedown', function(event){
 document.documentElement.addEventListener('dblclick', event => {
   if(event.target.tagName === 'HTML' || event.target.tagName === 'BODY'){//only addTerminal if body or higher (document where there is no body) is clicked. Top of the path is Window -> Document -
     socketize(event);
-    addTerminal(event.clientX, event.clientY);
+    addTerminal(event.clientX - parseInt(document.body.style.left), event.clientY - parseInt(document.body.style.top));
   }
 });
+
+function addTerminal(posX, posY){
+  var aTerminal = new Terminal(posX, posY);
+  document.body.appendChild(aTerminal.element);
+  aTerminal.element.focus();
+}
+
 
 allContent.addEventListener('mouseup', event => {
   socketize(event);
