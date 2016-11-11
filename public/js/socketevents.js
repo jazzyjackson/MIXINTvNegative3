@@ -47,15 +47,20 @@ socket.on('filesaveResult', data => {
   updateTerminal(data.responseText, data.requestElementId, data.aTerminalId)
 })
   
-function socketize(anEvent, optActiveElement){
+function socketize(anEvent, targetId){
+	//extracts useful information from any event passed as an argument. 
+	//whether its key or mouse. Irrelevant props will just be undefined.
+	//uses ES6 syntax to deconstruct the anEvent obj and construct the emit payload.
+	let {type, key, keyCode, buttons, clientX, clientY} = anEvent;
+
   socket.emit('event', {
-    type: anEvent.type,
-	  key: anEvent.key,	
-	  keyCode: anEvent.keyCode,
-    buttons: anEvent.buttons,
-    clientX: anEvent.clientX,
-    clientY: anEvent.clientY,
-    targetId: optActiveElement
+    type,
+	  key,	
+	  keyCode,
+    buttons,
+    clientX,
+    clientY,
+    targetId
   })
 }
 
