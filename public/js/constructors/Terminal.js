@@ -26,7 +26,8 @@ function updateTerminal(result, requestElementId, aTerminalId){
   //but then the room name wouldnt match the url, and if a user refreshed, 
   //or a new user went to that url, then the rooms wouldnt be the same. 
   //So unless I can think of something better I'm forcing a page reload when saving. 
-	window.location = `http://${window.location.host}/savedTrees/${aTerminal.id}.html`;
+  //pretty inefficient though, to have to wait around for that to finish.
+	window.location = `http://${window.location.host}/savedTrees/${aTerminalId}.html`;
   spanToUpdate && (spanToUpdate.className = 'result');
 }
 
