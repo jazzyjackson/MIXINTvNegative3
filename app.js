@@ -26,10 +26,9 @@ app.use(serverlogging('dev'));
 app.use(express.static(__dirname+ '/public'));
 app.use(express.static(__dirname + '/public/savedTrees'));
 app.use(express.static(path.join(__dirname, 'public/savedTrees'),{index:false,extensions:['html']}));
-//app.get('/', function(req,res){
-//    res.sendfile('./public/index.html');
-//    
-//})
+app.get('/:notYetAFile', function(req,res){
+   res.sendfile('./public/index.html');
+})
 
 app.post('/savethis', (req,res,next)=>{
 	var htmlString = req.body.content;
@@ -39,7 +38,13 @@ app.post('/savethis', (req,res,next)=>{
 			res.status(400).send(err);
 		} else {
 			let {size} = fs.statSync(path.join(__dirname, '/public/savedTrees/', fileName));
-			res.status(200).send(formatBytes(size,1) + ' written successfully to ' + fileName);
+			if(!(size === htmlString.length)){
+				console.log('Filesize mismatched string length, some characters were not 8 bit char. ')
+			}
+			console.log(`${size} bytes saved to disk.`)
+			console.log(`${htmlString.length} characters saved to disk.`)
+			console.log(`${formatBytes(size,1)} written successfully to ${fileName}`)
+			res.status(200).send(`${formatBytes(size,1)} written successfully to ${fileName}`);
 		}
 	})
 })
