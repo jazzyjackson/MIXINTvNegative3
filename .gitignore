@@ -1,6 +1,9 @@
 /node_modules/
-/savedTrees/
+/public/savedTrees/
+/public/images/
+
 *~
 *.un~
 *.swp
 *.swo
+/.vscode/
