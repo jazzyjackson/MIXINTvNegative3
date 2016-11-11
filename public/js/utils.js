@@ -10,6 +10,17 @@
 var updatePos;
 var allContent = document.documentElement;
 
+allContent.addEventListener('mousedown', function(event){
+  //Neat! On mousedown, the activeElement is the LAST thing that was clicked on, not the thing that mousedown just hit.
+  if(event.target.tagName === 'HTML' && event.shiftKey){
+    console.log(event.clientX, event.clientY, document.activeElement.id)
+    document.activeElement = document.body;
+    document.documentElement.addEventListener('mousemove', handleMove);
+    socketize(event);
+    updatePos = createUpdatePos(event.clientX, event.clientY, document.activeElement.id);
+  }
+})
+
 
 allContent.addEventListener('mouseup', event => {
   socketize(event);
@@ -40,7 +51,6 @@ function createUpdatePos(clientX, clientY){
   var theLastY = clientY;
   var enclosedUpdatePos = function(clientX, clientY, elementId){
       element = document.getElementById(elementId);
-      
       var movementX = clientX - theLastX;
       var movementY = clientY - theLastY;
       theLastX = clientX;
