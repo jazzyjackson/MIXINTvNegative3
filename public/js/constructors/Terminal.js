@@ -22,8 +22,11 @@ function updateTerminal(result, requestElementId, aTerminalId){
   //if the spantoupdate exists, set its innerText to the payload of the fileSaveResult socket emitter.
   spanToUpdate && (spanToUpdate.innerText = result);
   console.log(result)
-  //
-  window.history.pushState({},null, 'http://' + window.location.host + '/savedTrees/' + aTerminalId + '.html' )
+  //Preiously used window history push state to set the url without reloading the page, 
+  //but then the room name wouldnt match the url, and if a user refreshed, 
+  //or a new user went to that url, then the rooms wouldnt be the same. 
+  //So unless I can think of something better I'm forcing a page reload when saving. 
+	window.location = `http://${window.location.host}/savedTrees/${aTerminal.id}.html`;
   spanToUpdate && (spanToUpdate.className = 'result');
 }
 

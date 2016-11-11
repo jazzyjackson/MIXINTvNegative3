@@ -217,7 +217,8 @@ function save(aTerminal, ArrArray, options){
 			appendResult(requestElement.innerText, requestElement.id, aTerminal.id);
 			console.log(requestElement.innerText)
 			
-			window.history.pushState({},null, 'http://' + window.location.host + '/savedTrees/' + aTerminal.id + '.html' )
+			window.location = `http://${window.location.host}/savedTrees/${aTerminal.id}.html`;
+			
 			//sets documnent.head text tag inner text to current terminal id. 
 			updateTitleText(aTerminal.id);
 		})
