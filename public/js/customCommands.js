@@ -192,9 +192,11 @@ function save(aTerminal, ArrArray, options){
 	
 	var requestElement = createResult('request','Attempting to send file, waiting on response');
 	requestElement.setAttribute('createdAt', Date.now())
+	//builds a unique id from the terminals id and the number of nodes (which should only get bigger). 
 	requestElement.id = String(aTerminal.id) + aTerminal.childNodes.length;
-
-  if(options.isLocal){
+	//this id is used when receiving a sync'd response from remote commands. it refers to the element that will say 'Attempting to send...'
+  //save is called with an options object. When invoked with keystroke, isLocal is true, when invoked via socket message, isLocal is false or undefined.
+	if(options.isLocal){
 		fetch('http://' + window.location.host + '/savethis', {
 			method: 'POST',
 			headers: {
@@ -205,16 +207,22 @@ function save(aTerminal, ArrArray, options){
 		})
 		.then(res => res.text())
 		.then(result => {
+			//requestelement has an attribute recounting its creation time in ms. Subtract current time by this time to find out how longs its been since this function started.
 			let starttime = requestElement.getAttribute('createdAt')
 			let roundTripTime = Date.now() - starttime;
+			//append that time to the string placed inside the resulting div (overwriting previous message 'attempting to save') and swap out className for result. Allows for conditional styling.
 			requestElement.innerText = result + ' in ' + roundTripTime + 'ms';
 			requestElement.className = 'result';
-			appendResult(requestElement.innerText, requestElement.id);
+			//appendResult is a socket creator. Fires a message named filesaveresult, payload is the innerText plus the id of the request element...
+			appendResult(requestElement.innerText, requestElement.id, aTerminal.id);
 			console.log(requestElement.innerText)
+			
 			window.history.pushState({},null, 'http://' + window.location.host + '/savedTrees/' + aTerminal.id + '.html' )
+			//sets documnent.head text tag inner text to current terminal id. 
 			updateTitleText(aTerminal.id);
 		})
 	}
+	//if the save command was triggered via socket message, just return the request div, with the matching id.
 	return requestElement;
 
 }

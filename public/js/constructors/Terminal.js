@@ -16,12 +16,14 @@ Terminal.prototype.render = function(){
   return this.element;
 }
 
-function updateTerminal(result, targetId){
+function updateTerminal(result, requestElementId, aTerminalId){
   //boolean guards are necessary because the socket.emit(fileSaveUpdate is invoked whether the command save was run or ctrl s was hit, and when ctrl s is hit, a new element is not appended to the terminal.)  
-  let spanToUpdate = document.getElementById(targetId);
+  let spanToUpdate = document.getElementById(requestElementId);
+  //if the spantoupdate exists, set its innerText to the payload of the fileSaveResult socket emitter.
   spanToUpdate && (spanToUpdate.innerText = result);
   console.log(result)
-  window.history.pushState({},null, 'http://' + window.location.host + '/savedTrees/' + targetId + '.html' )
+  //
+  window.history.pushState({},null, 'http://' + window.location.host + '/savedTrees/' + aTerminalId + '.html' )
   spanToUpdate && (spanToUpdate.className = 'result');
 }
 
