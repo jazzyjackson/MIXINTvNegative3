@@ -12,7 +12,7 @@ var allContent = document.documentElement;
 
 allContent.addEventListener('mousedown', function(event){
   //Neat! On mousedown, the activeElement is the LAST thing that was clicked on, not the thing that mousedown just hit.
-  if(event.target.tagName === 'HTML' && event.shiftKey){
+  if((event.target.tagName === 'HTML' || event.target.tagName === 'BODY') && event.shiftKey){
     console.log(event.clientX, event.clientY, document.activeElement.id)
     document.activeElement = document.body;
     document.documentElement.addEventListener('mousemove', handleMove);
@@ -21,6 +21,12 @@ allContent.addEventListener('mousedown', function(event){
   }
 })
 
+document.documentElement.addEventListener('dblclick', event => {
+  if(event.target.tagName === 'HTML' || event.target.tagName === 'BODY'){//only addTerminal if body or higher (document where there is no body) is clicked. Top of the path is Window -> Document -
+    socketize(event);
+    addTerminal(event.clientX, event.clientY);
+  }
+});
 
 allContent.addEventListener('mouseup', event => {
   socketize(event);
@@ -106,6 +112,9 @@ window.addEventListener('load', ()=>{
   listOfDirContainers.forEach(aDirectoryContainer => {
     addDblClickListeners(aDirectoryContainer)
   })
+
+  document.body.style.height = window.innerHeight;
+  document.body.style.width = window.innerWidth;
 
   //if there are codemirrors, re-instantiate them with fromTextArea
   //if codemirrors weren't used, then codemirror.js won't be on the DOM and CodeMirror will be undefiend

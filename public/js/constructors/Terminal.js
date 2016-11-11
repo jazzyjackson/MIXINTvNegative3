@@ -122,12 +122,13 @@ document.documentElement.addEventListener('keydown', function(event){
   }
 });
 
-document.documentElement.addEventListener('dblclick', event => {
-  if(event.target.tagName === 'HTML' || event.target.tagName === 'BODY'){//only addTerminal if body or higher (document where there is no body) is clicked. Top of the path is Window -> Document -
-    socketize(event);
-    addTerminal(event.clientX, event.clientY);
-  }
-});
+//Use to have the dblclick add terminal listener in here, moved it to utils.js. Will be refactored to create whatever is the default. 
+// document.documentElement.addEventListener('dblclick', event => {
+//   if(event.target.tagName === 'HTML' || event.target.tagName === 'BODY'){//only addTerminal if body or higher (document where there is no body) is clicked. Top of the path is Window -> Document -
+//     socketize(event);
+//     addTerminal(event.clientX, event.clientY);
+//   }
+// });
 
 function addTerminal(posX, posY){
   var aTerminal = new Terminal(posX, posY);

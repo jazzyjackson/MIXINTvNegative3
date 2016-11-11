@@ -1,8 +1,15 @@
+html {
+  background: lightgray;
+}
+
 body {
   /*background-color: #eeF;*/
+
+  background-color: white;
   background-image: url("/images/backgrounddot.png");
   background-repeat: repeat;
   background-size:15px;
+  box-shadow: 0 0 50px lightblue;
 
 }
 
