@@ -22,7 +22,7 @@ function updateTerminal(result, requestElementId, aTerminalId){
   //if the spantoupdate exists, set its innerText to the payload of the fileSaveResult socket emitter.
   spanToUpdate && (spanToUpdate.innerText = result);
 
-  window.history.pushState({},null,`http://${window.location.host}/savedTrees/${aTerminalId}.html`)
+  window.history.pushState({},null,`http://${window.location.host}/savedTrees/${aTerminalId}.html${location.search}`)
   fireSubscribe();
   spanToUpdate && (spanToUpdate.className = 'result');
 }

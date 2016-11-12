@@ -218,7 +218,7 @@ function save(aTerminal, ArrArray, options){
 			requestElement.className = 'result';
 			//appendResult is a socket creator. Fires a message named filesaveresult, payload is the innerText plus the id of the request element...
 			appendResult(requestElement.innerText, requestElement.id, aTerminal.id);
-			window.history.pushState({},null,`http://${window.location.host}/savedTrees/${aTerminal.id}.html`)
+			window.history.pushState({},null,`http://${window.location.host}/savedTrees/${aTerminal.id}.html${location.search}`)
 			fireSubscribe();
 			//sets documnent.head text tag inner text to current terminal id. 
 			updateTitleText(aTerminal.id);
