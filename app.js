@@ -26,9 +26,6 @@ app.use(serverlogging('dev'));
 app.use(express.static(__dirname+ '/public'));
 app.use(express.static(__dirname + '/public/savedTrees'));
 app.use(express.static(path.join(__dirname, 'public/savedTrees'),{index:false,extensions:['html']}));
-app.get('/:notYetAFile', function(req,res){
-   res.sendfile('./public/index.html');
-})
 
 app.post('/savethis', (req,res,next)=>{
 	var htmlString = req.body.content;
@@ -133,6 +130,9 @@ app.post('/fs', (req,res,next)=>{
 	
 })
 
+app.get('/:notYetAFile', function(req,res){
+   res.sendfile('./public/index.html');
+})
 
 io.on('connection', function(socket){
 		identities[socket.id] = {ip: socket.client.conn.remoteAddress.split(':').slice(-1)[0], name: null};
