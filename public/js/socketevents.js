@@ -12,7 +12,7 @@ fireSubscribe();
 socket.on('event', function(event){
   switch(event.type){
 
-    case 'dblclick': addTerminal(event.clientX, event.clientY); break;
+    case 'dblclick': addTerminal(event.clientX, event.clientY);
         
     case 'mouseup': remoteUpdatePos = undefined; break;
     case 'touchend': remoteUpdatePos = undefined; break;

@@ -21,10 +21,23 @@ allContent.addEventListener('mousedown', function(event){
   }
 })
 
-document.documentElement.addEventListener('dblclick', event => {
-  if(event.target.tagName === 'HTML' || event.target.tagName === 'BODY'){//only addTerminal if body or higher (document where there is no body) is clicked. Top of the path is Window -> Document -
-    socketize(event);
-    addTerminal(event.clientX - parseInt(document.body.style.left), event.clientY - parseInt(document.body.style.top));
+allContent.addEventListener('dblclick', event => {
+  if(event.target.tagName ==='HTML' || event.target.tagName === 'BODY'){//only addTerminal if body or higher (document where there is no body) is clicked. Top of the path is Window -> Document -
+		// I learned a thing that doesn't work! clientX is readOnly. Something similar worked when converting touch events to mouse events because the touch events dont HAVE a clientX property, so I can create one and assign it however I want. But I can't reassign the mouse events x & y.
+		// console.log(event.clientX, event.clientY);
+		// event.clientY = event.clientY - parseInt(document.body.style.top); 	
+		// console.log(event.clientX, event.clientY);
+		//This is, perhaps, inelegant.
+		//when the click event is received by other clients, they're going to create an element
+		//based off the clientX and clientY of the socketized event. Since I cannot overwrite 
+	  //I create a copycat object with the necessary properties to be socketized as if it were a mouse event
+		let relativeEvent = {
+				type: event.type, //Will only ever be dblclick since we're inside a dblclick listener
+				clientX: event.clientX - parseInt(document.body.style.left), //Takes the relative body offset of the client, calculates the position of the new elements for the local and the remote connections.
+				clientY: event.clientY - parseInt(document.body.style.top) 	
+		}
+    socketize(relativeEvent);
+    addTerminal(relativeEvent.clientX, relativeEvent.clientY);
   }
 });
 
@@ -60,6 +73,9 @@ function handleMove(event){
 
 
 function createUpdatePos(clientX, clientY){
+	//this is a function creator. When a mouse/touchdown event occurs, the initial position 
+	//is enclosed in a function, those variables are updated on mousemove and will persist
+	//as long as the function exists. On touch/mouseup events, the function is destroyed (the variable it was assigned to is reassigned null)
   var theLastX = clientX;
   var theLastY = clientY;
   var enclosedUpdatePos = function(clientX, clientY, elementId){
