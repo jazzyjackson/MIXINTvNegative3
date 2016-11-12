@@ -193,7 +193,8 @@ function shiftxPx(event){
 }
 
 allContent.addEventListener('keydown', event => {
-    if(["ArrowUp","ArrowRight","ArrowDown","ArrowLeft","Digit0"].includes(event.code) && event.shiftKey){
+		//This does step on some toes. Codemirror uses ctrl shift arrow to highlight word by word. So this could be changed to ensure activeElement is body, something like that
+    if(["ArrowUp","ArrowRight","ArrowDown","ArrowLeft","Digit0"].includes(event.code) && event.shiftKey && event.ctrlKey){
       console.log('shifting...')
       shiftxPx(event)
     }
