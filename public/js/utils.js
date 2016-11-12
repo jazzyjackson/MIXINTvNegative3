@@ -157,3 +157,22 @@ function formatBytes(bytes,decimals) {
    var i = Math.floor(Math.log(bytes) / Math.log(k));
    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
 }
+
+function shiftxPx(event){
+  //shift pixels will be called when an arrow key and shift are pressed, so I'm expecting a key event and will switch based on key'
+  let bodyStyle = document.body.style
+  switch(event.code){
+    case "ArrowUp": bodyStyle.top = parseInt(bodyStyle.top) + parseInt(bodyStyle.height) + 'px'; break;
+    case "ArrowRight": bodyStyle.left = parseInt(bodyStyle.left) - parseInt(bodyStyle.width) + 'px'; break;
+    case "ArrowDown": bodyStyle.top = parseInt(bodyStyle.top) - parseInt(bodyStyle.height) + 'px'; break;
+    case "ArrowLeft":  bodyStyle.left = parseInt(bodyStyle.left) + parseInt(bodyStyle.width) + 'px'; break;
+    case "Digit0": bodyStyle.left = 0; bodyStyle.top = 0; break;
+  }
+}
+
+allContent.addEventListener('keydown', event => {
+    if(["ArrowUp","ArrowRight","ArrowDown","ArrowLeft","Digit0"].includes(event.code) && event.shiftKey){
+      console.log('shifting...')
+      shiftxPx(event)
+    }
+})
