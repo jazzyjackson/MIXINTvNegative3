@@ -15,7 +15,8 @@ var customCommands = {
 	ls: exec,
 	touch: exec,
 	pwd: exec,
-	cd: exec
+	cd: exec,
+	cat: exec
 	
 
 };
