@@ -3,7 +3,7 @@ var remoteUpdatePos;
 var socket = io();
 
 function fireSubscribe(){
-  socket.emit('subscribe',{room: location.toString()});
+  socket.emit('subscribe',{room: location.pathname.toString()});
 }
 fireSubscribe();
 //fireSubscribe is called when the script is first loaded and anytime the document is saved, 
