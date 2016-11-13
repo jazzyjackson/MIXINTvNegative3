@@ -17,7 +17,7 @@ let theEditButton = document.createElement('button');
 theEditButton.id = 'theEditButton';
 theEditButton.innerText = 'Add Section';
 theEditButton.style = 'margin: 20px';
-theEditButton.addEventListener('click', addSection);
+theEditButton.addEventListener('click', event => addSection(event, null));
 
 theEditZone.appendChild(theEditButton);
 
@@ -28,19 +28,29 @@ document.head.appendChild(editStyles);
 theBody.insertBefore(theEditZone, document.body.firstElementChild);
 
 
-function addSection(){
+function addSection(event, remoteUniq){
 	//called from one of two places. Either, on a addSection button click
 	//or in response to a socket event, fireClick
 	//if it was fired remotely, it is called without arguments.
 	//if it was called via click listener, the mouseevent will be in the arguments object, and arguments.length will by 1, truthy.
-	if(arguments.length) fireClick(this.id);
+	aNiq = remoteUniq ? remoteUniq : Math.random() * Math.pow(2,32);
+	if(event) fireClick(this.id,aNiq);
 	console.log(arguments)
 	console.log(this);
 	let editable = document.createElement('div');
 	editable.style.height = '100px'
 	editable.style.width = '100%'
-	editable.setAttribute('contentEditable', 'true');
+	//editable.setAttribute('contentEditable', 'true');
 	editable.style.background = 'white';
+	editable.className = 'codemirrorContainer'
+	editable.id = 'tempeditable' + aNiq;
 	console.log('inserting')
 	theBody.insertBefore(editable, theEditZone);
+
+	let aTempEditor = CodeMirror(editable);
+
+  aTempEditor.on('change',broadcastEdits);
+  aTempEditor.on('cursorActivity',broadcastPos) //Will pass the cm object  
+	editable.cm = aTempEditor;
+	console.log(aTempEditor)
 }
