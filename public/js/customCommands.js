@@ -94,12 +94,17 @@ function ls(aTerminal, ArrArray){
 }
 
 //OPEN will call create, passing the terminal, + ['CodeMirror','String of file'] as arg.
+//wow how on earth did this work. create takes a terminal that its called from and an array of options? Maybe that should be an options object
 function create(aTerminal, ArrArray){
+	//So first up, figure out the name of the things we're creating. Here its assumed to be the first element of the ArrAray
 	let newEntity = ArrArray[0];
+	//create Placeholder object
 	let result = createResult('query', 'Waiting for constructor to be available');
+	//checks if the consturctor function is in the global scope. Constructor functions bear the same name as their source file, so 'newEntity' represents a filename and a function name.
 	if(window[newEntity] === undefined){
-		let pathname = '/js/constructors/' + newEntity + '.js';
+		//if the constructor function of that name doesn't exist, create a script tag and set its src as this pathname and then append that script to the head
 		let newScript = document.createElement('script');
+		let pathname = '/js/constructors/' + newEntity + '.js';
 		newScript.setAttribute('src', pathname);
 		newScript.setAttribute('defer','true')
 		document.head.appendChild(newScript);
@@ -127,10 +132,10 @@ function create(aTerminal, ArrArray){
 		},1000)
 
 	} else {
-	//	let newConstructor = eval(`new ${newEntity}`)
-		let newConstructor = new window[newEntity](ArrArray[1],ArrArray[2])
+		//OK, the construcotr DOES exist on the global scope, so invoke it with the new keyword and pass 2nd and 3rd elements of the array to it as args
+		let newConstructor = new window[newEntity](ArrArray[1],ArrArray[2]) 
 		try{
-			let newComponent = newConstructor.render() //an array of things after the name of the thing
+			let newComponent = newConstructor.render()
 			document.body.appendChild(newComponent)
 			result.innerText = `Constructor invoked, ${newComponent.id} added to DOM`
 		}catch(e){

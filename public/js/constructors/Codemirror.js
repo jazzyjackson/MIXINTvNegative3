@@ -4,7 +4,7 @@ function Codemirror(optStringInit,optFileName){
 
   Leaf.call(this)
   this.element.className += ' codemirrorContainer'
-  var codemirrorList = document.getElementsByClassName('codemirror')
+  var codemirrorList = document.getElementsByClassName('codemirrorContainer')
   this.element.id = optFileName ? optFileName : ('untitled' + codemirrorList.length);
   var header = this.element.getElementsByClassName('entityHeader')[0];
   header.innerText = this.element.id;
