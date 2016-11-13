@@ -29,6 +29,13 @@ theBody.insertBefore(theEditZone, document.body.firstElementChild);
 
 
 function addSection(){
+	//called from one of two places. Either, on a addSection button click
+	//or in response to a socket event, fireClick
+	//if it was fired remotely, it is called without arguments.
+	//if it was called via click listener, the mouseevent will be in the arguments object, and arguments.length will by 1, truthy.
+	if(arguments.length) fireClick(this.id);
+	console.log(arguments)
+	console.log(this);
 	let editable = document.createElement('div');
 	editable.style.height = '100px'
 	editable.style.width = '100%'

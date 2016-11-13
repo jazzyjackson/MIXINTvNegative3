@@ -136,20 +136,23 @@ app.get('/:notYetAFile', function(req,res){
 
 io.on('connection', function(socket){
 		identities[socket.id] = {ip: socket.client.conn.remoteAddress.split(':').slice(-1)[0], name: null};
-    socket.on('event', function (data){
+    socket.on('event', data => {
       socket.broadcast.to(identities[socket.id].room).emit('event',data);
     });
-		socket.on('filesaveResult', function (data){
+		socket.on('filesaveResult', data => {
       socket.broadcast.to(identities[socket.id].room).emit('filesaveResult',data);
     });
-		socket.on('remoteRunFile', function(data){
+		socket.on('remoteRunFile', data => {
 			socket.broadcast.to(identities[socket.id].room).emit('remoteRunFile', data)
 		})
-		socket.on('cursorActivity', function(data){
+		socket.on('cursorActivity', data => {
 			socket.broadcast.to(identities[socket.id].room).emit('cursorActivity', data)
 		})
-		socket.on('mirrorChange', function(data){
+		socket.on('mirrorChange', data => {
 			socket.broadcast.to(identities[socket.id].room).emit('mirrorChange', data)
+		})
+	  socket.on('clickThis', data => {
+			socket.broadcast.to(identities[socket.id].room).emit('clickThis', data);
 		})
 
 		socket.on('subscribe', function(data){

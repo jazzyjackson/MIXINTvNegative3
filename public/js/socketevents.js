@@ -9,6 +9,13 @@ fireSubscribe();
 //fireSubscribe is called when the script is first loaded and anytime the document is saved, 
 //or any other action that changes the url, since url is used as the socket room name
 
+function fireClick(aButtonId){
+	socket.emit('clickThis', {id: aButtonId})
+}
+socket.on('clickThis', aButtonObj => {
+	addSection();
+})
+
 socket.on('event', function(event){
   switch(event.type){
 
