@@ -218,7 +218,7 @@ function save(aTerminal, ArrArray, options){
 			requestElement.className = 'result';
 			//appendResult is a socket creator. Fires a message named filesaveresult, payload is the innerText plus the id of the request element...
 			appendResult(requestElement.innerText, requestElement.id, aTerminal.id);
-			window.history.pushState({},null,`http://${window.location.host}/savedTrees/${aTerminal.id}.html${location.search}`)
+			window.history.pushState({},null,`http://${window.location.host}/savedTrees/${aTerminal.id}.html`)
 			fireSubscribe();
 			//sets documnent.head text tag inner text to current terminal id. 
 			updateTitleText(aTerminal.id);
@@ -375,3 +375,20 @@ function addDblClickListeners(directoryElement){
 	listOfFiles.forEach(el => el.addEventListener('dblclick', runFile));
 	listOfFiles.forEach(el => el.addEventListener('click', runFile));
 }
+
+document.body.addEventListener('keydown', event => {
+	if(event.key === 'Escape'){
+		let mirrorEscapedFrom = event.path.filter(el => el.className && el.className.includes('tempEditor'))[0]
+		if(mirrorEscapedFrom){
+			revertTempEditor(mirrorEscapedFrom);
+		}
+	}
+})
+
+
+function revertTempEditor(aMirrorContainer){
+	console.log(aMirrorContainer.cm.doc.getValue());
+	aMirrorContainer.innerHTML = aMirrorContainer.cm.doc.getValue();
+}
+
+

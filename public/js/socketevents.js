@@ -35,6 +35,17 @@ socket.on('event', function(event){
   }
 })
 
+socket.on('revertEditor', editorIdObj => {
+	console.log("hit! " + editorIdObj.aMirrorContainerId)
+	let theContainer = document.getElementById(editorIdObj.aMirrorContainerId);
+	revertTempEditor(theContainer);
+})
+
+function fireRevert(aMirrorContainerId){
+	console.log("firing! " + aMirrorContainerId);
+	socket.emit('revertEditor', {aMirrorContainerId})
+};
+
 socket.on('remoteRunFile', data => {
   let targetTerminal = document.getElementById(data.terminal);
   let pathname = data.path;

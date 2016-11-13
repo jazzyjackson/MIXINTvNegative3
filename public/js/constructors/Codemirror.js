@@ -74,6 +74,7 @@ function tryToAppend(aTag){
 }
 
 function timeout(ms){
+	//hahahaha apparently you cant reject promises with a timeout, so you have to resolve it and race it!
   return new Promise((resolve)=>{
     setTimeout(()=>resolve(false),ms)
   })

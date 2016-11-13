@@ -33,7 +33,7 @@ function addSection(event, remoteUniq){
 	//or in response to a socket event, fireClick
 	//if it was fired remotely, it is called without arguments.
 	//if it was called via click listener, the mouseevent will be in the arguments object, and arguments.length will by 1, truthy.
-	aNiq = remoteUniq ? remoteUniq : Math.random() * Math.pow(2,32);
+	aNiq = remoteUniq ? remoteUniq : Math.trunc(Math.random() * Math.pow(2,32));
 	if(event) fireClick(this.id,aNiq);
 	console.log(arguments)
 	console.log(this);
@@ -42,7 +42,7 @@ function addSection(event, remoteUniq){
 	editable.style.width = '100%'
 	//editable.setAttribute('contentEditable', 'true');
 	editable.style.background = 'white';
-	editable.className = 'codemirrorContainer'
+	editable.className = 'codemirrorContainer tempEditor'
 	editable.id = 'tempeditable' + aNiq;
 	console.log('inserting')
 	theBody.insertBefore(editable, theEditZone);
@@ -54,3 +54,22 @@ function addSection(event, remoteUniq){
 	editable.cm = aTempEditor;
 	console.log(aTempEditor)
 }
+
+
+document.body.addEventListener('keydown', event => {
+	if(event.key === 'Escape'){
+		let mirrorEscapedFrom = event.path.filter(el => el.className && el.className.includes('tempEditor'))[0]
+		if(mirrorEscapedFrom){
+			revertTempEditor(mirrorEscapedFrom);
+		}
+	}
+})
+
+
+function revertTempEditor(aMirrorContainer){
+	console.log(aMirrorContainer);
+	aMirrorContainer.innerHTML = aMirrorContainer.cm.doc.getValue();
+	console.log(fireRevert);
+	fireRevert(aMirrorContainer.id);
+}
+

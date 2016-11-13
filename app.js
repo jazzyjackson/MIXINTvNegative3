@@ -154,6 +154,9 @@ io.on('connection', function(socket){
 	  socket.on('clickThis', data => {
 			socket.broadcast.to(identities[socket.id].room).emit('clickThis', data);
 		})
+	  socket.on('revertEditor', data => {
+			socket.broadcast.to(identities[socket.id].room).emit('revertEditor', data);
+		})
 
 		socket.on('subscribe', function(data){
 			socket.join(data.room);
