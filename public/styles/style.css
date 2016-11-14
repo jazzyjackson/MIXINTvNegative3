@@ -19,8 +19,8 @@ body {
    border: 1px solid black;
 }
 
-.leaf h3 {
-    font-family: 'VT323', monospace;
+.leaf h3.entityHeader {
+  font-family: 'VT323', monospace;
 
   border: 1px solid black;
   margin: 0;
@@ -31,7 +31,7 @@ body {
   background: white;
   position: absolute;
   top: -2em;
-  left: 0;
+  left: -1px;
   /*z-index: 1;*/
   /* oh shit, does being position absolute implicitely place it above unpositioned elements? */
   /*  terminal headers have zindex 1 to float above promps and results. 
@@ -71,7 +71,7 @@ body {
 }
 
 
-.codemirrorContainer h3{
+.codemirrorContainer h3.entityHeader{
   position: static;
   top: 0;
   left: 0;
@@ -79,10 +79,11 @@ body {
   border-bottom: 1px solid black;
 }
 
-.terminal h3 {
+.terminal h3.entityHeader {
   /*Make terminals impervious to leaf headers being hidden*/
   visibility: visible;
   top: -10px;
+	left: 0px;
   border: none;
   border-bottom: 1px solid black;
   padding: 15px 0 5px 0;
@@ -111,7 +112,7 @@ body {
 }
 
 .terminal > p:first-of-type {
-  margin-top: 1.5em;
+  margin-top: 2em;
 }
 .terminal .fs {
   border: 2px solid transparent;
