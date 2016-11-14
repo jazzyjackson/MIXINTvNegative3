@@ -51,6 +51,19 @@ body {
 }
 .removeButton:hover{
 	color: red;
+  border-color: red;
+}
+.editButton:hover{
+  color: green;
+  border-color: green;
+}
+.removeButton:active{
+  color: white;
+  background: red;
+}
+.editButton:active{
+  color: white;
+  background: green;
 }
 
 
