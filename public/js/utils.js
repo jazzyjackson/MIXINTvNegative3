@@ -200,6 +200,11 @@ allContent.addEventListener('keydown', event => {
     }
 })
 
+
+function liveConnect(instanceOfCodeMirror, aNodeToConnect){
+	let closedCallback = function(){aNodeToConnect.innerHTML = instanceOfCodeMirror.doc.getValue()};
+	instanceOfCodeMirror.on('change',closedCallback);
+}	
 //Following code was too cool not to pull in. Offered copyleft by Jan Wolter at unixpapa.com/js/querystring.html
 function QueryString(qs)
 {
