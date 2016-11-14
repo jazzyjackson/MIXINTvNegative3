@@ -4,6 +4,5 @@
 
 *~
 *.un~
-*.swp
-*.swo
+*.sw*
 /.vscode/

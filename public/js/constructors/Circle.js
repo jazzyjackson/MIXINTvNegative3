@@ -12,12 +12,11 @@ function Circle(xPos,yPos,radius,color){
   this.element.style.width = diameter;
   this.element.style.borderRadius = diameter;
   this.element.style.background = background;
-  this.element.id = 'circle' + document.getElementsByClassName('circle').length;
+  this.element.id = 'circle' + nextIdNum('.circle');
   function an8bitrandom(){
     return Math.floor(Math.random() * 255);
   }
-  var header = this.element.getElementsByClassName('entityHeader')[0];
-  header.innerText = this.element.id;
+  this.entityHeader.firstChild.textContent = this.element.id;
   this.render = function(){
     return this.element;
   }

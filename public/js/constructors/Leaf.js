@@ -18,9 +18,25 @@ function Leaf(xPos, yPos, width, height){
   this.element.style.background = 'white';
 
   this.entityHeader = document.createElement('h3');
-  this.element.id = "leaf" + document.getElementsByClassName('leaf').length;
+  this.element.id = "leaf" + nextIdNum('.leaf');
   this.entityHeader.innerText = this.element.id;
   this.entityHeader.className = 'entityHeader';  
+
+	let editButton = document.createElement('div')
+	editButton.className = 'editButton';
+	editButton.innerHTML = 'A';
+	editButton.onclick = editThis;
+	//editThis is a function defined in utils.js that creates a codemirror with the contents of this div as its starting string
+	let removeButton = document.createElement('div')
+	removeButton.className = 'removeButton';
+	removeButton.innerHTML = 'X';
+	removeButton.onclick = event => {event.target.parentElement.parentElement.remove()};
+	
+	this.entityHeader.appendChild(editButton);
+	this.entityHeader.appendChild(removeButton);
+	
+	
+				
   this.element.appendChild(this.entityHeader);
   initLeafListeners(this.element);
 
@@ -29,4 +45,6 @@ function Leaf(xPos, yPos, width, height){
 Leaf.prototype.render = function(){
   return this.element
 }
+
+
 

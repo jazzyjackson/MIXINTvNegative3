@@ -13,7 +13,7 @@ var allContent = document.documentElement;
 allContent.addEventListener('mousedown', function(event){
   //Neat! On mousedown, the activeElement is the LAST thing that was clicked on, not the thing that mousedown just hit.
   if((event.target.tagName === 'HTML' || event.target.tagName === 'BODY') && event.shiftKey){
-    console.log(event.clientX, event.clientY, document.activeElement.id)
+    //console.log(event.clientX, event.clientY, document.activeElement.id)
     document.activeElement = document.body;
     document.documentElement.addEventListener('mousemove', handleMove);
     socketize(event);
@@ -205,6 +205,41 @@ function liveConnect(instanceOfCodeMirror, aNodeToConnect){
 	let closedCallback = function(){aNodeToConnect.innerHTML = instanceOfCodeMirror.doc.getValue()};
 	instanceOfCodeMirror.on('change',closedCallback);
 }	
+
+function editThis(){
+				//the mouse click that fired this function will be on a button. two parents up exists the id of the div. inner + that id should give the element id of the inner DIV we want
+				let parentId = event.target.parentElement.parentElement.id
+				let parentNode = document.getElementById(parentId);
+				let targetNode = document.getElementById('inner' + parentId);
+				let mirrorText = targetNode.innerHTML;
+				let targetTerminal = document.querySelector('.terminal');
+				let startX = parseInt(parentNode.style.left) + (parseInt(parentNode.style.width) / 2);
+				let startY = parseInt(parentNode.style.top) + (parseInt(parentNode.style.height) / 2);
+				console.log(startX, startY);
+				let assumedCodemirrorId = 'Codemirror' + nextIdNum('.codemirrorContainer'); 
+				create(targetTerminal, ['Codemirror', mirrorText, parentId, startX, startY])
+				setTimeout(()=>{
+					let hopefullyACodemirror = document.getElementById(assumedCodemirrorId);
+					liveConnect(hopefullyACodemirror.cm,targetNode)
+				}, 500)
+				//problem incoming: it should not be allowed to create a second codemirror for the same node. Or otherwise you better sync those docs.
+}
+
+function nextIdNum(classname){
+	//get a node list of all elements with this class
+	nodelist = document.querySelectorAll(classname);
+	//convert it to an array of id
+	nodelist = Array.from(nodelist, each => each.id)
+	//filter it to an array of ids with numbers
+	nodelist = nodelist.filter(each => /[0-9]+/.test(each))
+	//reduce it to just the number (exec returns an array of matches, I'll grab the first match
+	nodelist = nodelist.map(each=>/[0-9]+/.exec(each)[0])
+	//find the max
+	let result = Math.max.apply(Math, nodelist)
+	//Math.max on an empty array returns negative infinity. 
+	return (result === -Infinity) ? 0 : result + 1;
+}
+	
 //Following code was too cool not to pull in. Offered copyleft by Jan Wolter at unixpapa.com/js/querystring.html
 function QueryString(qs)
 {

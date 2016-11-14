@@ -8,14 +8,14 @@ function Tag(tagName,xPos,yPos,options){
   console.log(this)
   this.element.className += ' tag'; //add image to list of classNames with +=
   //starts out having an id of 'leaf'' + numberOfLeaves but you should overwrite this. this.entityHeader is a reference to the DOM Node instantiated in the parent Constructor
-  this.element.id = "tag" + document.getElementsByClassName('tag').length;
-  this.entityHeader.innerText = this.element.id;
+  this.element.id = "tag" + nextIdNum('.tag')
+  this.entityHeader.firstChild.textContent = this.element.id;
 
 	let htmlContainer = document.createElement('div');
 	htmlContainer.id = 'inner' + this.element.id;
 	htmlContainer.style = 'width: 100%; height: 100%;';
 	
-  let defaultElement = document.createElement(tagName);
+  let defaultElement = document.createElement(tagName ? tagName : 'div');
   if(options && options.url) defaultElement.setAttribute('src',url);
 
   //for images I don't want to set a fixed height, the image will fill width

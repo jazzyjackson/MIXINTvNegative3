@@ -1,10 +1,11 @@
 function Terminal(xPos, yPos){
   Leaf.call(this, xPos, yPos);
   this.element.setAttribute('history', 0); //0 is most recent, negative numbers go back in time
-  this.element.id = "root" + document.getElementsByClassName('terminal').length;
+  this.element.id = "root" + nextIdNum('.terminal');
   this.element.className += ' terminal'; //addClass terminal to existing className
   this.element.setAttribute('protoPrompt', 'localhost/' + this.element.id + " > ");
-  this.entityHeader.innerText = this.element.id;
+	//not sure if I can rely on the first child of the header to be the text Node, maybe there's a more generalizable way to get to the text node
+  this.entityHeader.firstChild.textContent = this.element.id;
   let protoPrompt = this.element.getAttribute('protoPrompt');
   let prompt = document.createElement('p');
   prompt.className = 'prompt';

@@ -110,17 +110,21 @@ function create(aTerminal, ArrArray){
 		document.head.appendChild(newScript);
 
 		//loading the script is asynchronous, the constructor cannot be called immediately
+		//timerID is a reference to the timer that is attempting to invoke the constructor every 10 milliseconds
+		//once it succeeds in invoking the constructor, it clearsInterval of itself, so it stops trying
 
 		let timerID = setInterval(() => {
 			if(window[newEntity]){
-				let newConstructor = new window[newEntity](ArrArray[1],ArrArray[2])
+				let newConstructor = new window[newEntity](...ArrArray.slice(1));
 				let newComponent = newConstructor.render();
 				document.body.appendChild(newComponent);
 				clearInterval(timerID);
 				result.innerText = `Constructor retrieved and invoked, ${newComponent.id} added to DOM`
 			}
 		}, 10)
-
+		//after one second, the timerID is cleared whether it exists or not.
+		//if the constructor still isnt available, the result inner Text is updated and a mean girls reference is printed to the console.
+		//furthermore, the script tag that was generated to load the constructor src is removed from the DOM if it never worked out.
 
 		setTimeout(()=>{
 			if(!window[newEntity]){
@@ -133,13 +137,13 @@ function create(aTerminal, ArrArray){
 
 	} else {
 		//OK, the construcotr DOES exist on the global scope, so invoke it with the new keyword and pass 2nd and 3rd elements of the array to it as args
-		let newConstructor = new window[newEntity](ArrArray[1],ArrArray[2]) 
+		let newConstructor = new window[newEntity](...ArrArray.slice(1)) 
 		try{
 			let newComponent = newConstructor.render()
 			document.body.appendChild(newComponent)
 			result.innerText = `Constructor invoked, ${newComponent.id} added to DOM`
 		}catch(e){
-			result.innerText = `Couldn't find constructor for ${newEntity}`
+			result.innerText = `${newEntity} was not undefined, but it also didn't return a DOM node from a render function, so I don't know what's up.`
 		}
 	}
 

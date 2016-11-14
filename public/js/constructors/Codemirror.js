@@ -1,13 +1,13 @@
-function Codemirror(optStringInit,optFileName){
+function Codemirror(optStringInit,optFileName,startX, startY){
 
-  console.log(optFileName)
+  console.log(arguments)
 
-  Leaf.call(this)
+  Leaf.call(this, startX, startY)
   this.element.className += ' codemirrorContainer'
   var codemirrorList = document.getElementsByClassName('codemirrorContainer')
-  this.element.id = optFileName ? optFileName : ('untitled' + codemirrorList.length);
-  var header = this.element.getElementsByClassName('entityHeader')[0];
-  header.innerText = this.element.id;
+  this.element.id = 'Codemirror' + nextIdNum('.codemirrorContainer');
+  this.entityHeader.firstChild.textContent = this.element.id;
+  this.entityHeader.firstChild.textContent += optFileName ? (' > ' + optFileName) : '';
   this.element.style.width = '400px';
   this.element.style.height = '400px';
   var codeText = document.createElement('textarea');
