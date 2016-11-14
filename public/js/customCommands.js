@@ -179,7 +179,7 @@ function rename(aTerminal, ArrArray){
 		return createResult('result', `${ArrArray[0]} doesn't appear to an element. Use an existing id.`);
 	}
 	targetElement.id = newId;
-	targetElement.childNodes[0].innerText = targetElement.id;
+	targetElement.firstChild.firstChild.textContent = targetElement.id;
 	targetElement.setAttribute('prompt', 'localhost/' + targetElement.id + " > ");
 	return createResult('result', oldId + ' has been renamed to ' + targetElement.id);
 }
