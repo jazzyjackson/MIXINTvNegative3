@@ -212,20 +212,25 @@ function liveConnect(instanceOfCodeMirror, aNodeToConnect){
 
 function editThis(){
 				//the mouse click that fired this function will be on a button. two parents up exists the id of the div. inner + that id should give the element id of the inner DIV we want
-				let parentId = event.target.parentElement.parentElement.id
+        let parentId = event.target.parentElement.parentElement.id
 				let parentNode = document.getElementById(parentId);
 				let targetNode = document.getElementById('inner' + parentId);
-				let mirrorText = targetNode.innerHTML;
-				let targetTerminal = document.querySelector('.terminal');
-				let startX = parseInt(parentNode.style.left) + (parseInt(parentNode.style.width) / 2);
-				let startY = parseInt(parentNode.style.top) + (parseInt(parentNode.style.height) / 2);
-				console.log(startX, startY);
-				let assumedCodemirrorId = 'Codemirror' + nextIdNum('.codemirrorContainer'); 
-				create(targetTerminal, ['Codemirror', mirrorText, parentId, startX, startY])
-				setTimeout(()=>{
-					let hopefullyACodemirror = document.getElementById(assumedCodemirrorId);
-					liveConnect(hopefullyACodemirror.cm,targetNode)
-				}, 500)
+        console.log(parentNode, targetNode)
+        if(targetNode){
+          let mirrorText = targetNode.innerHTML;
+          let targetTerminal = document.querySelector('.terminal');
+          let startX = parseInt(parentNode.style.left) + (parseInt(parentNode.style.width) / 2);
+          let startY = parseInt(parentNode.style.top) + (parseInt(parentNode.style.height) / 2);
+          console.log(startX, startY);
+          let assumedCodemirrorId = 'Codemirror' + nextIdNum('.codemirrorContainer'); 
+          create(targetTerminal, ['Codemirror', mirrorText, parentId, startX, startY])
+          setTimeout(()=>{
+            let hopefullyACodemirror = document.getElementById(assumedCodemirrorId);
+            liveConnect(hopefullyACodemirror.cm,targetNode)
+          }, 500)
+        } else {
+          hoist(parentNode.cm.doc.getValue())
+        }
 				//problem incoming: it should not be allowed to create a second codemirror for the same node. Or otherwise you better sync those docs.
 }
 

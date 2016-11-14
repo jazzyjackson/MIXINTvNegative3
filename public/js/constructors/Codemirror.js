@@ -10,6 +10,10 @@ function Codemirror(optStringInit,optFileName,startX, startY){
   this.entityHeader.firstChild.textContent += optFileName ? (' > ' + optFileName) : '';
   this.element.style.width = '400px';
   this.element.style.height = '400px';
+
+  var editButton = this.entityHeader.querySelector('.editButton');
+  editButton.textContent = 'R'
+
   var codeText = document.createElement('textarea');
   if(optStringInit){
     codeText.value = optStringInit;
@@ -77,6 +81,12 @@ function timeout(ms){
   return new Promise((resolve)=>{
     setTimeout(()=>resolve(false),ms)
   })
+}
+
+function hoist(scriptString){
+  let newScript = document.createElement('script');
+  newScript.textContent = scriptString;
+  document.head.appendChild(newScript);
 }
 
 
