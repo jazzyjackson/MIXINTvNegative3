@@ -120,10 +120,18 @@ function initLeafListeners(aLeafElement){
   aLeafElement.addEventListener('scroll', function(event){
     event.target.firstChild.style.top = event.target.scrollTop - 10;
   })
-	let editButton = aLeafElement.getElementsByClassName('editButton')[0]
-	editButton.onclick = editThis;
-  let removeButton = aLeafElement.getElementsByClassName('removeButton')[0]
-	removeButton.onclick = event => {event.target.parentElement.parentElement.remove()};
+  try{
+    let editButton = aLeafElement.getElementsByClassName('editButton')[0]
+    editButton.onclick = editThis;
+  } catch (e){
+    console.log(e)
+  }
+  try{
+    let removeButton = aLeafElement.getElementsByClassName('removeButton')[0]
+    removeButton.onclick = event => {event.target.parentElement.parentElement.remove()};
+  } catch(e){
+    console.log(e)
+  }
 }
 
 window.addEventListener('load', ()=>{
