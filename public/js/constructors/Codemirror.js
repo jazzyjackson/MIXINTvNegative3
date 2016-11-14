@@ -84,7 +84,10 @@ function timeout(ms){
 }
 
 function hoist(scriptString){
+  let oldScript = document.getElementById('repl');
+  oldScript.remove();
   let newScript = document.createElement('script');
+  newScript.id = 'repl';
   newScript.textContent = scriptString;
   document.head.appendChild(newScript);
 }
