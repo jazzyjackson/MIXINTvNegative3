@@ -10,9 +10,11 @@ fireSubscribe();
 //or any other action that changes the url, since url is used as the socket room name
 
 socket.on('event', function(event){
+  console.log(event)
   switch(event.type){
+    case 'dblclick': addTerminal(event.clientX, event.clientY); break;
 
-    case 'dblclick': addTerminal(event.clientX, event.clientY);
+    case 'click': document.querySelector(event.targetId).dispatchEvent(new Event('click')); break;
         
     case 'mouseup': remoteUpdatePos = undefined; break;
     case 'touchend': remoteUpdatePos = undefined; break;
@@ -26,6 +28,9 @@ socket.on('event', function(event){
     case 'keydown': handleKeystroke(event.key, event.keyCode, event.targetId, false); break;
   }
 })
+
+socket.on('mirrorChange', (data)=>(changeMirror(data)))
+
 
 socket.on('remoteRunFile', data => {
   let targetTerminal = document.getElementById(data.terminal);

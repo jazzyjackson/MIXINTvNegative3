@@ -128,7 +128,15 @@ function initLeafListeners(aLeafElement){
   }
   try{
     let removeButton = aLeafElement.getElementsByClassName('removeButton')[0]
-    removeButton.onclick = event => {event.target.parentElement.parentElement.remove()};
+    removeButton.onclick = event => {
+      console.log(event)
+      let parentNode = event.target.parentElement.parentElement;
+      parentNode.remove()
+      if(event.isTrusted){
+        let queryId = `#${parentNode.id}  .${event.target.className}`;
+        socketize(event, queryId);
+      }
+    }
   } catch(e){
     console.log(e)
   }
@@ -218,8 +226,14 @@ function liveConnect(instanceOfCodeMirror, aNodeToConnect){
 	instanceOfCodeMirror.on('change',closedCallback);
 }	
 
-function editThis(){
-				//the mouse click that fired this function will be on a button. two parents up exists the id of the div. inner + that id should give the element id of the inner DIV we want
+function editThis(event){
+ 
+        //This is attached to the edit button on all leaves
+        //functionality is overloaded
+        //if there is an innerdiv (assienged to targetNode) then: create Codemirror, fire liveConnect between that Codemirror and that innerdiv
+        //if that innerdiv doesn't exist, we're not dealing with a tag, so right now I'm assuming its a JS string that can be inserted to a script tag
+        //that has to be generalized. best to have an attribute that can be switched on.
+        //the mouse click that fired this function will be on a button. two parents up exists the id of the div. inner + that id should give the element id of the inner DIV we want
         let parentId = event.target.parentElement.parentElement.id
 				let parentNode = document.getElementById(parentId);
 				let targetNode = document.getElementById('inner' + parentId);
@@ -240,6 +254,10 @@ function editThis(){
           hoist(parentNode.cm.doc.getValue())
         }
 				//problem incoming: it should not be allowed to create a second codemirror for the same node. Or otherwise you better sync those docs.
+        if(event.isTrusted){
+          console.log(`#${parentId}  .${event.target.className}`)
+          socketize(event, `#${parentId}  .${event.target.className}`)
+        }
 }
 
 function nextIdNum(classname){

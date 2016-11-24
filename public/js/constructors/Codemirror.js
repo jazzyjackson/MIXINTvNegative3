@@ -127,14 +127,12 @@ function broadcastEdits(theMirror,changeObj){
   }
 }
 
-socket.on('mirrorChange', data => {
-
-  console.log(data);
+function changeMirror(data){
   let {changeFrom, changeTo, newContent, mirrorContainer} = data;
   let leaf = document.getElementById(mirrorContainer);
   let theMirror = leaf.cm
   theMirror.getDoc().replaceRange(newContent,changeFrom,changeTo)
-})
+}
 
 console.log(document.readyState)
 

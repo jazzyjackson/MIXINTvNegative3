@@ -25,26 +25,21 @@ function Leaf(xPos, yPos, width, height){
 	let editButton = document.createElement('div')
 	editButton.className = 'editButton';
 	editButton.innerHTML = 'A';
-	editButton.onclick = editThis;
 	//editThis is a function defined in utils.js that creates a codemirror with the contents of this div as its starting string
 	let removeButton = document.createElement('div')
 	removeButton.className = 'removeButton';
 	removeButton.innerHTML = 'X';
-	removeButton.onclick = event => {event.target.parentElement.parentElement.remove()};
+
 	
 	this.entityHeader.appendChild(editButton);
 	this.entityHeader.appendChild(removeButton);
-	
-	
-				
+
   this.element.appendChild(this.entityHeader);
   initLeafListeners(this.element);
 
-}
+};
 
 Leaf.prototype.render = function(){
   return this.element
 }
-
-
 
