@@ -26,6 +26,8 @@ function exec(aTerminal, ArrArray,options){
 
 		let requestElement = createResult('request', 'Running command on server...');
 		let command = options.potentialCommand + ' ' + ArrArray.join(' ');
+		//throw out anything after the semicolon, only allow one command be passed
+		command = command.split(';')[0];
 		fetch(`http://${window.location.host}/exec`, {
 			method: 'POST',
 			body: 'command=' + encodeURIComponent(command),
