@@ -94,7 +94,7 @@ function createUpdatePos(clientX, clientY){
 };
 
 function initLeafListeners(aLeafElement){
-  var entityHeader = aLeafElement.getElementsByClassName('entityHeader')[0];
+  var entityHeader = aLeafElement.querySelector('.entityHeader');
   entityHeader.addEventListener('mousedown', function(event){
     document.documentElement.addEventListener('mousemove', handleMove);
     socketize(event);
@@ -106,7 +106,7 @@ function initLeafListeners(aLeafElement){
       socketize(event);
       updatePos = createUpdatePos(convertedEvent.clientX, convertedEvent.clientY, document.activeElement.id);
       aLeafElement.focus();
-});
+  });
 
   aLeafElement.addEventListener('touchmove', function(event){
     event.preventDefault();
@@ -120,14 +120,13 @@ function initLeafListeners(aLeafElement){
   aLeafElement.addEventListener('scroll', function(event){
     event.target.firstChild.style.top = event.target.scrollTop - 10;
   })
-  try{
-    let editButton = aLeafElement.getElementsByClassName('editButton')[0]
+
+  let editButton = aLeafElement.querySelector('.editButton')
+  if(editButton){
     editButton.onclick = editThis;
-  } catch (e){
-    console.log(e)
   }
-  try{
-    let removeButton = aLeafElement.getElementsByClassName('removeButton')[0]
+  let removeButton = aLeafElement.querySelector('.removeButton')
+  if(removeButton){
     removeButton.onclick = event => {
       console.log(event)
       let parentNode = event.target.parentElement.parentElement;
@@ -137,8 +136,6 @@ function initLeafListeners(aLeafElement){
         socketize(event, queryId);
       }
     }
-  } catch(e){
-    console.log(e)
   }
 }
 
@@ -183,7 +180,7 @@ document.documentElement.addEventListener('keydown',(event)=>{
 function saveShortcut() { 
   //Ugh. Ugly workaround if you hit ctrl s when a codemirror is focused. Before saving, 
   //grab elements with classname CodeMirror-focused and remove it from classes
-  let possiblyFocusedCM = document.getElementsByClassName('CodeMirror-focused')[0];
+  let possiblyFocusedCM = document.querySelector('.CodeMirror-focused');
   possiblyFocusedCM && (possiblyFocusedCM.className = possiblyFocusedCM.className.replace(/CodeMirror-focused/,''));
   let termArr = Array.from(document.getElementsByClassName('terminal')); 
   termArr = termArr.filter(each => window.location.pathname.includes(each.id)); 
