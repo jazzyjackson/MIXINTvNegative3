@@ -1,13 +1,22 @@
 
 const express = require('express');
+const fs = require('fs')
 const app = express();
-const server = require('http').Server(app);
+
+var options = {
+  key: fs.readFileSync('./ssl/keyname.pem'),
+  cert: fs.readFileSync('./ssl/certname.pem')
+};
+
+const server = require('http').createServer(app);
+const sserver = require('https').createServer(options,app);
+
+
 const path = require('path');
 
-const fs = require('fs')
 const exec = require('child_process').exec
 
-const io = require('socket.io')(server);
+const io = require('socket.io')(sserver);
 const serverlogging = require('morgan');
 const bodyParser = require('body-parser')
 app.use( bodyParser.json() );       // to support JSON-encoded bodies
@@ -15,12 +24,12 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
 })); 
 
-
 let port = process.env.PORT || 3000;
 
 console.log(`Listening on ${port}`);
 var identities = {};
 server.listen(port);
+sserver.listen(3030)
 
 app.use(serverlogging('dev'));
 app.use(express.static(__dirname+ '/public'));

@@ -209,7 +209,7 @@ function save(aTerminal, ArrArray, options){
 
   //save is called with an options object. When invoked with keystroke, isLocal is true, when invoked via socket message, isLocal is false or undefined.
 	if(options.isLocal){
-		fetch('http://' + window.location.host + '/savethis', {
+		fetch(location.protocol + '//' + window.location.host + '/savethis', {
 			method: 'POST',
 			headers: {
 				"Content-Type": "application/x-www-form-urlencoded"
