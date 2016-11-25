@@ -147,7 +147,12 @@ window.addEventListener('load', ()=>{
       let textArea = mirrorContainer.getElementsByTagName('TEXTAREA')[0];
       mirrorContainer.cm = CodeMirror.fromTextArea(textArea, {lineNumbers: true});
       mirrorContainer.cm.on('change',broadcastEdits);
-      mirrorContainer.cm.on('cursorActivity',broadcastPos) //Will pass the cm object  
+      mirrorContainer.cm.on('cursorActivity',broadcastPos) //Will pass the cm object 
+      let possibleUpdate = mirrorContainer.getAttribute('update');
+      if(possibleUpdate){
+        console.log('connecting to ' + possibleUpdate)
+        liveConnect(mirrorContainer.cm,document.getElementById(possibleUpdate))
+      } 
     })
 })
 

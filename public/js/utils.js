@@ -221,6 +221,7 @@ allContent.addEventListener('keydown', event => {
 function liveConnect(instanceOfCodeMirror, aNodeToConnect){
 	let closedCallback = function(){aNodeToConnect.innerHTML = instanceOfCodeMirror.doc.getValue()};
 	instanceOfCodeMirror.on('change',closedCallback);
+  instanceOfCodeMirror.display.wrapper.parentElement.setAttribute('update',aNodeToConnect.id);
 }	
 
 function editThis(event){
