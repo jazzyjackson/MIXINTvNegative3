@@ -10,25 +10,27 @@ fireSubscribe();
 //or any other action that changes the url, since url is used as the socket room name
 
 socket.on('event', function(event){
-  console.log(event)
-  switch(event.type){
-    //triggered by doubleclicking on the background
-    case 'dblclick': addTerminal(event.clientX, event.clientY); break;
-    //triggered by clicking on header buttons
-    case 'click': document.querySelector(event.targetId).dispatchEvent(new Event('click')); break;
-    // when an element is broadcasting its movements START
-    case 'mousedown': remoteUpdatePos = createUpdatePos(event.clientX, event.clientY); break; 
-    case 'touchstart':  remoteUpdatePos = createUpdatePos(event.clientX, event.clientY); break;
-    // when an element is broadcasting its movements MOVE
-    case 'mousemove': remoteUpdatePos(event.clientX, event.clientY, event.targetId); break;
-    case 'touchmove': remoteUpdatePos(event.clientX, event.clientY, event.targetId); break;     // when an element is broadcasting its movements 
-    // when an element is broadcasting its movements END
-    case 'mouseup': remoteUpdatePos = undefined; break;
-    case 'touchend': remoteUpdatePos = undefined; break;
-    case 'touchcancel': remoteUpdatePos = undefined; break;
-    // when a terminal is broadcasting whats being typed
-    case 'keydown': handleKeystroke(event.key, event.keyCode, event.targetId, false); break;
+  if(isListening(event.targetId)){
+    switch(event.type){
+      //triggered by doubleclicking on the background
+      case 'dblclick': addTerminal(event.clientX, event.clientY); break;
+      //triggered by clicking on header buttons
+      case 'click': document.querySelector(event.targetId).dispatchEvent(new Event('click')); break;
+      // when an element is broadcasting its movements START
+      case 'mousedown': remoteUpdatePos = createUpdatePos(event.clientX, event.clientY); break; 
+      case 'touchstart':  remoteUpdatePos = createUpdatePos(event.clientX, event.clientY); break;
+      // when an element is broadcasting its movements MOVE
+      case 'mousemove': remoteUpdatePos(event.clientX, event.clientY, event.targetId); break;
+      case 'touchmove': remoteUpdatePos(event.clientX, event.clientY, event.targetId); break;     // when an element is broadcasting its movements 
+      // when an element is broadcasting its movements END
+      case 'mouseup': remoteUpdatePos = undefined; break;
+      case 'touchend': remoteUpdatePos = undefined; break;
+      case 'touchcancel': remoteUpdatePos = undefined; break;
+      // when a terminal is broadcasting whats being typed
+      case 'keydown': handleKeystroke(event.key, event.keyCode, event.targetId, false); break;
+    }
   }
+
 })
 
 //changeMirror is defined in constructors/Codemirror.js 
@@ -60,16 +62,31 @@ function socketize(anEvent, targetId){
 	//whether its key or mouse. Irrelevant props will just be undefined.
 	//uses ES6 syntax to deconstruct the anEvent obj and construct the emit payload.
 	let {type, key, keyCode, buttons, clientX, clientY} = anEvent;
+  //targetId might be undefined for body events
+  //socketize should happen in such cases
+  //if there is a targetId, we have to check if broadcast is not false
+  if(isBroadcasting(targetId)){
+    socket.emit('event', {
+      type,
+      key,	
+      keyCode,
+      buttons,
+      clientX,
+      clientY,
+      targetId
+    })
+  }
+}
 
-  socket.emit('event', {
-    type,
-	  key,	
-	  keyCode,
-    buttons,
-    clientX,
-    clientY,
-    targetId
-  })
+function isBroadcasting(targetId){
+  let theLeaf = document.getElementById(targetId)
+  let broadcastBool = theLeaf ? theLeaf.getAttribute('broadcast') : 'true';
+  return broadcastBool === 'true' ? true : false;
+}
+function isListening(targetId){
+  let theLeaf = document.getElementById(targetId)
+  let broadcastBool = theLeaf ? theLeaf.getAttribute('listen') : 'true';
+  return broadcastBool === 'true' ? true : false;
 }
 
 
