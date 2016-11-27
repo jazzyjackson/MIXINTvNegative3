@@ -127,6 +127,7 @@ function broadcastEdits(theMirror,changeObj){
   }
 }
 
+//called from socketevents.js on('changemirror')
 function changeMirror(data){
   let {changeFrom, changeTo, newContent, mirrorContainer} = data;
   let leaf = document.getElementById(mirrorContainer);

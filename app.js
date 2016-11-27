@@ -135,8 +135,10 @@ app.get('/:notYetAFile', function(req,res){
 })
 
 io.on('connection', function(socket){
+
 		identities[socket.id] = {ip: socket.client.conn.remoteAddress.split(':').slice(-1)[0], name: null};
-    socket.on('event', function (data){
+    //event, filesaveResult, remoteRunFile, cursorActivity, mirrorChange are all just bounced back. Broadcast to all clients assigned to the same room.
+		socket.on('event', function (data){
       socket.broadcast.to(identities[socket.id].room).emit('event',data);
     });
 		socket.on('filesaveResult', function (data){

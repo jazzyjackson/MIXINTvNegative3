@@ -12,23 +12,26 @@ fireSubscribe();
 socket.on('event', function(event){
   console.log(event)
   switch(event.type){
+    //triggered by doubleclicking on the background
     case 'dblclick': addTerminal(event.clientX, event.clientY); break;
-
+    //triggered by clicking on header buttons
     case 'click': document.querySelector(event.targetId).dispatchEvent(new Event('click')); break;
-        
+    // when an element is broadcasting its movements START
+    case 'mousedown': remoteUpdatePos = createUpdatePos(event.clientX, event.clientY); break; 
+    case 'touchstart':  remoteUpdatePos = createUpdatePos(event.clientX, event.clientY); break;
+    // when an element is broadcasting its movements MOVE
+    case 'mousemove': remoteUpdatePos(event.clientX, event.clientY, event.targetId); break;
+    case 'touchmove': remoteUpdatePos(event.clientX, event.clientY, event.targetId); break;     // when an element is broadcasting its movements 
+    // when an element is broadcasting its movements END
     case 'mouseup': remoteUpdatePos = undefined; break;
     case 'touchend': remoteUpdatePos = undefined; break;
     case 'touchcancel': remoteUpdatePos = undefined; break;
-        
-    case 'mousedown': remoteUpdatePos = createUpdatePos(event.clientX, event.clientY); break; 
-    case 'touchstart':  remoteUpdatePos = createUpdatePos(event.clientX, event.clientY); break;
-        
-    case 'mousemove': remoteUpdatePos(event.clientX, event.clientY, event.targetId); break;
-    case 'touchmove': remoteUpdatePos(event.clientX, event.clientY, event.targetId); break; 
+    // when a terminal is broadcasting whats being typed
     case 'keydown': handleKeystroke(event.key, event.keyCode, event.targetId, false); break;
   }
 })
 
+//changeMirror is defined in constructors/Codemirror.js 
 socket.on('mirrorChange', (data)=>(changeMirror(data)))
 
 
