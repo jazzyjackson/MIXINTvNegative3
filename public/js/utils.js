@@ -137,7 +137,24 @@ function initLeafListeners(aLeafElement){
       }
     }
   }
+  let broadcastButton = aLeafElement.querySelector('.broadcastButton')
+  if(broadcastButton){
+    broadcastButton.onclick = () => toggleAttr('broadcast');
+  }
+  let listenButton = aLeafElement.querySelector('.listenButton')
+  if(listenButton){  
+    listenButton.onclick = () => toggleAttr('listen');
+  }
 }
+
+function toggleAttr(attrName){
+  let theLeaf = event.target.parentElement.parentElement
+  console.log(theLeaf.getAttribute(attrName))
+  let attrStatus = theLeaf.getAttribute(attrName)
+  theLeaf.setAttribute(attrName, attrStatus === 'true' ? 'false' : 'true')
+  console.log(theLeaf.getAttribute(attrName))
+}
+
 
 window.addEventListener('load', ()=>{
   //reattach all the click and drag listeners to all elements
