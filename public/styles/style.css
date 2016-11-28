@@ -153,7 +153,7 @@ body {
 }
 
 .terminal > p:first-of-type {
-  margin-top: 2em;
+  margin-top: 42px;
 }
 .terminal .fs {
   border: 2px solid transparent;
