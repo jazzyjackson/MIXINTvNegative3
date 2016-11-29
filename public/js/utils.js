@@ -363,3 +363,14 @@ QueryString.prototype.keys= function ()
         a.push(key);
     return a;
 };
+// a hashcode function. Short and sweet. Not reliable. 32bit. Collisions not improbable. 
+// http://werxltd.com/wp/2010/05/13/javascript-implementation-of-javas-string-hashcode-method/
+
+function hashCode(aString){
+  let hash = 0;
+  for(each in aString){
+    hash = ((hash<<5)-hash)+aString.charCodeAt(each)
+    hash = Math.abs(hash & hash);
+  }
+  return hash.toString(16);
+}

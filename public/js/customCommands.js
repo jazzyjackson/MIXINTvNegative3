@@ -4,12 +4,14 @@ var customCommands = {
 	// whereami: whereami, 
 	// howami: howami, 
 	// whenami: whenami,
-	rename: rename,
-	save: save,
+	record,
+	stop,
+	rename,
+	save,
+	create,
+	open,
 	list: ls,
 	files: ls,
-	create: create,
-	open: open,
 	git: exec,
 	mkdir: exec,
 	ls: exec,
@@ -17,9 +19,20 @@ var customCommands = {
 	pwd: exec,
 	cd: exec,
 	cat: exec
-	
-
 };
+
+function record(aTerminal){
+	let result = save(aTerminal,[],{isLocal: true, recording: true})
+	console.log(result.hash)
+	//function in socketEvents to flag this room to record all events
+	startRecording(result.hash);
+
+
+	return result;
+}
+function stop(){
+	stopRecording();
+}
 
 
 function exec(aTerminal, ArrArray,options){
@@ -208,7 +221,9 @@ function save(aTerminal, ArrArray, options){
 	//grab the terminal the terminal in the zombie tree with the same id as the live tree from which it was invokved
 	//append the requestElement (via ref passed to function, it doesnt exist on the zombie tree yet)
 	appendSaveTime(liveTree,aTerminal.id,requestElement)
-
+	//so now liveTree is at its final form, the string that will be saved to disk. well. before and after all the URI componenting.
+	//gonna do a hacky thing and attach a hash to the object returned by this.
+	requestElement.hash = options.recording ? ('.' + hashCode(liveTree.innerHTML)) : '';
   //save is called with an options object. When invoked with keystroke, isLocal is true, when invoked via socket message, isLocal is false or undefined.
 	if(options.isLocal){
 		fetch('http://' + window.location.host + '/savethis', {
@@ -217,7 +232,7 @@ function save(aTerminal, ArrArray, options){
 				"Content-Type": "application/x-www-form-urlencoded"
 			},
 			body: ('content=' + encodeURIComponent(liveTree.innerHTML) +
-			      '&fileName=' + aTerminal.id + '.html')
+			      '&fileName=' + aTerminal.id + requestElement.hash + '.html')
 		})
 		.then(res => res.text())
 		.then(result => {
@@ -225,7 +240,8 @@ function save(aTerminal, ArrArray, options){
 			let starttime = requestElement.getAttribute('createdAt')
 			let roundTripTime = Date.now() - starttime;
 			//append that time to the string placed inside the resulting div (overwriting previous message 'attempting to save') and swap out className for result. Allows for conditional styling.
-			requestElement.innerText = `${result} in ${roundTripTime}ms`;
+			requestElement.innerText = options.recording ? `${aTerminal.id}.html is being logged as of ${new Date()} with the starting hash of ${requestElement.hash.slice(1)}`
+																									 : `${result} in ${roundTripTime}ms`;
 			requestElement.className = 'result';
 			//appendResult is a socket creator. Fires a message named filesaveresult, payload is the innerText plus the id of the request element...
 			appendResult(requestElement.innerText, requestElement.id, aTerminal.id);

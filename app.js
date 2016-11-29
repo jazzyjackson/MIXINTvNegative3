@@ -19,7 +19,11 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 
 let port = process.env.PORT || 3000;
 console.log(`Listening on ${port}`);
+
+
 var identities = {};
+var rooms = {};
+
 server.listen(port);
 
 app.use(serverlogging('dev'));
@@ -43,10 +47,13 @@ app.use('/', (req,res,next)=>{
 
 function bounce(socket,name,payload){
 	socket.broadcast.to(identities[socket.id].room).emit(name,payload);
+	if(rooms[identities[socket.id].room].recording){
+		console.log('recording: ', payload)
+	}
 }
 
 io.on('connection', function(socket){
-
+		//this could probably be an Object.assign or something.
 		identities[socket.id] = {ip: socket.client.conn.remoteAddress.split(':').slice(-1)[0], name: null};
     //event, filesaveResult, remoteRunFile, cursorActivity, mirrorChange are all just bounced back. Broadcast to all clients assigned to the same room.
 		socket.on('event',           data => bounce(socket,'event', data))
@@ -60,32 +67,21 @@ io.on('connection', function(socket){
 		socket.on('subscribe', function(data){
 			socket.join(data.room);
 			identities[socket.id].room = data.room;
+			if(rooms[data.room]){
+				rooms[data.room].participants.push(socket.id);
+			} else {
+				rooms[data.room] = {participants: [socket.id]};
+			}
 			console.log(identities[socket.id])
 		})
 
+		socket.on('record', () => {
+			rooms[identities[socket.id].room].recording = true;
+		})
+		socket.on('stop', () => {
+			rooms[identities[socket.id].room].recording = false;
+		})
 
-
-		// socket.on('identityRequest', function(req){
-		// 	//I think each client's identity request will come in separately, when one user asks whoami and hits enter, the local browser will evaluate that and emit an identity request, so this message shouldn't be broadcast.
-		// 	//req is the incoming message. socket is the particular connection.	
-		// 	// console.log(identities[socket.id]);
-		// 	socket.emit('identityResponse', {
-		// 		placeHolderId: req.placeHolderId,
-		// 		socketid: socket.id,
-		// 		ipaddress: identities[socket.id].ip,
-		// 		name: identities[socket.id].name
-		// 	});
-		// })
-
-
-		// socket.on('timeRequest', function(req){
-		// 	socket.emit('timeResponse', {
-		// 		placeHolderId: req.placeHolderId,
-		// 		serverTime: Date()
-		// 	})
-		// })
-
-    //events to implement: identityRequest, timeRequest
 })
 
 

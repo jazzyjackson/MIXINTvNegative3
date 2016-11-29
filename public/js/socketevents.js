@@ -9,6 +9,14 @@ fireSubscribe();
 //fireSubscribe is called when the script is first loaded and anytime the document is saved, 
 //or any other action that changes the url, since url is used as the socket room name
 
+function startRecording(hash){
+  socket.emit('record', {hash})
+}
+function stopRecording(){
+  socket.emit('stop', {})
+}
+
+
 socket.on('event', function(event){
   if(isListening(event.targetId)){
     switch(event.type){
