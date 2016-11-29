@@ -48,14 +48,15 @@ app.use('/', (req,res,next)=>{
 function bounce(socket,name,payload){
 	socket.broadcast.to(identities[socket.id].room).emit(name,payload);
 	if(rooms[identities[socket.id].room].recording){
-		console.log('recording: ', payload)
-	}
+		rooms[identities[socket.id].room].file.write(
+			`{"${Date.now()}": {"${name}": ${JSON.stringify(payload)}}}\n`
+		)}
 }
 
 io.on('connection', function(socket){
 		//this could probably be an Object.assign or something.
 		identities[socket.id] = {ip: socket.client.conn.remoteAddress.split(':').slice(-1)[0], name: null};
-    //event, filesaveResult, remoteRunFile, cursorActivity, mirrorChange are all just bounced back. Broadcast to all clients assigned to the same room.
+		//event, filesaveResult, remoteRunFile, cursorActivity, mirrorChange are all just bounced back. Broadcast to all clients assigned to the same room.
 		socket.on('event',           data => bounce(socket,'event', data))
 		socket.on('filesaveResult',  data => bounce(socket,'filesaveResult',data))
 		socket.on('remoteRunFile',   data => bounce(socket,'remoteRunFile',data))
@@ -75,11 +76,15 @@ io.on('connection', function(socket){
 			console.log(identities[socket.id])
 		})
 
-		socket.on('record', () => {
+		socket.on('record', ({hash}) => {
 			rooms[identities[socket.id].room].recording = true;
+			rooms[identities[socket.id].room].file = fs.createWriteStream(`./public/loggedTrees/${hash.slice(1)}.json`)
+			
 		})
 		socket.on('stop', () => {
 			rooms[identities[socket.id].room].recording = false;
+			rooms[identities[socket.id].room].file.close();
+			rooms[identities[socket.id].room].file = null;
 		})
 
 })

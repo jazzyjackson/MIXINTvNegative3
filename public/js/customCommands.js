@@ -32,6 +32,7 @@ function record(aTerminal){
 }
 function stop(){
 	stopRecording();
+	return createResult('result', 'Stopped Recording')
 }
 
 
