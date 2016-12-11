@@ -25,7 +25,17 @@ fs.readdir(`${__dirname}/sites`, (err, files) => {
 		//require the index.js in the router folder.
 		//if require fails, that prop will be an empty object
 		//which is fine, until that property is invoked.
-		files.forEach(thisdir => sites[thisdir] = require(`${__dirname}/sites/${thisdir}/routes`))
+
+			files.forEach(thisdir => {
+				try{
+					let aPotentialRouter = require(`${__dirname}/sites/${thisdir}/routes`);
+					if(typeof aPotentialRouter === 'function'){
+						sites[thisdir] = aPotentialRouter;
+					}
+				} catch(err) {
+					console.error(err)
+				}
+			})
 	}
 });
 
