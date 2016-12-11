@@ -16,6 +16,19 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
 })); 
 
+//instantiate an object with a default route for the app.
+const sites = {default: require('./routes')};
+//loop through the sites folder, adding routers for each folder inside.
+
+fs.readdir(`${__dirname}/sites`, (err, files) => {
+	if(!err){
+		//require the index.js in the router folder.
+		//if require fails, that prop will be an empty object
+		//which is fine, until that property is invoked.
+		files.forEach(thisdir => sites[thisdir] = require(`${__dirname}/sites/${thisdir}/routes`))
+	}
+});
+
 
 let port = process.env.PORT || 3000;
 console.log(`Listening on ${port}`);
@@ -28,16 +41,25 @@ app.use(serverlogging('dev'));
 // 	console.log('using...')
 // }
 //let textreeroute = require(`./routes/textreeplot.xyz`)
-app.use('/', (req,res,next)=>{
+app.use('/', (req,res,next) => {
+	//the new routing logic is, if the host equals a folder name, 
+	//use that host. if no folders match, use /routes/index, which will just be the default property. so it will be like, if prop exists, use that, else, default.
 	let host = req.headers.host;
 	//two edge cases. 
 	//localhost has :port on it, so, find the colon and replace it and everything after it with empty string, if it happens at the end (this is host, not pathname or href)
 	host = host.replace(/:.*\b/,'');
+	//for testing locally, I reroute test.coltenj.com to localhost and delete that test.
+	host = host.replace(/test./,'')
 	//same result should happen whether or not www. existed at the beggining (hence \b for word boundary)
 	host = host.replace(/\bwww\./,'');
-	if(host === 'localhost') host = DEFAULT_APP;
-	//ya I know this is unusual
-	require(`./routes/${host}`)(req,res,next);
+
+	if(sites[host]){
+	//	console.log(sites)
+	  // console.log(sites[host])
+		 sites[host](req,res,next)
+	} else {
+		 sites['default'](req,res,next)
+	}
 })
 
 

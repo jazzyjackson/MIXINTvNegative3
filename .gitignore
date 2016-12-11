@@ -1,6 +1,7 @@
 /node_modules/
 /public/savedTrees/
-
+/public/loggedTrees/
+/sites/
 *~
 *.un~
 *.sw*
