@@ -39,7 +39,7 @@ body {
    *   Each terminal has its stacking context isolated*/
 }
 
-.removeButton, .editButton, .broadcastButton, .listenButton{
+.removeButton, .editButton, .broadcastButton, .listenButton, .saveButton{
 	margin: 3px;
 	width: 30px;
   height: 30px;
@@ -54,6 +54,16 @@ body {
 }
 .leaf[broadcast="false"] .broadcastButton{
   background-color: red;
+}
+
+.saveButton {
+  float: right;
+  background-color: rebeccapurple;
+  -webkit-mask: url('../images/save.svg');
+  -webkit-mask-size: cover;  
+}
+.saveButton:active {
+  background-color: green;
 }
 
 .listenButton {

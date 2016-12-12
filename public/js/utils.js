@@ -145,6 +145,25 @@ function initLeafListeners(aLeafElement){
   if(listenButton){  
     listenButton.onclick = () => toggleAttr('listen');
   }
+
+  let saveButton = aLeafElement.querySelector('.saveButton')
+  if(saveButton){
+    saveButton.onclick = event => {
+      let parentLeaf = event.target.parentElement.parentElement;
+      let filename = parentLeaf.getAttribute('target');
+      let fileText = parentLeaf.cm.doc.getValue();
+      fetch(`http://${location.host}/saveText`, {
+        method: 'POST',
+        body: 'text=' 
+              + encodeURIComponent(fileText) 
+              + '&filename=' 
+              + encodeURIComponent(filename),
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+    }
+  }
 }
 
 function toggleAttr(attrName){

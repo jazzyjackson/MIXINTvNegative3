@@ -11,7 +11,7 @@ router.use(express.static(path.join(__dirname, '..',  'public/savedTrees'),{inde
 router.post('/savethis', (req,res,next)=>{
 	var htmlString = req.body.content;
 	var fileName = req.body.fileName;
-	fs.writeFile(path.join(__dirname, '..',  '/public/savedTrees/', fileName), htmlString, function(err){
+	fs.writeFile(path.join(__dirname, '..',  '/public/savedTrees/', fileName), htmlString, err => {
 		if(err){
 			res.status(400).send(err);
 		} else {
@@ -27,6 +27,12 @@ router.post('/savethis', (req,res,next)=>{
 	})
 })
 
+router.post('/saveText', (req,res,next) => {
+	console.log(req.body);
+	fs.writeFile(path.join(__dirname, '../', req.body.filename ), req.body.text, err => {
+			err ? res.sendStatus(400) :	res.sendStatus(200);
+	})
+})
 
 router.post('/exec', (req,res,next)=>{
 	let command = req.body.command;

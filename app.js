@@ -25,6 +25,8 @@ fs.readdir(`${__dirname}/sites`, (err, files) => {
 		//require the index.js in the router folder.
 		//if require fails, that prop will be an empty object
 		//which is fine, until that property is invoked.
+		  //filter out hidden files
+			files = files.filter(each => each[0] !== '.');
 
 			files.forEach(thisdir => {
 				try{
@@ -33,7 +35,7 @@ fs.readdir(`${__dirname}/sites`, (err, files) => {
 						sites[thisdir] = aPotentialRouter;
 					}
 				} catch(err) {
-					console.error(err)
+					console.error(`Site doesn't include a proper routes function. Printing error:`, err)
 				}
 			})
 	}

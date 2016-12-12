@@ -22,23 +22,22 @@ function Leaf(xPos, yPos, width, height){
   this.entityHeader.innerText = this.element.id;
   this.entityHeader.className = 'entityHeader';  
 
-	let editButton = document.createElement('div')
+  let newDiv = document.createElement.bind(document, 'div');
+
+	let editButton = newDiv();
+	let removeButton = newDiv();
+	let saveButton = newDiv();
+	let broadcastButton = newDiv();
+  let listenButton = newDiv();
 	editButton.className = 'editButton';
-	//editThis is a function defined in utils.js that creates a codemirror with the contents of this div as its starting string
-	let removeButton = document.createElement('div')
 	removeButton.className = 'removeButton';
-
-  let broadcastButton = document.createElement('div')
+	saveButton.className = 'saveButton';
 	broadcastButton.className = 'broadcastButton';
-	
-
-  let listenButton = document.createElement('div')
 	listenButton.className = 'listenButton';
-	
-
 	
 	this.entityHeader.appendChild(editButton);
 	this.entityHeader.appendChild(removeButton);
+	this.entityHeader.appendChild(saveButton);
 	this.entityHeader.appendChild(broadcastButton);
 	this.entityHeader.appendChild(listenButton);
 

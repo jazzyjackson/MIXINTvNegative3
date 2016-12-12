@@ -7,8 +7,9 @@ function Terminal(xPos, yPos){
 	//not sure if I can rely on the first child of the header to be the text Node, maybe there's a more generalizable way to get to the text node
   this.entityHeader.firstChild.textContent = this.element.id;
   
-  var editButton = this.entityHeader.querySelector('.editButton');
-  editButton.remove();
+  this.entityHeader.querySelector('.editButton').remove();
+  this.entityHeader.querySelector('.saveButton').remove();
+
 
   let protoPrompt = this.element.getAttribute('protoPrompt');
   let prompt = document.createElement('p');

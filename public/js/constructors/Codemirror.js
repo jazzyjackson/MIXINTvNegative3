@@ -6,6 +6,7 @@ function Codemirror(optStringInit,optFileName,startX, startY){
   this.element.className += ' codemirrorContainer'
   var codemirrorList = document.getElementsByClassName('codemirrorContainer')
   this.element.id = 'Codemirror' + nextIdNum('.codemirrorContainer');
+  this.element.setAttribute('target',optFileName)
   this.entityHeader.firstChild.textContent = this.element.id;
   this.entityHeader.firstChild.textContent += optFileName ? (' > ' + optFileName) : '';
   this.element.style.width = '400px';
