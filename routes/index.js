@@ -61,12 +61,9 @@ router.post('/exec', (req,res,next)=>{
 router.get('/readFile', (req,res,next) => {
 	console.log(req.query.pathname)
 	let pathname = req.query.pathname;
-	console.log(req.query.pathname);
-	console.log(pathname);
-	console.log(path.join(__dirname, '..' ));
-	console.log(path.join(__dirname, '..',  pathname));
+	pathname = path.join(__dirname, '..', pathname);
 
-	fs.readFile(path.join(__dirname, '..',  pathname), 'utf8' ,function(err,data){
+	fs.readFile(pathname, 'utf8', (err, data) => {
 		if(err){
 			console.log(err)
 			res.status(400).send(err);
@@ -83,26 +80,31 @@ router.post('/fs', (req,res,next)=>{
 			pathname = addSlashesIfNeedBe(req.body.pathname);
 	} 
 	
-	fs.readdir(path.join(__dirname, '..', pathname), function(err, files){
+  var dirtoread = path.join(__dirname, '..', pathname)
+
+	fs.readdir(dirtoread, function(err, files){
+
 		if(err){
 			res.status(204).send(err);
 		} else {
 			var result = {};
 			for(each in files){
 				var oneFile = files[each];
+				
 				if(oneFile[0] != '.'){             //if it's not hidden
-					if(oneFile.indexOf('.') === -1){ //and if there's no extension
+					if(fs.fstatSync(fs.openSync(path.join(dirtoread,oneFile),'r')).isDirectory()){ //if its a directory
 						result[files[each]] = 'directory';
 					} else {
 						switch(oneFile.split('.')[1].toLowerCase()){
 							case 'js': result[files[each]] = 'text'; break;
 							case 'css': result[files[each]] = 'text'; break;
-							case 'html': result[files[each]] = 'text'; break;
+							case 'html': result[files[each]] = 'markup'; break;
 							case 'txt': result[files[each]] = 'text'; break;
-							case 'svg': result[files[each]] = 'image'; break;
+							case 'svg': result[files[each]] = 'markup'; break;
 							case 'png': result[files[each]] = 'image'; break;
 							case 'jpg': result[files[each]] = 'image'; break;
 							case 'gif': result[files[each]] = 'image'; break;
+							default: result[files[each]] = 'unknown'; break;
 						}
 					}
 				}

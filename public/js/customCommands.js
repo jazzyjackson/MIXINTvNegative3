@@ -316,11 +316,17 @@ function runFile(event){
 			initPrompt(targetTerminal);
 		} else if(event.target.className && event.target.className.includes('text')){
 			socket.emit('remoteRunFile', { terminal: targetTerminal.id, func: 'open', path: targetPath});
-
 			let fileOpenResult = open(targetTerminal, [targetPath]);
 			targetTerminal.appendChild(fileOpenResult);
 			initPrompt(targetTerminal);
 		}
+
+/*
+	Probably something like:
+	else if(target.className.includes 'markup')
+		emit remote run file, terminal, func lookout 
+		targetTerminal.appendChild( lookout(targetTerminal, [targetPath]) )
+*/
 	}
 
 
