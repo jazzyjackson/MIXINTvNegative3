@@ -2,15 +2,14 @@ function Codemirror(optStringInit,optFileName,startX, startY){
 
   console.log(arguments)
 
-  Leaf.call(this, startX, startY)
+  Leaf.call(this, startX, startY, 800, 400)
   this.element.className += ' codemirrorContainer'
   var codemirrorList = document.getElementsByClassName('codemirrorContainer')
   this.element.id = 'Codemirror' + nextIdNum('.codemirrorContainer');
   this.element.setAttribute('target',optFileName)
   this.entityHeader.firstChild.textContent = this.element.id;
   this.entityHeader.firstChild.textContent += optFileName ? (' > ' + optFileName) : '';
-  this.element.style.width = '400px';
-  this.element.style.height = '400px';
+ 
 
   var editButton = this.entityHeader.querySelector('.editButton');
   editButton.textContent = 'R'

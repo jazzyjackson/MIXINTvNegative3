@@ -4,19 +4,20 @@ var customCommands = {
 	// whereami: whereami, 
 	// howami: howami, 
 	// whenami: whenami,
-	rename: rename,
-	save: save,
+	lookout,
+	rename,
+	save,
+	open,
+	create,
 	list: ls,
 	files: ls,
-	create: create,
-	open: open,
 	git: exec,
 	mkdir: exec,
 	ls: exec,
 	touch: exec,
 	pwd: exec,
 	cd: exec,
-	cat: exec
+	cat: exec,
 	
 
 };
@@ -68,6 +69,25 @@ function open(aTerminal, ArrArray){
 
 	return requestElement;
 
+}
+
+function lookout(aTerminal, arrArray){
+	var requestElement = createResult('request', 'Looking for files...');
+	requestElement.id = Date.now();
+	let pathname = arrArray[0] //pathname is passed as an array for some reason. too late now.
+	
+	fetch('http://' + window.location.host + '/readFile' + '?pathname='+encodeURIComponent(pathname))
+	.then(res => res.json())
+	.then(innerHTML => {
+		console.log(innerHTML)
+		create(aTerminal, ['Tag',null,{pathname,innerHTML}])
+		requestElement.className = 'result';
+		requestElement.innerText = 'Maybe it worked';
+		aTerminal.scrollTop = aTerminal.scrollHeight;
+
+	})
+
+  return requestElement;
 }
 
 function ls(aTerminal, ArrArray){
@@ -319,7 +339,12 @@ function runFile(event){
 			let fileOpenResult = open(targetTerminal, [targetPath]);
 			targetTerminal.appendChild(fileOpenResult);
 			initPrompt(targetTerminal);
+		} else if(event.target.className && event.target.className.includes('markup')){
+			let fileOpenResult = lookout(targetTerminal, [targetPath]);
+			targetTerminal.appendChild(fileOpenResult);
+			initPrompt(targetTerminal);
 		}
+
 
 /*
 	Probably something like:

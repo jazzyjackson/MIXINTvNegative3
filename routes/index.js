@@ -90,10 +90,13 @@ router.post('/fs', (req,res,next)=>{
 			var result = {};
 			for(each in files){
 				var oneFile = files[each];
+				console.log(oneFile)
 				
 				if(oneFile[0] != '.'){             //if it's not hidden
 					if(fs.fstatSync(fs.openSync(path.join(dirtoread,oneFile),'r')).isDirectory()){ //if its a directory
 						result[files[each]] = 'directory';
+					} else if (oneFile.indexOf('.') === -1){
+							result[files[each]] = 'unknown';
 					} else {
 						switch(oneFile.split('.')[1].toLowerCase()){
 							case 'js': result[files[each]] = 'text'; break;
