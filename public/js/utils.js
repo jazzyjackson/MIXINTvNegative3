@@ -255,8 +255,11 @@ allContent.addEventListener('keydown', event => {
 
 
 function liveConnect(instanceOfCodeMirror, aNodeToConnect){
-	let closedCallback = function(){aNodeToConnect.innerHTML = instanceOfCodeMirror.doc.getValue()};
+  console.log(aNodeToConnect)
+  let shadowToConnect = aNodeToConnect.attachShadow({mode: 'open'});
+	let closedCallback = function(){shadowToConnect.innerHTML = instanceOfCodeMirror.doc.getValue()};
 	instanceOfCodeMirror.on('change',closedCallback);
+  //setting the update attribute isn't necessary for the connect to happen - it is used on page load to reconnect.
   instanceOfCodeMirror.display.wrapper.parentElement.setAttribute('update',aNodeToConnect.id);
 }	
 
