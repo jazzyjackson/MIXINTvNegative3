@@ -35,16 +35,28 @@ router.post('/saveText', (req,res,next) => {
 })
 
 router.post('/exec', (req,res,next)=>{
+	/*
+	The process for running commands once they reach the server - these requests will be sent if they were included in the custom commands object, 
+	but this should also gaurd against arbitrary post requests (not from a faithful client, I mean)
+	So, there are some commands like 'cd' that require a special node routine
+	there are some commands that exist only on windows or linux, which should be matched according to server side OS: ls -> dir, touch -> type NUL >>, 
+	
+	*/
 	let command = req.body.command;
 	if(aCustomCommandMatches(command)){
+		if(process.env.OS.includes('Windows') && ['touch','ls'].some(each => command.indexOf(each) === 0)){
+			switch(command.split(' ')[0]){
+				case 'ls': exec('dir', (err,stdout,stderr)=>{
+						res.status(200).json({err,stdout,stderr});
+				}); break;
+				case 'touch': exec(`type NUL >> ${command.split(' ')[1]}`, (err,stdout,stderr)=>{
+					res.status(200).json({err,stdout,stderr});
+				}); break;
+			}
+		}
 		//cd is a special case, running it doesn't work, process.chdir has to be used instead
 		if(command.indexOf('cd') === 0){
-			try{
-				process.chdir(command.split(' ')[1]);
-				res.status(200).json({stdout: process.cwd()})
-			} catch(e){
-				res.status(404).json({err: 'cd errored out'})
-			}
+				changeDir(command)
 		} else {
 			exec(command, (err,stdout,stderr)=>{
 				res.status(200).json({err,stdout,stderr});
@@ -55,6 +67,15 @@ router.post('/exec', (req,res,next)=>{
 	}
 	console.log(command)
 })
+
+function changeDir(command){
+		try{
+			process.chdir(command.split(' ')[1]);
+			res.status(200).json({stdout: process.cwd()})
+		} catch(e){
+			res.status(404).json({err: 'cd errored out'})
+		}
+}
 
 
 

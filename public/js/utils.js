@@ -256,8 +256,13 @@ allContent.addEventListener('keydown', event => {
 
 function liveConnect(instanceOfCodeMirror, aNodeToConnect){
   console.log(aNodeToConnect)
-  let shadowToConnect = aNodeToConnect.attachShadow({mode: 'open'});
-	let closedCallback = function(){shadowToConnect.innerHTML = instanceOfCodeMirror.doc.getValue()};
+  let shadowToConnect = aNodeToConnect.shadowRoot ? aNodeToConnect.shadowRoot : aNodeToConnect.attachShadow({mode: 'open'});
+	
+  let closedCallback = function(){
+    let newHTML = instanceOfCodeMirror.doc.getValue();
+    aNodeToConnect.textContent = newHTML;
+    shadowToConnect.innerHTML = newHTML;
+  };
 	instanceOfCodeMirror.on('change',closedCallback);
   //setting the update attribute isn't necessary for the connect to happen - it is used on page load to reconnect.
   instanceOfCodeMirror.display.wrapper.parentElement.setAttribute('update',aNodeToConnect.id);
@@ -276,7 +281,7 @@ function editThis(event){
 				let targetNode = document.getElementById('inner' + parentId);
         console.log(parentNode, targetNode)
         if(targetNode){
-          let mirrorText = targetNode.innerHTML;
+          let mirrorText = targetNode.textContent;
           let targetTerminal = document.querySelector('.terminal');
           let startX = parseInt(parentNode.style.left) + (parseInt(parentNode.style.width) / 2);
           let startY = parseInt(parentNode.style.top) + (parseInt(parentNode.style.height) / 2);
