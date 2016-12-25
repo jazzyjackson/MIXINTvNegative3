@@ -27,7 +27,7 @@ function Tag(tagName,options = {}){
   //for images I don't want to set a fixed height, the image will fill width
   //and the containing div will stretch to fit around it. I'll set a minHeight tho.
   this.element.style.minHeight = '100px';
-	this.element.style.height = '';
+  this.element.style.height = '';
   this.element.appendChild(htmlContainer);
 }
 
@@ -35,3 +35,11 @@ function Tag(tagName,options = {}){
 Tag.prototype.render = function(){
   return this.element;
 }
+
+window.addEventListener('load', () => {
+  let tags = Array.from(document.getElementsByClassName('tag'))
+  tags.forEach(tagElement => {
+    let innerTag = tagElement.childNodes[1];
+    innerTag.shadowRoot.innerHTML = innerTag.textContent
+  })
+})
