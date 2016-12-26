@@ -44,7 +44,7 @@ router.post('/exec', (req,res,next)=>{
 	*/
 	let command = req.body.command;
 	if(aCustomCommandMatches(command)){
-		if(process.env.OS.includes('Windows') && ['touch','ls'].some(each => command.indexOf(each) === 0)){
+		if(process.env.OS && process.env.OS.includes('Windows') && ['touch','ls'].some(each => command.indexOf(each) === 0)){
 			switch(command.split(' ')[0]){
 				case 'ls': exec('dir', (err,stdout,stderr)=>{
 						res.status(200).json({err,stdout,stderr});
