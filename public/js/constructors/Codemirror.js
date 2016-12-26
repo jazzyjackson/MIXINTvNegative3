@@ -32,12 +32,27 @@ function Codemirror(optStringInit,optFileName,startX, startY){
     jsModeInclude.setAttribute('src', '/lib/mode/javascript/javascript.js')
     jsModeInclude.setAttribute('defer','true');
 
+    let cssModeInclude = document.createElement('script')
+    cssModeInclude.setAttribute('src', '/lib/mode/css/css.js')
+    cssModeInclude.setAttribute('defer','true');
+    
+    let xmlModeInclude = document.createElement('script')
+    xmlModeInclude.setAttribute('src', '/lib/mode/xml/xml.js')
+    xmlModeInclude.setAttribute('defer','true');
+
+    let htmlModeInclude = document.createElement('script')
+    htmlModeInclude.setAttribute('src', '/lib/mode/htmlmixed/htmlmixed.js')
+    htmlModeInclude.setAttribute('defer','true');
+
+
     promiseToAppend(cssInclude)
-    .then(()=> promiseToAppend(jsInclude))
-    .then(()=> promiseToAppend(jsModeInclude))
+    .then(() => promiseToAppend(jsInclude))
+    .then(() => promiseToAppend(jsModeInclude,cssModeInclude,xmlModeInclude))
+    .then(() => promiseToAppend(htmlModeInclude))
     .then(()=> {
       this.element.cm = CodeMirror.fromTextArea(codeText, {
-        lineNumbers: true
+        lineNumbers: true,
+        mode: "htmlmixed"
       });
       this.element.cm.on('change',broadcastEdits)
     })
@@ -57,9 +72,10 @@ function Codemirror(optStringInit,optFileName,startX, startY){
 
 }
 
-function promiseToAppend(aTag){
+function promiseToAppend(){
+  let ArrayOfTags = Array.from(arguments)
   return new Promise((resolve,reject)=>{
-    Promise.race([tryToAppend(aTag),timeout(1000)])
+    Promise.race([tryToAppend(ArrayOfTags),timeout(1000)])
     .then((appendSuccess)=>{
       if(appendSuccess){
         resolve('loaded successfully');
@@ -70,11 +86,16 @@ function promiseToAppend(aTag){
   })
 }
 
-function tryToAppend(aTag){
-  return new Promise(function(resolve){
-    aTag.addEventListener('load',()=>resolve(true))
-    document.head.appendChild(aTag);
-  })
+function tryToAppend(ArrayOfTags){
+  let promisesOfAppendment = ArrayOfTags.map(aTag => 
+    new Promise( resolve => {
+      aTag.addEventListener('load',()=>resolve(true))
+      document.head.appendChild(aTag);
+    })
+  )
+  
+
+  return Promise.all(promisesOfAppendment)
 }
 
 function timeout(ms){
