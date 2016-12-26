@@ -287,7 +287,9 @@ function editThis(event){
           let startY = parseInt(parentNode.style.top) + (parseInt(parentNode.style.height) / 2);
           console.log(startX, startY);
           let assumedCodemirrorId = 'Codemirror' + nextIdNum('.codemirrorContainer'); 
-          create(targetTerminal, ['Codemirror', mirrorText, targetNode.getAttribute('target'), startX, startY])
+          let target = targetNode.getAttribute('target');
+          target = (target === "undefined") ? targetNode.parentNode.id : target;
+          create(targetTerminal, ['Codemirror', mirrorText, target, startX, startY])
           setTimeout(()=>{
             let hopefullyACodemirror = document.getElementById(assumedCodemirrorId);
             liveConnect(hopefullyACodemirror.cm,targetNode)
