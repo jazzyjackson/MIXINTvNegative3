@@ -53,14 +53,13 @@ router.post('/exec', (req,res,next)=>{
 					res.status(200).json({err,stdout,stderr});
 				}); break;
 			}
-		}
 		//cd is a special case, running it doesn't work, process.chdir has to be used instead
-		if(command.indexOf('cd') === 0){
+		} else if(command.indexOf('cd') === 0){
 				changeDir(command)
 		} else {
-			exec(command, (err,stdout,stderr)=>{
-				res.status(200).json({err,stdout,stderr});
-			})
+				exec(command, (err,stdout,stderr)=>{
+					res.status(200).json({err,stdout,stderr});
+				})
 		}
 	} else {
 		res.status(403).json({err: `"${command}" has not been whitelisted to run serverside`});

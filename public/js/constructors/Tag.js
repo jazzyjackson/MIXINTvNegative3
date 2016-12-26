@@ -16,11 +16,16 @@ function Tag(tagName,options = {}){
 	htmlContainer.id = 'inner' + this.element.id;
 	htmlContainer.style = 'width: 100%; height: 100%;';
 	htmlContainer.setAttribute('target', options.pathname)
+  console.log(htmlContainer)
+  htmlContainer.attachShadow({mode: 'open'});
+  console.log(htmlContainer)
+  
   if(options.innerHTML){
-    htmlContainer.innerHTML = options.innerHTML;
+    htmlContainer.shadowRoot.innerHTML = options.innerHTML;
+    htmlContainer.textContent = options.innerHTML;
   } else {
     let defaultElement = document.createElement(tagName ? tagName : 'div');
-    htmlContainer.appendChild(defaultElement);
+    htmlContainer.shadowRoot.appendChild(defaultElement);
   }
   if(options && options.url) defaultElement.setAttribute('src',url);
   
@@ -40,6 +45,10 @@ window.addEventListener('load', () => {
   let tags = Array.from(document.getElementsByClassName('tag'))
   tags.forEach(tagElement => {
     let innerTag = tagElement.childNodes[1];
-    innerTag.shadowRoot.innerHTML = innerTag.textContent
+    console.log(innerTag.shadowRoot)
+    setTimeout(()=>{
+      console.log(innerTag.shadowRoot)
+      innerTag.shadowRoot.innerHTML = innerTag.textContent
+    }, 0)
   })
 })
