@@ -1,0 +1,54 @@
+  .editButton, .broadcastButton, .listenButton, .saveButton  {
+    position: absolute;
+    right: -15;
+    bottom: 0;
+    width: 15px;
+    height: 15px;
+  }
+  li:hover .editButton,li:hover .broadcastButton,li:hover .listenButton,li:hover .saveButton  {
+  	width: 40px;
+    height: 40px;
+    right: -40px;
+    bottom: -6px;
+  }
+  
+  .menu {
+    z-index: 999;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(rgba(0,0,0,0),rgba(0,0,0,0) 11%, rgba(1,1,1,0.5) 15%,rgba(255,255,255,0) 50%);
+    border-radius: 200px;
+    position: absolute;
+    left: -179px;
+    top: -176px;
+  }
+  .menu ul {
+    list-style: none;
+  }
+  .menu ul li {
+    background: linear-gradient(to right, rgba(0,0,0,0), rgba(0,0,0,0) 10%, rgba(255,255,255,0.5) 25%, white 90%, rgba(0,0,0,0));
+    width: 110px;
+    margin-left: 20px;
+    left: 50%;
+    bottom: Calc(50% - 0.55em);
+    position: absolute;
+    transform-origin: -20px 50%;
+  }
+  .menu ul li:hover {
+    font-size: 1.25em;
+  }
+  .menu ul li:nth-child(1){
+    transform: rotate(-60deg)
+  }
+  .menu ul li:nth-child(2){
+    transform: rotate(-30deg)
+  }  
+  .menu ul li:nth-child(3){
+    transform: rotate(0deg)
+  }  
+  .menu ul li:nth-child(4){
+    transform: rotate(30deg)
+  }
+  .menu ul li:nth-child(5){
+    transform: rotate(60deg)
+  }
