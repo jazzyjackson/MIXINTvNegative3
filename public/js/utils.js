@@ -123,11 +123,11 @@ function initLeafListeners(aLeafElement){
 
   let editButton = aLeafElement.querySelector('.editButton')
   if(editButton){
-    editButton.onclick = editThis;
+    editButton.parentElement.onmousedown = editThis;
   }
   let removeButton = aLeafElement.querySelector('.removeButton')
   if(removeButton){
-    removeButton.onclick = event => {
+    removeButton.onmousedown = event => {
       console.log(event)
       let parentNode = event.target.parentElement.parentElement;
       parentNode.remove()
@@ -139,17 +139,17 @@ function initLeafListeners(aLeafElement){
   }
   let broadcastButton = aLeafElement.querySelector('.broadcastButton')
   if(broadcastButton){
-    broadcastButton.onclick = () => toggleAttr('broadcast');
+    broadcastButton.parentElement.onmousedown = () => toggleAttr('broadcast');
   }
   let listenButton = aLeafElement.querySelector('.listenButton')
   if(listenButton){  
-    listenButton.onclick = () => toggleAttr('listen');
+    listenButton.parentElement.onmousedown = () => toggleAttr('listen');
   }
 
   let saveButton = aLeafElement.querySelector('.saveButton')
   if(saveButton){
-    saveButton.onclick = event => {
-      let parentLeaf = event.target.parentElement.parentElement;
+    saveButton.parentElement.onmousedown = event => {
+      let parentLeaf = event.target.parentElement.parentElement.parentElement.parentElement;
       let filename = parentLeaf.getAttribute('target');
       let fileText = parentLeaf.cm.doc.getValue();
       fetch(`http://${location.host}/saveText`, {
@@ -164,10 +164,28 @@ function initLeafListeners(aLeafElement){
       })
     }
   }
+
+  let menuButton = aLeafElement.querySelector('.menuButton');
+  let quitMenu = () => {
+    document.removeEventListener('mousedown',quitMenu);
+    setTimeout(()=>{
+      aLeafElement.setAttribute('showMenu', 'false');
+    }, 200)
+  };
+  menuButton.addEventListener('click', event => {
+    aLeafElement.setAttribute('showMenu', 'true')
+    setTimeout(()=>{
+      document.addEventListener('mousedown', quitMenu);
+    },100)
+  });
 }
 
-function toggleAttr(attrName){
-  let theLeaf = event.target.parentElement.parentElement
+function toggleAttr(attrName, optLeaf){
+  let theLeaf = optLeaf || event.target;
+  while(!theLeaf.className.includes('leaf') && theLeaf){
+    console.log(theLeaf)
+    theLeaf = theLeaf.parentElement;
+  }
   console.log(theLeaf.getAttribute(attrName))
   let attrStatus = theLeaf.getAttribute(attrName)
   theLeaf.setAttribute(attrName, attrStatus === 'true' ? 'false' : 'true')
@@ -276,8 +294,8 @@ function editThis(event){
         //if that innerdiv doesn't exist, we're not dealing with a tag, so right now I'm assuming its a JS string that can be inserted to a script tag
         //that has to be generalized. best to have an attribute that can be switched on.
         //the mouse click that fired this function will be on a button. two parents up exists the id of the div. inner + that id should give the element id of the inner DIV we want
-        let parentId = event.target.parentElement.parentElement.id
-				let parentNode = document.getElementById(parentId);
+        let parentId = event.target.parentElement.parentElement.parentElement.parentElement.id
+        let parentNode = document.getElementById(parentId);
 				let targetNode = document.getElementById('inner' + parentId);
         console.log(parentNode, targetNode)
         if(targetNode){

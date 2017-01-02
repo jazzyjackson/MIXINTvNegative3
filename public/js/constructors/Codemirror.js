@@ -12,7 +12,7 @@ function Codemirror(optStringInit,optFileName,startX, startY){
  
 
   var editButton = this.entityHeader.querySelector('.editButton');
-  editButton.textContent = 'R'
+  editButton.parentElement.firstChild.textContent = 'Evaluate'
 
   var codeText = document.createElement('textarea');
   if(optStringInit){
@@ -62,7 +62,8 @@ function Codemirror(optStringInit,optFileName,startX, startY){
     //fails to be be applied to subsequent codemirror divs
     setTimeout(()=>{
       this.element.cm = CodeMirror.fromTextArea(codeText, {
-        lineNumbers: true
+        lineNumbers: true,
+        mode: "htmlmixed"
       });
       this.element.cm.on('change',broadcastEdits)
     },10)

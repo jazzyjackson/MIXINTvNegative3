@@ -5,17 +5,23 @@ function Terminal(xPos, yPos){
   this.element.className += ' terminal'; //addClass terminal to existing className
   this.element.setAttribute('protoPrompt', 'localhost/' + this.element.id + " > ");
 	//not sure if I can rely on the first child of the header to be the text Node, maybe there's a more generalizable way to get to the text node
+  // let entityHeader = this.element.querySelector('.entityHeader')
   this.entityHeader.firstChild.textContent = this.element.id;
   
-  this.entityHeader.querySelector('.editButton').remove();
-  this.entityHeader.querySelector('.saveButton').remove();
+  this.entityHeader.querySelector('.editButton').parentElement.remove();
+  this.entityHeader.querySelector('.saveButton').parentElement.remove();
 
 
   let protoPrompt = this.element.getAttribute('protoPrompt');
   let prompt = document.createElement('p');
   prompt.className = 'prompt';
   prompt.innerHTML = this.element.getAttribute('protoPrompt');
-  this.element.appendChild(prompt);
+
+  let terminalContainer = document.createElement('div');
+  terminalContainer.className = "terminalContainer"
+  terminalContainer.appendChild(prompt)
+
+  this.element.appendChild(terminalContainer);
 }
 
 Terminal.prototype.render = function(){
@@ -56,6 +62,7 @@ function shiftHistory(increment){
 
 function handleKeystroke(aKeystroke, aKeyCode, aTarget, options){
     var terminal = document.getElementById(aTarget);
+    terminal = terminal.querySelector('.terminalContainer')
     if(aKeystroke == 'Backspace'){
       terminal.lastChild.innerHTML = terminal.lastChild.innerHTML.slice(0, -1)
     } else if( (aKeyCode >= 48 && aKeyCode <= 90) || (aKeyCode >= 186 && aKeyCode <= 222) || (aKeystroke == " ")) {
@@ -71,9 +78,11 @@ function handleKeystroke(aKeystroke, aKeyCode, aTarget, options){
 }
 
 // for some commands it is necessary to know if the keystroke was local or remote. isLocal carries this info.
-function handleInput(aTerminal,options){
+function handleInput(terminalContainer,options){
+    aTerminal = terminalContainer.parentElement;
     aTerminal.history = 0;
-    var query = aTerminal.lastChild.innerHTML.split('&gt;')[1];
+
+    var query = terminalContainer.lastChild.innerHTML.split('&gt;')[1];
     //Trim whitespace, split on space, check if that first result is in the list of keywords. If it is, return (or call) the property of that name. Else, run the whole phrase as a query
     var result;
 		var potentialCommand = query.trim().split(' ')[0]; //even for empty strings or strings with no spaces, the result of trim().split() will be an array with at least one element. 
@@ -89,19 +98,19 @@ function handleInput(aTerminal,options){
       result = evaluate(aTerminal, query); 
 		}
 
-    aTerminal.appendChild(result);
+    aTerminal.querySelector('.terminalContainer').appendChild(result);
     result.className += " result";
 
-    initPrompt(aTerminal);
+    initPrompt(terminalContainer);
     
 }
 
-function initPrompt(aTerminal){
+function initPrompt(terminalContainer){
     var prompt = document.createElement('p');
     prompt.className = "prompt";
-    prompt.innerHTML = aTerminal.getAttribute('protoPrompt');
-    aTerminal.appendChild(prompt);
-    aTerminal.scrollTop = aTerminal.scrollHeight;
+    prompt.innerHTML = terminalContainer.parentElement.getAttribute('protoPrompt');
+    terminalContainer.appendChild(prompt);
+    terminalContainer.scrollTop = terminalContainer.scrollHeight;
 }
 
 function evaluate(aTerminal, aQuery){
