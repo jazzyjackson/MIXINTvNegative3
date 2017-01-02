@@ -94,8 +94,16 @@ function createUpdatePos(clientX, clientY){
 };
 
 function initLeafListeners(aLeafElement){
-  var entityHeader = aLeafElement.querySelector('.entityHeader');
-  entityHeader.addEventListener('mousedown', function(event){
+  let thisHeader = aLeafElement.querySelector('.entityHeader');
+  aLeafElement.setAttribute('showmenu','false')
+  console.log(thisHeader)
+  thisHeader.outerHTML = window.entityHeader;
+  thisHeader = aLeafElement.querySelector('.entityHeader');
+  console.log(aLeafElement)
+  console.log(thisHeader.firstChild)
+  thisHeader.firstChild.textContent = aLeafElement.id;
+
+  thisHeader.addEventListener('mousedown', function(event){
     document.documentElement.addEventListener('mousemove', handleMove);
     socketize(event);
     updatePos = createUpdatePos(event.clientX, event.clientY, document.activeElement.id);

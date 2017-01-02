@@ -14,6 +14,10 @@ body {
 
 }
 
+*:focus {
+  outline: none;
+}
+
 .leaf.tag .entityHeader {
   position: relative;
   top: -1px;
@@ -53,7 +57,7 @@ body {
   float: left;
   margin-left: 5px;
   border: 1px solid black;
-  background: radial-gradient(black, black 20%, white 23%, white 27%, black 45%, black 50%, white 52%)
+  background: radial-gradient(white, white 25%, gray 45%, black 50%, white 52%)
 }
 
 .broadcastButton {
