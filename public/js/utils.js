@@ -202,6 +202,12 @@ function toggleAttr(attrName, optLeaf){
 
 
 window.addEventListener('load', ()=>{
+  var styles = Array.from(document.styleSheets, each => each.href.includes('menuStyle'));
+  if(!styles.some(each=>each)){
+    let menuStyle = document.createElement('link')
+    menuStyle.setAttribute('href','/styles/menuStyle.css')
+    document.head.appendChild(menuStyle)
+  }
   //reattach all the click and drag listeners to all elements
   var listOfLeaves = Array.from(document.getElementsByClassName('leaf'));
   listOfLeaves.forEach(leaf => {
