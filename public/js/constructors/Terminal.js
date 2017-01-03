@@ -6,10 +6,12 @@ function Terminal(xPos, yPos){
   this.element.setAttribute('protoPrompt', 'localhost/' + this.element.id + " > ");
 	//not sure if I can rely on the first child of the header to be the text Node, maybe there's a more generalizable way to get to the text node
   // let entityHeader = this.element.querySelector('.entityHeader')
-  this.entityHeader.firstChild.textContent = this.element.id;
+  let thisHeader = this.element.querySelector('.entityHeader')
+  let thisTitle = thisHeader.querySelector('.headerTitle')
+  thisTitle.textContent = this.element.id;
   
-  this.entityHeader.querySelector('.editButton').parentElement.remove();
-  this.entityHeader.querySelector('.saveButton').parentElement.remove();
+  thisHeader.querySelector('.editButton').parentElement.remove();
+  thisHeader.querySelector('.saveButton').parentElement.remove();
 
 
   let protoPrompt = this.element.getAttribute('protoPrompt');

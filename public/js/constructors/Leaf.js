@@ -9,11 +9,16 @@ window.menuHTML =
     </div>`
 
 window.entityHeader = 
-`<h3 class="entityHeader">
+`<div class="entityHeader">
+    <table>
+      <tr>
+        <td class="headerTitle"></td>
+      </tr>
+    </table>
     <div class="menuButton"></div>
     <div class="removeButton"></div>
     ${window.menuHTML}
-  </h3>`
+  </div>`
 
 
 
@@ -28,9 +33,9 @@ function Leaf(xPos, yPos, width, height){
   tempNode.innerHTML = 
   `<div showMenu="false" broadcast="true" listen="true" style="left: ${xPos}px; top: ${yPos}px; width: ${width}px; height: ${height}px; position: absolute;background: white" tabindex="1" class="leaf" id="${nodeId}">${window.entityHeader}</div>`
   this.element = tempNode.firstElementChild;
-  this.entityHeader = this.element.querySelector('.entityHeader')
+  // this.entityHeader = this.element.querySelector('.entityHeader')
 
-    initLeafListeners(this.element);
+  initLeafListeners(this.element);
 
 };
 

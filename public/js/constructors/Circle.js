@@ -16,7 +16,9 @@ function Circle(xPos,yPos,radius,color){
   function an8bitrandom(){
     return Math.floor(Math.random() * 255);
   }
-  this.entityHeader.firstChild.textContent = this.element.id;
+
+  this.element.querySelector('.headerTitle').textContent = this.element.id;
+  
   this.render = function(){
     return this.element;
   }

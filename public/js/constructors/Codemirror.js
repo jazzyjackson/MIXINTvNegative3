@@ -7,11 +7,12 @@ function Codemirror(optStringInit,optFileName,startX, startY){
   var codemirrorList = document.getElementsByClassName('codemirrorContainer')
   this.element.id = 'Codemirror' + nextIdNum('.codemirrorContainer');
   this.element.setAttribute('target',optFileName)
-  this.entityHeader.firstChild.textContent = this.element.id;
-  this.entityHeader.firstChild.textContent += optFileName ? (' > ' + optFileName) : '';
+  let thisTitle = this.element.querySelector('.headerTitle');
+  thisTitle.textContent = this.element.id;
+  thisTitle.textContent += optFileName ? (' > ' + optFileName) : '';
  
 
-  var editButton = this.entityHeader.querySelector('.editButton');
+  var editButton = this.element.querySelector('.editButton');
   editButton.parentElement.firstChild.textContent = 'Evaluate'
 
   var codeText = document.createElement('textarea');

@@ -2,23 +2,19 @@
 //can take arguments if you think you'll use them
 //In this case my arguments will be Image(url[,xPos,yPos]) - Leaf, sets default width and height if they're null
 function Tag(tagName,options = {}){
-  console.log(arguments)
   //calls the Leaf consturctor, which attaches all your click and drag events and adds a header
   //as well as initial styling. xpos,ypos,width,height. properties are now available on 'this'
   Leaf.call(this,options.xPos,options.yPos)
-  console.log(this)
   this.element.className += ' tag'; //add image to list of classNames with +=
   //starts out having an id of 'leaf'' + numberOfLeaves but you should overwrite this. this.entityHeader is a reference to the DOM Node instantiated in the parent Constructor
   this.element.id = "tag" + nextIdNum('.tag')
-  this.entityHeader.firstChild.textContent = this.element.id;
+  this.element.querySelector('.headerTitle').textContent = this.element.id;
 
 	let htmlContainer = document.createElement('div');
 	htmlContainer.id = 'inner' + this.element.id;
 	htmlContainer.style = 'width: 100%; height: 100%;';
 	htmlContainer.setAttribute('target', options.pathname)
-  console.log(htmlContainer)
   htmlContainer.attachShadow({mode: 'open'});
-  console.log(htmlContainer)
   
   if(options.innerHTML){
     htmlContainer.shadowRoot.innerHTML = options.innerHTML;
@@ -48,7 +44,7 @@ window.addEventListener('load', () => {
     console.log(innerTag.shadowRoot)
     setTimeout(()=>{
       console.log(innerTag.shadowRoot)
-      innerTag.shadowRoot.innerHTML = innerTag.textContent
+      innerTag.shadowRoot.innerHTML = innerTag.textContent;
     }, 0)
   })
 })

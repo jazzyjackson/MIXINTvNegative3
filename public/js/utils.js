@@ -96,12 +96,12 @@ function createUpdatePos(clientX, clientY){
 function initLeafListeners(aLeafElement){
   let thisHeader = aLeafElement.querySelector('.entityHeader');
   aLeafElement.setAttribute('showmenu','false')
-  console.log(thisHeader)
+  //this overwrites whatever header is already there, but its fine, because it happens before I attach all the event listeners
   thisHeader.outerHTML = window.entityHeader;
   thisHeader = aLeafElement.querySelector('.entityHeader');
-  console.log(aLeafElement)
-  console.log(thisHeader.firstChild)
-  thisHeader.firstChild.textContent = aLeafElement.id;
+  thisTitle = thisHeader.querySelector('.headerTitle')
+  thisTitle.textContent = aLeafElement.id;
+  
 
   thisHeader.addEventListener('mousedown', function(event){
     document.documentElement.addEventListener('mousemove', handleMove);

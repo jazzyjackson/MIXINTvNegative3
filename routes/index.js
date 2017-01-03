@@ -120,6 +120,7 @@ router.post('/fs', (req,res,next)=>{
 					} else {
 						switch(oneFile.split('.')[1].toLowerCase()){
 							case 'js': result[files[each]] = 'text'; break;
+							case 'json': result[files[each]] = 'text'; break;
 							case 'css': result[files[each]] = 'text'; break;
 							case 'html': result[files[each]] = 'markup'; break;
 							case 'txt': result[files[each]] = 'text'; break;

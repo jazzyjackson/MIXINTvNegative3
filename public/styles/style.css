@@ -18,24 +18,18 @@ body {
   outline: none;
 }
 
-.leaf.tag .entityHeader {
-  position: relative;
-  top: -1px;
-}
-
 .leaf {
    /*color: #fff;*/
    border: 1px solid black;
 }
 
-.leaf h3.entityHeader {
-  font-family: 'VT323', monospace;
+.leaf .entityHeader {
+  font-family: monospace;
 
   border: 1px solid black;
   margin: 0;
   padding: 5px 0 5px 0;
   width: 100%;
-  text-align: center;
   display: inline-block;
   background: white;
   position: absolute;
@@ -53,11 +47,34 @@ body {
 	width: 30px;
   height: 30px;
 }
+.entityHeader table {
+  margin: 0 auto;
+  height: 32px;
+}
+.headerTitle {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
 .menuButton {
-  float: left;
-  margin-left: 5px;
+  position: absolute;
+  top: 3px;
+  left: 2px;
   border: 1px solid black;
   background: radial-gradient(white, white 25%, gray 45%, black 50%, white 52%)
+}
+
+.removeButton {
+	position: absolute;
+  top: 3px;
+  right: 2px;
+  background-color: black;  
+  -webkit-mask: url('../images/exit.svg');
+  -webkit-mask-size: cover;
+}
+.removeButton:hover{
+	background-color: red;
+
 }
 
 .broadcastButton {
@@ -100,17 +117,7 @@ body {
   background-color: red;
 }
 
-.removeButton {
-	margin-right: 5px;
-	float: right;
-  background-color: black;  
-  -webkit-mask: url('../images/exit.svg');
-  -webkit-mask-size: cover;
-}
-.removeButton:hover{
-	background-color: red;
 
-}
 /*.editButton:hover{
   color: green;
   border-color: green;
@@ -134,18 +141,18 @@ body {
 }
 
 .CodeMirror {
-  font-family: 'VT323', monospace !important; /*CodeMirror css overrides this unless I attach codemirror above this, which, maybe I should*/
+  font-family: monospace !important; /*CodeMirror css overrides this unless I attach codemirror above this, which, maybe I should*/
 }
 .codemirrorContainer {
   /*overflow: hidden;*/
 }
 .codemirrorContainer .codeMirror{
-  height: Calc(100% - 2em);
+  height: Calc(100% - 43px);
   isolation: isolate;
 }
 
 
-.codemirrorContainer h3.entityHeader{
+.codemirrorContainer .entityHeader{
   position: static;
   top: 0;
   left: 0;
@@ -153,7 +160,7 @@ body {
   border-bottom: 1px solid black;
 }
 
-.terminal h3.entityHeader {
+.terminal .entityHeader {
   /*Make terminals impervious to leaf headers being hidden*/
   visibility: visible;
 	left: 0px;
@@ -167,7 +174,7 @@ body {
   background-color: rgba(255,255,255,1);
   width: 400px;
   height: 250px;
-  font-family: 'VT323', monospace;
+  font-family: monospace;
 }
 .terminalContainer {
   padding: 0 5px;
@@ -186,7 +193,7 @@ body {
 }
 
 .terminalContainer > p:first-of-type {
-  margin-top: 50px;
+  margin-top: 45px;
 }
 .terminal .fs {
   border: 2px solid transparent;
