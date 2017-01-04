@@ -1,9 +1,10 @@
+
 function Terminal(xPos, yPos){
   Leaf.call(this, xPos, yPos);
   this.element.setAttribute('history', 0); //0 is most recent, negative numbers go back in time
   this.element.id = "root" + nextIdNum('.terminal');
   this.element.className += ' terminal'; //addClass terminal to existing className
-  this.element.setAttribute('protoPrompt', 'localhost/' + this.element.id + " > ");
+  this.element.setAttribute('protoPrompt', 'localhost/' + this.element.id);
 	//not sure if I can rely on the first child of the header to be the text Node, maybe there's a more generalizable way to get to the text node
   // let entityHeader = this.element.querySelector('.entityHeader')
   let thisHeader = this.element.querySelector('.entityHeader')
@@ -14,16 +15,12 @@ function Terminal(xPos, yPos){
   thisHeader.querySelector('.saveButton').parentElement.remove();
 
 
+
   let protoPrompt = this.element.getAttribute('protoPrompt');
-  let prompt = document.createElement('p');
-  prompt.className = 'prompt';
-  prompt.innerHTML = this.element.getAttribute('protoPrompt');
-
   let terminalContainer = document.createElement('div');
-  terminalContainer.className = "terminalContainer"
-  terminalContainer.appendChild(prompt)
-
+  terminalContainer.className = "terminalContainer";
   this.element.appendChild(terminalContainer);
+  initPrompt(terminalContainer);
 }
 
 Terminal.prototype.render = function(){
@@ -63,12 +60,12 @@ function shiftHistory(increment){
 
 
 function handleKeystroke(aKeystroke, aKeyCode, aTarget, options){
-    var terminal = document.getElementById(aTarget);
-    terminal = terminal.querySelector('.terminalContainer')
+    let terminal = document.getElementById(aTarget).querySelector('.terminalContainer');
+    let lastinput = terminal.lastChild.querySelector('.input');
     if(aKeystroke == 'Backspace'){
-      terminal.lastChild.innerHTML = terminal.lastChild.innerHTML.slice(0, -1)
+      lastinput.innerHTML = lastinput.innerHTML.slice(0, -1)
     } else if( (aKeyCode >= 48 && aKeyCode <= 90) || (aKeyCode >= 186 && aKeyCode <= 222) || (aKeystroke == " ")) {
-      terminal.lastChild.innerHTML += aKeystroke;
+      lastinput.innerHTML += aKeystroke;
     } else if(aKeystroke == 'Enter'){
       handleInput(terminal, options)
     } else if(aKeystroke == 'ArrowUp'){
@@ -82,9 +79,9 @@ function handleKeystroke(aKeystroke, aKeyCode, aTarget, options){
 // for some commands it is necessary to know if the keystroke was local or remote. isLocal carries this info.
 function handleInput(terminalContainer,options){
     aTerminal = terminalContainer.parentElement;
-    aTerminal.history = 0;
+    aTerminal.setAttribute('history', 0);
 
-    var query = terminalContainer.lastChild.innerHTML.split('&gt;')[1];
+    var query = terminalContainer.lastChild.querySelector('.input').textContent;
     //Trim whitespace, split on space, check if that first result is in the list of keywords. If it is, return (or call) the property of that name. Else, run the whole phrase as a query
     var result;
 		var potentialCommand = query.trim().split(' ')[0]; //even for empty strings or strings with no spaces, the result of trim().split() will be an array with at least one element. 
@@ -108,10 +105,23 @@ function handleInput(terminalContainer,options){
 }
 
 function initPrompt(terminalContainer){
-    var prompt = document.createElement('p');
-    prompt.className = "prompt";
-    prompt.innerHTML = terminalContainer.parentElement.getAttribute('protoPrompt');
-    terminalContainer.appendChild(prompt);
+    console.log('initing prompt')
+    let protoPrompt = terminalContainer.parentElement.getAttribute('protoPrompt');
+    let tempDiv = document.createElement('div')
+    tempDiv.innerHTML = 
+    `<div class="promptContainer"><span class="prompt">${protoPrompt}<span class="arrow"></span></span><div class="input"></div></div>`
+    /* looks like this before deleting whitespace to avoid unwanted text nodes
+    <div class="terminalContainer">
+      <div class="promptContainer">
+        <span class="prompt"> localhost/root0
+          <span class="arrow"></span>
+        </span>
+        <div class="input"></div>
+      </div>
+    </div>
+    */
+    console.log(tempDiv)
+    terminalContainer.appendChild(tempDiv.firstElementChild);
     terminalContainer.scrollTop = terminalContainer.scrollHeight;
 }
 

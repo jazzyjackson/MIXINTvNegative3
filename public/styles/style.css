@@ -18,6 +18,30 @@ body {
   outline: none;
 }
 
+.terminal .input {
+  display: inline-block;
+}
+
+.terminal .promptContainer > span:first-of-type {
+  padding-left: 8px;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  margin-right: 15px;
+  position: relative;
+}
+.terminal .arrow {
+  display: inline-block;
+  border-top: 1px solid black;
+  border-right: 1px solid black;
+  width: 11.4px;
+  height: 11.4px;
+  transform: rotate(45deg);
+  position: absolute;
+  top: 1.8px;
+  right: -6px;
+}
+
+
 .leaf {
    /*color: #fff;*/
    border: 1px solid black;
@@ -25,7 +49,6 @@ body {
 
 .leaf .entityHeader {
   font-family: monospace;
-
   border: 1px solid black;
   margin: 0;
   padding: 5px 0 5px 0;
@@ -35,11 +58,8 @@ body {
   position: absolute;
   top: -2em;
   left: -1px;
-  /*z-index: 1;*/
-  /* oh shit, does being position absolute implicitely place it above unpositioned elements? */
-  /*  terminal headers have zindex 1 to float above promps and results. 
-   *  To prevent the header from stacking on top of other elements 
-   *   Each terminal has its stacking context isolated*/
+  z-index: 1;
+
 }
 
 .removeButton, .editButton, .broadcastButton, .listenButton, .saveButton, .menuButton {
@@ -177,10 +197,11 @@ body {
   font-family: monospace;
 }
 .terminalContainer {
-  padding: 0 5px;
+  padding-right: 5px;
   height: 100%;
   overflow-y: scroll;
 }
+
 
 .CodeMirror-focused, div:focus {
   z-index: 10;
@@ -192,8 +213,8 @@ body {
   line-height: 1.5em;
 }
 
-.terminalContainer > p:first-of-type {
-  margin-top: 45px;
+.terminalContainer > .promptContainer:first-of-type {
+  margin-top: 48px;
 }
 .terminal .fs {
   border: 2px solid transparent;
@@ -207,6 +228,7 @@ body {
 }
 
 .request, .result {
+  margin-left: 5px;
 	width: 100%;
 	line-height: 1.5em;
 }

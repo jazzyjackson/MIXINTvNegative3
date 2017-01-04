@@ -313,7 +313,7 @@ function editThis(event){
 				let targetNode = document.getElementById('inner' + parentId);
         console.log(parentNode, targetNode)
         if(targetNode){
-          let mirrorText = targetNode.textContent;
+          let mirrorText = targetNode.shadowRoot.innerHTML;
           let targetTerminal = document.querySelector('.terminal');
           let startX = parseInt(parentNode.style.left) + (parseInt(parentNode.style.width) / 2);
           let startY = parseInt(parentNode.style.top) + (parseInt(parentNode.style.height) / 2);
