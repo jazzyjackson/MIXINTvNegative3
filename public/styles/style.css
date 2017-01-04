@@ -30,15 +30,17 @@ body {
   position: relative;
 }
 .terminal .arrow {
+  box-sizing: border-box;
   display: inline-block;
   border-top: 1px solid black;
   border-right: 1px solid black;
   width: 11.4px;
   height: 11.4px;
+  transform-origin: bottom right;
   transform: rotate(45deg);
   position: absolute;
-  top: 1.8px;
-  right: -6px;
+  bottom: -1px;
+  right: 0px;
 }
 
 
@@ -195,6 +197,7 @@ body {
   width: 400px;
   height: 250px;
   font-family: monospace;
+  isolation: isolate;
 }
 .terminalContainer {
   padding-right: 5px;

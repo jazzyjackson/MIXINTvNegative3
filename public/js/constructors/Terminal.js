@@ -122,6 +122,16 @@ function initPrompt(terminalContainer){
     */
     console.log(tempDiv)
     terminalContainer.appendChild(tempDiv.firstElementChild);
+    setTimeout(()=>{
+      let promptHeight = terminalContainer.lastChild.querySelector('.prompt').getBoundingClientRect().height;
+      //returns style.css as a stylesheet object
+      let styleSheet = Array.from(document.styleSheets).filter(each => each.href && each.href.includes('styles/style.css'))[0]
+      let arrowRule = Array.from(styleSheet.rules).filter(each => each.selectorText.includes('arrow'))[0].style;
+      arrowRule.height = promptHeight / Math.sqrt(2);
+      arrowRule.width = promptHeight / Math.sqrt(2);
+      console.log(arrowRule)
+      
+    },0)
     terminalContainer.scrollTop = terminalContainer.scrollHeight;
 }
 
