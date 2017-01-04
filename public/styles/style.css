@@ -47,6 +47,8 @@ body {
 .leaf {
    /*color: #fff;*/
    border: 1px solid black;
+   isolation: isolate;
+   
 }
 
 .leaf .entityHeader {
@@ -197,7 +199,6 @@ body {
   width: 400px;
   height: 250px;
   font-family: monospace;
-  isolation: isolate;
 }
 .terminalContainer {
   padding-right: 5px;
