@@ -17,8 +17,9 @@ function Codemirror(optStringInit,optFileName,startX, startY){
     codeText.value = optStringInit;
   }
   this.element.appendChild(codeText);
+
   promiseToAppend('/lib/codemirror.css')
-  .then(() => promiseToAppend("/lib/codemirror.js"))
+  .then(() => promiseToAppend('/lib/codemirror.js'))
   .then(()=> {
     this.element.cm = CodeMirror.fromTextArea(codeText, {
       lineNumbers: true,
@@ -26,9 +27,38 @@ function Codemirror(optStringInit,optFileName,startX, startY){
     });
     this.element.cm.on('change',broadcastEdits)
   })
+  .then(()=> setHighlightMode(optFileName, this.element.cm))
   .catch(console.error.bind(console));
-  this.render = () => this.element;
 
+  this.render = () => this.element;
+}
+
+function setHighlightMode(optFileName, codemirror){
+  return new Promise(resolve => {
+    if(!optFileName){
+      resolve();
+    }
+    let pathExtension = optFileName.split('.')
+    pathExtension = pathExtension[pathExtension.length - 1];
+    if(pathExtension === 'js'){
+      promiseToAppend('/codemirrormode/javascript/javascript.js')
+      .then(()=>{
+        console.log('setting option as javascript')
+        
+        codemirror.setOption('mode', 'javascript');
+        resolve();
+      })
+    } else if (pathExtension === 'html'){
+       promiseToAppend('/codemirrormode/javascript/javascript.js',
+                       '/codemirrormode/css/css.js',
+                       '/codemirrormode/xml/xml.js')
+      .then(()=> promiseToAppend('/codemirrormode/htmlmixed/htmlmixed.js'))
+      .then(()=>{
+        codemirror.setOption('mode', 'htmlmixed');
+        resolve();
+      })
+    }
+  })
 }
 
 function promiseToAppend(){
