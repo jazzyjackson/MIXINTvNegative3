@@ -300,6 +300,15 @@ function liveConnect(instanceOfCodeMirror, aNodeToConnect){
   instanceOfCodeMirror.display.wrapper.parentElement.setAttribute('update',aNodeToConnect.id);
 }	
 
+function getParent(thisElement, optClassName = 'leaf'){
+
+  //traverse up the tree until you find a leaf, or maybe no leaf is found, exit in that case too. return whatever was found.
+  while(!thisElement.className.includes(optClassName) && thisElement !== null){
+    thisElement = thisElement.parentElement;
+  }
+  return thisElement;
+}
+
 function editThis(event){
  
         //This is attached to the edit button on all leaves

@@ -47,7 +47,7 @@ function exec(aTerminal, ArrArray,options){
 			if(requestElement.innerText === ""){
 				requestElement.innerText = 'The command ran without error or output'
 			}
-			aTerminal.scrollTop = aTerminal.scrollHeight;
+			aTerminal.lastChild.scrollTop = aTerminal.lastChild.scrollHeight;
 		})
 		return requestElement;
 }
@@ -63,7 +63,7 @@ function open(aTerminal, ArrArray){
 		create(aTerminal, ['Codemirror',resObj,pathname])
 		requestElement.className = 'result';
 		requestElement.innerText = 'Maybe it worked';
-		aTerminal.scrollTop = aTerminal.scrollHeight;
+		aTerminal.lastChild.scrollTop = aTerminal.lastChild.scrollHeight;
 
 	})
 
@@ -82,9 +82,13 @@ function lookout(aTerminal, arrArray){
 		console.log(innerHTML)
 		create(aTerminal, ['Tag',null,{pathname,innerHTML}])
 		requestElement.className = 'result';
-		requestElement.innerText = 'Maybe it worked';
-		aTerminal.scrollTop = aTerminal.scrollHeight;
-
+		requestElement.innerText = `Tag created with contents of ${pathname}`;
+		aTerminal.lastChild.scrollTop = aTerminal.lastChild.scrollHeight;
+	})
+	.catch(err => {
+		requestElement.className = 'result';
+		console.error(err)
+		requestElement.innerText = 'Fetch failed. Check your console.';
 	})
 
   return requestElement;
@@ -109,7 +113,7 @@ function ls(aTerminal, ArrArray){
 
 		addDblClickListeners(requestElement);
 		requestElement.className = 'result directoryContainer';
-		aTerminal.scrollTop = aTerminal.scrollHeight;
+		aTerminal.lastChild.scrollTop = aTerminal.lastChild.scrollHeight;
 	})
 
 	return requestElement;
@@ -313,16 +317,20 @@ function runFile(event){
 	//targetTerminal determines what the container element of a file is, for purposes of appending the result and socketizing the target to sync others
 	//event.path returns an array of elements the event bubbled up through, from the event.target to the window. Filter it down to one element. 
 	// This will work as long as you don't have a terminal within a terminal 
-	let targetTerminal = event.path.filter(el => el.className && el.className.includes('terminal'))[0];
+	let targetTerminal = getParent(event.target);
+	console.log(targetTerminal)
+	let targetInput = targetTerminal.lastChild.lastChild.querySelector('.input');
+	console.log(targetInput)
+	
 	//the title attribute of the event target is the pathname of the file displayed.
 	let targetPath = event.target.title;
 	//this is for generating the equivelant command that could be typed. Maybe I should just generate that text as if it were typed and execute???
 	let prompt = targetTerminal.getAttribute('protoPrompt');
   //Huh. open FILE is like create Codemirror FILETEXT. prints ls when re-executing list...
 	if(event.target.className && event.target.className.includes('directory')){
-		targetTerminal.lastChild.innerText = `${prompt} ls ${targetPath}`
-	} else if(event.target.className && event.target.className.includes('text')){
-		targetTerminal.lastChild.innerText = `${prompt} open ${targetPath}`
+		targetInput.textContent = `ls ${targetPath}`
+	} else if(event.target.className && event.target.className.includes('fs')){
+		targetInput.textContent = `open ${targetPath}`
 	} 
 
 	//Oh yeah, it does these things whether you single clicked or double clicked, but then checks for double click before executing.
@@ -332,17 +340,17 @@ function runFile(event){
 			socket.emit('remoteRunFile', { terminal: targetTerminal.id, func: 'ls', path: targetPath});
 			//Similar action, just different if you're opening or listing. runs ls - oh, from here ls is just a shortcut for the function name, not a property of the customCommands object.'
 			let listResult = ls(targetTerminal, [targetPath]);
-			targetTerminal.appendChild(listResult);
-			initPrompt(targetTerminal);
+			targetTerminal.lastChild.appendChild(listResult);
+			initPrompt(targetTerminal.lastChild);
 		} else if(event.target.className && event.target.className.includes('text')){
 			socket.emit('remoteRunFile', { terminal: targetTerminal.id, func: 'open', path: targetPath});
 			let fileOpenResult = open(targetTerminal, [targetPath]);
-			targetTerminal.appendChild(fileOpenResult);
-			initPrompt(targetTerminal);
+			targetTerminal.lastChild.appendChild(fileOpenResult);
+			initPrompt(targetTerminal.lastChild);
 		} else if(event.target.className && event.target.className.includes('markup')){
 			let fileOpenResult = lookout(targetTerminal, [targetPath]);
-			targetTerminal.appendChild(fileOpenResult);
-			initPrompt(targetTerminal);
+			targetTerminal.lastChild.appendChild(fileOpenResult);
+			initPrompt(targetTerminal.lastChild);
 		}
 
 

@@ -87,7 +87,6 @@ function handleInput(terminalContainer,options){
 		var potentialCommand = query.trim().split(' ')[0]; //even for empty strings or strings with no spaces, the result of trim().split() will be an array with at least one element. 
 		if(customCommands[potentialCommand]){
       let potentialArguments = query.trim().split(' ').slice(1); // returns an empty array if no args, otherwise, arguments are passed as an array
-      console.log(potentialArguments)                                       
       //This is kind of a mess. When I added a general exec command for whitelisted serverside CLI tools (git, mkdir, ffmpeg, touch), I decided I needed to know which command was run,
       //But so far all my other commands are set to expect arguments as an array. Since I need to know the requested command inside the general exec function inside customCommands.js,
       //I roll up the options passed to handleInput (right now, just if a command was executed locally or remotely) with an object contained potentialCommand, destructured es6 style.
@@ -105,7 +104,6 @@ function handleInput(terminalContainer,options){
 }
 
 function initPrompt(terminalContainer){
-    console.log('initing prompt')
     let protoPrompt = terminalContainer.parentElement.getAttribute('protoPrompt');
     let tempDiv = document.createElement('div')
     tempDiv.innerHTML = 
@@ -120,7 +118,6 @@ function initPrompt(terminalContainer){
       </div>
     </div>
     */
-    console.log(tempDiv)
     terminalContainer.appendChild(tempDiv.firstElementChild);
     setTimeout(()=>{
       let promptHeight = terminalContainer.lastChild.querySelector('.prompt').getBoundingClientRect().height;
@@ -129,9 +126,8 @@ function initPrompt(terminalContainer){
       let arrowRule = Array.from(styleSheet.rules).filter(each => each.selectorText.includes('arrow'))[0].style;
       arrowRule.height = promptHeight / Math.sqrt(2);
       arrowRule.width = promptHeight / Math.sqrt(2);
-      console.log(arrowRule)
-      
     },0)
+
     terminalContainer.scrollTop = terminalContainer.scrollHeight;
 }
 
@@ -143,7 +139,6 @@ function evaluate(aTerminal, aQuery){
       result.innerHTML = localEval.call(aTerminal);
 			return result;
     } catch(e) {
-			console.log(e);
 			result.innerHTML = e;
 			return result;
     }

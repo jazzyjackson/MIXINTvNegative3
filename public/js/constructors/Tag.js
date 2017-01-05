@@ -18,6 +18,14 @@ function Tag(tagName,options = {}){
   
   if(options.innerHTML){
     htmlContainer.shadowRoot.innerHTML = options.innerHTML;
+    //after assigning the innerHTML of the shadowRoot, if there are any script tags, re-attach each one with replaceChild, which will invoke the scripts, which doesn't happen when just setting the innerHTML of a node.'
+    let scripts = Array.from(htmlContainer.shadowRoot.querySelectorAll('script'))
+    scripts.forEach(scriptTag => {
+      let newScript = document.createElement('script')
+      newScript.textContent = scriptTag.textContent;
+      scriptTag.parentNode.replaceChild(newScript, scriptTag);
+    })
+    console.log(scripts)
     htmlContainer.textContent = options.innerHTML;
   } else {
     let defaultElement = document.createElement(tagName ? tagName : 'div');
