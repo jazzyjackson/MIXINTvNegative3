@@ -131,7 +131,8 @@ function initLeafListeners(aLeafElement){
 
   let editButton = aLeafElement.querySelector('.editButton')
   if(editButton){
-    editButton.parentElement.onmousedown = editThis;
+    editButton.onmousedown = editThis;
+    editButton.parentElement.onmousedown = editThis;    
   }
   let removeButton = aLeafElement.querySelector('.removeButton')
   if(removeButton){
@@ -140,7 +141,7 @@ function initLeafListeners(aLeafElement){
       let parentNode = event.target.parentElement.parentElement;
       parentNode.remove()
       if(event.isTrusted){
-        let queryId = `#${parentNode.id}  .${event.target.className}`;
+        let queryId = `#${getParent(event.target).id}  .${event.target.className}`;
         socketize(event, queryId);
       }
     }
@@ -303,22 +304,22 @@ function liveConnect(instanceOfCodeMirror, aNodeToConnect){
 function getParent(thisElement, optClassName = 'leaf'){
 
   //traverse up the tree until you find a leaf, or maybe no leaf is found, exit in that case too. return whatever was found.
-  while(!thisElement.className.includes(optClassName) && thisElement !== null){
+  while(thisElement && !thisElement.className.includes(optClassName)){
     thisElement = thisElement.parentElement;
   }
   return thisElement;
 }
 
 function editThis(event){
- 
+        event.stopPropagation();  
         //This is attached to the edit button on all leaves
         //functionality is overloaded
         //if there is an innerdiv (assienged to targetNode) then: create Codemirror, fire liveConnect between that Codemirror and that innerdiv
         //if that innerdiv doesn't exist, we're not dealing with a tag, so right now I'm assuming its a JS string that can be inserted to a script tag
         //that has to be generalized. best to have an attribute that can be switched on.
         //the mouse click that fired this function will be on a button. two parents up exists the id of the div. inner + that id should give the element id of the inner DIV we want
-        let parentId = event.target.parentElement.parentElement.parentElement.parentElement.id
-        let parentNode = document.getElementById(parentId);
+        let parentNode = getParent(event.target)
+        let parentId = parentNode.id;
 				let targetNode = document.getElementById('inner' + parentId);
         console.log(parentNode, targetNode)
         if(targetNode){
@@ -340,8 +341,7 @@ function editThis(event){
         }
 				//problem incoming: it should not be allowed to create a second codemirror for the same node. Or otherwise you better sync those docs.
         if(event.isTrusted){
-          console.log(`#${parentId}  .${event.target.className}`)
-          socketize(event, `#${parentId}  .${event.target.className}`)
+          socketize(event, `#${parentId}  .editButton`)
         }
 }
 
@@ -358,6 +358,15 @@ function nextIdNum(classname){
 	let result = Math.max.apply(Math, nodelist)
 	//Math.max on an empty array returns negative infinity. 
 	return (result === -Infinity) ? 0 : result + 1;
+}
+
+function mountScripts(aNode){
+    let scripts = Array.from(aNode.querySelectorAll('script'))
+    scripts.forEach(scriptTag => {
+      let newScript = document.createElement('script')
+      newScript.textContent = scriptTag.textContent;
+      scriptTag.parentNode.replaceChild(newScript, scriptTag);
+    })
 }
 	
 //Following code was too cool not to pull in. Offered copyleft by Jan Wolter at unixpapa.com/js/querystring.html

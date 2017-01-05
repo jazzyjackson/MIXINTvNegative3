@@ -11,23 +11,27 @@ fireSubscribe();
 
 socket.on('event', function(event){
   if(isListening(event.targetId)){
-    switch(event.type){
-      //triggered by doubleclicking on the background
-      case 'dblclick': addTerminal(event.clientX, event.clientY); break;
-      //triggered by clicking on header buttons
-      case 'click': document.querySelector(event.targetId).dispatchEvent(new Event('click')); break;
-      // when an element is broadcasting its movements START
-      case 'mousedown': remoteUpdatePos = createUpdatePos(event.clientX, event.clientY); break; 
-      case 'touchstart':  remoteUpdatePos = createUpdatePos(event.clientX, event.clientY); break;
-      // when an element is broadcasting its movements MOVE
-      case 'mousemove': remoteUpdatePos(event.clientX, event.clientY, event.targetId); break;
-      case 'touchmove': remoteUpdatePos(event.clientX, event.clientY, event.targetId); break;     // when an element is broadcasting its movements 
-      // when an element is broadcasting its movements END
-      case 'mouseup': remoteUpdatePos = undefined; break;
-      case 'touchend': remoteUpdatePos = undefined; break;
-      case 'touchcancel': remoteUpdatePos = undefined; break;
-      // when a terminal is broadcasting whats being typed
-      case 'keydown': handleKeystroke(event.key, event.keyCode, event.targetId, false); break;
+    if(event.targetId && event.type == 'mousedown'){
+        console.log(event)
+        document.querySelector(event.targetId).dispatchEvent(new Event('mousedown'));
+    } else {
+      switch(event.type){
+        //triggered by doubleclicking on the background
+        case 'dblclick': addTerminal(event.clientX, event.clientY); break;
+        //triggered by clicking on header buttons
+        // when an element is broadcasting its movements START
+        case 'mousedown': remoteUpdatePos = createUpdatePos(event.clientX, event.clientY); break; 
+        case 'touchstart':  remoteUpdatePos = createUpdatePos(event.clientX, event.clientY); break;
+        // when an element is broadcasting its movements MOVE
+        case 'mousemove': remoteUpdatePos(event.clientX, event.clientY, event.targetId); break;
+        case 'touchmove': remoteUpdatePos(event.clientX, event.clientY, event.targetId); break;     // when an element is broadcasting its movements 
+        // when an element is broadcasting its movements END
+        case 'mouseup': remoteUpdatePos = undefined; break;
+        case 'touchend': remoteUpdatePos = undefined; break;
+        case 'touchcancel': remoteUpdatePos = undefined; break;
+        // when a terminal is broadcasting whats being typed
+        case 'keydown': handleKeystroke(event.key, event.keyCode, event.targetId, false); break;
+      }
     }
   }
 
@@ -45,10 +49,14 @@ socket.on('remoteRunFile', data => {
   let evalResult = window[func](targetTerminal, [pathname]);
 
 	let prompt = targetTerminal.getAttribute('protoPrompt');
-	targetTerminal.lastChild.innerText = `${prompt} ${func} ${pathname}`
+  //targetTerminal is the leaf element,
+  //lastChild is the terminalcontainer
+  //lastChild of that is the last prompt (hopefully)
+  //
+	targetTerminal.lastChild.lastChild.querySelector('.input').textContet = `${func} ${pathname}`
 
-  targetTerminal.appendChild(evalResult);
-  initPrompt(targetTerminal);
+  targetTerminal.lastChild.appendChild(evalResult);
+  initPrompt(targetTerminal.lastChild);
 })
 
 socket.on('filesaveResult', data => {
@@ -65,8 +73,17 @@ function socketize(anEvent, targetId){
   //targetId might be undefined for body events
   //socketize should happen in such cases
   //if there is a targetId, we have to check if broadcast is not false
-  if(isBroadcasting(targetId)){
+  if(isBroadcasting(getParent(document.querySelector(targetId)) || document.getElementById(targetId))) {
     socket.emit('event', {
+      type,
+      key,	
+      keyCode,
+      buttons,
+      clientX,
+      clientY,
+      targetId
+    });
+    console.log({
       type,
       key,	
       keyCode,

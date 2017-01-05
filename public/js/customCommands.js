@@ -9,6 +9,7 @@ var customCommands = {
 	save,
 	open,
 	create,
+	lookout,
 	list: ls,
 	files: ls,
 	git: exec,
@@ -281,8 +282,8 @@ function appendSaveTime(liveTree,updateTerminalId,elementToClone){
 	//it screwed things up to try modifing the element that was being attached to the actualy dom. bad move in an async world. clone it instead.
 	let elementToAppend = elementToClone.cloneNode();
 	elementToAppend.innerText = `${fileToSaveSize} written successfully to ${updateTerminalId}.html at ${new Date()}`;
-	terminalToAppendTo.appendChild(elementToAppend);
-	initPrompt(terminalToAppendTo)
+	terminalToAppendTo.lastChild.appendChild(elementToAppend);
+	initPrompt(terminalToAppendTo.lastChild)
 }
 
 function updateTitleText(newName){
@@ -348,6 +349,7 @@ function runFile(event){
 			targetTerminal.lastChild.appendChild(fileOpenResult);
 			initPrompt(targetTerminal.lastChild);
 		} else if(event.target.className && event.target.className.includes('markup')){
+			socket.emit('remoteRunFile', { terminal: targetTerminal.id, func: 'lookout', path: targetPath});			
 			let fileOpenResult = lookout(targetTerminal, [targetPath]);
 			targetTerminal.lastChild.appendChild(fileOpenResult);
 			initPrompt(targetTerminal.lastChild);
