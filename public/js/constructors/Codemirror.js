@@ -1,10 +1,7 @@
 function Codemirror(optStringInit,optFileName,startX, startY){
 
-  console.log(arguments)
-
   Leaf.call(this, startX, startY, 800, 400)
   this.element.className += ' codemirrorContainer'
-  var codemirrorList = document.getElementsByClassName('codemirrorContainer')
   this.element.id = 'Codemirror' + nextIdNum('.codemirrorContainer');
   this.element.setAttribute('target',optFileName)
   let thisTitle = this.element.querySelector('.headerTitle');
@@ -20,61 +17,24 @@ function Codemirror(optStringInit,optFileName,startX, startY){
     codeText.value = optStringInit;
   }
   this.element.appendChild(codeText);
-  if(typeof CodeMirror === 'undefined'){
-    let cssInclude = document.createElement('link')
-    cssInclude.setAttribute('rel', 'stylesheet');
-    cssInclude.setAttribute('href', '/lib/codemirror.css')
-  //  document.head.appendChild(cssInclude);
-    let jsInclude = document.createElement('script')
-    jsInclude.setAttribute('src', '/lib/codemirror.js')
-    jsInclude.setAttribute('defer','true');
-
-    let jsModeInclude = document.createElement('script')
-    jsModeInclude.setAttribute('src', '/lib/mode/javascript/javascript.js')
-    jsModeInclude.setAttribute('defer','true');
-
-    let cssModeInclude = document.createElement('script')
-    cssModeInclude.setAttribute('src', '/lib/mode/css/css.js')
-    cssModeInclude.setAttribute('defer','true');
-    
-    let xmlModeInclude = document.createElement('script')
-    xmlModeInclude.setAttribute('src', '/lib/mode/xml/xml.js')
-    xmlModeInclude.setAttribute('defer','true');
-
-    let htmlModeInclude = document.createElement('script')
-    htmlModeInclude.setAttribute('src', '/lib/mode/htmlmixed/htmlmixed.js')
-    htmlModeInclude.setAttribute('defer','true');
-
-
-    promiseToAppend(cssInclude)
-    .then(() => promiseToAppend(jsInclude))
-    .then(() => promiseToAppend(jsModeInclude,cssModeInclude,xmlModeInclude))
-    .then(() => promiseToAppend(htmlModeInclude))
-    .then(()=> {
-      this.element.cm = CodeMirror.fromTextArea(codeText, {
-        lineNumbers: true,
-        mode: "htmlmixed"
-      });
-      this.element.cm.on('change',broadcastEdits)
-    })
-    .catch(console.log.bind(console))
-  } else {
-    //setTimeout mysteriously fixes an issue where codmirror css
-    //fails to be be applied to subsequent codemirror divs
-    setTimeout(()=>{
-      this.element.cm = CodeMirror.fromTextArea(codeText, {
-        lineNumbers: true,
-        mode: "htmlmixed"
-      });
-      this.element.cm.on('change',broadcastEdits)
-    },10)
-  }
-
+  promiseToAppend('/lib/codemirror.css')
+  .then(() => promiseToAppend("/lib/codemirror.js"))
+  .then(()=> {
+    this.element.cm = CodeMirror.fromTextArea(codeText, {
+      lineNumbers: true,
+      mode: null
+    });
+    this.element.cm.on('change',broadcastEdits)
+  })
+  .catch(console.error.bind(console));
   this.render = () => this.element;
 
 }
 
 function promiseToAppend(){
+  //takes multiple arguments, pathnames of things to include. 
+  //arguments are converted to an array.
+  //A promise is returned representing whether those arguments were successfully attached
   let ArrayOfTags = Array.from(arguments)
   return new Promise((resolve,reject)=>{
     Promise.race([tryToAppend(ArrayOfTags),timeout(1000)])
@@ -88,16 +48,43 @@ function promiseToAppend(){
   })
 }
 
-function tryToAppend(ArrayOfTags){
-  let promisesOfAppendment = ArrayOfTags.map(aTag => 
+function tryToAppend(ArrayOfPaths){
+  let promisesOfAppendment = ArrayOfPaths.map(aPathName => 
     new Promise( resolve => {
-      aTag.addEventListener('load',()=>resolve(true))
-      document.head.appendChild(aTag);
+      let pathExtension = aPathName.split('.')
+      pathExtension = pathExtension[pathExtension.length - 1];
+      if(isAppended(aPathName)){
+        console.log(`skipping ${aPathName}, already available`)
+        resolve(true);
+      } else if(pathExtension === 'js'){ //  && !isAppendended(aPathName)
+        console.log(`${aPathName} not found, attaching to head`)
+        let newTag = document.createElement('script')
+        newTag.setAttribute('src', aPathName);
+        newTag.setAttribute('defer','true');    
+        newTag.addEventListener('load',()=>resolve(true))
+        document.head.appendChild(newTag);
+      } else if (pathExtension === 'css'){
+        console.log(`${aPathName} not found, attaching to head`)        
+        let newTag = document.createElement('link')
+        newTag.setAttribute('rel', 'stylesheet');
+        newTag.setAttribute('href', aPathName);
+        newTag.addEventListener('load',()=>resolve(true))
+        document.head.appendChild(newTag);        
+      } else {
+        throw new Error('tryToAppend should only be used to attach js and css')
+      }
     })
   )
-  
-
   return Promise.all(promisesOfAppendment)
+}
+
+function isAppended(aPathName){
+    let pathExtension = aPathName.split('.')
+    pathExtension = pathExtension[pathExtension.length - 1];
+    let tagname = pathExtension === 'js' ? 'script' : 'link';
+    let attribute = pathExtension === 'js' ? 'src' : 'href';
+    let tags = Array.from(document.head.getElementsByTagName(tagname))
+    return tags.some(tag => tag.getAttribute(attribute) && tag.getAttribute(attribute).includes(aPathName));
 }
 
 function timeout(ms){

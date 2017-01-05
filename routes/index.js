@@ -8,6 +8,8 @@ router.use(express.static(path.join(__dirname, '..', '/public')));
 router.use(express.static(path.join(__dirname, '..', '/public/savedTrees')));
 router.use(express.static(path.join(__dirname, '..',  'public/savedTrees'),{index:false,extensions:['html']}));
 
+router.use('/codemirrormode', express.static(path.join(__dirname, '..', '/node_modules/codemirror/mode')));
+
 router.post('/savethis', (req,res,next)=>{
 	var htmlString = req.body.content;
 	var fileName = req.body.fileName;
