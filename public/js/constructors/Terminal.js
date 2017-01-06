@@ -41,21 +41,37 @@ function updateTerminal(result, requestElementId, aTerminalId){
 function shiftHistory(increment){
   let history = Number(this.getAttribute('history'));
   let protoPrompt = this.getAttribute('protoPrompt');
-  var listOfPrompts = this.getElementsByClassName('prompt');
-  if(increment === -1 && history > 1){
-    history += increment;
-    this.lastChild.innerHTML = listOfPrompts[listOfPrompts.length - (1 + history)].innerHTML;
-    this.setAttribute('history',history)
-  } else if(increment === 1 && history < listOfPrompts.length - 1){
-    history += increment;
-    this.lastChild.innerHTML = listOfPrompts[listOfPrompts.length - (1 + history)].innerHTML;
-    this.setAttribute('history',history)
-  } else if(increment === -1 && history == 1){
-    this.lastChild.innerHTML = protoPrompt;
-    history += increment;
-    this.setAttribute('history',history)
-
+  var listOfPrompts = Array.from(this.getElementsByClassName('promptContainer'));
+  //When I press up or down, I want to make the input.textContent of the last promptContainer
+  //be the input.textContent of a previous promptContainer
+  //update history if the new number is >= 0
+  let lastPromptInput = listOfPrompts[listOfPrompts.length - 1].querySelector('.input');
+  if(history === 0){
+    this.tempHistoryZero = lastPromptInput.textContent;
   }
+  if( history + increment >= 0 && history + increment < listOfPrompts.length) history += increment;
+  this.setAttribute('history', history)
+
+  if(history === 0){
+    lastPromptInput.textContent = this.tempHistoryZero;
+  } else {
+    lastPromptInput.textContent = listOfPrompts[listOfPrompts.length - (history + 1)].querySelector('.input').textContent;
+  }
+
+
+  // if(increment === -1 && history > 1){
+  //   history += increment;
+  //   this.lastChild.innerHTML = listOfPrompts[listOfPrompts.length - (1 + history)].innerHTML;
+  //   this.setAttribute('history',history)
+  // } else if(increment === 1 && history < listOfPrompts.length - 1){
+  //   history += increment;
+  //   this.lastChild.innerHTML = listOfPrompts[listOfPrompts.length - (1 + history)].innerHTML;
+  //   this.setAttribute('history',history)
+  // } else if(increment === -1 && history == 1){
+  //   this.lastChild.innerHTML = protoPrompt;
+  //   history += increment;
+  //   this.setAttribute('history',history)
+  //}
 }
 
 
