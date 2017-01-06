@@ -12,7 +12,6 @@ fireSubscribe();
 socket.on('event', function(event){
   if(isListening(event.targetId)){
     if(event.targetId && event.type == 'mousedown'){
-        console.log(event)
         document.querySelector(event.targetId).dispatchEvent(new Event('mousedown'));
     } else {
       switch(event.type){
@@ -83,15 +82,6 @@ function socketize(anEvent, targetId){
       clientY,
       targetId
     });
-    console.log({
-      type,
-      key,	
-      keyCode,
-      buttons,
-      clientX,
-      clientY,
-      targetId
-    })
   }
 }
 

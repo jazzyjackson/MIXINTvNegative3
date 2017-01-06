@@ -39,7 +39,6 @@ function exec(aTerminal, ArrArray,options){
 		})
 		.then(res => res.json())
 		.then(resObj => {
-			console.log(resObj)
 			requestElement.className = 'result'
 			requestElement.innerText = resObj.stdout ? resObj.stdout : ( resObj.stderr ? resObj.stderr : resObj.err)
 			if(resObj.stderr || resObj.err){
@@ -60,7 +59,6 @@ function open(aTerminal, ArrArray){
 	fetch('http://' + window.location.host + '/readFile' + '?pathname='+encodeURIComponent(pathname))
 	.then(res => res.json())
 	.then(resObj => {
-		console.log(resObj);
 		create(aTerminal, ['Codemirror',resObj,pathname])
 		requestElement.className = 'result';
 		requestElement.innerText = 'Maybe it worked';
@@ -80,7 +78,6 @@ function lookout(aTerminal, arrArray){
 	fetch('http://' + window.location.host + '/readFile' + '?pathname='+encodeURIComponent(pathname))
 	.then(res => res.json())
 	.then(innerHTML => {
-		console.log(innerHTML)
 		create(aTerminal, ['Tag',null,{pathname,innerHTML}])
 		requestElement.className = 'result';
 		requestElement.innerText = `Tag created with contents of ${pathname}`;
@@ -319,9 +316,7 @@ function runFile(event){
 	//event.path returns an array of elements the event bubbled up through, from the event.target to the window. Filter it down to one element. 
 	// This will work as long as you don't have a terminal within a terminal 
 	let targetTerminal = getParent(event.target);
-	console.log(targetTerminal)
 	let targetInput = targetTerminal.lastChild.lastChild.querySelector('.input');
-	console.log(targetInput)
 	
 	//the title attribute of the event target is the pathname of the file displayed.
 	let targetPath = event.target.title;

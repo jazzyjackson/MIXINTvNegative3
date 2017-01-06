@@ -45,7 +45,6 @@ window.addEventListener('load', () => {
     let innerTag = tagElement.childNodes[1];
     innerTag.shadowRoot || innerTag.attachShadow({mode: 'open'})
     setTimeout(()=>{
-      console.log(innerTag.shadowRoot)
       innerTag.shadowRoot.innerHTML = innerTag.textContent;
       mountScripts(innerTag.shadowRoot)
     }, 0)

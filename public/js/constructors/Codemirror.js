@@ -18,8 +18,8 @@ function Codemirror(optStringInit,optFileName,startX, startY){
   }
   this.element.appendChild(codeText);
 
-  promiseToAppend('/lib/codemirror.css')
-  .then(() => promiseToAppend('/lib/codemirror.js'))
+  promiseToAppend('/codemirrorlib/codemirror.css')
+  .then(() => promiseToAppend('/codemirrorlib/codemirror.js'))
   .then(()=> {
     this.element.cm = CodeMirror.fromTextArea(codeText, {
       lineNumbers: true,
@@ -37,7 +37,7 @@ function setHighlightMode(optFileName, codemirror){
     promiseToAppend('/codemirrormode/meta.js')
     .then(() => CodeMirror.findModeByFileName(optFileName).mode)
     .then( mode => {
-      console.log('stahhp')
+      console.log(`Setting codemirror mode to ${mode}`)
       if(mode === 'htmlmixed'){
          return promiseToAppend('/codemirrormode/javascript/javascript.js',
                        '/codemirrormode/css/css.js',
@@ -166,12 +166,8 @@ function changeMirror(data){
   theMirror.getDoc().replaceRange(newContent,changeFrom,changeTo)
 }
 
-console.log(document.readyState)
 
 window.addEventListener('load', ()=>{
-  
-  console.log(document.readyState)
-
     console.log('codemirror.js loaded')
     let mirrors = Array.from(document.getElementsByClassName('codemirrorContainer'))
     console.log(mirrors);
@@ -188,4 +184,3 @@ window.addEventListener('load', ()=>{
     })
 })
 
-console.log(document.readyState)

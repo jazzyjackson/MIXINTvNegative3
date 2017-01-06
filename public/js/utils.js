@@ -137,7 +137,6 @@ function initLeafListeners(aLeafElement){
   let removeButton = aLeafElement.querySelector('.removeButton')
   if(removeButton){
     removeButton.onmousedown = event => {
-      console.log(event)
       let parentNode = event.target.parentElement.parentElement;
       parentNode.remove()
       if(event.isTrusted){
@@ -192,13 +191,10 @@ function initLeafListeners(aLeafElement){
 function toggleAttr(attrName, optLeaf){
   let theLeaf = optLeaf || event.target;
   while(!theLeaf.className.includes('leaf') && theLeaf){
-    console.log(theLeaf)
     theLeaf = theLeaf.parentElement;
   }
-  console.log(theLeaf.getAttribute(attrName))
   let attrStatus = theLeaf.getAttribute(attrName)
   theLeaf.setAttribute(attrName, attrStatus === 'true' ? 'false' : 'true')
-  console.log(theLeaf.getAttribute(attrName))
 }
 
 
@@ -281,14 +277,12 @@ function shiftxPx(event){
 allContent.addEventListener('keydown', event => {
 		//This does step on some toes. Codemirror uses ctrl shift arrow to highlight word by word. So this could be changed to ensure activeElement is body, something like that
     if(["ArrowUp","ArrowRight","ArrowDown","ArrowLeft","Digit0"].includes(event.code) && event.shiftKey && event.ctrlKey){
-      console.log('shifting...')
       shiftxPx(event)
     }
 })
 
 
 function liveConnect(instanceOfCodeMirror, aNodeToConnect){
-  console.log(aNodeToConnect)
   let shadowToConnect = aNodeToConnect.shadowRoot ? aNodeToConnect.shadowRoot : aNodeToConnect.attachShadow({mode: 'open'});
 	
   let closedCallback = function(){
@@ -321,13 +315,11 @@ function editThis(event){
         let parentNode = getParent(event.target)
         let parentId = parentNode.id;
 				let targetNode = document.getElementById('inner' + parentId);
-        console.log(parentNode, targetNode)
         if(targetNode){
           let mirrorText = targetNode.shadowRoot.innerHTML;
           let targetTerminal = document.querySelector('.terminal');
           let startX = parseInt(parentNode.style.left) + (parseInt(parentNode.style.width) / 2);
           let startY = parseInt(parentNode.style.top) + (parseInt(parentNode.style.height) / 2);
-          console.log(startX, startY);
           let assumedCodemirrorId = 'Codemirror' + nextIdNum('.codemirrorContainer'); 
           let target = targetNode.getAttribute('target');
           target = (target === "undefined") ? targetNode.parentNode.id : target;

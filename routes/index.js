@@ -9,6 +9,7 @@ router.use(express.static(path.join(__dirname, '..', '/public/savedTrees')));
 router.use(express.static(path.join(__dirname, '..',  'public/savedTrees'),{index:false,extensions:['html']}));
 
 router.use('/codemirrormode', express.static(path.join(__dirname, '..', '/node_modules/codemirror/mode')));
+router.use('/codemirrorlib', express.static(path.join(__dirname, '..', '/node_modules/codemirror/lib')));
 
 router.post('/savethis', (req,res,next)=>{
 	var htmlString = req.body.content;
@@ -30,7 +31,6 @@ router.post('/savethis', (req,res,next)=>{
 })
 
 router.post('/saveText', (req,res,next) => {
-	console.log(req.body);
 	fs.writeFile(path.join(__dirname, '../', req.body.filename ), req.body.text, err => {
 			err ? res.sendStatus(400) :	res.sendStatus(200);
 	})
@@ -112,8 +112,6 @@ router.post('/fs', (req,res,next)=>{
 			var result = {};
 			for(each in files){
 				var oneFile = files[each];
-				console.log(oneFile)
-				
 				if(oneFile[0] != '.'){             //if it's not hidden
 					if(fs.fstatSync(fs.openSync(path.join(dirtoread,oneFile),'r')).isDirectory()){ //if its a directory
 						result[files[each]] = 'directory';
@@ -121,16 +119,12 @@ router.post('/fs', (req,res,next)=>{
 							result[files[each]] = 'unknown';
 					} else {
 						switch(oneFile.split('.')[1].toLowerCase()){
-							case 'js': result[files[each]] = 'text'; break;
-							case 'json': result[files[each]] = 'text'; break;
-							case 'css': result[files[each]] = 'text'; break;
 							case 'html': result[files[each]] = 'markup'; break;
-							case 'txt': result[files[each]] = 'text'; break;
 							case 'svg': result[files[each]] = 'markup'; break;
 							case 'png': result[files[each]] = 'image'; break;
 							case 'jpg': result[files[each]] = 'image'; break;
 							case 'gif': result[files[each]] = 'image'; break;
-							default: result[files[each]] = 'unknown'; break;
+							default: result[files[each]] = 'text'; break;
 						}
 					}
 				}
