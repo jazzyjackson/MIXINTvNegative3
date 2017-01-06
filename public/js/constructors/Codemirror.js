@@ -21,11 +21,16 @@ function Codemirror(optStringInit,optFileName,startX, startY){
   promiseToAppend('/codemirrorlib/codemirror.css')
   .then(() => promiseToAppend('/codemirrorlib/codemirror.js'))
   .then(()=> {
+    //Codemirror.fromTextArea does the DOM manipulation, creating the code editor. I'm simply placing a reference to the object it returns to the CodeMirrorContainer - the parent div that contains the textArea etc
     this.element.cm = CodeMirror.fromTextArea(codeText, {
       lineNumbers: true,
       mode: null
     });
+    //uses codemirror on method to add event listeners. On change, socket the change events. 
     this.element.cm.on('change',broadcastEdits)
+    //On focus and blur, adjust the className of the container div so that z-index and box shadow are applied.
+    this.element.cm.on('focus', ()=>this.element.className.includes('CodeMirrorContainer-focused') || (this.element.className += ' CodeMirrorContainer-focused'))
+    this.element.cm.on('blur', ()=>this.element.className = this.element.className.replace(/CodeMirrorContainer\-focused/g,''))
   })
   .then(()=> optFileName && setHighlightMode(optFileName, this.element.cm))
   .catch(console.error.bind(console));

@@ -207,7 +207,7 @@ body {
 }
 
 
-.CodeMirror-focused, div:focus {
+.CodeMirrorContainer-focused, .leaf:focus {
   z-index: 10;
   box-shadow: 5px 5px 20px black;
 }
