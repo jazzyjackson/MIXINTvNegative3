@@ -27,38 +27,29 @@ function Codemirror(optStringInit,optFileName,startX, startY){
     });
     this.element.cm.on('change',broadcastEdits)
   })
-  .then(()=> setHighlightMode(optFileName, this.element.cm))
+  .then(()=> optFileName && setHighlightMode(optFileName, this.element.cm))
   .catch(console.error.bind(console));
 
   this.render = () => this.element;
 }
 
 function setHighlightMode(optFileName, codemirror){
-  return new Promise(resolve => {
-    if(!optFileName){
-      resolve();
-    }
-    let pathExtension = optFileName.split('.')
-    pathExtension = pathExtension[pathExtension.length - 1];
-    if(pathExtension === 'js'){
-      promiseToAppend('/codemirrormode/javascript/javascript.js')
-      .then(()=>{
-        console.log('setting option as javascript')
-        
-        codemirror.setOption('mode', 'javascript');
-        resolve();
-      })
-    } else if (pathExtension === 'html'){
-       promiseToAppend('/codemirrormode/javascript/javascript.js',
+    promiseToAppend('/codemirrormode/meta.js')
+    .then(() => CodeMirror.findModeByFileName(optFileName).mode)
+    .then( mode => {
+      console.log('stahhp')
+      if(mode === 'htmlmixed'){
+         return promiseToAppend('/codemirrormode/javascript/javascript.js',
                        '/codemirrormode/css/css.js',
                        '/codemirrormode/xml/xml.js')
-      .then(()=> promiseToAppend('/codemirrormode/htmlmixed/htmlmixed.js'))
-      .then(()=>{
-        codemirror.setOption('mode', 'htmlmixed');
-        resolve();
-      })
-    }
-  })
+                .then(()=> promiseToAppend('/codemirrormode/htmlmixed/htmlmixed.js'))
+      } else {
+        return promiseToAppend(`/codemirrormode/${mode}/${mode}.js`)
+      }
+    })
+    .then(() => {
+      codemirror.setOption('mode', CodeMirror.findModeByFileName(optFileName).mode);
+    })
 }
 
 function promiseToAppend(){
