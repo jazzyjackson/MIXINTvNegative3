@@ -1,5 +1,0 @@
-<video autoplay="true" id="webcam" width="100%"></video>
-<script>
-var video = document.getElementById('innertag0').shadowRoot.getElementById('webcam');
-navigator.getUserMedia({video: true}, stream => video.setAttribute('src', URL.createObjectURL(stream)), err => console.error.bind(console));
-</script>
