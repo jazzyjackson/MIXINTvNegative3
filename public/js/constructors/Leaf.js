@@ -23,8 +23,8 @@ window.entityHeader =
 
 
 function Leaf(xPos, yPos, width, height){
-  xPos || (xPos = 50);
-  yPos || (yPos = 50);
+  xPos || (xPos = 150);
+  yPos || (yPos = 150);
   width || (width = 400);
   height || (height = 300);
 

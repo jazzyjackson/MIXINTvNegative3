@@ -315,7 +315,7 @@ function runFile(event){
 	//targetTerminal determines what the container element of a file is, for purposes of appending the result and socketizing the target to sync others
 	//event.path returns an array of elements the event bubbled up through, from the event.target to the window. Filter it down to one element. 
 	// This will work as long as you don't have a terminal within a terminal 
-	let targetTerminal = getParent(event.target);
+	let targetTerminal = getParentNode(event.target);
 	let targetInput = targetTerminal.lastChild.lastChild.querySelector('.input');
 	
 	//the title attribute of the event target is the pathname of the file displayed.

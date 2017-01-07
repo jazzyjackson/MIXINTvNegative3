@@ -2,7 +2,7 @@ function Codemirror(optStringInit,optFileName,startX, startY){
 
   Leaf.call(this, startX, startY, 800, 400)
   this.element.className += ' codemirrorContainer'
-  this.element.id = 'Codemirror' + nextIdNum('.codemirrorContainer');
+  this.element.id = `Codemirror${nextIdNum('.codemirrorContainer')}`;
   this.element.setAttribute('target',optFileName)
   let thisTitle = this.element.querySelector('.headerTitle');
   thisTitle.textContent = this.element.id;
@@ -26,11 +26,7 @@ function Codemirror(optStringInit,optFileName,startX, startY){
       lineNumbers: true,
       mode: null
     });
-    //uses codemirror on method to add event listeners. On change, socket the change events. 
-    this.element.cm.on('change',broadcastEdits)
-    //On focus and blur, adjust the className of the container div so that z-index and box shadow are applied.
-    this.element.cm.on('focus', ()=>this.element.className.includes('CodeMirrorContainer-focused') || (this.element.className += ' CodeMirrorContainer-focused'))
-    this.element.cm.on('blur', ()=>this.element.className = this.element.className.replace(/CodeMirrorContainer\-focused/g,''))
+    initCMlisteners(this.element);
   })
   .then(()=> optFileName && setHighlightMode(optFileName, this.element.cm))
   .catch(console.error.bind(console));
@@ -55,6 +51,13 @@ function setHighlightMode(optFileName, codemirror){
     .then(() => {
       codemirror.setOption('mode', CodeMirror.findModeByFileName(optFileName).mode);
     })
+}
+function initCMlisteners(codemirrorContainer){
+  //uses codemirror on method to add event listeners. On change, socket the change events. 
+    codemirrorContainer.cm.on('change',broadcastEdits)
+    //On focus and blur, adjust the className of the container div so that z-index and box shadow are applied.
+    codemirrorContainer.cm.on('focus', ()=>codemirrorContainer.className.includes('CodeMirrorContainer-focused') || (codemirrorContainer.className += ' CodeMirrorContainer-focused'))
+    codemirrorContainer.cm.on('blur', ()=>codemirrorContainer.className = codemirrorContainer.className.replace(/CodeMirrorContainer\-focused/g,''))
 }
 
 function promiseToAppend(){
@@ -175,17 +178,23 @@ function changeMirror(data){
 window.addEventListener('load', ()=>{
     console.log('codemirror.js loaded')
     let mirrors = Array.from(document.getElementsByClassName('codemirrorContainer'))
-    console.log(mirrors);
     mirrors.forEach(mirrorContainer => {
       let textArea = mirrorContainer.getElementsByTagName('TEXTAREA')[0];
-      mirrorContainer.cm = CodeMirror.fromTextArea(textArea, {lineNumbers: true, mode: "htmlmixed"});
-      mirrorContainer.cm.on('change',broadcastEdits);
-      mirrorContainer.cm.on('cursorActivity',broadcastPos) //Will pass the cm object 
+      mirrorContainer.cm = CodeMirror.fromTextArea(textArea, {lineNumbers: true, mode: null});
+      initCMlisteners(mirrorContainer);
       let possibleUpdate = mirrorContainer.getAttribute('update');
       if(possibleUpdate){
         console.log('connecting to ' + possibleUpdate)
         liveConnect(mirrorContainer.cm,document.getElementById(possibleUpdate))
-      } 
+      } ;
+      let possibleTarget = mirrorContainer.getAttribute('target');
+      if(possibleTarget){
+        console.log(`setting syntax highlighting for ${possibleTarget}`);
+        setHighlightMode(possibleTarget, mirrorContainer.cm);
+        let thisTitle = mirrorContainer.querySelector('.headerTitle');
+        thisTitle.textContent = mirrorContainer.id;
+        thisTitle.textContent += possibleTarget ? (' > ' + possibleTarget) : '';
+      }
     })
 })
 

@@ -140,7 +140,7 @@ function initLeafListeners(aLeafElement){
       let parentNode = event.target.parentElement.parentElement;
       parentNode.remove()
       if(event.isTrusted){
-        let queryId = `#${getParent(event.target).id}  .${event.target.className}`;
+        let queryId = `#${getParentNode(event.target).id}  .${event.target.className}`;
         socketize(event, queryId);
       }
     }
@@ -186,6 +186,16 @@ function initLeafListeners(aLeafElement){
       document.addEventListener('mousedown', quitMenu);
     },100)
   });
+  let menuContainer = aLeafElement.querySelector('.menu');
+  //to contain clicks in the menu from being socketed
+  menuContainer.addEventListener('mousedown', event => event.stopPropagation())
+  menuContainer.addEventListener('mousemove', event => event.stopPropagation())
+  menuContainer.addEventListener('mouseup', event => event.stopPropagation())
+  menuContainer.addEventListener('click', event => event.stopPropagation())
+  menuContainer.addEventListener('dblclick', event => event.stopPropagation())
+  menuContainer.addEventListener('touchdown', event => event.stopPropagation())
+  menuContainer.addEventListener('touchmove', event => event.stopPropagation())
+  menuContainer.addEventListener('touchend', event => event.stopPropagation())
 }
 
 function toggleAttr(attrName, optLeaf){
@@ -276,7 +286,8 @@ function shiftxPx(event){
 
 allContent.addEventListener('keydown', event => {
 		//This does step on some toes. Codemirror uses ctrl shift arrow to highlight word by word. So this could be changed to ensure activeElement is body, something like that
-    if(["ArrowUp","ArrowRight","ArrowDown","ArrowLeft","Digit0"].includes(event.code) && event.shiftKey && event.ctrlKey){
+    if(["ArrowUp","ArrowRight","ArrowDown","ArrowLeft","Digit0"].includes(event.code) && event.altKey){
+      event.stopPropagation();
       shiftxPx(event)
     }
 })
@@ -295,7 +306,9 @@ function liveConnect(instanceOfCodeMirror, aNodeToConnect){
   instanceOfCodeMirror.display.wrapper.parentElement.setAttribute('update',aNodeToConnect.id);
 }	
 
-function getParent(thisElement, optClassName = 'leaf'){
+//takes a node, returns a node.
+// getParentNode node, string => node
+function getParentNode(thisElement, optClassName = 'leaf'){
 
   //traverse up the tree until you find a leaf, or maybe no leaf is found, exit in that case too. return whatever was found.
   while(thisElement && !thisElement.className.includes(optClassName)){
@@ -312,7 +325,7 @@ function editThis(event){
         //if that innerdiv doesn't exist, we're not dealing with a tag, so right now I'm assuming its a JS string that can be inserted to a script tag
         //that has to be generalized. best to have an attribute that can be switched on.
         //the mouse click that fired this function will be on a button. two parents up exists the id of the div. inner + that id should give the element id of the inner DIV we want
-        let parentNode = getParent(event.target)
+        let parentNode = getParentNode(event.target)
         let parentId = parentNode.id;
 				let targetNode = document.getElementById('inner' + parentId);
         if(targetNode){

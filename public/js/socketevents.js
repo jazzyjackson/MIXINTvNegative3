@@ -72,7 +72,9 @@ function socketize(anEvent, targetId){
   //targetId might be undefined for body events
   //socketize should happen in such cases
   //if there is a targetId, we have to check if broadcast is not false
-  if(isBroadcasting(getParent(document.querySelector(targetId)) || document.getElementById(targetId))) {
+  //feeling a little queezy on this one, checking if there's a target id before checking whether it should broadcast
+  //I only hit this error once my menu buttons took focus from 
+  if(isBroadcasting(targetId)) {
     socket.emit('event', {
       type,
       key,	
@@ -86,13 +88,16 @@ function socketize(anEvent, targetId){
 }
 
 function isBroadcasting(targetId){
-  let theLeaf = document.getElementById(targetId)
-  let broadcastBool = theLeaf ? theLeaf.getAttribute('broadcast') : 'true';
+  let targetLeaf = getParentNode(document.getElementById(targetId));
+  //I guess it's a little strage that I might check 'is broadcasting' on things that don't have a broadcast attribute, 
+  //but this is just defaulting to broadcast if an event is socketized outside of a leaf (such as body clicks)
+  let broadcastBool = targetLeaf ? targetLeaf.getAttribute('broadcast') : 'true';
+  //because getAttribute returns a string, and boolean('false') -> true, so I'm using a ternary to convert a string to a bool
   return broadcastBool === 'true' ? true : false;
 }
 function isListening(targetId){
-  let theLeaf = document.getElementById(targetId)
-  let broadcastBool = theLeaf ? theLeaf.getAttribute('listen') : 'true';
+  let targetLeaf = getParentNode(document.getElementById(targetId));
+  let broadcastBool = targetLeaf ? targetLeaf.getAttribute('listen') : 'true';
   return broadcastBool === 'true' ? true : false;
 }
 
