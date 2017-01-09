@@ -24,36 +24,36 @@ body {
 
 .terminal .promptContainer > span:first-of-type {
   padding-left: 8px;
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
+  border-top: 1.5px solid black;
+  border-bottom: 1.5px solid black;
   margin-right: 15px;
   position: relative;
 }
 .terminal .arrow {
   box-sizing: border-box;
   display: inline-block;
-  border-top: 1px solid black;
-  border-right: 1px solid black;
+  border-top: 1.5px solid black;
+  border-right: 1.5px solid black;
   width: 11.4px;
   height: 11.4px;
   transform-origin: bottom right;
   transform: rotate(45deg);
   position: absolute;
-  bottom: -1px;
+  bottom: -1.5px;
   right: 0px;
 }
 
 
 .leaf {
    /*color: #fff;*/
-   border: 1px solid black;
+   border: 1.5px solid black;
    isolation: isolate;
    
 }
 
 .leaf .entityHeader {
   font-family: monospace;
-  border: 1px solid black;
+  border: 1.5px solid black;
   margin: 0;
   padding: 5px 0 5px 0;
   width: 100%;
@@ -84,7 +84,7 @@ body {
   position: absolute;
   top: 3px;
   left: 2px;
-  border: 1px solid black;
+  border: 1.5px solid black;
   background: radial-gradient(white, white 25%, gray 45%, black 50%, white 52%)
 }
 
@@ -181,7 +181,7 @@ body {
   top: 0;
   left: 0;
   border: none;
-  border-bottom: 1px solid black;
+  border-bottom: 1.5px solid black;
 }
 
 .terminal .entityHeader {
@@ -190,7 +190,7 @@ body {
 	left: 0px;
   top: 0px;
   border: none;
-  border-bottom: 1px solid black;
+  border-bottom: 1.5px solid black;
 
 }
 
