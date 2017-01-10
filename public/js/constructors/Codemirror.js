@@ -66,7 +66,7 @@ function promiseToAppend(){
   //A promise is returned representing whether those arguments were successfully attached
   let ArrayOfTags = Array.from(arguments)
   return new Promise((resolve,reject)=>{
-    Promise.race([tryToAppend(ArrayOfTags),timeout(1000)])
+    Promise.race([tryToAppend(ArrayOfTags),timeout(5000)])
     .then((appendSuccess)=>{
       if(appendSuccess){
         resolve('loaded successfully');

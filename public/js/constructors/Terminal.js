@@ -135,16 +135,19 @@ function initPrompt(terminalContainer){
     </div>
     */
     terminalContainer.appendChild(tempDiv.firstElementChild);
+    resetPromptStyle(terminalContainer)
+    terminalContainer.scrollTop = terminalContainer.scrollHeight;
+}
+
+function resetPromptStyle(terminalContainer){
     setTimeout(()=>{
-      let promptHeight = terminalContainer.lastChild.querySelector('.prompt').getBoundingClientRect().height;
+      let promptHeight = terminalContainer.querySelector('.prompt').getBoundingClientRect().height;
       //returns style.css as a stylesheet object
       let styleSheet = Array.from(document.styleSheets).filter(each => each.href && each.href.includes('styles/style.css'))[0]
       let arrowRule = Array.from(styleSheet.rules).filter(each => each.selectorText.includes('arrow'))[0].style;
       arrowRule.height = promptHeight / Math.sqrt(2);
       arrowRule.width = promptHeight / Math.sqrt(2);
     },0)
-
-    terminalContainer.scrollTop = terminalContainer.scrollHeight;
 }
 
 function evaluate(aTerminal, aQuery){
@@ -169,6 +172,8 @@ document.documentElement.addEventListener('keydown', function(event){
     handleKeystroke(event.key, event.keyCode, terminal.id, {isLocal: true});
   }
 });
+
+window.addEventListener('load', () =>  resetPromptStyle(document.querySelector('.terminalContainer')));
 
 //Use to have the dblclick add terminal listener in here, moved it to utils.js. Will be refactored to create whatever is the default. 
 // document.documentElement.addEventListener('dblclick', event => {
