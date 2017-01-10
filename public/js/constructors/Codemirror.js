@@ -3,7 +3,7 @@ function Codemirror(optStringInit,optFileName,startX, startY){
   Leaf.call(this, startX, startY, 800, 400)
   this.element.className += ' codemirrorContainer'
   this.element.id = `Codemirror${nextIdNum('.codemirrorContainer')}`;
-  this.element.setAttribute('target',optFileName)
+  if(optFileName) this.element.setAttribute('target',optFileName)
   let thisTitle = this.element.querySelector('.headerTitle');
   thisTitle.textContent = this.element.id;
   thisTitle.textContent += optFileName ? (' > ' + optFileName) : '';
