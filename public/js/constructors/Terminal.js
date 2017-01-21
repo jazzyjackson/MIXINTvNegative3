@@ -2,7 +2,17 @@
 function Terminal(xPos, yPos){
   Leaf.call(this, xPos, yPos);
   this.element.setAttribute('history', 0); //0 is most recent, negative numbers go back in time
-  this.element.id = "root" + nextIdNum('.terminal');
+  //check for a document name, pulling out just the word characters without surrounding punctuation
+  let aPotentialName = location.pathname
+  aPotentialName = aPotentialName.match(/\/\w+\.|\/\w+$/);
+  aPotentialName = aPotentialName && aPotentialName[0].match(/\w+/);
+  aPotentialName = aPotentialName && aPotentialName[0];
+  //if the document has a name AND there is NOT already a terminal with that name
+  if(aPotentialName && !document.getElementById(aPotentialName)){
+    this.element.id = aPotentialName;
+  } else {
+    this.element.id = "root" + nextIdNum('.terminal');
+  }
   this.element.className += ' terminal'; //addClass terminal to existing className
   this.element.setAttribute('protoPrompt', 'localhost/' + this.element.id);
 	//not sure if I can rely on the first child of the header to be the text Node, maybe there's a more generalizable way to get to the text node
@@ -13,8 +23,6 @@ function Terminal(xPos, yPos){
   
   thisHeader.querySelector('.editButton').parentElement.remove();
   thisHeader.querySelector('.saveButton').parentElement.remove();
-
-
 
   let protoPrompt = this.element.getAttribute('protoPrompt');
   let terminalContainer = document.createElement('div');
