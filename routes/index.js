@@ -46,7 +46,7 @@ router.post('/exec', (req,res,next)=>{
 	*/
 	let command = req.body.command;
 	if(aCustomCommandMatches(command)){
-		if(process.env.OS && process.env.OS.includes('Windows') && ['touch','ls'].some(each => command.indexOf(each) === 0)){
+		if(process.env.OS && process.env.OS.includes('Windows') && ['touch','ls','pwd'].some(each => command.indexOf(each) === 0)){
 			switch(command.split(' ')[0]){
 				case 'ls': exec('dir', (err,stdout,stderr)=>{
 						res.status(200).json({err,stdout,stderr});
@@ -54,6 +54,7 @@ router.post('/exec', (req,res,next)=>{
 				case 'touch': exec(`type NUL >> ${command.split(' ')[1]}`, (err,stdout,stderr)=>{
 					res.status(200).json({err,stdout,stderr});
 				}); break;
+				case 'pwd': res.status(200).json({stdout: process.cwd()}); break;
 			}
 		//cd is a special case, running it doesn't work, process.chdir has to be used instead
 		} else if(command.indexOf('cd') === 0){
@@ -90,9 +91,13 @@ router.get('/readFile', (req,res,next) => {
 			console.log(err)
 			res.status(400).send(err);
 		} else {
-			res.json(data);
+			res.send(data);
 		}
 	})
+})
+
+router.get('/download', (req,res,next) => {
+	res.download(path.join(__dirname, '..', req.query.pathname));
 })
 
 router.post('/fs', (req,res,next)=>{
