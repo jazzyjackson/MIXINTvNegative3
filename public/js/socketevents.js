@@ -52,7 +52,7 @@ socket.on('remoteRunFile', data => {
   //lastChild is the terminalcontainer
   //lastChild of that is the last prompt (hopefully)
   //
-	targetTerminal.lastChild.lastChild.querySelector('.input').textContet = `${func} ${pathname}`
+	targetTerminal.lastChild.lastChild.querySelector('.input').textContent = `${func} ${pathname}`
 
   targetTerminal.lastChild.appendChild(evalResult);
   initPrompt(targetTerminal.lastChild);

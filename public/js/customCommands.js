@@ -10,8 +10,8 @@ var customCommands = {
 	open,
 	create,
 	lookout,
-	list: ls,
-	files: ls,
+	list,
+	files: list,
 	git: exec,
 	mkdir: exec,
 	ls: exec,
@@ -52,16 +52,16 @@ function exec(aTerminal, ArrArray,options){
 		return requestElement;
 }
 
-function open(aTerminal, ArrArray){
+function mirror(aTerminal, ArrArray){
 	var requestElement = createResult('request', 'Looking for files...');
 	requestElement.id = Date.now();
 	let pathname = ArrArray[0];
 	fetch('http://' + window.location.host + '/readFile' + '?pathname='+encodeURIComponent(pathname))
-	.then(res => res.json())
-	.then(resObj => {
-		create(aTerminal, ['Codemirror',resObj,pathname])
+	.then(res => res.text())
+	.then(filetext => {
+		create(aTerminal, ['Codemirror',filetext,pathname])
 		requestElement.className = 'result';
-		requestElement.innerText = 'Maybe it worked';
+		requestElement.innerText = `Attempting to mirror ${pathname}`;
 		aTerminal.lastChild.scrollTop = aTerminal.lastChild.scrollHeight;
 
 	})
@@ -76,7 +76,7 @@ function lookout(aTerminal, arrArray){
 	let pathname = arrArray[0] //pathname is passed as an array for some reason. too late now.
 	
 	fetch('http://' + window.location.host + '/readFile' + '?pathname='+encodeURIComponent(pathname))
-	.then(res => res.json())
+	.then(res => res.text())
 	.then(innerHTML => {
 		create(aTerminal, ['Tag',null,{pathname,innerHTML}])
 		requestElement.className = 'result';
@@ -92,7 +92,7 @@ function lookout(aTerminal, arrArray){
   return requestElement;
 }
 
-function ls(aTerminal, ArrArray){
+function list(aTerminal, ArrArray){
 	var requestElement = createResult('request', 'Looking for files...');
 	requestElement.id = Date.now();
 	
@@ -181,7 +181,7 @@ function buildDirDisplay(resObj){
 	let pathname = resObj.pathname;
 	let resultString = '';
 	for(each in fileObj){
-		resultString += `<p class="fs ${fileObj[each]}" title="${pathname + each}"> ${each} </p> `
+		resultString += `<p class="fs ${fileObj[each]}" title="${pathname + each}"> ${each} <a href="download?pathname=${encodeURIComponent(pathname + each)}"></a> </p>`
 	}
 	return resultString;
 }
@@ -324,23 +324,23 @@ function runFile(event){
 	let prompt = targetTerminal.getAttribute('protoPrompt');
   //Huh. open FILE is like create Codemirror FILETEXT. prints ls when re-executing list...
 	if(event.target.className && event.target.className.includes('directory')){
-		targetInput.textContent = `ls ${targetPath}`
+		targetInput.textContent = `list ${targetPath}`
 	} else if(event.target.className && event.target.className.includes('fs')){
-		targetInput.textContent = `open ${targetPath}`
+		targetInput.textContent = `mirror ${targetPath}`
 	} 
 
 	//Oh yeah, it does these things whether you single clicked or double clicked, but then checks for double click before executing.
-	if(event.type === 'dblclick'){
+	if(event.type === 'dblclick' && !event.ctrlKey){
 		if(event.target.className && event.target.className.includes('directory')){
 			//socketizing with custom command (which I belive is just bounced), and the socket object includes the id of the terminal, the name of a function, and a pathname.
-			socket.emit('remoteRunFile', { terminal: targetTerminal.id, func: 'ls', path: targetPath});
+			socket.emit('remoteRunFile', { terminal: targetTerminal.id, func: 'list', path: targetPath});
 			//Similar action, just different if you're opening or listing. runs ls - oh, from here ls is just a shortcut for the function name, not a property of the customCommands object.'
-			let listResult = ls(targetTerminal, [targetPath]);
+			let listResult = list(targetTerminal, [targetPath]);
 			targetTerminal.lastChild.appendChild(listResult);
 			initPrompt(targetTerminal.lastChild);
 		} else if(event.target.className && event.target.className.includes('text')){
-			socket.emit('remoteRunFile', { terminal: targetTerminal.id, func: 'open', path: targetPath});
-			let fileOpenResult = open(targetTerminal, [targetPath]);
+			socket.emit('remoteRunFile', { terminal: targetTerminal.id, func: 'mirror', path: targetPath});
+			let fileOpenResult = mirror(targetTerminal, [targetPath]);
 			targetTerminal.lastChild.appendChild(fileOpenResult);
 			initPrompt(targetTerminal.lastChild);
 		} else if(event.target.className && event.target.className.includes('markup')){
@@ -349,6 +349,14 @@ function runFile(event){
 			targetTerminal.lastChild.appendChild(fileOpenResult);
 			initPrompt(targetTerminal.lastChild);
 		}
+	}
+	if(event.type === 'dblclick' && event.ctrlKey){
+		// if(event.target.className && (event.target.className.includes('text') || event.target.className.includes('markup') )){
+			event.target.querySelector('a').click();
+		// }
+	}
+		
+
 
 
 /*
@@ -357,7 +365,6 @@ function runFile(event){
 		emit remote run file, terminal, func lookout 
 		targetTerminal.appendChild( lookout(targetTerminal, [targetPath]) )
 */
-	}
 
 
 }

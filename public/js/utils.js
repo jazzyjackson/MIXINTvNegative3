@@ -300,6 +300,7 @@ function liveConnect(instanceOfCodeMirror, aNodeToConnect){
     let newHTML = instanceOfCodeMirror.doc.getValue();
     aNodeToConnect.textContent = newHTML;
     shadowToConnect.innerHTML = newHTML;
+    mountScripts(shadowToConnect);
   };
 	instanceOfCodeMirror.on('change',closedCallback);
   //setting the update attribute isn't necessary for the connect to happen - it is used on page load to reconnect.
@@ -366,6 +367,7 @@ function nextIdNum(classname){
 }
 
 function mountScripts(aNode){
+    //querySelector is a method of any node. get element by tag name is a method that must be inherited from document. Maybe i'm mounting scripts that don't have a document.
     let scripts = Array.from(aNode.querySelectorAll('script'))
     scripts.forEach(scriptTag => {
       let newScript = document.createElement('script')
