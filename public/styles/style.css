@@ -61,9 +61,11 @@ body {
   background: white;
   position: absolute;
   top: -43px;
-  left: -1px;
+  left: -1.5px;
   z-index: 1;
-
+}
+.tag .entityHeader {
+  left: -1px;
 }
 
 .removeButton, .editButton, .broadcastButton, .listenButton, .saveButton, .menuButton {
