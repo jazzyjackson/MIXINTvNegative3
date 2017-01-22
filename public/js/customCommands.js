@@ -204,6 +204,9 @@ function rename(aTerminal, ArrArray){
 	}
 	targetElement.id = newId;
 	targetElement.querySelector('.headerTitle').textContent = targetElement.id;
+	if(targetElement.className.includes('tag')){
+		targetElement.lastChild.id = 'inner' + newId;
+	}
 	targetElement.setAttribute('protoprompt', 'localhost/' + targetElement.id);
 	return createResult('result', oldId + ' has been renamed to ' + targetElement.id);
 }
