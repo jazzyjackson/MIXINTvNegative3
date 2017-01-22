@@ -128,13 +128,13 @@
 &lt;/style&gt;
 &lt;script&gt;
   function makeNewUrl(){
-    var newurl = Math.trunc(Math.random() * 65556).toString(16);
+    var newurl = Math.trunc(Math.random() * Math.pow(16,4)).toString(16);
     var randomurl = document.getElementById('randomURL').lastChild.shadowRoot.querySelector('a');
     while(newurl.length &lt; 4){
     	newurl = '0' + newurl;
     }
-    randomurl.setAttribute(`href`,`http://textreeplot.xyz/${newurl}`);
-    randomurl.textContent = `textreeplot.xyz/${newurl}`;
+    randomurl.setAttribute(`href`,`http://${location.host}/${newurl}`);
+    randomurl.textContent = `${location.host}/${newurl}`;
   }
 &lt;/script&gt;&lt;/p&gt;</div></div><div showmenu="false" broadcast="true" listen="true" style="left: 71px; top: 99px; width: 800px; position: absolute; background: white; min-height: 100px;" tabindex="1" class="leaf tag" id="Welcome" protoprompt="localhost/Welcome"><div class="entityHeader">
     <table>
