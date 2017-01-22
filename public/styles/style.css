@@ -64,9 +64,7 @@ body {
   left: -1.5px;
   z-index: 1;
 }
-.tag .entityHeader {
-  left: -1px;
-}
+
 
 .removeButton, .editButton, .broadcastButton, .listenButton, .saveButton, .menuButton {
 	margin: 3px;

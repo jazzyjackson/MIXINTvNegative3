@@ -1,15 +1,24 @@
-<html>
-  <head>
+<head>
     <!--<link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">-->
     <link rel="stylesheet" href="/styles/style.css">
     <link rel="stylesheet" href="/styles/menustyle.css">
-    <script src="/js/constructors/Leaf.js" defer></script>
-    <script src="/js/constructors/Terminal.js" defer></script>
-    <script src="/js/socket.io.js" defer></script>
-    <script src="/js/socketevents.js" defer></script>
-    <script src="/js/customCommands.js" defer></script>
-    <script src="/js/utils.js" defer></script>
-    <script id="loadscript">
+    <script src="/js/constructors/Leaf.js" defer=""></script>
+    <script src="/js/constructors/Terminal.js" defer=""></script>
+    <script src="/js/socket.io.js" defer=""></script>
+    <script src="/js/socketevents.js" defer=""></script>
+    <script src="/js/customCommands.js" defer=""></script>
+    <script src="/js/utils.js" defer=""></script>
+    
+    
+  <script src="/js/constructors/Tag.js" defer="true"></script><title>whatisit</title><script id="repl">var waiting = setInterval(()=>{
+	console.log('waiting')
+	if(window['makeNewUrl']){
+    	console.log('makeNewUrl found!')
+    	setInterval(makeNewUrl, 250);
+        clearInterval(waiting);
+    }
+}, 250)
+</script><script id="loadscript">
       let scriptArray = Array.from(document.getElementsByTagName('script'));
       let loadingArray = [];
       let firstTerminalIcanFind;
@@ -83,25 +92,105 @@
       //   document.head.appendChild(thisScript)
       // }
 
-    </script>
-    <script id='repl'></script>
-  </head>
+    </script></head>
   <!--Giving body id body for consistency with certain functions that rely on div id-->
-  <body id="body" style="position: absolute; left: 0; top: 0;">
-    <div showmenu="false" broadcast="true" listen="true" style="left: 150px; top: 150px; width: 400px; height: 300px; position: absolute;background: white" tabindex="1" class="leaf terminal" id="root0" history="0" protoprompt="localhost/root0"><div class="entityHeader">
+  <body id="body" style="position: absolute; left: 0px; top: 0px; height: 2094px; width: 6000px;">
+    
+  
+
+<div showmenu="false" broadcast="true" listen="true" style="left: 904px; top: 99px; width: 400px; position: absolute; background: white; min-height: 100px;" tabindex="1" class="leaf tag" id="randomURL" protoprompt="localhost/randomURL"><div class="entityHeader">
     <table>
       <tbody><tr>
-        <td class="headerTitle">root0</td>
+        <td class="headerTitle">randomURL</td>
       </tr>
     </tbody></table>
     <div class="menuButton"></div>
     <div class="removeButton"></div>
     <div class="menu">
       <ul>
+        <li tabindex="2"> Edit <div class="editButton"></div></li>
         <li tabindex="2"> Broadcast <div class="broadcastButton"></div> </li>
         <li tabindex="2"> Listen <div class="listenButton"></div> </li>
+        <li tabindex="2"> Save <div class="saveButton"></div> </li>
       </ul>
     </div>
-  </div><div class="terminalContainer"><div class="promptContainer"><span class="prompt">localhost/root0<span class="arrow"></span></span><div class="input"></div></div></div></div>
-  </body>
-</html>
+  </div><div id="innerrandomURL" target="undefined" style="width: 100%; height: 100%;">&lt;h2&gt; Start with a blank plot &lt;/h2&gt;
+&lt;h3&gt;&lt;a href="http://textreeplot.xyz/8e73"&gt;textreeplot.xyz/8e73&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt; You could also use a name of your choice.&lt;/p&gt;
+&lt;p&gt; Anyone connected to the same url will have their actions synchronized with yours.
+&lt;style&gt;
+* {
+	margin: 10px;
+    text-align: center;
+    font-family: monospace;
+}
+
+&lt;/style&gt;
+&lt;script&gt;
+  function makeNewUrl(){
+    var newurl = Math.trunc(Math.random() * 65556).toString(16);
+    var randomurl = document.getElementById('randomURL').lastChild.shadowRoot.querySelector('a');
+    while(newurl.length &lt; 4){
+    	newurl = '0' + newurl;
+    }
+    randomurl.setAttribute(`href`,`http://textreeplot.xyz/${newurl}`);
+    randomurl.textContent = `textreeplot.xyz/${newurl}`;
+  }
+&lt;/script&gt;&lt;/p&gt;</div></div><div showmenu="false" broadcast="true" listen="true" style="left: 71px; top: 99px; width: 800px; position: absolute; background: white; min-height: 100px;" tabindex="1" class="leaf tag" id="Welcome" protoprompt="localhost/Welcome"><div class="entityHeader">
+    <table>
+      <tbody><tr>
+        <td class="headerTitle">Welcome</td>
+      </tr>
+    </tbody></table>
+    <div class="menuButton"></div>
+    <div class="removeButton"></div>
+    <div class="menu">
+      <ul>
+        <li tabindex="2"> Edit <div class="editButton"></div></li>
+        <li tabindex="2"> Broadcast <div class="broadcastButton"></div> </li>
+        <li tabindex="2"> Listen <div class="listenButton"></div> </li>
+        <li tabindex="2"> Save <div class="saveButton"></div> </li>
+      </ul>
+    </div>
+  </div><div id="innerWelcome" target="undefined" style="width: 100%; height: 100%;">&lt;h3&gt; Textree Plot is an open-world, multiplayer development environment. &lt;/h3&gt;
+&lt;p&gt;Websites are nothing but trees of text, and a plot is a good way to organize trees OR text, in the form of stories and secret plans. &lt;/p&gt;
+&lt;p&gt; A textree plot is a web application with tools for modifying itself and for creating new content and capabilities. With a double click anywhere on the empty plot, a 'terminal emulator' appears which allows you to modify the window OR the server (you might say you're given 'root' access). If you happen to know javascript, you can run commands here, anything from 2 + 2 to document.body.style.background = 'pink' &lt;/p&gt;
+
+&lt;p&gt;Textree Plot is designed to be an easy to install web server. Once you have node installed, it's just two commands, "npm install", "npm start" to have the application running on your personal computer or cloud server. 
+&lt;/p&gt;
+&lt;p&gt;The source code is hosted at &lt;a href="https://github.com/jazzyjackson/textreeplot"&gt;github.com/jazzyjackson/textreeplot&lt;/a&gt;, from there you can git clone or download the application as a zip to install anywhere that runs an up-to-date NodeJS&lt;/p&gt;
+&lt;p&gt;
+
+&lt;/p&gt;
+&lt;p&gt; I built this software because I wanted a space that allowed for collective thinking and acting within the capabilities of the modern web browser. &lt;/p&gt;
+&lt;p&gt; It is, of course, offered without warranty or support. I claim no license, as this is merely an amalgamation of other people's work, and I'm not totally sold on the concept of property, let alone the intellectual variety. &lt;/p&gt;
+
+&lt;h3&gt; Get Started &lt;/h3&gt;
+&lt;p&gt;The principal usefulness of the application as it stands is to edit documents with realtime feedback, on your own or with friends. You can interact with the html of this document with the editor below. Type the command 'create Tag', click the menu circle in the upper left of that new tag and click 'edit'. Anything you type in the editor will be made the innerHTML of the tag. HTML and SVG was easy to implement in the webbrowser, but Markdown and LaTeX editing could be added at a later time. 
+&lt;/p&gt;
+&lt;h4&gt; Moving Around &lt;/h4&gt;
+&lt;p&gt; Holding down SHIFT while right-clicking and dragging pans the entire document. &lt;/p&gt;
+&lt;p&gt; Double clicking anywhere creates a new terminal emulator. Move windows by clicking and dragging their header, or if you're on a touchscreen, you can touch and drag anywhere.
+&lt;style&gt;
+	p, h3, h4 {
+    	margin: 10px;
+        font-family: monospace;
+        font-size: 1.2em;
+     }
+&lt;/style&gt;</div></div><div showmenu="false" broadcast="true" listen="true" style="left: 910px; top: 284px; width: 400px; height: 300px; position: absolute; background: white;" tabindex="1" class="leaf terminal" id="whatisit" history="0" protoprompt="localhost/whatisit"><div class="entityHeader">
+    <table>
+      <tbody><tr>
+        <td class="headerTitle">whatisit</td>
+      </tr>
+    </tbody></table>
+    <div class="menuButton"></div>
+    <div class="removeButton"></div>
+    <div class="menu">
+      <ul>
+        
+        <li tabindex="2"> Broadcast <div class="broadcastButton"></div> </li>
+        <li tabindex="2"> Listen <div class="listenButton"></div> </li>
+        
+      </ul>
+    </div>
+  </div><div class="terminalContainer"><div class="promptContainer"><span class="prompt">localhost/whatisit<span class="arrow"></span></span><div class="input"></div></div><div class="request" id="whatisit2" createdat="1485073690911">10.438 KB written successfully to whatisit.html at Sun Jan 22 2017 03:28:10 GMT-0500 (Eastern Standard Time)</div><div class="promptContainer"><span class="prompt">localhost/whatisit<span class="arrow"></span></span><div class="input"></div></div></div></div></body>
