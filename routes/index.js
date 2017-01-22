@@ -145,7 +145,7 @@ router.post('/fs', (req,res,next)=>{
 })
 
 router.get('/:notYetAFile', function(req,res){
-   res.sendFile(path.join(__dirname, '..',  '/public/index.html'));
+   res.sendFile(path.join(__dirname, '..',  '/public/blank.html'));
 })
 
 module.exports = router;
