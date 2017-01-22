@@ -1,0 +1,9 @@
+<blink> hello </blink>
+<script>
+  setInterval(()=>{
+    let blink = this.querySelector('blink')
+    let currentStyle = blink.style.visibility
+    blink.style.visibility = currentStyle === 'hidden' ? 'visible' : 'hidden';
+  },500)
+
+</script>

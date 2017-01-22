@@ -1,0 +1,6 @@
+<video autoplay="true" id="webcam" width="100%" src="blob:http://localhost:3000/45b27b0a-8997-4d3d-880c-2165855ec1e5"></video>
+<h1> Hello </h1>
+<script>
+var video = document.getElementById('innertag0').shadowRoot.getElementById('webcam');
+navigator.getUserMedia({video: true}, stream => video.setAttribute('src', URL.createObjectURL(stream)), err => console.error.bind(console));
+</script>

@@ -209,10 +209,11 @@ function toggleAttr(attrName, optLeaf){
 
 
 window.addEventListener('load', ()=>{
-  var styles = Array.from(document.styleSheets, each => each.href.includes('menuStyle'));
+  var styles = Array.from(document.styleSheets, each => each.href.includes('menustyle'));
   if(!styles.some(each=>each)){
     let menuStyle = document.createElement('link')
-    menuStyle.setAttribute('href','/styles/menuStyle.css')
+    menuStyle.setAttribute('href','/styles/menustyle.css')
+    menuStyle.setAttribute('rel','stylesheet')
     document.head.appendChild(menuStyle)
   }
   //reattach all the click and drag listeners to all elements
