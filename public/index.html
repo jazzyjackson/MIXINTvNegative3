@@ -29,13 +29,29 @@
         }
       })
       document.addEventListener('readystatechange', () => {
-
+        console.log('readyStateChange')
         switch(document.readyState){
           case 'interactive': 
             firstTerminalIcanFind = document.querySelector('.terminalContainer');
             loadingArray.forEach(divNode => {
               firstTerminalIcanFind.appendChild(divNode)
             });
+            let aPotentialName = location.pathname;
+            aPotentialName = aPotentialName.match(/\/\w+\.|\/\w+$/);
+            aPotentialName = aPotentialName && aPotentialName[0].match(/\w+/);
+            aPotentialName = aPotentialName && aPotentialName[0];
+            let potentialTerminal = document.getElementById("root0");
+            //if the document has a name AND there is NOT already a terminal with that name
+            if(aPotentialName && potentialTerminal){
+              potentialTerminal.id = aPotentialName;
+              let thisHeader = potentialTerminal.querySelector('.entityHeader')
+              let thisTitle = thisHeader.querySelector('.headerTitle')
+              thisTitle.textContent = aPotentialName;
+              potentialTerminal.setAttribute('protoPrompt', 'localhost/' + aPotentialName);
+              Array.from(potentialTerminal.getElementsByClassName('promptContainer'), function(node){
+                node.firstChild.innerHTML = `localhost/${aPotentialName}<span class="arrow"></span>`;
+              })
+            }
             break;
           case 'complete':
             let readyDiv = document.createElement('div')
@@ -47,7 +63,9 @@
             break;
         }
       })
-      window.addEventListener('load', () => console.log('window loaded'))
+      window.addEventListener('load', () => {
+        
+      })
       let scriptReArranger = new MutationObserver((info,thisMute)=>{
         console.log("something has changed!", info)
         thisMute.disconnect();
