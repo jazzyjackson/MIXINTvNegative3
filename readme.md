@@ -6,7 +6,8 @@
 </p>
 <p>The source code is hosted at <a href="https://github.com/jazzyjackson/textreeplot">github.com/jazzyjackson/textreeplot</a>, from there you can git clone or download the application as a zip to install anywhere that runs an up-to-date NodeJS</p>
 <p>
-
+<video autoplay="true" loop="true" src="./images/menuConstruct.mp4"></video>
+<video autoplay="true" loop="true" src="./images/cropStyle.mp4"></video>
 </p>
 <p> I built this software because I wanted a space that allowed for collective thinking and acting within the capabilities of the modern web browser. </p>
 <p> It is, of course, offered without warranty or support. I claim no license, as this is merely an amalgamation of other people's work, and I'm not totally sold on the concept of property, let alone the intellectual variety. </p>
@@ -16,11 +17,15 @@
 </p>
 <h4> Moving Around </h4>
 <p> Holding down SHIFT while right-clicking and dragging pans the entire document. </p>
-<p> Double clicking anywhere creates a new terminal emulator. Move windows by clicking and dragging their header, or if you're on a touchscreen, you can touch and drag anywhere.
+<p> Double clicking anywhere creates a new terminal emulator. Move windows by clicking and dragging their header, or if you're on a touchscreen, you can touch and drag anywhere. </p>
 <style>
-	p, h3, h4 {
-    	margin: 10px;
-        font-family: monospace;
-        font-size: 1.2em;
-     }
-</style></p>
+  video {
+    width: 50%;
+    float: left;
+  }
+  p, h3, h4 {
+    margin: 10px;
+    font-family: monospace;
+    font-size: 1.2em;
+  }
+</style>
