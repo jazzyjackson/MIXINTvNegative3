@@ -297,13 +297,26 @@ allContent.addEventListener('keydown', event => {
 function liveConnect(instanceOfCodeMirror, aNodeToConnect){
   let shadowToConnect = aNodeToConnect.shadowRoot ? aNodeToConnect.shadowRoot : aNodeToConnect.attachShadow({mode: 'open'});
 	
-  let closedCallback = function(){
+  let pushMirror2HTML = function(){
     let newHTML = instanceOfCodeMirror.doc.getValue();
-    aNodeToConnect.textContent = newHTML;
-    shadowToConnect.innerHTML = newHTML;
-    mountScripts(shadowToConnect);
+    if(instanceOfCodeMirror.doc.getValue() !== shadowToConnect.innerHTML){
+      aNodeToConnect.textContent = newHTML;
+      shadowToConnect.innerHTML = newHTML;
+      mountScripts(shadowToConnect);
+    }
   };
-	instanceOfCodeMirror.on('change',closedCallback);
+
+  let pushHTML2Mirror = function(info){
+    console.log(info)    
+    let newHTML = aNodeToConnect.shadowRoot.innerHTML;
+    if(instanceOfCodeMirror.doc.getValue() !== shadowToConnect.innerHTML){
+      instanceOfCodeMirror.doc.setValue(shadowToConnect.innerHTML);
+    }
+  }
+  let tagChangeWatcher = new MutationObserver(pushHTML2Mirror);
+  tagChangeWatcher.observe(shadowToConnect,{subtree: true, characterData: true});
+	instanceOfCodeMirror.on('change',pushMirror2HTML);
+
   //setting the update attribute isn't necessary for the connect to happen - it is used on page load to reconnect.
   instanceOfCodeMirror.display.wrapper.parentElement.setAttribute('update',aNodeToConnect.id);
 }	

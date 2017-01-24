@@ -22,8 +22,8 @@ function Tag(tagName,options = {}){
     mountScripts(htmlContainer.shadowRoot)
     htmlContainer.textContent = options.innerHTML;
   } else {
-    let defaultElement = document.createElement(tagName ? tagName : 'div');
-    htmlContainer.shadowRoot.appendChild(defaultElement);
+    let defaultElement = '<div contenteditable="true"></div>'
+    htmlContainer.shadowRoot.innerHTML = defaultElement;
   }
   if(options && options.url) defaultElement.setAttribute('src',url);
   
