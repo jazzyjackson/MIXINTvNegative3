@@ -80,23 +80,26 @@ function bounce(socket,name,payload){
 }
 
 io.on('connection', function(socket){
-
-		identities[socket.id] = {ip: socket.client.conn.remoteAddress.split(':').slice(-1)[0], name: null};
-    //event, filesaveResult, remoteRunFile, cursorActivity, mirrorChange are all just bounced back. Broadcast to all clients assigned to the same room.
-		socket.on('event',           data => bounce(socket,'event', data))
-		socket.on('filesaveResult',  data => bounce(socket,'filesaveResult',data))
-		socket.on('remoteRunFile',   data => bounce(socket,'remoteRunFile',data))
-		socket.on('cursorActivity',  data => bounce(socket,'cursorActivity',data))
-		socket.on('mirrorChange',    data => bounce(socket,'mirrorChange',data))
-		//right now, there's a function called on page load that fires this with current location.pathname.
-		//it occurs to me that I could probably extract that from the socket object
-		//and the only advantage here is that I can programmatically reconnect to a different room, which may or may not be useful
-		socket.on('subscribe', function(data){
-			socket.join(data.room);
-			identities[socket.id].room = data.room;
-			console.log(identities[socket.id])
-		})
-
+	  let {host, referer} = socket.client.conn.request.headers
+		//don't sync on dubdomains. use coltenj.com to split http://coltenj.com/ and check if there's a subdomain there.'
+		if(referer.split(host)[1] && referer.split(host)[1].length > 1){
+			console.log('subdomain')
+			identities[socket.id] = {ip: socket.client.conn.remoteAddress.split(':').slice(-1)[0], name: null};
+			//event, filesaveResult, remoteRunFile, cursorActivity, mirrorChange are all just bounced back. Broadcast to all clients assigned to the same room.
+			socket.on('event',           data => bounce(socket,'event', data))
+			socket.on('filesaveResult',  data => bounce(socket,'filesaveResult',data))
+			socket.on('remoteRunFile',   data => bounce(socket,'remoteRunFile',data))
+			socket.on('cursorActivity',  data => bounce(socket,'cursorActivity',data))
+			socket.on('mirrorChange',    data => bounce(socket,'mirrorChange',data))
+			//right now, there's a function called on page load that fires this with current location.pathname.
+			//it occurs to me that I could probably extract that from the socket object
+			//and the only advantage here is that I can programmatically reconnect to a different room, which may or may not be useful
+			socket.on('subscribe', function(data){
+				socket.join(data.room);
+				identities[socket.id].room = data.room;
+				console.log(identities[socket.id])
+			})
+		}
 
 
 		// socket.on('identityRequest', function(req){
