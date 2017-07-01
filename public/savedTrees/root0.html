@@ -1,0 +1,375 @@
+<head>
+    <!--<link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">-->
+    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="stylesheet" href="/styles/menustyle.css">
+    <script src="/js/constructors/Leaf.js" defer=""></script>
+    <script src="/js/constructors/Terminal.js" defer=""></script>
+    <script src="/js/socket.io.js" defer=""></script>
+    <script src="/js/socketevents.js" defer=""></script>
+    <script src="/js/customCommands.js" defer=""></script>
+    <script src="/js/utils.js" defer=""></script>
+    
+    
+  <script src="/js/constructors/Tag.js" defer="true"></script><script src="/js/constructors/Codemirror.js" defer="true"></script><link rel="stylesheet" href="/codemirrorlib/codemirror.css"><script src="/codemirrorlib/codemirror.js" defer="true"></script><script src="/codemirrormode/meta.js" defer="true"></script><title>commandline</title><script src="/codemirrormode/javascript/javascript.js" defer="true"></script><script id="repl">var tagroot = document.getElementById('innertag0').shadowRoot
+var taginput = tagroot.getElementById('commandinput')
+var inputcontainer = tagroot.querySelector('.textbox')
+var inputdisplay = tagroot.querySelector('.inputDisplay')
+taginput.click()
+inputcontainer.addEventListener('click', () => taginput.focus())
+taginput.addEventListener('keyup', event => inputdisplay.textContent = event.target.value)
+</script><script id="loadscript">
+      let scriptArray = Array.from(document.getElementsByTagName('script'));
+      let loadingArray = [];
+      let firstTerminalIcanFind;
+      
+      scriptArray.forEach(scriptNode => {
+        // console.log(scriptNode)
+        let src = scriptNode.getAttribute('src');
+        if(src){
+          let loadingDiv = document.createElement('div');
+          loadingDiv.className = 'result'
+          loadingDiv.textContent = `Loading ${src}... `
+          loadingArray.push(loadingDiv)
+          scriptNode.addEventListener('load', () => {
+            loadingDiv.textContent += ' done.'
+            console.log('done with ',src)
+          })
+        }
+      })
+      document.addEventListener('readystatechange', () => {
+        console.log('readyStateChange')
+        switch(document.readyState){
+          case 'interactive': 
+            firstTerminalIcanFind = document.querySelector('.terminalContainer');
+            loadingArray.forEach(divNode => {
+              firstTerminalIcanFind.appendChild(divNode)
+            });
+            let aPotentialName = location.pathname;
+            aPotentialName = aPotentialName.match(/\/\w+\.|\/\w+$/);
+            aPotentialName = aPotentialName && aPotentialName[0].match(/\w+/);
+            aPotentialName = aPotentialName && aPotentialName[0];
+            let potentialTerminal = document.getElementById("root0");
+            //if the document has a name AND there is NOT already a terminal with that name
+            if(aPotentialName && potentialTerminal){
+              potentialTerminal.id = aPotentialName;
+              let thisHeader = potentialTerminal.querySelector('.entityHeader')
+              let thisTitle = thisHeader.querySelector('.headerTitle')
+              thisTitle.textContent = aPotentialName;
+              potentialTerminal.setAttribute('protoPrompt', 'localhost/' + aPotentialName);
+              Array.from(potentialTerminal.getElementsByClassName('promptContainer'), function(node){
+                node.firstChild.innerHTML = `localhost/${aPotentialName}<span class="arrow"></span>`;
+              })
+            }
+            break;
+          case 'complete':
+            let readyDiv = document.createElement('div')
+            readyDiv.className = 'result'
+            readyDiv.textContent = 'OK Ready.'
+            readyDiv.style.textAlign = 'right'
+            firstTerminalIcanFind.appendChild(readyDiv)
+            initPrompt(firstTerminalIcanFind);
+            break;
+        }
+      })
+      window.addEventListener('load', () => {
+        
+      })
+      let scriptReArranger = new MutationObserver((info,thisMute)=>{
+        console.log("something has changed!", info)
+        thisMute.disconnect();
+        // mvoeThisScript();
+        let thisScript = document.getElementById("loadscript");
+        thisScript.remove();
+        document.head.appendChild(thisScript)
+        thisMute.observe(document.head, {childList: true})
+        //this gets caught in an infinite loop.
+      })
+      scriptReArranger.observe(document.head, {childList: true})
+      // function moveThisScript(){
+      //   let thisScript = document.getElementById("loadscript");
+      //   thisScript.remove();
+      //   document.head.appendChild(thisScript)
+      // }
+
+    </script></head>
+  <!--Giving body id body for consistency with certain functions that rely on div id-->
+  <body id="body" style="position: absolute; left: 40px; top: 36px; height: 1126px; width: 2758px;">
+    <div showmenu="false" broadcast="true" listen="true" style="left: 620px; top: -26px; width: 400px; height: 300px; position: absolute; background: white;" tabindex="1" class="leaf terminal" id="commandline" history="0" protoprompt="localhost/commandline"><div class="entityHeader">
+    <table>
+      <tbody><tr>
+        <td class="headerTitle">commandline</td>
+      </tr>
+    </tbody></table>
+    <div class="menuButton"></div>
+    <div class="removeButton"></div>
+    <div class="menu">
+      <ul>
+        <li tabindex="2"> Edit <div class="editButton"></div></li>
+        <li tabindex="2"> Broadcast <div class="broadcastButton"></div> </li>
+        <li tabindex="2"> Listen <div class="listenButton"></div> </li>
+        <li tabindex="2"> Save <div class="saveButton"></div> </li>
+      </ul>
+    </div>
+  </div><div class="terminalContainer" history="6"><div class="promptContainer"><span class="prompt">localhost/commandline<span class="arrow"></span></span><div class="input"></div></div><div class="result">Loading /js/constructors/Leaf.js...  done.</div><div class="result">Loading /js/constructors/Terminal.js...  done.</div><div class="result">Loading /js/socket.io.js...  done.</div><div class="result">Loading /js/socketevents.js...  done.</div><div class="result">Loading /js/customCommands.js...  done.</div><div class="result">Loading /js/utils.js...  done.</div><div class="result" style="text-align: right;">OK Ready.</div><div class="promptContainer"><span class="prompt">localhost/commandline<span class="arrow"></span></span><div class="input">create Tag</div></div><div class="query result" id="1493954823345">Constructor retrieved and invoked, tag0 added to DOM</div><div class="promptContainer"><span class="prompt">localhost/commandline<span class="arrow"></span></span><div class="input">create Codemirror</div></div><div class="query result" id="1493954964334">Constructor invoked, Codemirror1 added to DOM</div><div class="promptContainer"><span class="prompt">localhost/commandline<span class="arrow"></span></span><div class="input">save</div></div><div class="result" id="commandline2" createdat="1493955007549">10.25 KB written successfully to commandline.html in 274ms</div><div class="promptContainer"><span class="prompt">localhost/commandline<span class="arrow"></span></span><div class="input">save</div></div><div class="result" id="commandline2" createdat="1493955509322">11.9 KB written successfully to commandline.html in 60ms</div><div class="promptContainer"><span class="prompt">localhost/commandline<span class="arrow"></span></span><div class="input">create Codemirror</div></div><div class="query result" id="1493955541963">Constructor invoked, Codemirror2 added to DOM</div><div class="promptContainer"><span class="prompt">localhost/commandline<span class="arrow"></span></span><div class="input">files</div></div><div class="result directoryContainer" id="1493955551261"><p class="fs text" title="/app.js"> app.js <a href="download?pathname=%2Fapp.js"></a> </p><p class="fs markup" title="/blockcolor.html"> blockcolor.html <a href="download?pathname=%2Fblockcolor.html"></a> </p><p class="fs markup" title="/grabvideo.html"> grabvideo.html <a href="download?pathname=%2Fgrabvideo.html"></a> </p><p class="fs directory" title="/node_modules"> node_modules <a href="download?pathname=%2Fnode_modules"></a> </p><p class="fs unknown" title="/null"> null <a href="download?pathname=%2Fnull"></a> </p><p class="fs text" title="/package.json"> package.json <a href="download?pathname=%2Fpackage.json"></a> </p><p class="fs directory" title="/public"> public <a href="download?pathname=%2Fpublic"></a> </p><p class="fs text" title="/readme.md"> readme.md <a href="download?pathname=%2Freadme.md"></a> </p><p class="fs directory" title="/routes"> routes <a href="download?pathname=%2Froutes"></a> </p><p class="fs directory" title="/sites"> sites <a href="download?pathname=%2Fsites"></a> </p><p class="fs directory" title="/test"> test <a href="download?pathname=%2Ftest"></a> </p><p class="fs directory" title="/testdir"> testdir <a href="download?pathname=%2Ftestdir"></a> </p><p class="fs directory" title="/user"> user <a href="download?pathname=%2Fuser"></a> </p></div><div class="promptContainer"><span class="prompt">localhost/commandline<span class="arrow"></span></span><div class="input">mirror /app.js</div></div><div class="result" id="1493955553670">Attempting to mirror /app.js</div><div class="promptContainer"><span class="prompt">localhost/commandline<span class="arrow"></span></span><div class="input">Codemirror2.cm.setOption('mode','javascript')</div></div><div class="result result" id="1493955569563">undefined</div><div class="promptContainer"><span class="prompt">localhost/commandline<span class="arrow"></span></span><div class="input">save</div></div><div class="request" id="commandline2" createdat="1493956922252">15.862 KB written successfully to commandline.html at Fri May 05 2017 00:02:02 GMT-0400 (Eastern Daylight Time)</div><div class="promptContainer"><span class="prompt">localhost/commandline<span class="arrow"></span></span><div class="input"></div></div><div class="result">Loading /js/constructors/Leaf.js...  done.</div><div class="result">Loading /js/constructors/Terminal.js...  done.</div><div class="result">Loading /js/socket.io.js...  done.</div><div class="result">Loading /js/socketevents.js...  done.</div><div class="result">Loading /js/customCommands.js...  done.</div><div class="result">Loading /js/utils.js...  done.</div><div class="result">Loading /js/constructors/Tag.js...  done.</div><div class="result">Loading /js/constructors/Codemirror.js...  done.</div><div class="result">Loading /codemirrorlib/codemirror.js...  done.</div><div class="result">Loading /codemirrormode/meta.js...  done.</div><div class="result">Loading /codemirrormode/javascript/javascript.js...  done.</div><div class="result" style="text-align: right;">OK Ready.</div><div class="promptContainer"><span class="prompt">localhost/commandline<span class="arrow"></span></span><div class="input">Codemirror2.cm.setOption('mode','javascript')</div></div><div class="result result" id="1493957208475">undefined</div><div class="promptContainer"><span class="prompt">localhost/commandline<span class="arrow"></span></span><div class="input">save</div></div><div class="result" id="commandline2" createdat="1493957610446">17.97 KB written successfully to commandline.html in 121ms</div><div class="promptContainer"><span class="prompt">localhost/commandline<span class="arrow"></span></span><div class="input">save</div></div><div class="request" id="commandline2" createdat="1493957715347">17.92 KB written successfully to commandline.html at Fri May 05 2017 00:15:15 GMT-0400 (Eastern Daylight Time)</div><div class="promptContainer"><span class="prompt">localhost/commandline<span class="arrow"></span></span><div class="input"></div></div><div class="result">Loading /js/constructors/Leaf.js...  done.</div><div class="result">Loading /js/constructors/Terminal.js...  done.</div><div class="result">Loading /js/socket.io.js...  done.</div><div class="result">Loading /js/socketevents.js...  done.</div><div class="result">Loading /js/customCommands.js...  done.</div><div class="result">Loading /js/utils.js...  done.</div><div class="result">Loading /js/constructors/Tag.js...  done.</div><div class="result">Loading /js/constructors/Codemirror.js...  done.</div><div class="result">Loading /codemirrorlib/codemirror.js...  done.</div><div class="result">Loading /codemirrormode/meta.js...  done.</div><div class="result">Loading /codemirrormode/javascript/javascript.js...  done.</div><div class="result" style="text-align: right;">OK Ready.</div><div class="promptContainer"><span class="prompt">localhost/commandline<span class="arrow"></span></span><div class="input">Codemirror2.cm.setOption('mode','javascript')</div></div><div class="result result" id="1493957725614">undefined</div><div class="promptContainer"><span class="prompt">localhost/commandline<span class="arrow"></span></span><div class="input">save</div></div><div class="result" id="commandline2" createdat="1493958112564">19.88 KB written successfully to commandline.html in 96ms</div><div class="promptContainer"><span class="prompt">localhost/commandline<span class="arrow"></span></span><div class="input">save</div></div><div class="result" id="commandline2" createdat="1493958269555">20.5 KB written successfully to commandline.html in 417ms</div><div class="promptContainer"><span class="prompt">localhost/commandline<span class="arrow"></span></span><div class="input">tag0</div></div><div class="result result" id="1493958274478">[object HTMLDivElement]</div><div class="promptContainer"><span class="prompt">localhost/commandline<span class="arrow"></span></span><div class="input">tag0.style.background = 'none'</div></div><div class="result result" id="1493958280971">none</div><div class="promptContainer"><span class="prompt">localhost/commandline<span class="arrow"></span></span><div class="input">save</div></div><div class="result" id="commandline2" createdat="1493958525403">21.52 KB written successfully to commandline.html in 94ms</div><div class="promptContainer"><span class="prompt">localhost/commandline<span class="arrow"></span></span><div class="input">save</div></div><div class="result" id="commandline2" createdat="1493959326724">22.34 KB written successfully to commandline.html in 306ms</div><div class="promptContainer"><span class="prompt">localhost/commandline<span class="arrow"></span></span><div class="input">tag0.style.border = 'none'</div></div><div class="result result" id="1493959821016">none</div><div class="promptContainer"><span class="prompt">localhost/commandline<span class="arrow"></span></span><div class="input">save</div></div><div class="request" id="commandline2" createdat="1493960034785">22.608 KB written successfully to commandline.html at Fri May 05 2017 00:53:54 GMT-0400 (Eastern Daylight Time)</div><div class="promptContainer"><span class="prompt">localhost/commandline<span class="arrow"></span></span><div class="input"></div></div><div class="result">Loading /js/constructors/Leaf.js...  done.</div><div class="result">Loading /js/constructors/Terminal.js...  done.</div><div class="result">Loading /js/socket.io.js...  done.</div><div class="result">Loading /js/socketevents.js...  done.</div><div class="result">Loading /js/customCommands.js...  done.</div><div class="result">Loading /js/utils.js...  done.</div><div class="result">Loading /js/constructors/Tag.js...  done.</div><div class="result">Loading /js/constructors/Codemirror.js...  done.</div><div class="result">Loading /codemirrorlib/codemirror.js...  done.</div><div class="result">Loading /codemirrormode/meta.js...  done.</div><div class="result">Loading /codemirrormode/javascript/javascript.js...  done.</div><div class="result" style="text-align: right;">OK Ready.</div><div class="promptContainer"><span class="prompt">localhost/commandline<span class="arrow"></span></span><div class="input"></div></div></div></div>
+  
+
+<div showmenu="false" broadcast="true" listen="true" style="left: 164px; top: 107px; width: 400px; position: absolute; background: none; min-height: 100px; border: none;" tabindex="1" class="leaf tag" id="tag0"><div class="entityHeader">
+    <table>
+      <tbody><tr>
+        <td class="headerTitle">tag0</td>
+      </tr>
+    </tbody></table>
+    <div class="menuButton"></div>
+    <div class="removeButton"></div>
+    <div class="menu">
+      <ul>
+        <li tabindex="2"> Edit <div class="editButton"></div></li>
+        <li tabindex="2"> Broadcast <div class="broadcastButton"></div> </li>
+        <li tabindex="2"> Listen <div class="listenButton"></div> </li>
+        <li tabindex="2"> Save <div class="saveButton"></div> </li>
+      </ul>
+    </div>
+  </div><div id="innertag0" target="undefined" style="width: 100%; height: 100%;">&lt;div class='commandcontainer'&gt;
+	&lt;div class='commandbox'&gt;
+    	&lt;div class='blurbox'&gt;
+        &lt;/div&gt;
+        &lt;div class='textbox'&gt;
+        	&lt;div class='inputDisplay'&gt;This is a test. &lt;/div&gt;
+        	&lt;form&gt;&lt;input type='text' id='commandinput' value='hello'&gt;&lt;/input&gt;&lt;/form&gt;
+        &lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;style&gt;
+	* {
+    	box-sizing: border-box;
+    }
+	.commandcontainer {
+    	height: 500px;
+        width: 200px;
+    }
+    .commandbox {
+    	position: relative;
+    	height: 200px;
+        min-width: 500px;
+        margin: 50px;
+    }
+    .blurbox {
+    	background-image: linear-gradient(rgba(0,0,0,0.02),rgba(0,0,0,0.02)), url(/images/backgrounddot.png),  linear-gradient(white, white);
+        box-shadow: lightgray 0 0 5px 1px;
+    	background-size: 15px;
+        width: 100%;
+        height: 40px;
+        position: absolute;
+        bottom: 0;
+        filter: blur(1px);
+    }
+    .textbox {
+    	position: absolute;
+        width: 100%;
+        height: 40px;
+        bottom: 0;
+        cursor: text;
+        background: 
+    }
+    .textbox .inputDisplay {
+    	margin: 3% 6%;
+        min-height: 1.1em;
+        position: absolute;
+        bottom: 0;
+        font-family: monospace;
+    }
+    .textbox .inputDisplay::after {
+    	content: '';
+        display: block;
+        float: right;
+        width: 9px;
+        height: 1.1em;
+        background: lightblue;
+    }
+    .textbox input {
+    	position: absolute;
+        bottom: 0;
+    	width: 90%;
+        background: none;
+        border: none;
+        margin: 2% 5%;
+        height: 0;
+        box-shadow: black 0 0 5px;
+        overflow: visible;
+        color: white;
+    }
+    .textbox input:focus {
+    	outline: none;
+        box-shadow: lightblue 0 0 5px 2px;
+    }
+&lt;/style&gt;
+</div></div><div showmenu="false" broadcast="true" listen="true" style="left: 617px; top: 315px; width: 800px; height: 400px; position: absolute; background: white;" tabindex="1" class="leaf codemirrorContainer                                                                  " id="Codemirror0" target="tag0" update="innertag0"><div class="entityHeader">
+    <table>
+      <tbody><tr>
+        <td class="headerTitle">Codemirror0 &gt; tag0</td>
+      </tr>
+    </tbody></table>
+    <div class="menuButton"></div>
+    <div class="removeButton"></div>
+    <div class="menu">
+      <ul>
+        <li tabindex="2"> Edit <div class="editButton"></div></li>
+        <li tabindex="2"> Broadcast <div class="broadcastButton"></div> </li>
+        <li tabindex="2"> Listen <div class="listenButton"></div> </li>
+        <li tabindex="2"> Save <div class="saveButton"></div> </li>
+      </ul>
+    </div>
+  </div><textarea style="display: none;">&lt;div class='commandcontainer'&gt;
+	&lt;div class='commandbox'&gt;
+    	&lt;div class='blurbox'&gt;
+        &lt;/div&gt;
+        &lt;div class='textbox'&gt;
+        	&lt;div class='inputDisplay'&gt;This is a test. &lt;/div&gt;
+        	&lt;form&gt;&lt;input type='text' id='commandinput' value='hello'&gt;&lt;/input&gt;&lt;/form&gt;
+        &lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;style&gt;
+	* {
+    	box-sizing: border-box;
+    }
+	.commandcontainer {
+    	height: 500px;
+        width: 200px;
+    }
+    .commandbox {
+    	position: relative;
+    	height: 200px;
+        min-width: 500px;
+        margin: 50px;
+    }
+    .blurbox {
+    	background-image: linear-gradient(rgba(0,0,0,0.02),rgba(0,0,0,0.02)), url(/images/backgrounddot.png),  linear-gradient(white, white);
+        box-shadow: lightgray 0 0 5px 1px;
+    	background-size: 15px;
+        width: 100%;
+        height: 40px;
+        position: absolute;
+        bottom: 0;
+        filter: blur(1px);
+    }
+    .textbox {
+    	position: absolute;
+        width: 100%;
+        height: 40px;
+        bottom: 0;
+        cursor: text;
+        background: 
+    }
+    .textbox .inputDisplay {
+    	margin: 3% 6%;
+        min-height: 1.1em;
+        position: absolute;
+        bottom: 0;
+        font-family: monospace;
+    }
+    .textbox .inputDisplay::after {
+    	content: '';
+        display: block;
+        float: right;
+        width: 9px;
+        height: 1.1em;
+        background: lightblue;
+    }
+    .textbox input {
+    	position: absolute;
+        bottom: 0;
+    	width: 90%;
+        background: none;
+        border: none;
+        margin: 2% 5%;
+        height: 0;
+        box-shadow: black 0 0 5px;
+        overflow: visible;
+        color: white;
+    }
+    .textbox input:focus {
+    	outline: none;
+        box-shadow: lightblue 0 0 5px 2px;
+    }
+&lt;/style&gt;
+</textarea></div><div showmenu="false" broadcast="true" listen="true" style="left: 203px; top: 733px; width: 800px; height: 400px; position: absolute; background: white;" tabindex="1" class="leaf codemirrorContainer     " id="Codemirror1"><div class="entityHeader">
+    <table>
+      <tbody><tr>
+        <td class="headerTitle">Codemirror1</td>
+      </tr>
+    </tbody></table>
+    <div class="menuButton"></div>
+    <div class="removeButton"></div>
+    <div class="menu">
+      <ul>
+        <li tabindex="2"> Edit <div class="editButton"></div></li>
+        <li tabindex="2"> Broadcast <div class="broadcastButton"></div> </li>
+        <li tabindex="2"> Listen <div class="listenButton"></div> </li>
+        <li tabindex="2"> Save <div class="saveButton"></div> </li>
+      </ul>
+    </div>
+  </div><textarea style="display: none;">Figure out cursing blink, probably calc the client rect of a text node and position the cursor based on that. 
+Or maybe it's as easy as an after pseudo element
+
+Will have to manipulate cursor position / selection so when you click / click and drag text that's not actually the input...
+
+</textarea></div><div showmenu="false" broadcast="true" listen="true" style="left: 1472px; top: 43px; width: 800px; height: 400px; position: absolute; background: white;" tabindex="1" class="leaf codemirrorContainer                                                     " id="Codemirror2"><div class="entityHeader">
+    <table>
+      <tbody><tr>
+        <td class="headerTitle">Codemirror2</td>
+      </tr>
+    </tbody></table>
+    <div class="menuButton"></div>
+    <div class="removeButton"></div>
+    <div class="menu">
+      <ul>
+        <li tabindex="2"> Edit <div class="editButton"></div></li>
+        <li tabindex="2"> Broadcast <div class="broadcastButton"></div> </li>
+        <li tabindex="2"> Listen <div class="listenButton"></div> </li>
+        <li tabindex="2"> Save <div class="saveButton"></div> </li>
+      </ul>
+    </div>
+  </div><textarea style="display: none;">var tagroot = document.getElementById('innertag0').shadowRoot
+var taginput = tagroot.getElementById('commandinput')
+var inputcontainer = tagroot.querySelector('.textbox')
+var inputdisplay = tagroot.querySelector('.inputDisplay')
+taginput.click()
+inputcontainer.addEventListener('click', () =&gt; taginput.focus())
+taginput.addEventListener('keyup', event =&gt; inputdisplay.textContent = event.target.value)
+</textarea></div><div showmenu="false" broadcast="true" listen="true" style="left: 1264px; top: 658px; width: 400px; height: 300px; position: absolute; background: white;" tabindex="1" class="leaf terminal" id="root0" history="0" protoprompt="localhost/root0"><div class="entityHeader">
+    <table>
+      <tbody><tr>
+        <td class="headerTitle">root0</td>
+      </tr>
+    </tbody></table>
+    <div class="menuButton"></div>
+    <div class="removeButton"></div>
+    <div class="menu">
+      <ul>
+        
+        <li tabindex="2"> Broadcast <div class="broadcastButton"></div> </li>
+        <li tabindex="2"> Listen <div class="listenButton"></div> </li>
+        
+      </ul>
+    </div>
+  </div><div class="terminalContainer"><div class="promptContainer"><span class="prompt">localhost/root0<span class="arrow"></span></span><div class="input">create Tag</div></div><div class="query result" id="1494901766282">Constructor invoked, tag1 added to DOM</div><div class="promptContainer"><span class="prompt">localhost/root0<span class="arrow"></span></span><div class="input">create Codemirror</div></div><div class="query result" id="1494901774591">Constructor invoked, Codemirror3 added to DOM</div><div class="promptContainer"><span class="prompt">localhost/root0<span class="arrow"></span></span><div class="input">save</div></div><div class="request" id="root02" createdat="1494901855495">26.103 KB written successfully to root0.html at Mon May 15 2017 22:30:55 GMT-0400 (Eastern Daylight Time)</div><div class="promptContainer"><span class="prompt">localhost/root0<span class="arrow"></span></span><div class="input"></div></div></div></div><div showmenu="false" broadcast="true" listen="true" style="left: 1751px; top: 522px; width: 800px; height: 400px; position: absolute; background: white;" tabindex="1" class="leaf codemirrorContainer  " id="Codemirror3"><div class="entityHeader">
+    <table>
+      <tbody><tr>
+        <td class="headerTitle">Codemirror3</td>
+      </tr>
+    </tbody></table>
+    <div class="menuButton"></div>
+    <div class="removeButton"></div>
+    <div class="menu">
+      <ul>
+        <li tabindex="2">Evaluate<div class="editButton"></div></li>
+        <li tabindex="2"> Broadcast <div class="broadcastButton"></div> </li>
+        <li tabindex="2"> Listen <div class="listenButton"></div> </li>
+        <li tabindex="2"> Save <div class="saveButton"></div> </li>
+      </ul>
+    </div>
+  </div><textarea style="display: none;">Position pieces of the panel on LCD
+pan to reposition everything</textarea></div></body>

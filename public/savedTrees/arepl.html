@@ -1,0 +1,46 @@
+<head>
+    <!--<link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">-->
+    <link rel="stylesheet" href="/styles/style.css">
+    <script src="/js/constructors/Leaf.js" defer=""></script>
+    <script src="/js/constructors/Terminal.js" defer=""></script>
+    <script src="/js/socket.io.js" defer=""></script>
+    <script src="/js/socketevents.js" defer=""></script>
+    <script src="/js/customCommands.js" defer=""></script>
+    <script src="/js/utils.js" defer=""></script>
+  <script src="/js/constructors/Codemirror.js" defer="true"></script><link rel="stylesheet" href="/lib/codemirror.css"><script src="/lib/codemirror.js" defer="true"></script><script src="/lib/mode/javascript/javascript.js" defer="true"></script><title>arepl</title></head>
+  <!--Giving body id body for consistency with certain functions that rely on div id-->
+  <body id="body" style="position: absolute; left: 164px; top: 75px; height: 925px; width: 732px;">
+  
+<div tabindex="1" class="leaf terminal" id="arepl" history="0" protoprompt="localhost/root0 > " style="left: 96px; top: 208px; width: 400px; height: 300px; position: absolute; background: white;" prompt="localhost/arepl > "><h3 class="entityHeader" style="top: 455px;">arepl</h3><p class="prompt">localhost/root0 &gt; document.save</p><div class="result result" id="1479034229190">undefined</div><p class="prompt">localhost/root0 &gt; save</p><div class="request" id="root04" createdat="1479034233662">1.135 KB written successfully to root0.html at Sun Nov 13 2016 05:50:33 GMT-0500 (Eastern Standard Time)</div><p class="prompt">localhost/root0 &gt; save</p><div class="request" id="root06" createdat="1479034250492">1.346 KB written successfully to root0.html at Sun Nov 13 2016 05:50:50 GMT-0500 (Eastern Standard Time)</div><p class="prompt">localhost/root0 &gt; save</p><div class="request" id="root08" createdat="1479034331690">1.562 KB written successfully to root0.html at Sun Nov 13 2016 05:52:11 GMT-0500 (Eastern Standard Time)</div><p class="prompt">localhost/root0 &gt; save</p><div class="request" id="root010" createdat="1479034570988">1.825 KB written successfully to root0.html at Sun Nov 13 2016 05:56:10 GMT-0500 (Eastern Standard Time)</div><p class="prompt">localhost/root0 &gt; save</p><div class="request" id="root012" createdat="1479035190938">2.043 KB written successfully to root0.html at Sun Nov 13 2016 06:06:30 GMT-0500 (Eastern Standard Time)</div><p class="prompt">localhost/root0 &gt; create Codemirror</p><div class="query result" id="1479035984527">Constructor retrieved and invoked, untitled0 added to DOM</div><p class="prompt">localhost/root0 &gt; rename arepl</p><div class="result result" id="1479036624373">root0 has been renamed to arepl</div><p class="prompt">localhost/root0 &gt; save</p><div class="result" id="arepl18" createdat="1479036625780">4.35 KB written successfully to arepl.html in 743ms</div><p class="prompt">localhost/root0 &gt; save</p><div class="request" id="arepl20" createdat="1479036911687">4.435 KB written successfully to arepl.html at Sun Nov 13 2016 06:35:11 GMT-0500 (Eastern Standard Time)</div><p class="prompt">localhost/root0 &gt; </p></div><script id="inl" contenteditable="true" style="display: block;">var x = 2 + 2; alert(x);</script><div tabindex="1" class="leaf codemirrorContainer" id="untitled0" style="left: -99px; top: 272px; width: 400px; height: 400px; position: absolute; background: white;"><h3 class="entityHeader">untitled0</h3><textarea style="display: none;">I've made a rather startling discovery
+
+There's nothing espcially special about
+&lt;style&gt; and &lt;script&gt;, its just that the
+user agent stylsheet displays none by default
+
+but you can override that, display block
+heck you can even set the contenteditable attribute
+
+with CSS, things get wacky here, because the contents of that style element represent the stylesheet exactly,
+changes to the style tag.textContent are reflected immediately
+
+script doesn't reevaluate its innerText immediately however
+If I edit the innerText and refresh the page, the code executes
+but it took a little fiddling to get 
+
+
+Dude on stack overflow is legit
+http://stackoverflow.com/a/20584396
+function nodeScriptClone(node){
+        var script  = document.createElement("script");
+        script.text = node.innerHTML;
+        for( var i = node.attributes.length-1; i &gt;= 0; i-- ) {
+                script.setAttribute( node.attributes[i].name, node.attributes[i].value );
+        }
+        return script;
+}
+
+For script and HTML and CSS
+
+for a codemirror, maybe an attribute, or just a reference to the dom node its connected
+
+</textarea></div></body>

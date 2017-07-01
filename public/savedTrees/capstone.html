@@ -1,0 +1,39 @@
+<head>
+    <!--<link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">-->
+    <link rel="stylesheet" href="/styles/style.css">
+    <script src="/js/constructors/Leaf.js" defer=""></script>
+    <script src="/js/constructors/Terminal.js" defer=""></script>
+    <script src="/js/socket.io.js" defer=""></script>
+    <script src="/js/socketevents.js" defer=""></script>
+    <script src="/js/customCommands.js" defer=""></script>
+    <script src="/js/utils.js" defer=""></script>
+    <script id="repl"></script>
+  <script src="/js/constructors/Codemirror.js" defer="true"></script><link rel="stylesheet" href="/lib/codemirror.css"><script src="/lib/codemirror.js" defer="true"></script><script src="/lib/mode/javascript/javascript.js" defer="true"></script><title>capstone</title></head>
+  <!--Giving body id body for consistency with certain functions that rely on div id-->
+  <body id="body" style="position: absolute; left: 0px; top: 0px; height: 676px; width: 1280px;" data-feedly-mini="yes"><div id="StayFocusd-infobar" style="display:none;">
+    <img src="chrome-extension://laankejkbhbdhmipfmgcngdelahlfoji/common/img/eye_19x19_red.png">
+    <span id="StayFocusd-infobar-msg"></span>
+    <span id="StayFocusd-infobar-links">
+        <a id="StayFocusd-infobar-never-show">hide forever</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+        <a id="StayFocusd-infobar-hide">hide once</a>
+    </span>
+</div>
+
+<div tabindex="1" class="leaf codemirrorContainer  " id="eqBot" style="left: 0px; top: 0px; width: 50vw; height: 50vh; position: absolute; background: white;" prompt="localhost/eqBot > "><h3 class="entityHeader">eqBot<div class="editButton">R</div><div class="removeButton">X</div></h3><textarea style="display: none;">Improving relationships 
+Like an 'EQ' coach
+Observing your conversations (text email otherwise)
+	Bot makes suggestions of what to say / not to say
+    
+ 	People are more willing to be honest to a computer than to a researcher
+    </textarea></div><div tabindex="1" class="leaf codemirrorContainer  " id="originalAuthor" style="left: 0px; top: 50%; width: 50vw; height: 50vh; position: absolute; background: white;" prompt="localhost/originalAuthor > "><h3 class="entityHeader">originalAuthor<div class="editButton">R</div><div class="removeButton">X</div></h3><textarea style="display: none;">For a given news article, compare its content, find other sites that phrase things
+similar or finds sites the phrase things different
+
+grab </textarea></div><div tabindex="1" class="leaf codemirrorContainer " id="permissionBox" style="left: 50%; top: 0px; width: 50%; height: 50vh; position: absolute; background: white;" prompt="localhost/permissionBox > "><h3 class="entityHeader">permissionBox<div class="editButton">R</div><div class="removeButton">X</div></h3><textarea style="display: none;">Build a website where customers store sensitive information 
+that can only be access by a customer-specified set of people
+for a customer-specified amount of time
+
+Possible applications:
+- STD status
+- legal paperwork and passwords after death
+- children managing parents' health
+</textarea></div><div tabindex="1" class="leaf terminal" id="capstone" history="6" protoprompt="localhost/root0 > " prompt="localhost/capstone > " style="left: 947px; top: 704px; width: 400px; height: 300px; position: absolute; background: white;"><h3 class="entityHeader" style="top: 1234px;">capstone<div class="removeButton">X</div></h3><p class="prompt">localhost/root0 &gt; rename capstone</p><div class="result result" id="1479246882788">root0 has been renamed to capstone</div><p class="prompt">localhost/root0 &gt; Codemirror0.style.width = '50%'</p><div class="result result" id="1479246913193">50%</div><p class="prompt">localhost/root0 &gt; Codemirror0.style.left = '50%'</p><div class="result result" id="1479246919725">50%</div><p class="prompt">localhost/root0 &gt; Codemirror0.style.top = 0</p><div class="result result" id="1479246926867">0</div><p class="prompt">localhost/root0 &gt; Codemirror0.style.height = '50vh'</p><div class="result result" id="1479246935866">50vh</div><p class="prompt">localhost/root0 &gt; Codemirror1.style.top = '50%'</p><div class="result result" id="1479247648853">50%</div><p class="prompt">localhost/root0 &gt; Codemirror.style.left = '50%'</p><div class="result result" id="1479247655201">TypeError: Cannot set property 'left' of undefined</div><p class="prompt">localhost/root0 &gt; Codemirror1.style.left = '50%'</p><div class="result result" id="1479247664111">50%</div><p class="prompt">localhost/root0 &gt; Codemirror1.style.width = '50vw'</p><div class="result result" id="1479247689762">50vw</div><p class="prompt">localhost/root0 &gt; Codemirror1.style.height = '50vw'</p><div class="result result" id="1479247698593">50vw</div><p class="prompt">localhost/root0 &gt; save</p><div class="result" id="capstone22" createdat="1479247700143">4.5 KB written successfully to capstone.html in 49ms</div><p class="prompt">localhost/root0 &gt;rename Codemirror0 permissionBox</p><div class="result result" id="1479247748846">Codemirror0 has been renamed to permissionBox</div><p class="prompt">localhost/root0 &gt; rename Codemirror1 other</p><div class="result result" id="1479247787938">Codemirror1 has been renamed to other</div><p class="prompt">localhost/root0 &gt; save</p><div class="request" id="capstone28" createdat="1479247790821">4.829 KB written successfully to capstone.html at Tue Nov 15 2016 17:09:50 GMT-0500 (Eastern Standard Time)</div><p class="prompt">localhost/root0 &gt; other.style.height = '50vh'</p><div class="result result" id="1479247840802">50vh</div><p class="prompt">localhost/root0 &gt; save</p><div class="result" id="capstone32" createdat="1479247843861">5.4 KB written successfully to capstone.html in 64ms</div><p class="prompt">localhost/root0 &gt; </p><div class="request" id="capstone34" createdat="1479247861546">5.347 KB written successfully to capstone.html at Tue Nov 15 2016 17:11:01 GMT-0500 (Eastern Standard Time)</div><p class="prompt">localhost/root0 &gt; </p><div class="request" id="capstone36" createdat="1479248295124">5.661 KB written successfully to capstone.html at Tue Nov 15 2016 17:18:15 GMT-0500 (EST)</div><p class="prompt">localhost/root0 &gt; </p><div class="request" id="capstone38" createdat="1479248486514">5.931 KB written successfully to capstone.html at Tue Nov 15 2016 17:21:26 GMT-0500 (Eastern Standard Time)</div><p class="prompt">localhost/root0 &gt; </p><div class="request" id="capstone40" createdat="1479248757561">6.902 KB written successfully to capstone.html at Tue Nov 15 2016 17:25:57 GMT-0500 (EST)</div><p class="prompt">localhost/root0 &gt; </p></div><div tabindex="1" class="leaf codemirrorContainer" id="other" style="left: 50%; top: 50%; width: 50vw; height: 50vh; position: absolute; background: white;" prompt="localhost/other > "><h3 class="entityHeader">other<div class="editButton">R</div><div class="removeButton">X</div></h3><textarea style="display: none;">setInterval(save, 500)</textarea></div><div id="feedly-mini" title="feedly Mini tookit"></div></body>

@@ -1,0 +1,91 @@
+<head>
+    <!--<link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">-->
+    <link rel="stylesheet" href="/styles/style.css">
+    <script src="/js/constructors/Leaf.js" defer=""></script>
+    <script src="/js/constructors/Terminal.js" defer=""></script>
+    <script src="/js/socket.io.js" defer=""></script>
+    <script src="/js/socketevents.js" defer=""></script>
+    <script src="/js/customCommands.js" defer=""></script>
+    <script src="/js/utils.js" defer=""></script>
+    
+  <script src="/js/constructors/Tag.js" defer="true"></script><script src="/js/constructors/Codemirror.js" defer="true"></script><link rel="stylesheet" href="/lib/codemirror.css"><script src="/lib/codemirror.js" defer="true"></script><script src="/lib/mode/javascript/javascript.js" defer="true"></script><title>clicker</title><script id="repl">function addOne(){
+	var i = parseInt(counter.textContent)
+	counter.textContent = ++i;
+    console.log('click')
+}
+
+</script></head>
+  <!--Giving body id body for consistency with certain functions that rely on div id-->
+  <body id="body" style="position: absolute; left: 43px; top: 13px; height: 1193px; width: 1340px;">
+
+<div tabindex="1" class="leaf tag" id="tag0" style="left: 29px; top: 58px; width: 400px; position: absolute; background: white; min-height: 100px;"><h3 class="entityHeader">tag0<div class="editButton">A</div><div class="removeButton">X</div></h3><div id="innertag0" style="width: 100%; height: 100%;"><div>
+  
+  <form onclick="addOne()" class="circle">
+  	<input type="checkbox">
+  </form>
+
+  <form class="square">
+  	<input type="checkbox">
+  </form>
+
+
+  <div id="counter">20</div>
+  <style>
+      .circle, .square {
+        display: inline-block;
+        padding: 10px;
+        margin: 10px;
+        border: 1px solid black;
+      }
+	  .circle {
+        border-radius: 20px
+      }
+	  #counter {
+      	padding: 10px;
+		display: inline-block;
+	  }
+  <style>
+  
+</div></style></div></div></div><div tabindex="1" class="leaf codemirrorContainer " id="Codemirror0" style="left: 515px; top: 28px; width: 450px; height: 600px; position: absolute; background: white;"><h3 class="entityHeader">Codemirror0 &gt; tag0<div class="editButton">R</div><div class="removeButton">X</div></h3><textarea style="display: none;">&lt;div&gt;
+  
+  &lt;form onclick='addOne()' class='circle'&gt;
+  	&lt;input type='checkbox'&gt;
+  &lt;/form&gt;
+
+  &lt;form class='square'&gt;
+  	&lt;input type='checkbox'&gt;
+  &lt;/form&gt;
+
+  &lt;div id='counter'&gt; 0 &lt;/div&gt;
+  &lt;style&gt;
+      .circle, .square {
+        display: inline-block;
+        padding: 10px;
+        margin: 10px;
+        border: 1px solid black;
+      }
+	  .circle {
+        border-radius: 
+      }
+	  #counter {
+      	padding: 10px;
+		display: inline-block;
+	  }
+  &lt;style&gt;
+  
+&lt;/div&gt;</textarea></div><div tabindex="1" class="leaf codemirrorContainer " id="Codemirror1" style="left: 21px; top: 226px; width: 400px; height: 400px; position: absolute; background: white;"><h3 class="entityHeader">Codemirror1<div class="editButton">R</div><div class="removeButton">X</div></h3><textarea style="display: none;">function addOne(){
+	var i = parseInt(counter.textContent)
+	counter.textContent = ++i;
+    console.log('click')
+}
+
+</textarea></div><div tabindex="1" class="leaf terminal" id="clicker" history="0" protoprompt="localhost/root0 > " style="left: 896px; top: 665px; width: 400px; height: 300px; position: absolute; background: white;" prompt="localhost/clicker > "><h3 class="entityHeader">clicker<div class="removeButton">X</div></h3><p class="prompt">localhost/root0 &gt; create Codemirror</p><div class="query result" id="1480015974966">Constructor invoked, Codemirror2 added to DOM</div><p class="prompt">localhost/root0 &gt; Codemirror2.style.width = 800</p><div class="result result" id="1480017689378">800</div><p class="prompt">localhost/root0 &gt; rename clicker</p><div class="result result" id="1480017813718">root0 has been renamed to clicker</div><p class="prompt">localhost/root0 &gt; </p><div class="request" id="clicker8" createdat="1480017814512">4.651 KB written successfully to clicker.html at Thu Nov 24 2016 15:03:34 GMT-0500 (Eastern Standard Time)</div><p class="prompt">localhost/root0 &gt; </p></div><div tabindex="1" class="leaf codemirrorContainer" id="Codemirror2" style="left: 52px; top: 679px; width: 800px; height: 400px; position: absolute; background: white;"><h3 class="entityHeader">Codemirror2<div class="editButton">R</div><div class="removeButton">X</div></h3><textarea style="display: none;">I need two things to fire synchro button clicks
+
+the inner identifier (event.target.className)
+the outer identifier (parentElement.parentElement.id)
+
+smash that into a string for
+  
+target = document.querySelector("#id &gt; .className")
+target.dispatchEvent(new Event('click'))
+</textarea></div></body>

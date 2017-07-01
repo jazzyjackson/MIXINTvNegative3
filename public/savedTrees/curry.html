@@ -1,0 +1,105 @@
+<head>
+    <!--<link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">-->
+    <link rel="stylesheet" href="/styles/style.css">
+    <script src="/js/constructors/Leaf.js" defer=""></script>
+    <script src="/js/constructors/Terminal.js" defer=""></script>
+    <script src="/js/socket.io.js" defer=""></script>
+    <script src="/js/socketevents.js" defer=""></script>
+    <script src="/js/customCommands.js" defer=""></script>
+    <script src="/js/utils.js" defer=""></script>
+    
+  <script src="/js/constructors/Codemirror.js" defer="true"></script><link rel="stylesheet" href="/lib/codemirror.css"><script src="/lib/codemirror.js" defer="true"></script><script src="/lib/mode/javascript/javascript.js" defer="true"></script><script id="repl">function curry(func) {
+
+  let numParams = func.length;
+  let store = [];
+
+  let resolver = function(...args) {
+    let store = args;
+
+    return function(...args) {
+      let newStore = store.concat(args);
+      return newStore.length >= numParams ? func(...newStore) : resolver(...newStore);
+    }
+  }
+
+  return resolver();
+
+}
+
+function someMath(a, b, c, d) {
+  return a * b / c + d;
+}
+
+let initial = curry(someMath);
+let first = initial(2); // [2]
+let second = first(8); // [2, 8]
+let otherSecond = first(3, 6, 1); // [2,3,6,1]
+let third = second(4);
+let last = third(3);
+
+console.log('the first result:', last); // -> 7
+console.log('the second result:', otherSecond); // -> 2
+</script></head>
+  <!--Giving body id body for consistency with certain functions that rely on div id-->
+  <body id="body" style="position: absolute; left: 0px; top: 0px; height: 989px; width: 1362px;">
+
+<div tabindex="1" class="leaf terminal" id="curry" listen="true" broadcast="true" history="1" protoprompt="localhost/root0 > " prompt="localhost/curry > " style="left: 748px; top: 98px; width: 400px; height: 300px; position: absolute; background: white;"><h3 class="entityHeader" style="top: 1364px;">curry<div class="removeButton"></div><div class="broadcastButton"></div><div class="listenButton"></div></h3><p class="prompt">localhost/root0 &gt; rename curry</p><div class="result result" id="1480434018247">root0 has been renamed to curry</div><p class="prompt">localhost/root0 &gt; create Codemirror</p><div class="query result" id="1480434023967">Constructor retrieved and invoked, Codemirror0 added to DOM</div><p class="prompt">localhost/root0 &gt; curry</p><div class="result result" id="1480434263778">function curry(func) {
+
+  let numParams = func.length;
+  let store = [];
+
+  let resolver = function(...args) {
+    let store = args;
+
+    return function(...args) {
+      let newStore = store.concat(args);
+      return newStore.length &gt;= numParams ? func(...newStore) : resolver(...newStore);
+    }
+  }
+
+  return resolver();
+
+}</div><p class="prompt">localhost/root0 &gt; someMath(3,4,5,3)</p><div class="result result" id="1480434270831">5.4</div><p class="prompt">localhost/root0 &gt; Codemirror.style.width = 800</p><div class="result result" id="1480434287178">TypeError: Cannot set property 'width' of undefined</div><p class="prompt">localhost/root0 &gt; Codemirror0.style.width = 800</p><div class="result result" id="1480434293546">800</div><p class="prompt">localhost/root0 &gt; Codemirror0.style.height = 800</p><div class="result result" id="1480434301680">800</div><p class="prompt">localhost/root0 &gt; ave</p><div class="result result" id="1480434396609">ReferenceError: ave is not defined</div><p class="prompt">localhost/root0 &gt; save</p><div class="request" id="curry18" createdat="1480434397547">4.637 KB written successfully to curry.html at Tue Nov 29 2016 10:46:37 GMT-0500 (EST)</div><p class="prompt">localhost/root0 &gt; initial</p><div class="result result" id="1480434413341">function (...args) {
+      let newStore = store.concat(args);
+      return newStore.length &gt;= numParams ? func(...newStore) : resolver(...newStore);
+    }</div><p class="prompt">localhost/root0 &gt; first</p><div class="result result" id="1480434419093">function (...args) {
+      let newStore = store.concat(args);
+      return newStore.length &gt;= numParams ? func(...newStore) : resolver(...newStore);
+    }</div><p class="prompt">localhost/root0 &gt; first(8)</p><div class="result result" id="1480434423400">function (...args) {
+      let newStore = store.concat(args);
+      return newStore.length &gt;= numParams ? func(...newStore) : resolver(...newStore);
+    }</div><p class="prompt">localhost/root0 &gt; first(2,9)</p><div class="result result" id="1480434429390">function (...args) {
+      let newStore = store.concat(args);
+      return newStore.length &gt;= numParams ? func(...newStore) : resolver(...newStore);
+    }</div><p class="prompt">localhost/root0 &gt; first(2,2,2)</p><div class="result result" id="1480434435393">4</div><p class="prompt">localhost/root0 &gt; initial(2,2,2,2)</p><div class="result result" id="1480434443773">4</div><p class="prompt">localhost/root0 &gt; initial(2,2,3,3)</p><div class="result result" id="1480434447193">4.333333333333333</div><p class="prompt">localhost/root0 &gt; third(3)</p><div class="result result" id="1480434451786">7</div><p class="prompt">localhost/root0 &gt; otherSecond</p><div class="result result" id="1480434472016">2</div><p class="prompt">localhost/root0 &gt; save</p><div class="request" id="curry38" createdat="1480434478336">6.434 KB written successfully to curry.html at Tue Nov 29 2016 10:47:58 GMT-0500 (EST)</div><p class="prompt">localhost/root0 &gt; </p></div><div tabindex="1" class="leaf codemirrorContainer" id="Codemirror0" listen="true" broadcast="true" style="left: 50px; top: 50px; width: 800px; height: 800px; position: absolute; background: white;"><h3 class="entityHeader">Codemirror0<div class="editButton">R</div><div class="removeButton"></div><div class="broadcastButton"></div><div class="listenButton"></div></h3><textarea style="display: none;">function curry(func) {
+
+  let numParams = func.length;
+  let store = [];
+
+  let resolver = function(...args) {
+    let store = args;
+
+    return function(...args) {
+      let newStore = store.concat(args);
+      return newStore.length &gt;= numParams ? func(...newStore) : resolver(...newStore);
+    }
+  }
+
+  return resolver();
+
+}
+
+function someMath(a, b, c, d) {
+  return a * b / c + d;
+}
+
+let initial = curry(someMath);
+let first = initial(2); // [2]
+let second = first(8); // [2, 8]
+let otherSecond = first(3, 6, 1); // [2,3,6,1]
+let third = second(4);
+let last = third(3);
+
+console.log('the first result:', last); // -&gt; 7
+console.log('the second result:', otherSecond); // -&gt; 2
+</textarea></div></body>

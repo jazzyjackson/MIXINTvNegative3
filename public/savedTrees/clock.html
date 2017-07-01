@@ -1,0 +1,97 @@
+<head>
+    <!--<link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">-->
+    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="stylesheet" href="/styles/menustyle.css">
+    <script src="/js/constructors/Leaf.js" defer=""></script>
+    <script src="/js/constructors/Terminal.js" defer=""></script>
+    <script src="/js/socket.io.js" defer=""></script>
+    <script src="/js/socketevents.js" defer=""></script>
+    <script src="/js/customCommands.js" defer=""></script>
+    <script src="/js/utils.js" defer=""></script>
+    <script id="repl"></script>
+  <link href="/styles/menuStyle.css"><title>clock</title><script src="/js/constructors/Codemirror.js" defer="true"></script><link rel="stylesheet" href="/codemirrorlib/codemirror.css"><script src="/codemirrorlib/codemirror.js" defer="true"></script><script src="/codemirrormode/meta.js" defer="true"></script><script src="/codemirrormode/clike/clike.js" defer="true"></script><link href="/styles/menuStyle.css"></head>
+  <!--Giving body id body for consistency with certain functions that rely on div id-->
+  <body id="body" style="position: absolute; left: 0px; top: 0px; height: 989px; width: 1715px;">
+
+<div showmenu="false" broadcast="true" listen="true" style="left: 952px; top: 337px; width: 400px; height: 300px; position: absolute;background: white" tabindex="1" class="leaf terminal" id="clock" history="0" protoprompt="localhost/clock"><div class="entityHeader">
+    <table>
+      <tbody><tr>
+        <td class="headerTitle">clock</td>
+      </tr>
+    </tbody></table>
+    <div class="menuButton"></div>
+    <div class="removeButton"></div>
+    <div class="menu">
+      <ul>
+        <li tabindex="2"> Edit <div class="editButton"></div></li>
+        <li tabindex="2"> Broadcast <div class="broadcastButton"></div> </li>
+        <li tabindex="2"> Listen <div class="listenButton"></div> </li>
+        <li tabindex="2"> Save <div class="saveButton"></div> </li>
+      </ul>
+    </div>
+  </div><div class="terminalContainer"><div class="promptContainer"><span class="prompt">localhost/root0<span class="arrow"></span></span><div class="input">rename clock</div></div><div class="result result" id="1483738504711">root0 has been renamed to clock</div><div class="promptContainer"><span class="prompt">localhost/clock<span class="arrow"></span></span><div class="input">save</div></div><div class="result" id="clock2" createdat="1483738505692">2.2 KB written successfully to clock.html in 114ms</div><div class="promptContainer"><span class="prompt">localhost/clock<span class="arrow"></span></span><div class="input">create Codemirror</div></div><div class="query result" id="1483738508321">Constructor retrieved and invoked, Codemirror0 added to DOM</div><div class="promptContainer"><span class="prompt">localhost/clock<span class="arrow"></span></span><div class="input">files</div></div><div class="result directoryContainer" id="1483738526881"><p class="fs text" title="/app.js"> app.js </p> <p class="fs directory" title="/node_modules"> node_modules </p> <p class="fs text" title="/package.json"> package.json </p> <p class="fs directory" title="/public"> public </p> <p class="fs directory" title="/routes"> routes </p> <p class="fs directory" title="/sites"> sites </p> <p class="fs directory" title="/test"> test </p> <p class="fs directory" title="/testdir"> testdir </p> <p class="fs directory" title="/user"> user </p> </div><div class="promptContainer"><span class="prompt">localhost/clock<span class="arrow"></span></span><div class="input">cd test</div></div><div class="request result" id="1483738530561">Running command on server...</div><div class="promptContainer"><span class="prompt">localhost/clock<span class="arrow"></span></span><div class="input">ls</div></div><div class="result" id="1483738533190">first.txt<br></div><div class="promptContainer"><span class="prompt">localhost/clock<span class="arrow"></span></span><div class="input">pwd</div></div><div class="result" id="1483738534131">/home/TextreePlot/test<br></div><div class="promptContainer"><span class="prompt">localhost/clock<span class="arrow"></span></span><div class="input">touch clock.ino</div></div><div class="result" id="1483738540160" style="color: red;">clock.ino { dev: 64769,<br>  mode: 33188,<br>  nlink: 1,<br>  uid: 0,<br>  gid: 0,<br>  rdev: 0,<br>  blksize: 4096,<br>  ino: 1053256,<br>  size: 0,<br>  blocks: 0,<br>  atime: 2017-01-06T21:35:40.000Z,<br>  mtime: 2017-01-06T21:35:40.000Z,<br>  ctime: 2017-01-06T21:35:40.539Z,<br>  birthtime: 2017-01-06T21:35:40.539Z }<br></div><div class="promptContainer"><span class="prompt">localhost/clock<span class="arrow"></span></span><div class="input">files</div></div><div class="result directoryContainer" id="1483738541860"><p class="fs text" title="/app.js"> app.js </p> <p class="fs directory" title="/node_modules"> node_modules </p> <p class="fs text" title="/package.json"> package.json </p> <p class="fs directory" title="/public"> public </p> <p class="fs directory" title="/routes"> routes </p> <p class="fs directory" title="/sites"> sites </p> <p class="fs directory" title="/test"> test </p> <p class="fs directory" title="/testdir"> testdir </p> <p class="fs directory" title="/user"> user </p> </div><div class="promptContainer"><span class="prompt">localhost/clock<span class="arrow"></span></span><div class="input">ls /test</div></div><div class="result directoryContainer" id="1483738543961"><p class="fs text" title="/test/clock.ino"> clock.ino </p> <p class="fs text" title="/test/first.txt"> first.txt </p> </div><div class="promptContainer"><span class="prompt">localhost/clock<span class="arrow"></span></span><div class="input">open /test/clock.ino</div></div><div class="result" id="1483738545071">Maybe it worked</div><div class="promptContainer"><span class="prompt">localhost/clock<span class="arrow"></span></span><div class="input">pwd</div></div><div class="result" id="1483738555320">/home/TextreePlot/test<br></div><div class="promptContainer"><span class="prompt">localhost/clock<span class="arrow"></span></span><div class="input">touch clock.c</div></div><div class="result" id="1483738558999" style="color: red;">clock.c { dev: 64769,<br>  mode: 33188,<br>  nlink: 1,<br>  uid: 0,<br>  gid: 0,<br>  rdev: 0,<br>  blksize: 4096,<br>  ino: 1053257,<br>  size: 0,<br>  blocks: 0,<br>  atime: 2017-01-06T21:35:59.000Z,<br>  mtime: 2017-01-06T21:35:59.000Z,<br>  ctime: 2017-01-06T21:35:59.303Z,<br>  birthtime: 2017-01-06T21:35:59.303Z }<br></div><div class="promptContainer"><span class="prompt">localhost/clock<span class="arrow"></span></span><div class="input">files</div></div><div class="result directoryContainer" id="1483738560632"><p class="fs text" title="/app.js"> app.js </p> <p class="fs directory" title="/node_modules"> node_modules </p> <p class="fs text" title="/package.json"> package.json </p> <p class="fs directory" title="/public"> public </p> <p class="fs directory" title="/routes"> routes </p> <p class="fs directory" title="/sites"> sites </p> <p class="fs directory" title="/test"> test </p> <p class="fs directory" title="/testdir"> testdir </p> <p class="fs directory" title="/user"> user </p> </div><div class="promptContainer"><span class="prompt">localhost/clock<span class="arrow"></span></span><div class="input">ls /test</div></div><div class="result directoryContainer" id="1483738562721"><p class="fs text" title="/test/clock.c"> clock.c </p> <p class="fs text" title="/test/clock.ino"> clock.ino </p> <p class="fs text" title="/test/first.txt"> first.txt </p> </div><div class="promptContainer"><span class="prompt">localhost/clock<span class="arrow"></span></span><div class="input">open /test/clock.c</div></div><div class="result" id="1483738563897">Maybe it worked</div><div class="promptContainer"><span class="prompt">localhost/clock<span class="arrow"></span></span><div class="input">save</div></div><div class="request" id="clock2" createdat="1483738867881">9.608 KB written successfully to clock.html at Fri Jan 06 2017 16:41:07 GMT-0500 (Eastern Standard Time)</div><div class="promptContainer"><span class="prompt">localhost/clock<span class="arrow"></span></span><div class="input">open /test/clock.c</div></div><div class="result" id="1483738890211">Maybe it worked</div><div class="promptContainer"><span class="prompt">localhost/clock<span class="arrow"></span></span><div class="input">save</div></div><div class="request" id="clock2" createdat="1483738901158">10.264 KB written successfully to clock.html at Fri Jan 06 2017 16:41:41 GMT-0500 (Eastern Standard Time)</div><div class="promptContainer"><span class="prompt">localhost/clock<span class="arrow"></span></span><div class="input"></div></div></div></div><div showmenu="false" broadcast="true" listen="true" style="left: 50px; top: 50px; width: 800px; height: 400px; position: absolute;background: white" tabindex="1" class="leaf codemirrorContainer " id="Codemirror0" target="/test/clock.c"><div class="entityHeader">
+    <table>
+      <tbody><tr>
+        <td class="headerTitle">Codemirror0 &gt; /test/clock.c</td>
+      </tr>
+    </tbody></table>
+    <div class="menuButton"></div>
+    <div class="removeButton"></div>
+    <div class="menu">
+      <ul>
+        <li tabindex="2">Evaluate<div class="editButton"></div></li>
+        <li tabindex="2"> Broadcast <div class="broadcastButton"></div> </li>
+        <li tabindex="2"> Listen <div class="listenButton"></div> </li>
+        <li tabindex="2"> Save <div class="saveButton"></div> </li>
+      </ul>
+    </div>
+  </div><textarea style="display: none;">/*  CrossRoads Timeclock  */
+#include &lt;FastLED.h&gt;
+
+#define LED_PIN     5
+#define NUM_LEDS    33
+#define BRIGHTNESS  64
+#define LED_TYPE    WS2811
+#define COLOR_ORDER GRB
+CRGB leds[NUM_LEDS];
+
+#define UPDATES_PER_SECOND 100
+
+unsigned long previousTime = 0;
+byte seconds ;
+byte minutes ;
+byte hours ;
+void setup()
+{
+Serial.begin (9600);
+}
+
+void loop ()
+{
+// I  think using microseconds is even more accurate
+  if (millis() &gt;= (previousTime)) 
+  {
+     previousTime = previousTime + 1000;  // use 100000 for uS
+     seconds = seconds +1;
+     if (seconds == 60)
+     {
+        seconds = 0;
+        minutes = minutes +1;
+     }
+     if (minutes == 60)
+     {
+        minutes = 0;
+        hours = hours +1;
+     }
+     if (hours == 13)
+     {
+        hours = 1;
+     }
+  Serial.print (hours, DEC);
+  Serial.print (":");
+  Serial.print (minutes,DEC);
+  Serial.print (":");
+  Serial.println(seconds,DEC);
+  } // end 1 second
+} // end loop
+</textarea></div></body>

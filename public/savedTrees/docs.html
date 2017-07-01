@@ -1,0 +1,24 @@
+<head>
+    <!--<link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">-->
+    <link rel="stylesheet" href="/styles/style.css">
+    <script src="/js/constructors/Leaf.js" defer=""></script>
+    <script src="/js/constructors/Terminal.js" defer=""></script>
+    <script src="/js/socket.io.js" defer=""></script>
+    <script src="/js/socketevents.js" defer=""></script>
+    <script src="/js/customCommands.js" defer=""></script>
+    <script src="/js/utils.js" defer=""></script>
+  <style type="text/css">
+:root #header + #content > #left > #rlblock_left
+{ display: none !important; }</style><script src="/js/constructors/Codemirror.js" defer="true"></script><link rel="stylesheet" href="/lib/codemirror.css"><script src="/lib/codemirror.js" defer="true"></script><script src="/lib/mode/javascript/javascript.js" defer="true"></script><title>docs</title></head>
+  <!--Giving body id body for consistency with certain functions that rely on div id-->
+  <body id="body" style="position: absolute; left: 0px; top: 0px; height: 1182px; width: 1365px;">
+
+<div tabindex="1" class="leaf terminal" id="docs" history="0" protoprompt="localhost/root0 > " prompt="localhost/docs > " style="left: 332px; top: 642px; width: 400px; height: 300px; position: absolute; background: white;"><h3 class="entityHeader" style="top: 426.25px;">docs</h3><p class="prompt">localhost/root0 &gt; create Codemirror</p><div class="query result" id="1478978236180">Constructor retrieved and invoked, untitled0 added to DOM</div><p class="prompt">localhost/root0 &gt;rename docs</p><div class="result result" id="1478978293821">root0 has been renamed to docs</div><p class="prompt">localhost/root0 &gt; save</p><div class="result" id="docs6" createdat="1478978295156">2.36 KB written successfully to docs.html in 235ms</div><p class="prompt">localhost/root0 &gt; ls</p><div class="result" id="1478978907034">app.js<br>example.js<br>node_modules<br>package.json<br>public<br>testdir<br>testdirtest.txt<br>test.txt<br>user<br></div><p class="prompt">localhost/root0 &gt; </p><div class="request" id="docs10" createdat="1478978910349">2.554 KB written successfully to docs.html at Sat Nov 12 2016 14:28:30 GMT-0500 (Eastern Standard Time)</div><p class="prompt">localhost/root0 &gt; untitled0.style.width = '900px'</p><div class="result result" id="1478988401481">900px</div><p class="prompt">localhost/root0 &gt; </p><div class="request" id="docs14" createdat="1478988430948">3.03 KB written successfully to docs.html at Sat Nov 12 2016 17:07:10 GMT-0500 (Eastern Standard Time)</div><p class="prompt">localhost/root0 &gt; save</p><div class="request" id="docs16" createdat="1478989190388">3.244 KB written successfully to docs.html at Sat Nov 12 2016 17:19:50 GMT-0500 (Eastern Standard Time)</div><p class="prompt">localhost/root0 &gt; </p></div><div tabindex="1" class="leaf codemirrorContainer  " id="untitled0" style="left: 50px; top: 50px; width: 900px; height: 400px; position: absolute; background: white;"><h3 class="entityHeader">untitled0</h3><textarea style="display: none;">I'm trying to remember where URL has an effect
+
+On page load, in socketevents, fireSubscribe fires, naming the socket room
+So that should throw away the query string so that people can have different
+query strings in the same room
+
+And then, on page save, the url is overwritten, but it should keep the query string intact,
+  so, only replace location.pathname
+</textarea></div></body>

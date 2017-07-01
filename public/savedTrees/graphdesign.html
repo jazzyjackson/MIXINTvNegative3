@@ -1,0 +1,570 @@
+<head>
+    <!--<link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">-->
+    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="stylesheet" href="/styles/menustyle.css">
+    <script src="/js/constructors/Leaf.js" defer=""></script>
+    <script src="/js/constructors/Terminal.js" defer=""></script>
+    <script src="/js/socket.io.js" defer=""></script>
+    <script src="/js/socketevents.js" defer=""></script>
+    <script src="/js/customCommands.js" defer=""></script>
+    <script src="/js/utils.js" defer=""></script>
+    
+    <script id="repl"></script>
+  <script src="/js/constructors/Tag.js" defer="true"></script><script src="/js/constructors/Codemirror.js" defer="true"></script><link rel="stylesheet" href="/codemirrorlib/codemirror.css"><script src="/codemirrorlib/codemirror.js" defer="true"></script><script src="/codemirrormode/meta.js" defer="true"></script><script src="/codemirrormode/javascript/javascript.js" defer="true"></script><script src="/codemirrormode/css/css.js" defer="true"></script><script src="/codemirrormode/xml/xml.js" defer="true"></script><script src="/codemirrormode/htmlmixed/htmlmixed.js" defer="true"></script><title>graphdesign</title><script id="loadscript">
+      let scriptArray = Array.from(document.getElementsByTagName('script'));
+      let loadingArray = [];
+      let firstTerminalIcanFind;
+      
+      scriptArray.forEach(scriptNode => {
+        // console.log(scriptNode)
+        let src = scriptNode.getAttribute('src');
+        if(src){
+          let loadingDiv = document.createElement('div');
+          loadingDiv.className = 'result'
+          loadingDiv.textContent = `Loading ${src}... `
+          loadingArray.push(loadingDiv)
+          scriptNode.addEventListener('load', () => {
+            loadingDiv.textContent += ' done.'
+            console.log('done with ',src)
+          })
+        }
+      })
+      document.addEventListener('readystatechange', () => {
+        console.log('readyStateChange')
+        switch(document.readyState){
+          case 'interactive': 
+            firstTerminalIcanFind = document.querySelector('.terminalContainer');
+            loadingArray.forEach(divNode => {
+              firstTerminalIcanFind.appendChild(divNode)
+            });
+            let aPotentialName = location.pathname;
+            aPotentialName = aPotentialName.match(/\/\w+\.|\/\w+$/);
+            aPotentialName = aPotentialName && aPotentialName[0].match(/\w+/);
+            aPotentialName = aPotentialName && aPotentialName[0];
+            let potentialTerminal = document.getElementById("root0");
+            //if the document has a name AND there is NOT already a terminal with that name
+            if(aPotentialName && potentialTerminal){
+              potentialTerminal.id = aPotentialName;
+              let thisHeader = potentialTerminal.querySelector('.entityHeader')
+              let thisTitle = thisHeader.querySelector('.headerTitle')
+              thisTitle.textContent = aPotentialName;
+              potentialTerminal.setAttribute('protoPrompt', 'localhost/' + aPotentialName);
+              Array.from(potentialTerminal.getElementsByClassName('promptContainer'), function(node){
+                node.firstChild.innerHTML = `localhost/${aPotentialName}<span class="arrow"></span>`;
+              })
+            }
+            break;
+          case 'complete':
+            let readyDiv = document.createElement('div')
+            readyDiv.className = 'result'
+            readyDiv.textContent = 'OK Ready.'
+            readyDiv.style.textAlign = 'right'
+            firstTerminalIcanFind.appendChild(readyDiv)
+            initPrompt(firstTerminalIcanFind);
+            break;
+        }
+      })
+      window.addEventListener('load', () => {
+        
+      })
+      let scriptReArranger = new MutationObserver((info,thisMute)=>{
+        console.log("something has changed!", info)
+        thisMute.disconnect();
+        // mvoeThisScript();
+        let thisScript = document.getElementById("loadscript");
+        thisScript.remove();
+        document.head.appendChild(thisScript)
+        thisMute.observe(document.head, {childList: true})
+        //this gets caught in an infinite loop.
+      })
+      scriptReArranger.observe(document.head, {childList: true})
+      // function moveThisScript(){
+      //   let thisScript = document.getElementById("loadscript");
+      //   thisScript.remove();
+      //   document.head.appendChild(thisScript)
+      // }
+
+    </script></head>
+  <!--Giving body id body for consistency with certain functions that rely on div id-->
+  <body id="body" style="position: absolute; left: 0px; top: 0px; height: 632px; width: 1163px;">
+    
+  
+
+<div showmenu="false" broadcast="true" listen="true" style="left: 16px; top: 117px; width: 400px; position: absolute; background: none; min-height: 100px; border: none;" tabindex="1" class="leaf tag" id="tag0"><div class="entityHeader">
+    <table>
+      <tbody><tr>
+        <td class="headerTitle">tag0</td>
+      </tr>
+    </tbody></table>
+    <div class="menuButton"></div>
+    <div class="removeButton"></div>
+    <div class="menu">
+      <ul>
+        <li tabindex="2"> Edit <div class="editButton"></div></li>
+        <li tabindex="2"> Broadcast <div class="broadcastButton"></div> </li>
+        <li tabindex="2"> Listen <div class="listenButton"></div> </li>
+        <li tabindex="2"> Save <div class="saveButton"></div> </li>
+      </ul>
+    </div>
+  </div><div id="innertag0" target="undefined" style="width: 100%; height: 100%;">&lt;div id='somenumber' class='nodecontainer'&gt;
+	&lt;div class='leftpanel'&gt;
+      &lt;div class='inputhook'&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class='datapanel'&gt;
+      &lt;textarea class='datainput'&gt;&lt;/textarea&gt;
+    &lt;/div&gt;
+    &lt;div class='rightpanel'&gt;
+      &lt;div class='outputhook'&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;style&gt;
+  	.datainput {
+      width: 150px;
+      height: 100px;
+      border: none;
+      padding: 5px;
+  	}
+    .nodecontainer {
+      filter: blur(2px);
+      background: white;
+      min-height: 100px;
+      width: 0;
+      margin: 20px;
+      border-radius: 10px;
+      display: flex;
+    }
+    .leftpanel, .datapanel, .rightpanel {
+      box-sizing: border-box;
+      border: 1px solid lightgrey;
+    }
+    .leftpanel, .rightpanel {
+      min-width: 22px;
+      width: 10%;
+      background: #eee;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .leftpanel {
+		border-radius: 5px 0 0 5px;
+      	border-right: none;
+    }
+  	.rightpanel {
+  		border-radius: 0 5px 5px 0;
+      	border-left: none;
+  	}
+  	.inputhook, .outputhook {
+  		width: 9px;
+      	height: 9px;
+      	background: white;
+      	border-radius: 15px;   
+      	border: 1px solid lightgrey;
+  	}
+&lt;/style&gt;</div></div><div showmenu="false" broadcast="true" listen="true" style="left: 61px; top: 454px; width: 800px; height: 400px; position: absolute; background: white;" tabindex="1" class="leaf codemirrorContainer                                                    " id="Codemirror0" target="tag0" update="innertag0"><div class="entityHeader">
+    <table>
+      <tbody><tr>
+        <td class="headerTitle">Codemirror0 &gt; tag0</td>
+      </tr>
+    </tbody></table>
+    <div class="menuButton"></div>
+    <div class="removeButton"></div>
+    <div class="menu">
+      <ul>
+        <li tabindex="2"> Edit <div class="editButton"></div></li>
+        <li tabindex="2"> Broadcast <div class="broadcastButton"></div> </li>
+        <li tabindex="2"> Listen <div class="listenButton"></div> </li>
+        <li tabindex="2"> Save <div class="saveButton"></div> </li>
+      </ul>
+    </div>
+  </div><textarea style="display: none;">&lt;div id='somenumber' class='nodecontainer'&gt;
+	&lt;div class='leftpanel'&gt;
+      &lt;div class='inputhook'&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class='datapanel'&gt;
+      &lt;textarea class='datainput'&gt;&lt;/textarea&gt;
+    &lt;/div&gt;
+    &lt;div class='rightpanel'&gt;
+      &lt;div class='outputhook'&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;style&gt;
+  	.datainput {
+      width: 150px;
+      height: 100px;
+      border: none;
+      padding: 5px;
+  	}
+    .nodecontainer {
+      filter: blur(2px);
+      background: white;
+      min-height: 100px;
+      width: 0;
+      margin: 20px;
+      border-radius: 10px;
+      display: flex;
+    }
+    .leftpanel, .datapanel, .rightpanel {
+      box-sizing: border-box;
+      border: 1px solid lightgrey;
+    }
+    .leftpanel, .rightpanel {
+      min-width: 22px;
+      width: 10%;
+      background: #eee;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .leftpanel {
+		border-radius: 5px 0 0 5px;
+      	border-right: none;
+    }
+  	.rightpanel {
+  		border-radius: 0 5px 5px 0;
+      	border-left: none;
+  	}
+  	.inputhook, .outputhook {
+  		width: 9px;
+      	height: 9px;
+      	background: white;
+      	border-radius: 15px;   
+      	border: 1px solid lightgrey;
+  	}
+&lt;/style&gt;</textarea></div><div showmenu="false" broadcast="true" listen="true" style="left: 221px; top: 523px; width: 800px; height: 400px; position: absolute; background: white;" tabindex="1" class="leaf codemirrorContainer                                     " id="Codemirror1"><div class="entityHeader">
+    <table>
+      <tbody><tr>
+        <td class="headerTitle">Codemirror1</td>
+      </tr>
+    </tbody></table>
+    <div class="menuButton"></div>
+    <div class="removeButton"></div>
+    <div class="menu">
+      <ul>
+        <li tabindex="2"> Edit <div class="editButton"></div></li>
+        <li tabindex="2"> Broadcast <div class="broadcastButton"></div> </li>
+        <li tabindex="2"> Listen <div class="listenButton"></div> </li>
+        <li tabindex="2"> Save <div class="saveButton"></div> </li>
+      </ul>
+    </div>
+  </div><textarea style="display: none;">Note to self:
+If I'm going to be redrawing content with every keystroke, I better copy properties like text value and position, if they are to be interactive and iterable!
+
+For pipes hooking up to nodes, maybe produce SVG which is on its own layer just above the background,
+and the background color of the panel hooks can be changed to reflect what ppe they're connected to each other, 
+so that pipe endpoints can be visible without dealing with z-index issues, and there need not be any fancy footwork for lining up the svg edge up with the html nodes, what a nightmare!
+
+Function for piping content should be like: node has clearly marked input and output type. Helpful context menu.
+Click and drag from one hook to another. Screen auto-scrolls in this mode. 
+
+The function updating the attributes of the svg should simply be tracking the mouse down point and the 
+x y coordinates of the mousemove, recalculating curve and updating SVG, laying underneath all nodes...
+except maybe when it's being dragged it becomes z-index 1 and the html node elevated to z-index 2, something like that
+So that you click, look for a place to drop anchor, and now the svg node positions itself within a tree
+Probably an abstraction of the DOM. But anytime you click and drag a node, the associated pipes will need to be redrawn as well. I suppose this may fire off 3 separate functions per mouse move...
+
+Set Interval
+Set Timeout
+Read from node
+write to node
+read from disk
+write to disk
+mode window
+mode process
+hook to network (bind address/port to certain function)
+hook from network (an AJAX function that can be triggered to make HTTP or TCP requests)
+
+Chatscript program can be written this way, a TCP socket that then triggers a series of functions that draws boxes on the screen.
+Functional DOM manipulation can probably be elegant enough to be fun.
+
+write a general wrapper for standardio and transform stream so that lots of unix tools can happen
+
+sed, grep, curl etc
+just system data, memory usage, current processes.... click to kill functionality on unix!
+Right click to expose toolbar. Could be resize tools, but also switch mode tool. Could just change classname which loads a whole nother set of CSS rules.
+Same data represented in different ways (litterally just hide data, as well as switching up the interface to it)
+
+Be able to flip from value, to interface, to source code. Source code can be nothing but a function, if 
+there aren't any blocks to display, the interface side is just a label editable via value. 
+Get value returns the value a.k.a. the label, but eval grabs the source code to process things.
+
+This could allow for easy web componentization of little signal producers. Knobs, sliders, various generators. Great for sound and data pipelining. 
+Allow indicators of data flow, memory usage.... There will be a lot more overhead handing file streams off to each function, but being totally non-blocking and transparent will probably make up for it. Streams could be potentially collapsed into a single process to work around the overhead.
+
+3D - nodes can be pushed and pulled and then you can change what level you're at. CSS blur over the whole thing. 
+
+Set your draw distance + distance between layers. may totally hide everything but the current level (meta + / - to cycle through)
+Things that are one layer towards you are extremely transparent and don't react to mouse events.
+When panning, they get out of the way faster, as if distances are relative like they're floating in air
+
+Position and object type current options and content are serialized as JSON.
+Find a way to do a diff when updating... Perhaps when a change occurs, the path of the mother object is determined and passed along with the subbranch as an update operation, with an md5 hash of the whole object after the transformation. So receiving clients can be updated with as little data as possible, update the object, and compare hashes. If it doesn't match, whole branches are updated until it does. Or just the most updated version is re-distributed til hashes match. I feel like this is that problem of multiple nodes deciding who's in charge.
+
+Need to be able to 
+
+How to gaussian blue progressively </textarea></div><div showmenu="false" broadcast="true" listen="true" style="left: 298px; top: 242px; width: 400px; position: absolute; background: none; min-height: 100px; border: none;" tabindex="1" class="leaf tag" id="tag1"><div class="entityHeader">
+    <table>
+      <tbody><tr>
+        <td class="headerTitle">tag1</td>
+      </tr>
+    </tbody></table>
+    <div class="menuButton"></div>
+    <div class="removeButton"></div>
+    <div class="menu">
+      <ul>
+        <li tabindex="2"> Edit <div class="editButton"></div></li>
+        <li tabindex="2"> Broadcast <div class="broadcastButton"></div> </li>
+        <li tabindex="2"> Listen <div class="listenButton"></div> </li>
+        <li tabindex="2"> Save <div class="saveButton"></div> </li>
+      </ul>
+    </div>
+  </div><div id="innertag1" target="undefined" style="width: 100%; height: 100%;">&lt;div id='somenumber' class='nodecontainer'&gt;
+	&lt;div class='leftpanel'&gt;
+      &lt;div class='inputhook'&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class='datapanel'&gt;
+      &lt;textarea class='datainput'&gt;&lt;/textarea&gt;
+    &lt;/div&gt;
+    &lt;div class='rightpanel'&gt;
+      &lt;div class='outputhook'&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;style&gt;
+  	.datainput {
+      width: 150px;
+      height: 100px;
+      border: none;
+      padding: 5px;
+  	}
+    .nodecontainer {
+      background: white;
+      min-height: 100px;
+      width: 0;
+      margin: 20px;
+      border-radius: 10px;
+      display: flex;
+    }
+    .leftpanel, .datapanel, .rightpanel {
+      box-sizing: border-box;
+      border: 1px solid lightgrey;
+    }
+    .leftpanel, .rightpanel {
+      min-width: 22px;
+      width: 10%;
+      background: #eee;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .leftpanel {
+		border-radius: 5px 0 0 5px;
+      	border-right: none;
+    }
+  	.rightpanel {
+  		border-radius: 0 5px 5px 0;
+      	border-left: none;
+  	}
+  	.inputhook, .outputhook {
+  		width: 9px;
+      	height: 9px;
+      	background: white;
+      	border-radius: 15px;   
+      	border: 1px solid lightgrey;
+  	}
+&lt;/style&gt;</div></div><div showmenu="false" broadcast="true" listen="true" style="left: 707px; top: 93px; width: 400px; height: 300px; position: absolute;background: white" tabindex="1" class="leaf terminal" id="graphdesign" history="0" protoprompt="localhost/graphdesign"><div class="entityHeader">
+    <table>
+      <tbody><tr>
+        <td class="headerTitle">graphdesign</td>
+      </tr>
+    </tbody></table>
+    <div class="menuButton"></div>
+    <div class="removeButton"></div>
+    <div class="menu">
+      <ul>
+        <li tabindex="2"> Edit <div class="editButton"></div></li>
+        <li tabindex="2"> Broadcast <div class="broadcastButton"></div> </li>
+        <li tabindex="2"> Listen <div class="listenButton"></div> </li>
+        <li tabindex="2"> Save <div class="saveButton"></div> </li>
+      </ul>
+    </div>
+  </div><div class="terminalContainer" history="2"><div class="promptContainer"><span class="prompt">localhost/graphdesign<span class="arrow"></span></span><div class="input">create Tag</div></div><div class="query result" id="1493869343347">Constructor invoked, tag2 added to DOM</div><div class="promptContainer"><span class="prompt">localhost/graphdesign<span class="arrow"></span></span><div class="input">tag2.style.background = 'none'</div></div><div class="result result" id="1493869451065">none</div><div class="promptContainer"><span class="prompt">localhost/graphdesign<span class="arrow"></span></span><div class="input">tag2.style.border = 'none'</div></div><div class="result result" id="1493869456633">none</div><div class="promptContainer"><span class="prompt">localhost/graphdesign<span class="arrow"></span></span><div class="input">tag2.style.visibility = 'hidden'</div></div><div class="result result" id="1493869563973">hidden</div><div class="promptContainer"><span class="prompt">localhost/graphdesign<span class="arrow"></span></span><div class="input">tag2.style.visibility = 'visible'</div></div><div class="result result" id="1493869568042">visible</div><div class="promptContainer"><span class="prompt">localhost/graphdesign<span class="arrow"></span></span><div class="input">tag2.childNodes.length</div></div><div class="result result" id="1493869574511">2</div><div class="promptContainer"><span class="prompt">localhost/graphdesign<span class="arrow"></span></span><div class="input">tag2.childNodes[0].className</div></div><div class="result result" id="1493869585931">entityHeader</div><div class="promptContainer"><span class="prompt">localhost/graphdesign<span class="arrow"></span></span><div class="input">tag2.childNodes[0].style.visibility = 'hidden'</div></div><div class="result result" id="1493869596936">hidden</div><div class="promptContainer"><span class="prompt">localhost/graphdesign<span class="arrow"></span></span><div class="input">tag0.firstChild.style.visibility = 'hidden'</div></div><div class="result result" id="1493869609111">hidden</div><div class="promptContainer"><span class="prompt">localhost/graphdesign<span class="arrow"></span></span><div class="input">tag1.firstChild.style.visibility = 'hidden'</div></div><div class="result result" id="1493869624431">hidden</div><div class="promptContainer"><span class="prompt">localhost/graphdesign<span class="arrow"></span></span><div class="input">save</div></div><div class="request" id="graphdesign2" createdat="1493870143024">32.012 KB written successfully to graphdesign.html at Wed May 03 2017 23:55:43 GMT-0400 (Eastern Daylight Time)</div><div class="promptContainer"><span class="prompt">localhost/graphdesign<span class="arrow"></span></span><div class="input"></div></div><div class="result">Loading /js/constructors/Leaf.js...  done.</div><div class="result">Loading /js/constructors/Terminal.js...  done.</div><div class="result">Loading /js/socket.io.js...  done.</div><div class="result">Loading /js/socketevents.js...  done.</div><div class="result">Loading /js/customCommands.js...  done.</div><div class="result">Loading /js/utils.js...  done.</div><div class="result">Loading /js/constructors/Tag.js...  done.</div><div class="result">Loading /js/constructors/Codemirror.js...  done.</div><div class="result">Loading /codemirrorlib/codemirror.js...  done.</div><div class="result">Loading /codemirrormode/meta.js...  done.</div><div class="result">Loading /codemirrormode/javascript/javascript.js...  done.</div><div class="result">Loading /codemirrormode/css/css.js...  done.</div><div class="result">Loading /codemirrormode/xml/xml.js...  done.</div><div class="result">Loading /codemirrormode/htmlmixed/htmlmixed.js...  done.</div><div class="result" style="text-align: right;">OK Ready.</div><div class="promptContainer"><span class="prompt">localhost/graphdesign<span class="arrow"></span></span><div class="input">save</div></div><div class="request" id="graphdesign2" createdat="1493874077692">27.276 KB written successfully to graphdesign.html at Thu May 04 2017 01:01:17 GMT-0400 (Eastern Daylight Time)</div><div class="promptContainer"><span class="prompt">localhost/graphdesign<span class="arrow"></span></span><div class="input"></div></div></div></div><div showmenu="false" broadcast="true" listen="true" style="left: 187px; top: 156px; width: 400px; position: absolute; background: none; min-height: 100px; border: none; visibility: visible;" tabindex="1" class="leaf tag" id="tag2"><div class="entityHeader">
+    <table>
+      <tbody><tr>
+        <td class="headerTitle">tag2</td>
+      </tr>
+    </tbody></table>
+    <div class="menuButton"></div>
+    <div class="removeButton"></div>
+    <div class="menu">
+      <ul>
+        <li tabindex="2"> Edit <div class="editButton"></div></li>
+        <li tabindex="2"> Broadcast <div class="broadcastButton"></div> </li>
+        <li tabindex="2"> Listen <div class="listenButton"></div> </li>
+        <li tabindex="2"> Save <div class="saveButton"></div> </li>
+      </ul>
+    </div>
+  </div><div id="innertag2" target="undefined" style="width: 100%; height: 100%;">&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
+&lt;!-- Created with Inkscape (http://www.inkscape.org/) --&gt;
+
+&lt;svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="40mm"
+   height="60mm"
+   viewBox="0 0 744.09448819 1052.3622047"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="blurryline.svg"&gt;
+  &lt;defs
+     id="defs4"&gt;
+    &lt;linearGradient
+       inkscape:collect="always"
+       id="linearGradient4150"&gt;
+      &lt;stop
+         style="stop-color:#000000;stop-opacity:1"
+         offset="0"
+         id="stop4152" /&gt;
+      &lt;stop
+         style="stop-color:#007300;stop-opacity:0;"
+         offset="1"
+         id="stop4154" /&gt;
+    &lt;/linearGradient&gt;
+    &lt;linearGradient
+       inkscape:collect="always"
+       id="linearGradient4142"&gt;
+      &lt;stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop4144" /&gt;
+      &lt;stop
+         style="stop-color:#000000;stop-opacity:0;"
+         offset="1"
+         id="stop4146" /&gt;
+    &lt;/linearGradient&gt;
+    &lt;linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4142"
+       id="linearGradient4148"
+       x1="-488.66345"
+       y1="652.36365"
+       x2="-911.401"
+       y2="280.93506"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(1050.5586,-149.50258)" /&gt;
+    &lt;linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4150"
+       id="linearGradient4156"
+       x1="-941.33075"
+       y1="266.3562"
+       x2="99.711639"
+       y2="1312.6567"
+       gradientUnits="userSpaceOnUse" /&gt;
+    &lt;filter
+       style="color-interpolation-filters:sRGB;"
+       inkscape:label="Out of Focus"
+       id="filter4382"&gt;
+      &lt;feFlood
+         flood-opacity="1"
+         flood-color="rgb(255,255,255)"
+         result="flood"
+         id="feFlood4384" /&gt;
+      &lt;feColorMatrix
+         in="SourceGraphic"
+         values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 -0.2125 -0.7154 -0.0721 1 0 "
+         result="colormatrix1"
+         id="feColorMatrix4386" /&gt;
+      &lt;feGaussianBlur
+         stdDeviation="10.6 15.4"
+         result="blur"
+         id="feGaussianBlur4388" /&gt;
+      &lt;feColorMatrix
+         in="blur"
+         values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 7.35 -3.3 "
+         result="colormatrix2"
+         id="feColorMatrix4390" /&gt;
+      &lt;feBlend
+         in="colormatrix2"
+         in2="flood"
+         mode="normal"
+         result="blend"
+         id="feBlend4392" /&gt;
+      &lt;feComposite
+         in="blend"
+         in2="blend"
+         operator="arithmetic"
+         k2="1"
+         result="composite1"
+         id="feComposite4394" /&gt;
+      &lt;feComposite
+         in2="SourceGraphic"
+         operator="in"
+         id="feComposite4396" /&gt;
+    &lt;/filter&gt;
+  &lt;/defs&gt;
+  &lt;sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.24748737"
+     inkscape:cx="-262.598"
+     inkscape:cy="247.64028"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer2"
+     showgrid="false"
+     inkscape:window-width="1280"
+     inkscape:window-height="737"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" /&gt;
+  &lt;metadata
+     id="metadata7"&gt;
+    &lt;rdf:RDF&gt;
+      &lt;cc:Work
+         rdf:about=""&gt;
+        &lt;dc:format&gt;image/svg+xml&lt;/dc:format&gt;
+        &lt;dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" /&gt;
+        &lt;dc:title&gt;&lt;/dc:title&gt;
+      &lt;/cc:Work&gt;
+    &lt;/rdf:RDF&gt;
+  &lt;/metadata&gt;
+  &lt;g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     style="display:inline"&gt;
+    &lt;g
+       id="g4414"
+       transform="translate(1050.5586,-149.50258)"&gt;
+      &lt;path
+         sodipodi:nodetypes="cc"
+         inkscape:connector-curvature="0"
+         id="path4136"
+         d="m -977.14286,232.3622 c 535.57102,4.64812 96.49205,658.62763 665.71429,657.14286"
+         style="fill:none;fill-rule:evenodd;stroke:url(#linearGradient4156);stroke-width:21.20000076;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter4382)" /&gt;
+    &lt;/g&gt;
+  &lt;/g&gt;
+  &lt;g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Layer 2"
+     style="display:inline"&gt;
+    &lt;path
+       sodipodi:nodetypes="cc"
+       inkscape:connector-curvature="0"
+       id="path4138"
+       d="M 73.415786,82.859623 C 608.98681,87.507743 169.90784,741.48725 739.13008,740.00248"
+       style="fill:none;fill-rule:evenodd;stroke:url(#linearGradient4148);stroke-width:21.20000076;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" /&gt;
+  &lt;/g&gt;
+&lt;/svg&gt;
+</div></div></body>

@@ -1,0 +1,202 @@
+<head>
+    <!--<link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">-->
+    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="stylesheet" href="/styles/menustyle.css">
+    <script src="/js/constructors/Leaf.js" defer=""></script>
+    <script src="/js/constructors/Terminal.js" defer=""></script>
+    <script src="/js/socket.io.js" defer=""></script>
+    <script src="/js/socketevents.js" defer=""></script>
+    <script src="/js/customCommands.js" defer=""></script>
+    <script src="/js/utils.js" defer=""></script>
+    
+    <script id="repl"></script>
+  <script src="/js/constructors/Tag.js" defer="true"></script><script src="/js/constructors/Codemirror.js" defer="true"></script><link rel="stylesheet" href="/codemirrorlib/codemirror.css"><script src="/codemirrorlib/codemirror.js" defer="true"></script><script src="/codemirrormode/meta.js" defer="true"></script><title>root10</title><script src="/codemirrormode/javascript/javascript.js" defer="true"></script><script src="/codemirrormode/css/css.js" defer="true"></script><script src="/codemirrormode/xml/xml.js" defer="true"></script><script src="/codemirrormode/htmlmixed/htmlmixed.js" defer="true"></script><script id="loadscript">
+      let scriptArray = Array.from(document.getElementsByTagName('script'));
+      let loadingArray = [];
+      let firstTerminalIcanFind;
+      
+      scriptArray.forEach(scriptNode => {
+        // console.log(scriptNode)
+        let src = scriptNode.getAttribute('src');
+        if(src){
+          let loadingDiv = document.createElement('div');
+          loadingDiv.className = 'result'
+          loadingDiv.textContent = `Loading ${src}... `
+          loadingArray.push(loadingDiv)
+          scriptNode.addEventListener('load', () => {
+            loadingDiv.textContent += ' done.'
+            console.log('done with ',src)
+          })
+        }
+      })
+      document.addEventListener('readystatechange', () => {
+        console.log('readyStateChange')
+        switch(document.readyState){
+          case 'interactive': 
+            firstTerminalIcanFind = document.querySelector('.terminalContainer');
+            loadingArray.forEach(divNode => {
+              firstTerminalIcanFind.appendChild(divNode)
+            });
+            let aPotentialName = location.pathname;
+            aPotentialName = aPotentialName.match(/\/\w+\.|\/\w+$/);
+            aPotentialName = aPotentialName && aPotentialName[0].match(/\w+/);
+            aPotentialName = aPotentialName && aPotentialName[0];
+            let potentialTerminal = document.getElementById("root0");
+            //if the document has a name AND there is NOT already a terminal with that name
+            if(aPotentialName && potentialTerminal){
+              potentialTerminal.id = aPotentialName;
+              let thisHeader = potentialTerminal.querySelector('.entityHeader')
+              let thisTitle = thisHeader.querySelector('.headerTitle')
+              thisTitle.textContent = aPotentialName;
+              potentialTerminal.setAttribute('protoPrompt', 'localhost/' + aPotentialName);
+              Array.from(potentialTerminal.getElementsByClassName('promptContainer'), function(node){
+                node.firstChild.innerHTML = `localhost/${aPotentialName}<span class="arrow"></span>`;
+              })
+            }
+            break;
+          case 'complete':
+            let readyDiv = document.createElement('div')
+            readyDiv.className = 'result'
+            readyDiv.textContent = 'OK Ready.'
+            readyDiv.style.textAlign = 'right'
+            firstTerminalIcanFind.appendChild(readyDiv)
+            initPrompt(firstTerminalIcanFind);
+            break;
+        }
+      })
+      window.addEventListener('load', () => {
+        
+      })
+      let scriptReArranger = new MutationObserver((info,thisMute)=>{
+        console.log("something has changed!", info)
+        thisMute.disconnect();
+        // mvoeThisScript();
+        let thisScript = document.getElementById("loadscript");
+        thisScript.remove();
+        document.head.appendChild(thisScript)
+        thisMute.observe(document.head, {childList: true})
+        //this gets caught in an infinite loop.
+      })
+      scriptReArranger.observe(document.head, {childList: true})
+      // function moveThisScript(){
+      //   let thisScript = document.getElementById("loadscript");
+      //   thisScript.remove();
+      //   document.head.appendChild(thisScript)
+      // }
+
+    </script></head>
+  <!--Giving body id body for consistency with certain functions that rely on div id-->
+  <body id="body" style="position: absolute; left: 27px; top: 147px; height: 1072px; width: 1818px;">
+    
+  
+
+<div showmenu="false" broadcast="true" listen="true" style="left: 73px; top: 282px; width: 1000px; position: absolute; background: white; min-height: 100px; height: 400px;" tabindex="1" class="leaf tag" id="coltenj.com/colors.html" protoprompt="localhost/coltenj.com/colors.html"><div class="entityHeader">
+    <table>
+      <tbody><tr>
+        <td class="headerTitle">coltenj.com/colors.html</td>
+      </tr>
+    </tbody></table>
+    <div class="menuButton"></div>
+    <div class="removeButton"></div>
+    <div class="menu">
+      <ul>
+        <li tabindex="2"> Edit <div class="editButton"></div></li>
+        <li tabindex="2"> Broadcast <div class="broadcastButton"></div> </li>
+        <li tabindex="2"> Listen <div class="listenButton"></div> </li>
+        <li tabindex="2"> Save <div class="saveButton"></div> </li>
+      </ul>
+    </div>
+  </div><div id="innercoltenj.com/colors.html" target="undefined" style="width: 100%; height: 100%;">&lt;style&gt;
+#wrapper { width: 1000px; height: 400; padding: 0; overflow: hidden; }
+#scaled-frame { width: 2000px; height: 800px; border: 0px; }
+#scaled-frame {
+    zoom: 0.5;
+    -moz-transform: scale(0.5);
+    -moz-transform-origin: 0 0;
+    -o-transform: scale(0.5);
+    -o-transform-origin: 0 0;
+    -webkit-transform: scale(0.5);
+    -webkit-transform-origin: 0 0;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+ #scaled-frame  { zoom: 1;  }
+}
+&lt;/style&gt;
+
+&lt;div id="wrapper"&gt;&lt;iframe id="scaled-frame" src="http://coltenj.com/colors.html"&gt;&lt;/div&gt;</div></div><div showmenu="false" broadcast="true" listen="true" style="left: 58px; top: 764px; width: 1000px; position: absolute; background: white; min-height: 100px; height: 400px;" tabindex="1" class="leaf tag" id="coltenj.com/ads.html" protoprompt="localhost/coltenj.com/ads.html"><div class="entityHeader">
+    <table>
+      <tbody><tr>
+        <td class="headerTitle">coltenj.com/ads.html</td>
+      </tr>
+    </tbody></table>
+    <div class="menuButton"></div>
+    <div class="removeButton"></div>
+    <div class="menu">
+      <ul>
+        <li tabindex="2"> Edit <div class="editButton"></div></li>
+        <li tabindex="2"> Broadcast <div class="broadcastButton"></div> </li>
+        <li tabindex="2"> Listen <div class="listenButton"></div> </li>
+        <li tabindex="2"> Save <div class="saveButton"></div> </li>
+      </ul>
+    </div>
+  </div><div id="innercoltenj.com/ads.html" target="undefined" style="width: 100%; height: 100%;">&lt;style&gt;
+#wrapper { width: 1000px; height: 400; padding: 0; overflow: hidden; }
+#scaled-frame { width: 2000px; height: 800px; border: 0px; }
+#scaled-frame {
+    zoom: 0.5;
+    -moz-transform: scale(0.5);
+    -moz-transform-origin: 0 0;
+    -o-transform: scale(0.5);
+    -o-transform-origin: 0 0;
+    -webkit-transform: scale(0.5);
+    -webkit-transform-origin: 0 0;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+ #scaled-frame  { zoom: 1;  }
+}
+&lt;/style&gt;
+
+&lt;div id="wrapper"&gt;&lt;iframe id="scaled-frame" src="http://coltenj.com/ads.html"&gt;&lt;/div&gt;</div></div><div showmenu="false" broadcast="true" listen="true" style="left: 896px; top: -81px; width: 400px; height: 300px; position: absolute; background: white;" tabindex="1" class="leaf terminal" id="root10" history="0" protoprompt="localhost/root10"><div class="entityHeader">
+    <table>
+      <tbody><tr>
+        <td class="headerTitle">root10</td>
+      </tr>
+    </tbody></table>
+    <div class="menuButton"></div>
+    <div class="removeButton"></div>
+    <div class="menu">
+      <ul>
+        
+        <li tabindex="2"> Broadcast <div class="broadcastButton"></div> </li>
+        <li tabindex="2"> Listen <div class="listenButton"></div> </li>
+        
+      </ul>
+    </div>
+  </div><div class="terminalContainer"><div class="promptContainer"><span class="prompt">localhost/root10<span class="arrow"></span></span><div class="input">create Tag</div></div><div class="query result" id="1487563034492">Constructor invoked, tag0 added to DOM</div><div class="promptContainer"><span class="prompt">localhost/root10<span class="arrow"></span></span><div class="input">rename tag0 Hello!</div></div><div class="result result" id="1487563039641">tag0 has been renamed to Hello!</div><div class="promptContainer"><span class="prompt">localhost/root10<span class="arrow"></span></span><div class="input">Hello!</div></div><div class="result result" id="1487563413526">SyntaxError: Unexpected token !</div><div class="promptContainer"><span class="prompt">localhost/root10<span class="arrow"></span></span><div class="input">create Tag</div></div><div class="query result" id="1487563423727">Constructor invoked, tag0 added to DOM</div><div class="promptContainer"><span class="prompt">localhost/root10<span class="arrow"></span></span><div class="input">create Tag</div></div><div class="query result" id="1487563454456">Constructor invoked, tag0 added to DOM</div><div class="promptContainer"><span class="prompt">localhost/root10<span class="arrow"></span></span><div class="input">tag0.style.width = '800px'</div></div><div class="result result" id="1487563469715">800px</div><div class="promptContainer"><span class="prompt">localhost/root10<span class="arrow"></span></span><div class="input">rename tag0 welcome</div></div><div class="result result" id="1487563573326">tag0 has been renamed to welcome</div><div class="promptContainer"><span class="prompt">localhost/root10<span class="arrow"></span></span><div class="input">save</div></div><div class="request" id="root102" createdat="1487563579359">11.543 KB written successfully to root10.html at Sun Feb 19 2017 23:06:19 GMT-0500 (Eastern Standard Time)</div><div class="promptContainer"><span class="prompt">localhost/root10<span class="arrow"></span></span><div class="input"></div></div></div></div><div showmenu="false" broadcast="true" listen="true" style="left: 70px; top: -17px; width: 800px; position: absolute; background: white; min-height: 100px;" tabindex="1" class="leaf tag" id="welcome" protoprompt="localhost/welcome"><div class="entityHeader">
+    <table>
+      <tbody><tr>
+        <td class="headerTitle">welcome</td>
+      </tr>
+    </tbody></table>
+    <div class="menuButton"></div>
+    <div class="removeButton"></div>
+    <div class="menu">
+      <ul>
+        <li tabindex="2"> Edit <div class="editButton"></div></li>
+        <li tabindex="2"> Broadcast <div class="broadcastButton"></div> </li>
+        <li tabindex="2"> Listen <div class="listenButton"></div> </li>
+        <li tabindex="2"> Save <div class="saveButton"></div> </li>
+      </ul>
+    </div>
+  </div><div id="innerwelcome" target="undefined" style="width: 100%; height: 100%;">&lt;p&gt; This is as good of a place as any to keep track of what I'm doing. &lt;/p&gt;
+&lt;p&gt; I've been Colten Jackson since 1990, and coltenj.com has existed since 2002. It's still basically my middle school science fair project.&lt;/p&gt;
+&lt;p&gt; I can't really decide on an arrangment for my site so I'll just throw a bunch of iframes at you. &lt;/p&gt;
+
+&lt;style&gt;
+	p {
+    	font-size: 20px;
+        padding: 5px;
+    }
+&lt;/style&gt;&lt;/p&gt;</div></div></body>

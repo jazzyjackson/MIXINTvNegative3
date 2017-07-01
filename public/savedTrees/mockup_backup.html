@@ -1,0 +1,126 @@
+<head>
+    <link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">
+    <link rel="stylesheet" href="/styles/style.css">
+    <script src="/js/constructors/Terminal.js" defer=""></script>
+    <script src="/js/socket.io.js" defer=""></script>
+    <script src="/js/socketevents.js" defer=""></script>
+    <script src="/js/customCommands.js" defer=""></script>
+    <script src="/js/clickevents.js" defer=""></script>
+    <script src="/js/keyevents.js" defer=""></script>
+  <script src="/js/constructors/Codemirror.js" defer="true"></script><link rel="stylesheet" href="/lib/codemirror.css"><script src="/lib/codemirror.js" defer="true"></script><script src="/lib/mode/javascript/javascript.js" defer="true"></script></head>
+  <body>
+
+<div tabindex="1" class="leaf terminal" history="0" id="mockup_backup" protoprompt="localhost/root0 > " prompt="localhost/mockup_backup > " style="left: 1383px; top: 23px; position: absolute;"><h3 class="entityHeader" style="top: 620.095px;">mockup_backup</h3><p class="prompt">localhost/root0 &gt; rename mockup</p><div class="result result" id="1478013016333">root0 has been renamed to mockup</div><p class="prompt">localhost/root0 &gt; create Codemirror</p><div class="query result" id="1478013030039">Constructor retrieved and invoked, untitled0 added to DOM</div><p class="prompt">localhost/root0 &gt; rename untitled0 DesignDecisions</p><div class="result result" id="1478013044820">untitled0 has been renamed to DesignDecisions</div><p class="prompt">localhost/root0 &gt; create Codemirror</p><div class="query result" id="1478013088218">Constructor invoked, untitled1 added to DOM</div><p class="prompt">localhost/root0 &gt; rename untitled1 LandingPage</p><div class="result result" id="1478013191819">untitled1 has been renamed to LandingPage</div><p class="prompt">localhost/root0 &gt; save</p><div class="result" id="mockup12" createdat="1478013228823">mockup.html written successfully in 366ms</div><p class="prompt">localhost/root0 &gt; create Codemirror</p><div class="query result" id="1478013348160">Constructor invoked, untitled2 added to DOM</div><p class="prompt">localhost/root0 &gt; UserActions.style.width = '800px'</p><div class="result result" id="1478014603660">800px</div><p class="prompt">localhost/root0 &gt;save</p><div class="result" id="mockup18" createdat="1478015480963">mockup.html written successfully in 376ms</div><p class="prompt">localhost/root0 &gt; create Codemirror</p><div class="query result" id="1478015524497">Constructor invoked, untitled3 added to DOM</div><p class="prompt">localhost/root0 &gt; rename untitled3 NavbarActions</p><div class="result result" id="1478015542412">untitled3 has been renamed to NavbarActions</div><p class="prompt">localhost/root0 &gt; create Codemirror</p><div class="query result" id="1478016088325">Constructor invoked, untitled4 added to DOM</div><p class="prompt">localhost/root0 &gt; rename untitled4 EventView</p><div class="result result" id="1478016101635">untitled4 has been renamed to EventView</div><p class="prompt">localhost/root0 &gt; rename LandingPage LandingView</p><div class="result result" id="1478016137720">LandingPage has been renamed to LandingView</div><p class="prompt">localhost/root0 &gt; save</p><div class="result" id="mockup30" createdat="1478016738133">mockup.html written successfully in 56ms</div><p class="prompt">localhost/root0 &gt; create Codemirror</p><div class="query result" id="1478016942819">Constructor invoked, untitled6 added to DOM</div><p class="prompt">localhost/root0 &gt;rename untitled6 UserView</p><div class="result result" id="1478016971455">untitled6 has been renamed to UserView</div><p class="prompt">localhost/root0 &gt; create Codemirror</p><div class="query result" id="1478017479666">Constructor invoked, untitled7 added to DOM</div><p class="prompt">localhost/root0 &gt; rename untitled7 Ticket</p><div class="result result" id="1478017486185">untitled7 has been renamed to Ticket</div><p class="prompt">localhost/root0 &gt; save</p><div class="result" id="mockup40" createdat="1478017839302">mockup.html written successfully in 518ms</div><p class="prompt">localhost/root0 &gt; rename mockup_backup</p><div class="result result" id="1478019536617">mockup has been renamed to mockup_backup</div><p class="prompt">localhost/root0 &gt; save</p></div><div tabindex="1" class="leaf codemirrorContainer" id="DesignDecisions" prompt="localhost/DesignDecisions > " style="left: 49px; top: 38px; position: absolute; width: 400px; height: 400px;"><h3 class="entityHeader">DesignDecisions</h3><textarea style="display: none;">big ass search bar
+
+Assuming a user wants to search for a show THEY want
+not putting a bunch of products in front of them a la storefront
+
+navbar @ top to direct users to searches by genre, artist, venue
+navbar has login, shopping cart, 
+
+featured events on main page
+to kind of give new users an idea of what type of events are available
+(are these big top 40 stars,
+ or just local gigs, like, what is this site for?
+ 
+ 		LIST OF REACT COMPONENTS
+ 		- navbar
+ 		- searchbar
+ 		- resultslist
+ 		- result
+ 		- event
+ 		- 'more info' (for artist/venue)
+ 		- cart
+ 		- user account / login / edit account view
+        - ticket</textarea></div><div tabindex="1" class="leaf codemirrorContainer" id="LandingView" prompt="localhost/LandingView > " style="left: 457px; top: 879px; position: absolute; width: 400px; height: 400px;"><h3 class="entityHeader">LandingView</h3><textarea style="display: none;">Top navbar:
+float right: login / shopping cart
+
+
+Top third hero with bigass search bar
+
+Bottom Third: Top 5 (or so) featured events
+
+ - search results component -
+   on landing / default:
+   we can choose a default query, like events happening tonight
+   when artists/genre/views is clicked,
+   the same component is reloaded with new query</textarea></div><div tabindex="1" class="leaf codemirrorContainer" id="SearchBarActions" prompt="localhost/SearchBarActions > " style="left: 49px; top: 466px; position: absolute; width: 800px; height: 400px;"><h3 class="entityHeader">SearchBarActions</h3><textarea style="display: none;">A user might, 
+  Just know about the show they're looking for.
+  Might want to browse Arists
+  Might want to list of venue
+  
+What happens if you know what you're looking for:
+  You'll be taken to the page for that specific evnt
+  A pop up autocomplete, lists 
+  
+  
+
+What happens if you Don't:
+  
+	You can consider how you want to browse
+    Click artists / venue / genre
+		Sends in a component for that selected view
+        
+    You click artists, get a list of artists
+        - Browsing artists WHERE events.date is SOON // sort decisions, what shows up first
+        - when you click on an artist, you get a list of events for that artist and that artists info
+        - the search bar gives way to the artists info in the upper third, with a toggle to get back to search
+        
+	You click venues, you get a list of venues
+    	- Browsing venues WHERE location is CLOSEST to you
+    	- when you click on a venue, you get a list of events at that venue and the venue info
+        - the search bar gives way to the artists info in the upper third, with a toggle to get back to search
+        
+    You click genres, you get a list of genres
+    	- Browsing genres alphabetically (big friendly genres e.g. rap, rock, jazz, alternative etc.)
+		- when you click a genre, you get a list of events of that genre
+
+        
+        Probably should be sort options         - 
+</textarea></div><div tabindex="1" class="leaf codemirrorContainer" id="NavbarActions" prompt="localhost/NavbarActions > " style="left: 45px; top: 874px; position: absolute; width: 400px; height: 400px;"><h3 class="entityHeader">NavbarActions</h3><textarea style="display: none;">Buttons on navbar:
+	Login/User Page
+    	- Depending if user is logged in.
+        - Login will render login view
+        - User will render the user page
+    
+    Sign Up
+    	- Renders a sign up view
+        
+    Cart
+    	- renders the cart view for that user
+        
+    Logo
+    	- clears state, renders default view
+</textarea></div><div tabindex="1" class="leaf codemirrorContainer" id="EventView" prompt="localhost/EventView > " style="left: 866px; top: 469px; position: absolute; width: 400px; height: 400px;"><h3 class="entityHeader">EventView</h3><textarea style="display: none;">Ticket price
+event date
+add to cart button
+
+Artist more info
+Venue info
+
+looks like a ticket all cute like</textarea></div><div tabindex="1" class="leaf codemirrorContainer" id="MoreInfo" prompt="localhost/MoreInfo > " style="left: 1285px; top: 469px; position: absolute; width: 400px; height: 400px;"><h3 class="entityHeader">MoreInfo</h3><textarea style="display: none;">MoreInfo appears when a particular artist/venue
+is clicked from the resultsList
+
+Includes a picture representing the thing
+For artists, a short bio
+for venues, a short history
+
+Always </textarea></div><div tabindex="1" class="leaf codemirrorContainer" id="UserView" prompt="localhost/UserView > " style="left: 866px; top: 42px; position: absolute; width: 400px; height: 400px;"><h3 class="entityHeader">UserView</h3><textarea style="display: none;">You see it when you click the 'My account' button
+when you're already loggen in
+
+Your account page:
+
+A list of previous purchases (rendered as ticket components)
+Your user info (email, address, name)
+
+</textarea></div><div tabindex="1" class="leaf codemirrorContainer" id="Ticket" prompt="localhost/Ticket > " style="left: 453px; top: 41px; position: absolute; width: 400px; height: 400px;"><h3 class="entityHeader">Ticket</h3><textarea style="display: none;">Looks like a ticket
+appears when you click a particular event
+appears when you click your shopping cart, to see
+all tickets you've acquired 
+
+Price of that ticket
+Event name / artist / venue etc
+
+
+Probably also appear on user account page as a list
+of prior orders</textarea></div></body>

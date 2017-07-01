@@ -1,0 +1,19 @@
+<head>
+    <!--<link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">-->
+    <link rel="stylesheet" href="/styles/style.css">
+    <script src="/js/constructors/Leaf.js" defer=""></script>
+    <script src="/js/constructors/Terminal.js" defer=""></script>
+    <script src="/js/socket.io.js" defer=""></script>
+    <script src="/js/socketevents.js" defer=""></script>
+    <script src="/js/customCommands.js" defer=""></script>
+    <script src="/js/utils.js" defer=""></script>
+    <script id="repl"></script>
+  <script src="/js/constructors/Tag.js" defer="true"></script><script src="/js/constructors/Codemirror.js" defer="true"></script><link rel="stylesheet" href="/lib/codemirror.css"><script src="/lib/codemirror.js" defer="true"></script><script src="/lib/mode/javascript/javascript.js" defer="true"></script></head>
+  <!--Giving body id body for consistency with certain functions that rely on div id-->
+  <body id="body" style="position: absolute; left: 0px; top: 0px; height: 679px; width: 997px;">
+
+<div tabindex="1" class="leaf terminal" id="stillworks" listen="true" broadcast="true" history="0" protoprompt="localhost/root0 > " style="left: 61px; top: 258px; width: 400px; height: 300px; position: absolute; background: white;" prompt="localhost/stillworks > "><h3 class="entityHeader">stillworks<div class="removeButton"></div><div class="broadcastButton"></div><div class="listenButton"></div></h3><p class="prompt">localhost/root0 &gt; 2 + 2</p><div class="result result" id="1480317614173">4</div><p class="prompt">localhost/root0 &gt; create Tag</p><div class="query result" id="1480317616458">Constructor retrieved and invoked, tag0 added to DOM</div><p class="prompt">localhost/root0 &gt; rename stillworks</p><div class="result result" id="1480317651576">root0 has been renamed to stillworks</div><p class="prompt">localhost/root0 &gt; save</p><div class="request" id="stillworks8" createdat="1480317653840">2.943 KB written successfully to stillworks.html at Mon Nov 28 2016 02:20:53 GMT-0500 (Eastern Standard Time)</div><p class="prompt">localhost/root0 &gt; </p></div><div tabindex="1" class="leaf tag" id="tag0" listen="true" broadcast="true" style="left: 50px; top: 50px; width: 400px; position: absolute; background: white; min-height: 100px;"><h3 class="entityHeader">tag0<div class="editButton"></div><div class="removeButton"></div><div class="broadcastButton"></div><div class="listenButton"></div></h3><div id="innertag0" style="width: 100%; height: 100%;"><h1> Hello </h1>
+<h3> Things seem to work swimmingly </h3>
+<h5> lucky. </h5></div></div><div tabindex="1" class="leaf codemirrorContainer" id="Codemirror0" listen="true" broadcast="true" style="left: 541px; top: 145px; width: 400px; height: 400px; position: absolute; background: white;" update="innertag0"><h3 class="entityHeader">Codemirror0 &gt; tag0<div class="editButton">R</div><div class="removeButton"></div><div class="broadcastButton"></div><div class="listenButton"></div></h3><textarea style="display: none;">&lt;h1&gt; Hello &lt;/h1&gt;
+&lt;h3&gt; Things seem to work swimmingly &lt;/h3&gt;
+&lt;h5&gt; lucky. &lt;/h5&gt;</textarea></div></body>

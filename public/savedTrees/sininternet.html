@@ -1,0 +1,370 @@
+<head>
+    <!--<link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">-->
+    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="stylesheet" href="/styles/menustyle.css">
+    <script src="/js/constructors/Leaf.js" defer=""></script>
+    <script src="/js/constructors/Terminal.js" defer=""></script>
+    <script src="/js/socket.io.js" defer=""></script>
+    <script src="/js/socketevents.js" defer=""></script>
+    <script src="/js/customCommands.js" defer=""></script>
+    <script src="/js/utils.js" defer=""></script>
+    
+    
+  <script src="/js/constructors/Codemirror.js" defer="true"></script><link rel="stylesheet" href="/codemirrorlib/codemirror.css"><script src="/codemirrorlib/codemirror.js" defer="true"></script><script src="/codemirrormode/meta.js" defer="true"></script><script src="/codemirrormode/javascript/javascript.js" defer="true"></script><script src="/js/constructors/Tag.js" defer="true"></script><title>sininternet</title><script id="repl">var lastX = 0;
+var lastY = 0;
+
+document.body.firstChild.onmousemove = function(event){
+	var nextX = event.clientX;
+    var nextY = event.clientY;
+    nextX = Math.floor(nextX / 50) * 50
+	nextY = Math.floor(nextY / 50) * 50
+    if(nextX != lastX){
+    	console.log('something horizontal happened')
+        lastX = nextX
+    }
+    if(nextY != lastY){
+    	console.log('something vertical happened')
+        let newTag = generateTag(event.clientX, event.clientY);
+        document.body.appendChild(newTag)
+        setTimeout(()=>{
+          newTag.remove()
+        }, 350)
+        lastY = nextY
+	}
+    
+}
+
+function generateTag(x,y){
+  var tempDiv = document.createElement('div')
+  tempDiv.innerHTML = 
+  `<div style="position: absolute; left: ${x}; top: ${y};font-size: 20px; font-family: Sans-serif; color: white; text-shadow: 0px 0px 5px black;">${pickAnErrorAnyError()}</div>`
+  return tempDiv.firstChild
+}
+function pickAnErrorAnyError(){
+  let errors = ["Couldn't sign in", "Authentication failed", "Check your connection and try again", "Content was last updated 4 days ago", "Waiting for usable network", "Host is not communicating for more than 15 seconds. Still waiting...", "Can't search", "Data connection lost", "ERR_INTERNET_DISCONNECTED"]
+  return errors[Math.floor(Math.random() * errors.length)]
+}</script><script id="loadscript">
+      let scriptArray = Array.from(document.getElementsByTagName('script'));
+      let loadingArray = [];
+      let firstTerminalIcanFind;
+      
+      scriptArray.forEach(scriptNode => {
+        // console.log(scriptNode)
+        let src = scriptNode.getAttribute('src');
+        if(src){
+          let loadingDiv = document.createElement('div');
+          loadingDiv.className = 'result'
+          loadingDiv.textContent = `Loading ${src}... `
+          loadingArray.push(loadingDiv)
+          scriptNode.addEventListener('load', () => {
+            loadingDiv.textContent += ' done.'
+            console.log('done with ',src)
+          })
+        }
+      })
+      document.addEventListener('readystatechange', () => {
+        console.log('readyStateChange')
+        switch(document.readyState){
+          case 'interactive': 
+            firstTerminalIcanFind = document.querySelector('.terminalContainer');
+            loadingArray.forEach(divNode => {
+              firstTerminalIcanFind.appendChild(divNode)
+            });
+            let aPotentialName = location.pathname;
+            aPotentialName = aPotentialName.match(/\/\w+\.|\/\w+$/);
+            aPotentialName = aPotentialName && aPotentialName[0].match(/\w+/);
+            aPotentialName = aPotentialName && aPotentialName[0];
+            let potentialTerminal = document.getElementById("root0");
+            //if the document has a name AND there is NOT already a terminal with that name
+            if(aPotentialName && potentialTerminal){
+              potentialTerminal.id = aPotentialName;
+              let thisHeader = potentialTerminal.querySelector('.entityHeader')
+              let thisTitle = thisHeader.querySelector('.headerTitle')
+              thisTitle.textContent = aPotentialName;
+              potentialTerminal.setAttribute('protoPrompt', 'localhost/' + aPotentialName);
+              Array.from(potentialTerminal.getElementsByClassName('promptContainer'), function(node){
+                node.firstChild.innerHTML = `localhost/${aPotentialName}<span class="arrow"></span>`;
+              })
+            }
+            break;
+          case 'complete':
+            let readyDiv = document.createElement('div')
+            readyDiv.className = 'result'
+            readyDiv.textContent = 'OK Ready.'
+            readyDiv.style.textAlign = 'right'
+            firstTerminalIcanFind.appendChild(readyDiv)
+            initPrompt(firstTerminalIcanFind);
+            break;
+        }
+      })
+      window.addEventListener('load', () => {
+        
+      })
+      let scriptReArranger = new MutationObserver((info,thisMute)=>{
+        console.log("something has changed!", info)
+        thisMute.disconnect();
+        // mvoeThisScript();
+        let thisScript = document.getElementById("loadscript");
+        thisScript.remove();
+        document.head.appendChild(thisScript)
+        thisMute.observe(document.head, {childList: true})
+        //this gets caught in an infinite loop.
+      })
+      scriptReArranger.observe(document.head, {childList: true})
+      // function moveThisScript(){
+      //   let thisScript = document.getElementById("loadscript");
+      //   thisScript.remove();
+      //   document.head.appendChild(thisScript)
+      // }
+
+    </script></head>
+  <!--Giving body id body for consistency with certain functions that rely on div id-->
+  <body id="body" style="position: absolute; left: 1025px; top: 12px; height: 982px; width: 1745px; background: black;"><video autoplay="true" loop="true" src="http://coltenj.com/img/030greenbriar.mp4" style="width: 100%;"></video>
+    
+  
+
+<div showmenu="false" broadcast="true" listen="true" style="left: -760px; top: 158px; width: 800px; height: 400px; position: absolute; background: white;" tabindex="1" class="leaf codemirrorContainer                                           " id="Codemirror0"><div class="entityHeader">
+    <table>
+      <tbody><tr>
+        <td class="headerTitle">Codemirror0</td>
+      </tr>
+    </tbody></table>
+    <div class="menuButton"></div>
+    <div class="removeButton"></div>
+    <div class="menu">
+      <ul>
+        <li tabindex="2"> Edit <div class="editButton"></div></li>
+        <li tabindex="2"> Broadcast <div class="broadcastButton"></div> </li>
+        <li tabindex="2"> Listen <div class="listenButton"></div> </li>
+        <li tabindex="2"> Save <div class="saveButton"></div> </li>
+      </ul>
+    </div>
+  </div><textarea style="display: none;">var lastX = 0;
+var lastY = 0;
+
+document.body.firstChild.onmousemove = function(event){
+	var nextX = event.clientX;
+    var nextY = event.clientY;
+    nextX = Math.floor(nextX / 50) * 50
+	nextY = Math.floor(nextY / 50) * 50
+    if(nextX != lastX){
+    	console.log('something horizontal happened')
+        lastX = nextX
+    }
+    if(nextY != lastY){
+    	console.log('something vertical happened')
+        let newTag = generateTag(event.clientX, event.clientY);
+        document.body.appendChild(newTag)
+        setTimeout(()=&gt;{
+          newTag.remove()
+        }, 350)
+        lastY = nextY
+	}
+    
+}
+
+function generateTag(x,y){
+  var tempDiv = document.createElement('div')
+  tempDiv.innerHTML = 
+  `&lt;div style="position: absolute; left: ${x}; top: ${y};font-size: 20px; font-family: Sans-serif; color: white; text-shadow: 0px 0px 5px black;"&gt;${pickAnErrorAnyError()}&lt;/div&gt;`
+  return tempDiv.firstChild
+}
+function pickAnErrorAnyError(){
+  let errors = ["Couldn't sign in", "Authentication failed", "Check your connection and try again", "Content was last updated 4 days ago", "Waiting for usable network", "Host is not communicating for more than 15 seconds. Still waiting...", "Can't search", "Data connection lost", "ERR_INTERNET_DISCONNECTED"]
+  return errors[Math.floor(Math.random() * errors.length)]
+}</textarea></div><div showmenu="false" broadcast="true" listen="true" style="left: 250px; top: 379px; width: 400px; position: absolute; background: transparent; min-height: 100px;" tabindex="1" class="leaf tag" id="tag0"><div class="entityHeader">
+    <table>
+      <tbody><tr>
+        <td class="headerTitle">tag0</td>
+      </tr>
+    </tbody></table>
+    <div class="menuButton"></div>
+    <div class="removeButton"></div>
+    <div class="menu">
+      <ul>
+        <li tabindex="2"> Edit <div class="editButton"></div></li>
+        <li tabindex="2"> Broadcast <div class="broadcastButton"></div> </li>
+        <li tabindex="2"> Listen <div class="listenButton"></div> </li>
+        <li tabindex="2"> Save <div class="saveButton"></div> </li>
+      </ul>
+    </div>
+  </div><div id="innertag0" target="undefined" style="width: 100%; height: 100%;">&lt;div class='sininternet'&gt; Couldn't sign in&lt;/div&gt;
+&lt;style&gt;
+	div {
+    	font-size: 20px;
+        font-family: Sans-serif;
+        color: white;
+        text-shadow: 0px 0px 5px black;
+    }
+&lt;/style&gt;
+&lt;!-- Signal lost
+Couldn't sign in
+Authentication failed
+Check your connection and try again
+Content was last updated x days ago
+Waiting for usable network
+Host is not communicating for more than 15 seconds. Still waiting...
+Can't search
+Data connection lost
+ERR_INTERNET_DISCONNECTED
+¡Sin internet! --&gt;</div></div><div showmenu="false" broadcast="true" listen="true" style="left: -916px; top: 221px; width: 400px; height: 300px; position: absolute; background: white;" tabindex="1" class="leaf terminal" id="sininternet" history="0" protoprompt="localhost/sininternet"><div class="entityHeader">
+    <table>
+      <tbody><tr>
+        <td class="headerTitle">sininternet</td>
+      </tr>
+    </tbody></table>
+    <div class="menuButton"></div>
+    <div class="removeButton"></div>
+    <div class="menu">
+      <ul>
+        <li tabindex="2"> Edit <div class="editButton"></div></li>
+        <li tabindex="2"> Broadcast <div class="broadcastButton"></div> </li>
+        <li tabindex="2"> Listen <div class="listenButton"></div> </li>
+        <li tabindex="2"> Save <div class="saveButton"></div> </li>
+      </ul>
+    </div>
+  </div><div class="terminalContainer"><div class="promptContainer"><span class="prompt">localhost/sininternet<span class="arrow"></span></span><div class="input">save</div></div><div class="request" id="sininternet2" createdat="1491086977853">10.139 KB written successfully to sininternet.html at Sat Apr 01 2017 18:49:37 GMT-0400 (Eastern Daylight Time)</div><div class="promptContainer"><span class="prompt">localhost/sininternet<span class="arrow"></span></span><div class="input"></div></div><div class="result">Loading /js/constructors/Leaf.js...  done.</div><div class="result">Loading /js/constructors/Terminal.js...  done.</div><div class="result">Loading /js/socket.io.js...  done.</div><div class="result">Loading /js/socketevents.js...  done.</div><div class="result">Loading /js/customCommands.js...  done.</div><div class="result">Loading /js/utils.js...  done.</div><div class="result">Loading /js/constructors/Codemirror.js...  done.</div><div class="result">Loading /codemirrorlib/codemirror.js...  done.</div><div class="result">Loading /codemirrormode/meta.js...  done.</div><div class="result">Loading /codemirrormode/javascript/javascript.js...  done.</div><div class="result">Loading /js/constructors/Tag.js...  done.</div><div class="result" style="text-align: right;">OK Ready.</div><div class="promptContainer"><span class="prompt">localhost/sininternet<span class="arrow"></span></span><div class="input">files</div></div><div class="result directoryContainer" id="1491087138886"><p class="fs text" title="/app.js"> app.js <a href="download?pathname=%2Fapp.js"></a> </p><p class="fs markup" title="/blockcolor.html"> blockcolor.html <a href="download?pathname=%2Fblockcolor.html"></a> </p><p class="fs markup" title="/grabvideo.html"> grabvideo.html <a href="download?pathname=%2Fgrabvideo.html"></a> </p><p class="fs directory" title="/node_modules"> node_modules <a href="download?pathname=%2Fnode_modules"></a> </p><p class="fs unknown" title="/null"> null <a href="download?pathname=%2Fnull"></a> </p><p class="fs text" title="/package.json"> package.json <a href="download?pathname=%2Fpackage.json"></a> </p><p class="fs directory" title="/public"> public <a href="download?pathname=%2Fpublic"></a> </p><p class="fs text" title="/readme.md"> readme.md <a href="download?pathname=%2Freadme.md"></a> </p><p class="fs directory" title="/routes"> routes <a href="download?pathname=%2Froutes"></a> </p><p class="fs directory" title="/sites"> sites <a href="download?pathname=%2Fsites"></a> </p><p class="fs directory" title="/test"> test <a href="download?pathname=%2Ftest"></a> </p><p class="fs directory" title="/testdir"> testdir <a href="download?pathname=%2Ftestdir"></a> </p><p class="fs directory" title="/user"> user <a href="download?pathname=%2Fuser"></a> </p></div><div class="promptContainer"><span class="prompt">localhost/sininternet<span class="arrow"></span></span><div class="input">mirror /app.js</div></div><div class="result" id="1491087140858">Attempting to mirror /app.js</div><div class="promptContainer"><span class="prompt">localhost/sininternet<span class="arrow"></span></span><div class="input">Codemirror0.cm.setOption('mode','javascript')</div></div><div class="result result" id="1491087155275">undefined</div><div class="promptContainer"><span class="prompt">localhost/sininternet<span class="arrow"></span></span><div class="input">save</div></div><div class="request" id="sininternet2" createdat="1491088293854">19.5 KB written successfully to sininternet.html at Sat Apr 01 2017 19:11:33 GMT-0400 (Eastern Daylight Time)</div><div class="promptContainer"><span class="prompt">localhost/sininternet<span class="arrow"></span></span><div class="input"></div></div></div></div><div showmenu="false" broadcast="true" listen="true" style="left: -197px; top: 533px; width: 800px; height: 400px; position: absolute; background: white;" tabindex="1" class="leaf codemirrorContainer" id="Codemirror1" target="/app.js"><div class="entityHeader">
+    <table>
+      <tbody><tr>
+        <td class="headerTitle">Codemirror1 &gt; /app.js</td>
+      </tr>
+    </tbody></table>
+    <div class="menuButton"></div>
+    <div class="removeButton"></div>
+    <div class="menu">
+      <ul>
+        <li tabindex="2">Evaluate<div class="editButton"></div></li>
+        <li tabindex="2"> Broadcast <div class="broadcastButton"></div> </li>
+        <li tabindex="2"> Listen <div class="listenButton"></div> </li>
+        <li tabindex="2"> Save <div class="saveButton"></div> </li>
+      </ul>
+    </div>
+  </div><textarea style="display: none;">const DEFAULT_APP = 'textreeplot.xyz'
+const express = require('express');
+const app = express();
+const server = require('http').Server(app);
+const path = require('path');
+
+const fs = require('fs')
+const exec = require('child_process').exec
+
+const io = require('socket.io')(server);
+const serverlogging = require('morgan');
+const bodyParser = require('body-parser')
+
+app.use( bodyParser.json() );       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+  extended: true
+})); 
+
+//instantiate an object with a default route for the app.
+const sites = {default: require('./routes')};
+//loop through the sites folder, adding routers for each folder inside.
+
+fs.readdir(`${__dirname}/sites`, (err, files) =&gt; {
+	if(!err){
+		//require the index.js in the router folder.
+		//if require fails, that prop will be an empty object
+		//which is fine, until that property is invoked.
+		  //filter out hidden files
+			files = files.filter(each =&gt; each[0] !== '.');
+
+			files.forEach(thisdir =&gt; {
+				try{
+					let aPotentialRouter = require(`${__dirname}/sites/${thisdir}/routes`);
+					if(typeof aPotentialRouter === 'function'){
+						sites[thisdir] = aPotentialRouter;
+					}
+				} catch(err) {
+					console.error(`Site doesn't include a proper routes function. Printing error:`, err)
+				}
+			})
+	}
+});
+
+
+let port = process.env.PORT || 3000;
+console.log(`Listening on ${port}`);
+var identities = {};
+server.listen(port);
+
+app.use(serverlogging('dev'));
+// if(){
+
+// 	console.log('using...')
+// }
+//let textreeroute = require(`./routes/textreeplot.xyz`)
+app.use('/', (req,res,next) =&gt; {
+	//the new routing logic is, if the host equals a folder name, 
+	//use that host. if no folders match, use /routes/index, which will just be the default property. so it will be like, if prop exists, use that, else, default.
+	let host = req.headers.host;
+	//two edge cases. 
+	//localhost has :port on it, so, find the colon and replace it and everything after it with empty string, if it happens at the end (this is host, not pathname or href)
+	host = host.replace(/:.*\b/,'');
+	//for testing locally, I reroute test.coltenj.com to localhost and delete that test.
+	host = host.replace(/test./,'')
+	//same result should happen whether or not www. existed at the beggining (hence \b for word boundary)
+	host = host.replace(/\bwww\./,'');
+
+	if(sites[host]){
+	//	console.log(sites)
+	  // console.log(sites[host])
+		 sites[host](req,res,next)
+	} else {
+		 sites['default'](req,res,next)
+	}
+})
+
+
+function bounce(socket,name,payload){
+	socket.broadcast.to(identities[socket.id].room).emit(name,payload);
+}
+
+io.on('connection', function(socket){
+	  let {host, referer} = socket.client.conn.request.headers
+		//don't sync on dubdomains. use coltenj.com to split http://coltenj.com/ and check if there's a subdomain there.'
+		if(referer.split(host)[1] &amp;&amp; referer.split(host)[1].length &gt; 1){
+			console.log('subdomain')
+			identities[socket.id] = {ip: socket.client.conn.remoteAddress.split(':').slice(-1)[0], name: null};
+			//event, filesaveResult, remoteRunFile, cursorActivity, mirrorChange are all just bounced back. Broadcast to all clients assigned to the same room.
+			socket.on('event',           data =&gt; bounce(socket,'event', data))
+			socket.on('filesaveResult',  data =&gt; bounce(socket,'filesaveResult',data))
+			socket.on('remoteRunFile',   data =&gt; bounce(socket,'remoteRunFile',data))
+			socket.on('cursorActivity',  data =&gt; bounce(socket,'cursorActivity',data))
+			socket.on('mirrorChange',    data =&gt; bounce(socket,'mirrorChange',data))
+			//right now, there's a function called on page load that fires this with current location.pathname.
+			//it occurs to me that I could probably extract that from the socket object
+			//and the only advantage here is that I can programmatically reconnect to a different room, which may or may not be useful
+			socket.on('subscribe', function(data){
+				socket.join(data.room);
+				identities[socket.id].room = data.room;
+				console.log(identities[socket.id])
+			})
+		}
+
+
+		// socket.on('identityRequest', function(req){
+		// 	//I think each client's identity request will come in separately, when one user asks whoami and hits enter, the local browser will evaluate that and emit an identity request, so this message shouldn't be broadcast.
+		// 	//req is the incoming message. socket is the particular connection.	
+		// 	// console.log(identities[socket.id]);
+		// 	socket.emit('identityResponse', {
+		// 		placeHolderId: req.placeHolderId,
+		// 		socketid: socket.id,
+		// 		ipaddress: identities[socket.id].ip,
+		// 		name: identities[socket.id].name
+		// 	});
+		// })
+
+
+		// socket.on('timeRequest', function(req){
+		// 	socket.emit('timeResponse', {
+		// 		placeHolderId: req.placeHolderId,
+		// 		serverTime: Date()
+		// 	})
+		// })
+
+    //events to implement: identityRequest, timeRequest
+})
+
+
+</textarea></div></body>

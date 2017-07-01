@@ -1,0 +1,25 @@
+<head>
+    <link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">
+    <link rel="stylesheet" href="/styles/style.css">
+    <script src="/js/constructors/Terminal.js" defer=""></script>
+    <script src="/js/socket.io.js" defer=""></script>
+    <script src="/js/socketevents.js" defer=""></script>
+    <script src="/js/customCommands.js" defer=""></script>
+    <script src="/js/clickevents.js" defer=""></script>
+    <script src="/js/keyevents.js" defer=""></script>
+  <script src="/js/constructors/Codemirror.js" defer="true"></script><link rel="stylesheet" href="/lib/codemirror.css"><script src="/lib/codemirror.js" defer="true"></script><script src="/lib/mode/javascript/javascript.js" defer="true"></script></head>
+  <body>
+
+<div style="left: 58px; top: 470px; position: absolute;" tabindex="1" class="leaf terminal" history="1" id="voidint" protoprompt="localhost/root0 > " prompt="localhost/voidint > "><h3 class="entityHeader" style="top: 253px;">voidint</h3><p class="prompt">localhost/root0 &gt; ls</p><div class="result directoryContainer" id="1478002374235"><p class="fs text" title="/app.js"> app.js </p> <p class="fs directory" title="/node_modules"> node_modules </p> <p class="fs directory" title="/public"> public </p> <p class="fs text" title="/test.txt"> test.txt </p> <p class="fs directory" title="/testdir"> testdir </p> <p class="fs text" title="/testdirtest.txt"> testdirtest.txt </p> </div><p class="prompt">localhost/root0 &gt; rename voidint</p><div class="result result" id="1478002383761">root0 has been renamed to voidint</div><p class="prompt">localhost/root0 &gt; save</p><div class="result" id="voidint6" createdat="1478002395498">voidint.html written successfully in 68ms</div><p class="prompt">localhost/root0 &gt; create Codemirror</p><div class="query result" id="1478002400981">Constructor retrieved and invoked, untitled0 added to DOM</div><p class="prompt">localhost/root0 &gt; create Codemirror</p><div class="query result" id="1478002403257">Constructor invoked, untitled1 added to DOM</div><p class="prompt">localhost/root0 &gt; save</p><div class="result" id="voidint12" createdat="1478002416760">voidint.html written successfully in 47ms</div><p class="prompt">localhost/root0 &gt; untitled0.style.width = '800px'</p><div class="result result" id="1478002456641">800px</div><p class="prompt">localhost/root0 &gt; save</p></div><div style="left: 50px; top: 50px; position: absolute; width: 800px; height: 400px;" tabindex="1" class="leaf codemirrorContainer" id="untitled0"><h3 class="entityHeader">untitled0</h3><textarea style="display: none;">I've had data types on the mind
+and I wonder if you might try something next time you get the chance on an arduino
+it's looking for functions that are named void and loop
+no
+loop and setup
+and I wonder if it cares that the data type is void
+I have a hunch that it will work the same if the data type is int
+and in c the default return value of an integer function is 0 unless there was an error
+anyway, I think it would be easier to introduce function declarations with int. because it becomes not so different from a variable assignment
+and it makes more sense that computers can fail or succeed and return 0 or 1 than trying to gloss over and say 'functions usually return data, but not ours, ours are void, void means nothing' - like, that's a little esoteric for intro to programming
+(oh I'm a liar, only main() returns 0 or 1. It's otherwise undefined. Bad practice. I still like it better.)
+Also I really like this stackoverflow answer:
+I'd be wary of calling undefined behaviour "allowed", though admittedly I'd also be wrong to call it "prohibited".</textarea></div><div style="left: 483px; top: 471px; position: absolute; width: 400px; height: 400px;" tabindex="1" class="leaf codemirrorContainer" id="untitled1"><h3 class="entityHeader">untitled1</h3><textarea style="display: none;"></textarea></div></body>

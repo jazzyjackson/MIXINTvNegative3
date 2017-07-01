@@ -1,0 +1,185 @@
+<head>
+    <!--<link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">-->
+    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="stylesheet" href="/styles/menustyle.css">
+    <script src="/js/constructors/Leaf.js" defer=""></script>
+    <script src="/js/constructors/Terminal.js" defer=""></script>
+    <script src="/js/socket.io.js" defer=""></script>
+    <script src="/js/socketevents.js" defer=""></script>
+    <script src="/js/customCommands.js" defer=""></script>
+    <script src="/js/utils.js" defer=""></script>
+    
+    <script id="repl"></script>
+  <script src="/js/constructors/Codemirror.js" defer="true"></script><link rel="stylesheet" href="/codemirrorlib/codemirror.css"><script src="/codemirrorlib/codemirror.js" defer="true"></script><script id="loadscript">
+      let scriptArray = Array.from(document.getElementsByTagName('script'));
+      let loadingArray = [];
+      let firstTerminalIcanFind;
+      
+      scriptArray.forEach(scriptNode => {
+        // console.log(scriptNode)
+        let src = scriptNode.getAttribute('src');
+        if(src){
+          let loadingDiv = document.createElement('div');
+          loadingDiv.className = 'result'
+          loadingDiv.textContent = `Loading ${src}... `
+          loadingArray.push(loadingDiv)
+          scriptNode.addEventListener('load', () => {
+            loadingDiv.textContent += ' done.'
+            console.log('done with ',src)
+          })
+        }
+      })
+      document.addEventListener('readystatechange', () => {
+        console.log('readyStateChange')
+        switch(document.readyState){
+          case 'interactive': 
+            firstTerminalIcanFind = document.querySelector('.terminalContainer');
+            loadingArray.forEach(divNode => {
+              firstTerminalIcanFind.appendChild(divNode)
+            });
+            let aPotentialName = location.pathname;
+            aPotentialName = aPotentialName.match(/\/\w+\.|\/\w+$/);
+            aPotentialName = aPotentialName && aPotentialName[0].match(/\w+/);
+            aPotentialName = aPotentialName && aPotentialName[0];
+            let potentialTerminal = document.getElementById("root0");
+            //if the document has a name AND there is NOT already a terminal with that name
+            if(aPotentialName && potentialTerminal){
+              potentialTerminal.id = aPotentialName;
+              let thisHeader = potentialTerminal.querySelector('.entityHeader')
+              let thisTitle = thisHeader.querySelector('.headerTitle')
+              thisTitle.textContent = aPotentialName;
+              potentialTerminal.setAttribute('protoPrompt', 'localhost/' + aPotentialName);
+              Array.from(potentialTerminal.getElementsByClassName('promptContainer'), function(node){
+                node.firstChild.innerHTML = `localhost/${aPotentialName}<span class="arrow"></span>`;
+              })
+            }
+            break;
+          case 'complete':
+            let readyDiv = document.createElement('div')
+            readyDiv.className = 'result'
+            readyDiv.textContent = 'OK Ready.'
+            readyDiv.style.textAlign = 'right'
+            firstTerminalIcanFind.appendChild(readyDiv)
+            initPrompt(firstTerminalIcanFind);
+            break;
+        }
+      })
+      window.addEventListener('load', () => {
+        
+      })
+      let scriptReArranger = new MutationObserver((info,thisMute)=>{
+        console.log("something has changed!", info)
+        thisMute.disconnect();
+        // mvoeThisScript();
+        let thisScript = document.getElementById("loadscript");
+        thisScript.remove();
+        document.head.appendChild(thisScript)
+        thisMute.observe(document.head, {childList: true})
+        //this gets caught in an infinite loop.
+      })
+      scriptReArranger.observe(document.head, {childList: true})
+      // function moveThisScript(){
+      //   let thisScript = document.getElementById("loadscript");
+      //   thisScript.remove();
+      //   document.head.appendChild(thisScript)
+      // }
+
+    </script></head>
+  <!--Giving body id body for consistency with certain functions that rely on div id-->
+  <body id="body" style="position: absolute; left: 0px; top: 0px; height: 755px; width: 1440px;">
+    <div showmenu="false" broadcast="true" listen="true" style="left: 131px; top: 21px; width: 400px; height: 300px; position: absolute; background: white;" tabindex="1" class="leaf terminal" id="multer" history="0" protoprompt="localhost/multer"><div class="entityHeader">
+    <table>
+      <tbody><tr>
+        <td class="headerTitle">multer</td>
+      </tr>
+    </tbody></table>
+    <div class="menuButton"></div>
+    <div class="removeButton"></div>
+    <div class="menu">
+      <ul>
+        <li tabindex="2"> Edit <div class="editButton"></div></li>
+        <li tabindex="2"> Broadcast <div class="broadcastButton"></div> </li>
+        <li tabindex="2"> Listen <div class="listenButton"></div> </li>
+        <li tabindex="2"> Save <div class="saveButton"></div> </li>
+      </ul>
+    </div>
+  </div><div class="terminalContainer"><div class="promptContainer"><span class="prompt">localhost/multer<span class="arrow"></span></span><div class="input"></div></div><div class="result">Loading /js/constructors/Leaf.js...  done.</div><div class="result">Loading /js/constructors/Terminal.js...  done.</div><div class="result">Loading /js/socket.io.js...  done.</div><div class="result">Loading /js/socketevents.js...  done.</div><div class="result">Loading /js/customCommands.js...  done.</div><div class="result">Loading /js/utils.js...  done.</div><div class="result" style="text-align: right;">OK Ready.</div><div class="promptContainer"><span class="prompt">localhost/multer<span class="arrow"></span></span><div class="input">create Codemirror</div></div><div class="query result" id="1492622546872">Constructor retrieved and invoked, Codemirror0 added to DOM</div><div class="promptContainer"><span class="prompt">localhost/multer<span class="arrow"></span></span><div class="input">create Codemirror</div></div><div class="query result" id="1492622886559">Constructor invoked, Codemirror1 added to DOM</div><div class="promptContainer"><span class="prompt">localhost/multer<span class="arrow"></span></span><div class="input">save</div></div><div class="request" id="multer2" createdat="1492622984331">9.171 KB written successfully to multer.html at Wed Apr 19 2017 13:29:44 GMT-0400 (EDT)</div><div class="promptContainer"><span class="prompt">localhost/multer<span class="arrow"></span></span><div class="input"></div></div><div class="result">Loading /js/constructors/Leaf.js...  done.</div><div class="result">Loading /js/constructors/Terminal.js...  done.</div><div class="result">Loading /js/socket.io.js...  done.</div><div class="result">Loading /js/socketevents.js...  done.</div><div class="result">Loading /js/customCommands.js...  done.</div><div class="result">Loading /js/utils.js...  done.</div><div class="result">Loading /js/constructors/Codemirror.js...  done.</div><div class="result">Loading /codemirrorlib/codemirror.js...  done.</div><div class="result" style="text-align: right;">OK Ready.</div><div class="promptContainer"><span class="prompt">localhost/multer<span class="arrow"></span></span><div class="input">save</div></div><div class="request" id="multer2" createdat="1492627936642">10.654 KB written successfully to multer.html at Wed Apr 19 2017 14:52:16 GMT-0400 (EDT)</div><div class="promptContainer"><span class="prompt">localhost/multer<span class="arrow"></span></span><div class="input"></div></div></div></div>
+  
+
+<div showmenu="false" broadcast="true" listen="true" style="left: 604px; top: 104px; width: 800px; height: 400px; position: absolute; background: white;" tabindex="1" class="leaf codemirrorContainer  " id="Codemirror0"><div class="entityHeader">
+    <table>
+      <tbody><tr>
+        <td class="headerTitle">Codemirror0</td>
+      </tr>
+    </tbody></table>
+    <div class="menuButton"></div>
+    <div class="removeButton"></div>
+    <div class="menu">
+      <ul>
+        <li tabindex="2"> Edit <div class="editButton"></div></li>
+        <li tabindex="2"> Broadcast <div class="broadcastButton"></div> </li>
+        <li tabindex="2"> Listen <div class="listenButton"></div> </li>
+        <li tabindex="2"> Save <div class="saveButton"></div> </li>
+      </ul>
+    </div>
+  </div><textarea style="display: none;">    let audienceModal = document.getElementById('audienceModal')
+    audienceModal.ondragover = function(event){
+        this.className = 'modalDialog dropOK'
+        return false;
+    }
+    audienceModal.ondragleave = function(event){
+        this.className = 'modalDialog'
+        return false;
+    }
+    audienceModal.ondrop = function(event){
+        event.preventDefault()
+        this.className = 'modalDialog'
+        let fileData = new FormData();
+        Array.from(event.dataTransfer.files, fileBlob =&gt; {
+            fileData.append('file[]', fileBlob)
+        })
+        
+        fetch('/newAudience', {
+            method: 'POST',
+            body: fileData
+        }).then(()=&gt;console.log('probably worked'))
+    }</textarea></div><div showmenu="false" broadcast="true" listen="true" style="left: 149px; top: 371px; width: 800px; height: 400px; position: absolute; background: white;" tabindex="1" class="leaf codemirrorContainer  " id="Codemirror1"><div class="entityHeader">
+    <table>
+      <tbody><tr>
+        <td class="headerTitle">Codemirror1</td>
+      </tr>
+    </tbody></table>
+    <div class="menuButton"></div>
+    <div class="removeButton"></div>
+    <div class="menu">
+      <ul>
+        <li tabindex="2"> Edit <div class="editButton"></div></li>
+        <li tabindex="2"> Broadcast <div class="broadcastButton"></div> </li>
+        <li tabindex="2"> Listen <div class="listenButton"></div> </li>
+        <li tabindex="2"> Save <div class="saveButton"></div> </li>
+      </ul>
+    </div>
+  </div><textarea style="display: none;">let multerInTheMiddle = multer({storage: multer.diskStorage({
+        destination: (req,file,cb) =&gt; {
+            cb(null, path.join(__dirname, "/audiences"))
+        },
+        filename: (req,file,cb) =&gt; {
+            console.log(file.originalname)
+            cb(null, file.originalname)
+        }
+    })
+})
+
+app.post('/newAudience', multerInTheMiddle.array('file[]'), (req,res) =&gt; {
+    res.status(200).send("Thank you for your files")
+})
+
+app.use(function (err, req, res, next) {
+  if(err.code == 'LIMIT_FILE_SIZE'){
+      res.status(413).send('These files should be less than 1MB. Tell Colten to change this max file size if you need it changed.')
+  } else if(err.code == 'LIMIT_FILE_COUNT'){
+      res.status(429).send('Just to prevent accidental giant file uploads, there is a max of 12 uploads at a time. Tell Colten if this should be changed.')
+  } else {
+    res.status(500).send('Something broke!')
+  }
+})</textarea></div></body>

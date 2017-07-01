@@ -1,0 +1,230 @@
+<head>
+    <!--<link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">-->
+    <link rel="stylesheet" href="/styles/style.css">
+    <script src="/js/constructors/Leaf.js" defer=""></script>
+    <script src="/js/constructors/Terminal.js" defer=""></script>
+    <script src="/js/socket.io.js" defer=""></script>
+    <script src="/js/socketevents.js" defer=""></script>
+    <script src="/js/customCommands.js" defer=""></script>
+    <script src="/js/utils.js" defer=""></script>
+    <script id="repl"></script>
+  <script src="/js/constructors/Codemirror.js" defer="true"></script><link rel="stylesheet" href="/lib/codemirror.css"><script src="/lib/codemirror.js" defer="true"></script><script src="/lib/mode/javascript/javascript.js" defer="true"></script><title>whatisit</title><link href="/styles/menuStyle.css"><link rel="stylesheet" href="/codemirrorlib/codemirror.css"><script src="/codemirrorlib/codemirror.js" defer="true"></script><link href="/styles/menuStyle.css"><script src="/codemirrormode/meta.js" defer="true"></script><script src="/codemirrormode/javascript/javascript.js" defer="true"></script><link rel="stylesheet" href="/styles/menustyle.css"><script src="/js/constructors/Tag.js" defer="true"></script></head>
+  <!--Giving body id body for consistency with certain functions that rely on div id-->
+  <body id="body" style="position: absolute; left: 0px; top: 0px; height: 818px; width: 1333px;">
+
+<div showmenu="false" broadcast="true" listen="true" style="left: 92px; top: 170px; width: 800px; height: 400px; position: absolute; background: white;" tabindex="1" class="leaf codemirrorContainer                                                                    " id="Codemirror0" target="undefined"><div class="entityHeader">
+    <table>
+      <tbody><tr>
+        <td class="headerTitle">Codemirror0 &gt; undefined</td>
+      </tr>
+    </tbody></table>
+    <div class="menuButton"></div>
+    <div class="removeButton"></div>
+    <div class="menu">
+      <ul>
+        <li tabindex="2"> Edit <div class="editButton"></div></li>
+        <li tabindex="2"> Broadcast <div class="broadcastButton"></div> </li>
+        <li tabindex="2"> Listen <div class="listenButton"></div> </li>
+        <li tabindex="2"> Save <div class="saveButton"></div> </li>
+      </ul>
+    </div>
+  </div><textarea style="display: none;">Textree Plot is an open-world, multiplayer development environment. Websites are nothing but trees of text, and a plot is a good way to organize trees OR text, in the form of stories and secret plans.
+
+A textree plot is a web application with tools for modifying itself and for creating new content and capabilities. With a double click anywhere on the empty plot, a 'terminal emulator' appears which allows you to modify the window OR the server (you might say you're given 'root' access). If you happen to know javascript, you can run commands here, anything from 2 + 2 to document.body.style.background = 'pink'
+
+I built this software because I wanted a space that allowed for collective thinking and acting within the capabilities of the modern web browser. 
+
+The principal usefulness of the application as it stands is to edit documents with realtime feedback, on your own or with friends. Type the command 'create Tag', click the menu circle in the upper left of that new tag and click 'edit'. Anything you type in the editor will be made the innerHTML of the tag. HTML was easy in the webbrowser, but Markdown and LaTeX editing could be added at a later time. 
+
+Textree Plot is designed to be an easy to install web server. Once you have node installed, it's just two commands, "npm install", "npm start" to have the application running on your personal computer or cloud server. 
+
+Current capbilities are simply the tools to build more: 
+javascript terminal emulator
+Which evalutates arbitrary javascript similarly to chrome's console. Also allows commands to be run on the server (git, mkdir, ls, cd, etc).
+
+code editor with syntax highlighting, and 
+HTML prototyping.
+
+
+
+How the terminal emulator works:
+This uses eval() to interpret strings, and the execution context is tied to the DOM node of the terminal. That is to say, typing 'this' will return a reference to the Terminal node, so you can style it dynamically by typing, for example, this.style.width = '1000px'. Any windows on the screen display their node id as their title, and by using an unspecified feature (i.e., maybe this will dissapear in a future version of Chrome), passing the name of a node is just as good as passing a reference to that node. i.e.:
+Codemirror0.remove() is shorthand for document.getElementById('Codemirror0').remove()
+
+So the terminal emulator is your control center for the window, and if synchronized terminals are running in multiple participants' windows, then those commands are run simultaneously.
+
+Before attempting to evaluate what you entered, the terminal emulator checks if the first word matches any methods of an object called "customCommands", defined in customCommands.js, and if so, passing the string onto that method for execution. This allows participants to 'save' the current page, or 'list' the filesystem on the server. 'list' is the filesystem explorer I wrote myself, if you type 'ls' the command is passed on to the server for execution, so you can type 'ls -la' to view permissions and file modified dates, etc, if running linux.
+
+
+How Codemirror is implemented. 
+When you type "create codemirror", or when you open a file, a 'leaf' is created with an empty textarea (or a textarea containing the text of the file you're opening) and then the codemirror method 'fromTextArea' is used. This is unmodified and acts according to the Codemirror's documentation.
+When the codemirror is created, it creates an object that stores the document and all of codemirror's options and methods. A reference to this object is attached as a property with the name cm on the containing leaf, the div with the id displayed on the header. This makes it convenient to set options and access methods that aren't explicited implemented by textree plot. For example, to set linewrapping, in a terminal you can type, 
+Codemirror0.cm.setOption('lineWrapping','true')
+and hit return. 
+
+If the codemirror was created by hitting 'edit' on a tag leaf, an event listener is attached so that each change of the codemirror results in the innerHTML of the target's shadowRoot.
+
+I especially wanted a space where I could try things (whether code prototypes, or thoughts) and know they only exist right in front of me. You would make an effort to think differently if you knew other people could read your mind, right? I would hope that as more of our thinking happens via HTTPS, we can have ideas as freely as we do without worrying about mind-readers. 
+
+I want pepole to trust the machines that they make!
+
+That said, nothing about textree plots is secure. Your mousemovents and keystrokes are transmitted without encryption and saved on the server in plain text. There are very good encryption libraries built with javascript, but I'm not confident in my ability to implement them correctly (yet!). 
+
+A one-click web server that allows you to retain ownership of your content and applications, by virtue of running on your own computer. 
+
+Hyperlinking to other scripts is a very effective way to add capabilities to your plot - anytime you share a script, you're sharing the source code. Textree Plots assumes that participants are interested in learning and building on each others code. 
+
+It is, of course, offered without warranty or support. I claim no license, as this is merely an amalgamation of other people's work, and I'm not totally sold on the concept of property, let alone the intellectual variety. 
+
+
+
+
+  
+You can 'save' the state of your plot, which creates an html file that you can open later, or you can 'record' your actions and play them back at a later time.
+  
+Most importantly, you can take the server home with you. Textreeplot runs inside a virtual machine so you can use everything provided here without having to rely on me or the internet routers of the world, finicky things that they are.
+  
+  
+  </textarea></div><div showmenu="false" broadcast="true" listen="true" style="left: -123px; top: 670px; width: 1200px; height: 400px; position: absolute; background: white;" tabindex="1" class="leaf codemirrorContainer                                                     " id="Codemirror1"><div class="entityHeader">
+    <table>
+      <tbody><tr>
+        <td class="headerTitle">Codemirror1</td>
+      </tr>
+    </tbody></table>
+    <div class="menuButton"></div>
+    <div class="removeButton"></div>
+    <div class="menu">
+      <ul>
+        <li tabindex="2"> Edit <div class="editButton"></div></li>
+        <li tabindex="2"> Broadcast <div class="broadcastButton"></div> </li>
+        <li tabindex="2"> Listen <div class="listenButton"></div> </li>
+        <li tabindex="2"> Save <div class="saveButton"></div> </li>
+      </ul>
+    </div>
+  </div><textarea style="display: none;">Textree Plot is a web application for designing web applications.
+
+It's made to be easy to install as a server, and you can then edit and add to the application from a web browser
+This removes a lot of the barrier to entry in booting a web server, there's no command line configuration necessary.
+The features that are alreayd implemented include:
+	- a terminal emulator that allows for arbitrary execution of javascript, including custom commands defined within the application
+    - within the terminal emulator, a file browser that allows you to open and edit any text file on your computer. 
+    - Video, audio, and images are opened with an html5 tag that points to the media source.
+    - the capability to run command line processes from the front end: git pull, npm install, gcc, node.
+    - You can even create a python script and execute it without leaving the web browser.
+    
+
+It offers this console that lets you run javascript, with reference to itself with 'this', reference to other nodes 
+It offers a file explorer via the terminal:
+	enter the command "files" to start navigating. 
+    Double click folder names to list files from that folder.
+    Double click text files to open a text editor with automatic syntax highlighting based on filename.
+Textree Plot offers the capability of running command line processes from the web front end.
+	try 'git status' or 'mkdir' - they are spun off as a child process of the server
+    allows commands via whitelist - in the customCommands obj (just execute Object.keys(customCommands) to see list)
+   						          - /routes/index.js in a function named 'aCustomCommandMatches'
+    when installed locally, this means you can 'touch ex.c', edit a c file, and then run commands to compile and execute that file, all from the web appliation.
+Textree Plot allows all actions to be synchronized across the web, whoever is connected to the same url on the same server. Collaborative editing and web chat. 
+	Since each keystroke and mouse click and drag is transmitted to the server to be broadcast to anyone else,
+    I have the unique opportunity 
+Textree Plot provides methods for 
+Textree plot is made out of plain text that's compiled at run time (either by node or by the web browser),
+making it easy to edit, add to, and learn from the source code
+
+Your laptop can be a server if you want to play with it on a local network.
+
+
+My ultimate goal here is to lower the barriers to entry to sharing information - 
+We're still signing up for accounts and having our personal data uploaded to clouds just to share files
+And signing up for platforms designed to be addictive in order to keep up with our friends
+
+The big idea is to turn the internet into a never ending art project where people are participants instead of users.
+Even more, to have a space where users write code while explaining their needs to each other, 
+and explain what code does to each other, so that eventually an AI can write code that meets someones needs
+
+The future I want is one where I can explain my problem to a computer and have it write code that solves my problem -
+but I need the computer to be able to explain how the program works. I don't want to live in a world where AI is writing
+the rules in its own opaque, indecipherable robot language. I need AI that can explain its own code clearly. And I'm not an expert,
+but what I've seen is that the most important thing for effective AI is a giant training set - so that's what makes me 
+enthusiastic about building an infrastructure that allows for the recorded activity of code prototyping intertwined with natural language conversation,
+I want to get that training set of people explaining in english what they want, and how a programmer would approach that problem and communicate how it works.
+So someday an AI can build a program in front of you and explain to you how its solution works.
+
+But for now we'll just have to talk to other humans.</textarea></div><div showmenu="false" broadcast="true" listen="true" style="left: 952px; top: 282px; width: 400px; height: 300px; position: absolute; background: white;" tabindex="1" class="leaf terminal" id="whatisit" history="0" protoprompt="localhost/whatisit"><div class="entityHeader">
+    <table>
+      <tbody><tr>
+        <td class="headerTitle">whatisit</td>
+      </tr>
+    </tbody></table>
+    <div class="menuButton"></div>
+    <div class="removeButton"></div>
+    <div class="menu">
+      <ul>
+        <li tabindex="2"> Edit <div class="editButton"></div></li>
+        <li tabindex="2"> Broadcast <div class="broadcastButton"></div> </li>
+        <li tabindex="2"> Listen <div class="listenButton"></div> </li>
+        <li tabindex="2"> Save <div class="saveButton"></div> </li>
+      </ul>
+    </div>
+  </div><div class="terminalContainer" history="1"><div class="promptContainer"><span class="prompt">localhost/root0<span class="arrow"></span></span><div class="input">rename whatisit</div></div><div class="result result" id="1484704019981">root0 has been renamed to whatisit</div><div class="promptContainer"><span class="prompt">localhost/whatisit<span class="arrow"></span></span><div class="input">save</div></div><div class="request" id="whatisit2" createdat="1484704021094">12.336 KB written successfully to whatisit.html at Tue Jan 17 2017 20:47:01 GMT-0500 (Eastern Standard Time)</div><div class="promptContainer"><span class="prompt">localhost/whatisit<span class="arrow"></span></span><div class="input">create Codemirror</div></div><div class="query result" id="1485019254069">Constructor invoked, Codemirror2 added to DOM</div><div class="promptContainer"><span class="prompt">localhost/whatisit<span class="arrow"></span></span><div class="input">Codemirror0.cm.setOption('lineWrapping','true')</div></div><div class="result result" id="1485019501120">undefined</div><div class="promptContainer"><span class="prompt">localhost/whatisit<span class="arrow"></span></span><div class="input">create Leaf</div></div><div class="query result" id="1485019557275">Constructor invoked, leaf3 added to DOM</div><div class="promptContainer"><span class="prompt">localhost/whatisit<span class="arrow"></span></span><div class="input">list</div></div><div class="result directoryContainer" id="1485020118064"><p class="fs text" title="/app.js"> app.js </p> <p class="fs directory" title="/node_modules"> node_modules </p> <p class="fs text" title="/package.json"> package.json </p> <p class="fs directory" title="/public"> public </p> <p class="fs directory" title="/routes"> routes </p> <p class="fs directory" title="/sites"> sites </p> <p class="fs directory" title="/test"> test </p> <p class="fs directory" title="/testdir"> testdir </p> <p class="fs directory" title="/user"> user </p> </div><div class="promptContainer"><span class="prompt">localhost/whatisit<span class="arrow"></span></span><div class="input">ls -la</div></div><div class="result" id="1485020247523">total 64<br>drwxr-xr-x  10 root root  4096 Jan  6 18:45 .<br>drwxr-xr-x   5 root root  4096 Nov 12 00:12 ..<br>-rw-r--r--   1 root root  4585 Dec 26 03:39 app.js<br>drwxr-xr-x   8 root root  4096 Jan 11 00:16 .git<br>-rw-r--r--   1 root root    86 Dec 11 23:38 .gitignore<br>drwxr-xr-x 219 root root 12288 Jan  6 03:45 node_modules<br>-rw-r--r--   1 root root   755 Jan  6 03:47 package.json<br>drwxr-xr-x   6 root root  4096 Jan 11 00:16 public<br>drwxr-xr-x   2 root root  4096 Jan  6 03:47 routes<br>drwxr-xr-x   3 root root  4096 Dec 11 23:39 sites<br>drwxr-xr-x   2 root root  4096 Jan  6 21:35 test<br>drwxr-xr-x   2 root root  4096 Nov  1 02:17 testdir<br>drwxr-xr-x   2 root root  4096 Nov  2 13:17 user<br></div><div class="promptContainer"><span class="prompt">localhost/whatisit<span class="arrow"></span></span><div class="input">save</div></div><div class="result" id="whatisit2" createdat="1485022366770">17.84 KB written successfully to whatisit.html in 265ms</div><div class="promptContainer"><span class="prompt">localhost/whatisit<span class="arrow"></span></span><div class="input">create Tag</div></div><div class="query result" id="1485068878079">Constructor retrieved and invoked, tag0 added to DOM</div><div class="promptContainer"><span class="prompt">localhost/whatisit<span class="arrow"></span></span><div class="input">create Tag</div></div><div class="query result" id="1485069109104">Constructor invoked, tag0 added to DOM</div><div class="promptContainer"><span class="prompt">localhost/whatisit<span class="arrow"></span></span><div class="input">save</div></div><div class="request" id="whatisit2" createdat="1485070409705">20.382 KB written successfully to whatisit.html at Sun Jan 22 2017 02:33:29 GMT-0500 (Eastern Standard Time)</div><div class="promptContainer"><span class="prompt">localhost/whatisit<span class="arrow"></span></span><div class="input"></div></div></div></div><div showmenu="false" broadcast="true" listen="true" style="left: 824px; top: 683px; width: 800px; height: 400px; position: absolute; background: white;" tabindex="1" class="leaf codemirrorContainer                       " id="Codemirror2"><div class="entityHeader">
+    <table>
+      <tbody><tr>
+        <td class="headerTitle">Codemirror2</td>
+      </tr>
+    </tbody></table>
+    <div class="menuButton"></div>
+    <div class="removeButton"></div>
+    <div class="menu">
+      <ul>
+        <li tabindex="2">Evaluate<div class="editButton"></div></li>
+        <li tabindex="2"> Broadcast <div class="broadcastButton"></div> </li>
+        <li tabindex="2"> Listen <div class="listenButton"></div> </li>
+        <li tabindex="2"> Save <div class="saveButton"></div> </li>
+      </ul>
+    </div>
+  </div><textarea style="display: none;">Front page goals:
+
+Terminal.
+a welcoming tag: "start with a blank plot with a random url"
+"You can also use your own name, textreeplot.xyz/whateveryouwant,
+and the page will be created for you"
+"Anyone at the same url will have their actions synchronized with yours"
+
+</textarea></div><div showmenu="false" broadcast="true" listen="true" style="left: 150px; top: 150px; width: 400px; position: absolute; background: white; min-height: 100px;" tabindex="1" class="leaf tag" id="randomURL" protoprompt="localhost/randomURL"><div class="entityHeader">
+    <table>
+      <tbody><tr>
+        <td class="headerTitle">randomURL</td>
+      </tr>
+    </tbody></table>
+    <div class="menuButton"></div>
+    <div class="removeButton"></div>
+    <div class="menu">
+      <ul>
+        <li tabindex="2"> Edit <div class="editButton"></div></li>
+        <li tabindex="2"> Broadcast <div class="broadcastButton"></div> </li>
+        <li tabindex="2"> Listen <div class="listenButton"></div> </li>
+        <li tabindex="2"> Save <div class="saveButton"></div> </li>
+      </ul>
+    </div>
+  </div><div id="innertag0" target="undefined" style="width: 100%; height: 100%;">&lt;h2&gt; Start with a blank plot &lt;/h2&gt;
+&lt;h3&gt;&lt;a href=""&gt;textreeplot.xyz/aaaaaa&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt; You could also use a name of your choice.&lt;/p&gt;
+&lt;p&gt; Anyone connected to the same url will have their actions synchronized with yours.
+&lt;style&gt;
+* {
+	margin: 10px;
+    text-align: center;
+    font-family: monospace;
+}
+
+&lt;/style&gt;
+&lt;script&gt;
+  function makeNewUrl(){
+    var newurl = Math.trunc(Math.random() * 65556).toString(16);
+    var randomurl = document.getElementById('tag0').lastChild.shadowRoot.querySelector('a');
+    while(newurl.length &lt; 4){
+    	newurl = '0' + newurl;
+    }
+    randomurl.setAttribute(`href`,`textreeplot.xyz/${newurl}`);
+    randomurl.textContent = `textreeplot.xyz/${newurl}`;
+  }
+&lt;/script&gt;</div></div></body>

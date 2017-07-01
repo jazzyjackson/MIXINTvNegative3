@@ -1,0 +1,408 @@
+<head>
+    <link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">
+    <link rel="stylesheet" href="/styles/style.css">
+    <script src="/js/constructors/Terminal.js" defer=""></script>
+    <script src="/js/socket.io.js" defer=""></script>
+    <script src="/js/socketevents.js" defer=""></script>
+    <script src="/js/customCommands.js" defer=""></script>
+    <script src="/js/clickevents.js" defer=""></script>
+    <script src="/js/keyevents.js" defer=""></script>
+  <script src="/js/constructors/Codemirror.js" defer="true"></script><link rel="stylesheet" href="/lib/codemirror.css"><script src="/lib/codemirror.js" defer="true"></script><script src="/lib/mode/javascript/javascript.js" defer="true"></script><script src="/js/constructors/Circle.js" defer="true"></script></head>
+  <body cz-shortcut-listen="true"><div id="StayFocusd-infobar" style="display:none;">
+    <img src="chrome-extension://laankejkbhbdhmipfmgcngdelahlfoji/common/img/eye_19x19_red.png">
+    <span id="StayFocusd-infobar-msg"></span>
+    <span id="StayFocusd-infobar-links">
+        <a id="StayFocusd-infobar-never-show">hide forever</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+        <a id="StayFocusd-infobar-hide">hide once</a>
+    </span>
+</div>
+
+<div tabindex="1" class="leaf terminal" history="8" id="guestbook" protoprompt="localhost/root0 > " prompt="localhost/guestbook > " style="left: 103px; top: 415px; position: absolute; background: pink;"><h3 class="entityHeader" style="top: 948px;">guestbook</h3><p class="prompt">localhost/root0 &gt; create Codemirror</p><div class="query result" id="1477971148771">Constructor retrieved and invoked, untitled0 added to DOM</div><p class="prompt">localhost/root0 &gt; rename guestbook</p><div class="result result" id="1477971170367">root0 has been renamed to guestbook</div><p class="prompt">localhost/root0 &gt; savesave</p><div class="result result" id="1477971286461">ReferenceError: savesave is not defined</div><p class="prompt">localhost/root0 &gt; create Codemirror</p><div class="query result" id="1477971460613">Constructor invoked, untitled1 added to DOM</div><p class="prompt">localhost/root0 &gt; untitled0.style.top = 0</p><div class="result result" id="1477971506529">0</div><p class="prompt">localhost/root0 &gt; create Circle</p><div class="query result" id="1477971549056">Constructor retrieved and invoked, circle0 added to DOM</div><p class="prompt">localhost/root0 &gt; savesave</p><div class="result result" id="1477971554238">ReferenceError: savesave is not defined</div><p class="prompt">localhost/root0 &gt; create Circle</p><div class="query result" id="1477971565365">Constructor invoked, circle1 added to DOM</div><p class="prompt">localhost/root0 &gt; untitled1.remove()</p><div class="result result" id="1477971578150">undefined</div><p class="prompt">localhost/root0 &gt; save</p><div class="result" id="guestbook20" createdat="1477971801492">guestbook.html written successfully in 68ms</div><p class="prompt">localhost/root0 &gt; save</p><div class="result" id="guestbook22" createdat="1477972071609">guestbook.html written successfully in 125ms</div><p class="prompt">localhost/root0 &gt; </p><div class="result result" id="1477972388951">undefined</div><p class="prompt">localhost/root0 &gt; this</p><div class="result result" id="1477972391864">[object HTMLDivElement]</div><p class="prompt">localhost/root0 &gt; this.style</p><div class="result result" id="1477972394003">[object CSSStyleDeclaration]</div><p class="prompt">localhost/root0 &gt; this.style.background = 'pink'</p><div class="result result" id="1477972401211">pink</div><p class="prompt">localhost/root0 &gt; untitled0.style.background = 'pink'</p><div class="result result" id="1477972422012">pink</div><p class="prompt">localhost/root0 &gt; cirlce0.style.background = 'pink'</p><div class="result result" id="1477972439743">ReferenceError: cirlce0 is not defined</div><p class="prompt">localhost/root0 &gt; circle0.style.background = 'pink'</p><div class="result result" id="1477972452074">pink</div><p class="prompt">localhost/root0 &gt; circle0.style.width = '400px'</p><div class="result result" id="1477972460080">400px</div><p class="prompt">localhost/root0 &gt; circle0.style.height = '400px'</p><div class="result result" id="1477972471442">400px</div><p class="prompt">localhost/root0 &gt; circle0.style.borderRadius = '400px'</p><div class="result result" id="1477972480741">400px</div><p class="prompt">localhost/root0 &gt; save</p><div class="result" id="guestbook44" createdat="1477972581559">guestbook.html written successfully in 193ms</div><p class="prompt">localhost/root0 &gt; untitled4.style.top = 0</p><div class="result result" id="1477972608740">0</div><p class="prompt">localhost/root0 &gt; save</p><div class="result" id="guestbook48" createdat="1477972643746">guestbook.html written successfully in 77ms</div><p class="prompt">localhost/root0 &gt; circle0.style.background = 'burgundy'</p><div class="result result" id="1477972683371">burgundy</div><p class="prompt">localhost/root0 &gt; circle0.style.background = 'blue'</p><div class="result result" id="1477972696690">blue</div><p class="prompt">localhost/root0 &gt; untitled0.remove()</p><div class="result result" id="1477972712317">undefined</div><p class="prompt">localhost/root0 &gt; save</p><div class="result" id="guestbook56" createdat="1477972884647">guestbook.html written successfully in 128ms</div><p class="prompt">localhost/root0 &gt; untitled4.style.top = 0</p><div class="result result" id="1477972889437">0</div><p class="prompt">localhost/root0 &gt; save</p></div><div tabindex="1" class="leaf circle" id="circle0" style="left: 510px; top: 192px; position: absolute; height: 400px; width: 400px; border-radius: 400px; background: blue;"><h3 class="entityHeader">circle0</h3></div><div tabindex="1" class="leaf circle" id="circle1" style="left: 98px; top: 812px; position: absolute; height: 100px; width: 100px; border-radius: 100px; background: rgba(37, 63, 133, 0.419608);"><h3 class="entityHeader">circle1</h3></div><div tabindex="1" class="leaf terminal" history="2" id="root1" protoprompt="localhost/root1 > " style="left: 584px; top: 161px; position: absolute;"><h3 class="entityHeader" style="top: 1408px;">root1</h3><p class="prompt">localhost/root1 &gt; Where are you taking them?</p><div class="result result" id="1477971593410">SyntaxError: Unexpected identifier</div><p class="prompt">localhost/root1 &gt; create Codemirror</p><div class="query result" id="1477971597816">Constructor invoked, untitled1 added to DOM</div><p class="prompt">localhost/root1 &gt; ls</p><div class="result directoryContainer" id="1477971703978"><p class="fs text" title="/app.js"> app.js </p> <p class="fs directory" title="/node_modules"> node_modules </p> <p class="fs directory" title="/public"> public </p> <p class="fs text" title="/test.txt"> test.txt </p> <p class="fs directory" title="/testdir"> testdir </p> <p class="fs text" title="/testdirtest.txt"> testdirtest.txt </p> </div><p class="prompt">localhost/root1 &gt;  ls /public</p><div class="result directoryContainer" id="1477971706438"><p class="fs directory" title="/public/images"> images </p> <p class="fs text" title="/public/index.html"> index.html </p> <p class="fs directory" title="/public/js"> js </p> <p class="fs directory" title="/public/lib"> lib </p> <p class="fs directory" title="/public/savedTrees"> savedTrees </p> <p class="fs directory" title="/public/styles"> styles </p> </div><p class="prompt">localhost/root1 &gt; ls</p><div class="result directoryContainer" id="1477971709932"><p class="fs text" title="/app.js"> app.js </p> <p class="fs directory" title="/node_modules"> node_modules </p> <p class="fs directory" title="/public"> public </p> <p class="fs text" title="/test.txt"> test.txt </p> <p class="fs directory" title="/testdir"> testdir </p> <p class="fs text" title="/testdirtest.txt"> testdirtest.txt </p> </div><p class="prompt">localhost/root1 &gt;  open /app.js</p><div class="result" id="1477971711765">Maybe it worked</div><p class="prompt">localhost/root1 &gt; guestbook</p><div class="result result" id="1477971781998">[object HTMLDivElement]</div><p class="prompt">localhost/root1 &gt; guestbook.style.left = '10px'</p><div class="result result" id="1477971787136">10px</div><p class="prompt">localhost/root1 &gt; guestbook.style.top = '10px'</p><div class="result result" id="1477971793856">10px</div><p class="prompt">localhost/root1 &gt; ls</p><div class="result directoryContainer" id="1477971934632"><p class="fs text" title="/app.js"> app.js </p> <p class="fs directory" title="/node_modules"> node_modules </p> <p class="fs directory" title="/public"> public </p> <p class="fs text" title="/test.txt"> test.txt </p> <p class="fs directory" title="/testdir"> testdir </p> <p class="fs text" title="/testdirtest.txt"> testdirtest.txt </p> </div><p class="prompt">localhost/root1 &gt;  ls /public</p><div class="result directoryContainer" id="1477971937494"><p class="fs directory" title="/public/images"> images </p> <p class="fs text" title="/public/index.html"> index.html </p> <p class="fs directory" title="/public/js"> js </p> <p class="fs directory" title="/public/lib"> lib </p> <p class="fs directory" title="/public/savedTrees"> savedTrees </p> <p class="fs directory" title="/public/styles"> styles </p> </div><p class="prompt">localhost/root1 &gt;  ls /public/js</p><div class="result directoryContainer" id="1477971938673"><p class="fs text" title="/public/js/Circle.js"> Circle.js </p> <p class="fs text" title="/public/js/clickevents.js"> clickevents.js </p> <p class="fs directory" title="/public/js/constructors"> constructors </p> <p class="fs text" title="/public/js/customCommands.js"> customCommands.js </p> <p class="fs text" title="/public/js/keyevents.js"> keyevents.js </p> <p class="fs text" title="/public/js/socketevents.js"> socketevents.js </p> </div><p class="prompt">localhost/root1 &gt;  ls /public/js/constructors</p><div class="result directoryContainer" id="1477971943147"><p class="fs text" title="/public/js/constructors/Circle.js"> Circle.js </p> <p class="fs text" title="/public/js/constructors/Codemirror.js"> Codemirror.js </p> <p class="fs text" title="/public/js/constructors/Terminal.js"> Terminal.js </p> </div><p class="prompt">localhost/root1 &gt;  open /public/js/constructors/Circle.js</p><div class="result" id="1477971944713">Maybe it worked</div><p class="prompt">localhost/root1 &gt; create Codemirror</p><div class="query result" id="1477971954591">Constructor invoked, untitled4 added to DOM</div><p class="prompt">localhost/root1 &gt;  open /public/js/constructors/Codemirror.js</p><div class="result" id="1477972016323">Maybe it worked</div><p class="prompt">localhost/root1 &gt;  open /public/js/constructors/Circle.js</p></div><div tabindex="1" class="leaf codemirrorContainer" id="untitled1" style="left: 5564px; top: -5055px; position: absolute; width: 400px; height: 400px;"><h3 class="entityHeader">untitled1</h3><textarea style="display: none;"></textarea></div><div tabindex="1" class="leaf codemirrorContainer" id="/app.js" style="left: 763px; top: 222px; position: absolute; width: 400px; height: 400px;"><h3 class="entityHeader">/app.js</h3><textarea style="display: none;">const express = require('express');
+const app = express();
+const server = require('http').Server(app);
+const path = require('path');
+
+const fs = require('fs')
+const exec = require('child_process').exec
+
+const io = require('socket.io')(server);
+const serverlogging = require('morgan');
+const bodyParser = require('body-parser')
+app.use( bodyParser.json() );       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+  extended: true
+})); 
+
+let port = process.env.PORT || 3000;
+
+console.log(`Listening on ${port}`);
+var identities = {};
+server.listen(port);
+
+app.use(serverlogging('dev'));
+app.use(express.static(__dirname+ '/public'));
+app.use(express.static(__dirname + '/public/savedTrees'));
+//app.get('/', function(req,res){
+//    res.sendfile('./public/index.html');
+//    
+//})
+
+app.post('/savethis', (req,res,next)=&gt;{
+	var htmlString = req.body.content;
+	var fileName = req.body.fileName;
+	fs.writeFile(path.join(__dirname, '/public/savedTrees/', fileName), htmlString, function(err){
+		if(err){
+			res.status(400).send(err);
+		} else {
+			res.status(200).send(fileName + ' written successfully');
+		}
+	})
+})
+
+
+app.post('/exec', (req,res,next)=&gt;{
+	let command = req.body.command;
+	if(aCustomCommandMatches(command)){
+		exec(command, (err,stdout,stderr)=&gt;{
+			res.status(200).json({err,stdout,stderr});
+		})
+	} else {
+		res.status(403).send();
+	}
+	console.log(command)
+})
+
+app.get('/readFile', (req,res,next) =&gt; {
+	console.log(req.query.pathname)
+	let pathname = req.query.pathname;
+	console.log(req.query.pathname);
+	console.log(pathname);
+	console.log(__dirname);
+	console.log(path.join(__dirname, pathname));
+
+	fs.readFile(path.join(__dirname, pathname), 'utf8' ,function(err,data){
+		if(err){
+			console.log(err)
+			res.status(400).send(err);
+		} else {
+			res.json(data);
+		}
+	})
+})
+
+app.post('/fs', (req,res,next)=&gt;{
+
+	var pathname = '/';
+	if(req.body.pathname !== 'undefined'){
+			pathname = addSlashesIfNeedBe(req.body.pathname);
+	} 
+	
+	fs.readdir(path.join(__dirname,pathname), function(err, files){
+		if(err){
+			res.status(204).send(err);
+		} else {
+			var result = {};
+			for(each in files){
+				var oneFile = files[each];
+				if(oneFile[0] != '.'){             //if it's not hidden
+					if(oneFile.indexOf('.') === -1){ //and if there's no extension
+						result[files[each]] = 'directory';
+					} else {
+						switch(oneFile.split('.')[1]){
+							case 'js': result[files[each]] = 'text'; break;
+							case 'css': result[files[each]] = 'text'; break;
+							case 'html': result[files[each]] = 'text'; break;
+							case 'txt': result[files[each]] = 'text'; break;
+							case 'svg': result[files[each]] = 'image'; break;
+							case 'png': result[files[each]] = 'image'; break;
+							case 'jpg': result[files[each]] = 'image'; break;
+							case 'gif': result[files[each]] = 'image'; break;
+						}
+					}
+				}
+			}
+
+			res.status(200).json({pathname, result});
+		// fileArr = fileArr.slice(1, fileArr.length - 1); //git rid of brackets
+		// fileArr = fileArr.split(','); //convert to array
+		// fileArr = fileArr.map(function(aFileName){return aFileName.slice(1,aFileName.length -1)});
+		}
+	})
+	
+})
+
+
+io.on('connection', function(socket){
+		identities[socket.id] = {ip: socket.client.conn.remoteAddress.split(':').slice(-1)[0], name: null};
+    socket.on('event', function (data){
+      socket.broadcast.emit('event',data);
+    });
+		socket.on('filesaveResult', function (data){
+      socket.broadcast.emit('filesaveResult',data);
+    });
+		socket.on('remoteRunFile', function(data){
+			socket.broadcast.emit('remoteRunFile', data)
+		})
+		socket.on('cursorActivity', function(data){
+			socket.broadcast.emit('cursorActivity', data)
+		})
+		socket.on('mirrorChange', function(data){
+			socket.broadcast.emit('mirrorChange', data)
+		})
+		
+
+		socket.on('identityRequest', function(req){
+			//I think each client's identity request will come in separately, when one user asks whoami and hits enter, the local browser will evaluate that and emit an identity request, so this message shouldn't be broadcast.
+			//req is the incoming message. socket is the particular connection.	
+			// console.log(identities[socket.id]);
+			socket.emit('identityResponse', {
+				placeHolderId: req.placeHolderId,
+				socketid: socket.id,
+				ipaddress: identities[socket.id].ip,
+				name: identities[socket.id].name
+			});
+		})
+
+
+		socket.on('timeRequest', function(req){
+			socket.emit('timeResponse', {
+				placeHolderId: req.placeHolderId,
+				serverTime: Date()
+			})
+		})
+
+    //events to implement: identityRequest, timeRequest
+})
+
+
+function addSlashesIfNeedBe(aFilePath){
+		if(aFilePath[0] !== '/'){
+			aFilePath = '/' + aFilePath;
+		}
+		if(aFilePath[aFilePath.length - 1] !== '/'){
+			aFilePath += '/'
+		}
+		return aFilePath;
+	}
+// socket.client.conn.remoteAddress reports the Public IP of the origin of the message
+// socket.id reports the socket ID of the origin of the message. 
+
+//Probably ought to be a utility or something
+function aCustomCommandMatches(aPostedCommand){
+	let arrValid = ['git status','git fetch','git pull','mkdir','touch'];
+	return arrValid.some(validCommand =&gt; aPostedCommand.indexOf(validCommand) === 0)
+}
+</textarea></div><div tabindex="1" class="leaf codemirrorContainer" id="/public/js/constructors/Circle.js" style="left: 903px; top: -32px; position: absolute; width: 400px; height: 400px;"><h3 class="entityHeader">/public/js/constructors/Circle.js</h3><textarea style="display: none;">function Circle(xPos,yPos,radius,color){
+  Leaf.call(this, xPos, yPos);
+  
+  var defaultRadius = 50;
+  var defaultColor = 'rgba(' + an8bitrandom() + ',' + an8bitrandom() + ',' + an8bitrandom() + ',' + Math.random() + ')';
+  this.element.className += ' circle'; //addClassName circle to existing
+  var diameter = radius ? (radius * 2) : (defaultRadius * 2);
+  diameter = diameter + "px"
+  var background = color ? color : defaultColor;
+  
+  this.element.style.height = diameter;
+  this.element.style.width = diameter;
+  this.element.style.borderRadius = diameter;
+  this.element.style.background = background;
+  this.element.id = 'circle' + document.getElementsByClassName('circle').length;
+  function an8bitrandom(){
+    return Math.floor(Math.random() * 255);
+  }
+  var header = this.element.getElementsByClassName('entityHeader')[0];
+  header.innerText = this.element.id;
+  this.render = function(){
+    return this.element;
+  }
+}
+</textarea></div><div tabindex="1" class="leaf codemirrorContainer" id="untitled4" style="left: 50px; top: 0px; position: absolute; width: 400px; height: 400px;"><h3 class="entityHeader">untitled4</h3><textarea style="display: none;">Circle.js
+
+is the file that generates the circle
+
+it's just meant to be like the simplest possible
+constructor function.
+
+the text editors and terminals have the same type of file
+
+a function that returns an element to add to the window
+
+Codemirror.js is the code I had to write to get the 
+text editors to work.
+
+Type so I know you can! Or if something is broke...
+Roger
+
+That
+Hah. Cool. Good. Jolly. Cani changethings?
+ 
+  
+  Like colors?yeah
+
+:O 
+
+So, if you double click and get a terminal
+So, the terminals just run javascript, if you know
+the property names then you can change whatever you want
+
+Eventually, I want to parse speech
+so you can just talk to
+and say, like, make this thing purple
+and whatever you clicked on last, or currentlytouching
+will turn purple.
+
+That's the dream.
+
+its css
+Good plan! missyumiss you
+KEYBOARD is weird
+
+
+Neat! 
+
+S
+oFancy
+ </textarea></div><div tabindex="1" class="leaf codemirrorContainer" id="/public/js/constructors/Codemirror.js" style="left: 602px; top: 963px; position: absolute; width: 400px; height: 400px;"><h3 class="entityHeader">/public/js/constructors/Codemirror.js</h3><textarea style="display: none;">function Codemirror(optStringInit,optFileName){
+
+  console.log(optFileName)
+
+  Leaf.call(this)
+  this.element.className += ' codemirrorContainer'
+  var codemirrorList = document.getElementsByClassName('codemirror')
+  this.element.id = optFileName ? optFileName : ('untitled' + codemirrorList.length);
+  var header = this.element.getElementsByClassName('entityHeader')[0];
+  header.innerText = this.element.id;
+  this.element.style.width = '400px';
+  this.element.style.height = '400px';
+  var codeText = document.createElement('textarea');
+  if(optStringInit){
+    codeText.value = optStringInit;
+  }
+  this.element.appendChild(codeText);
+  if(typeof CodeMirror === 'undefined'){
+    let cssInclude = document.createElement('link')
+    cssInclude.setAttribute('rel', 'stylesheet');
+    cssInclude.setAttribute('href', '/lib/codemirror.css')
+  //  document.head.appendChild(cssInclude);
+    let jsInclude = document.createElement('script')
+    jsInclude.setAttribute('src', '/lib/codemirror.js')
+    jsInclude.setAttribute('defer','true');
+
+    let jsModeInclude = document.createElement('script')
+    jsModeInclude.setAttribute('src', '/lib/mode/javascript/javascript.js')
+    jsModeInclude.setAttribute('defer','true');
+
+    promiseToAppend(cssInclude)
+    .then(()=&gt; promiseToAppend(jsInclude))
+    .then(()=&gt; promiseToAppend(jsModeInclude))
+    .then(()=&gt; {
+      this.element.cm = CodeMirror.fromTextArea(codeText, {
+        lineNumbers: true
+      });
+      this.element.cm.on('change',broadcastEdits)
+    })
+    .catch(console.log.bind(console))
+  } else {
+    //setTimeout mysteriously fixes an issue where codmirror css
+    //fails to be be applied to subsequent codemirror divs
+    setTimeout(()=&gt;{
+      this.element.cm = CodeMirror.fromTextArea(codeText, {
+        lineNumbers: true
+      });
+      this.element.cm.on('change',broadcastEdits)
+    },10)
+  }
+
+  this.render = () =&gt; this.element;
+
+}
+
+function promiseToAppend(aTag){
+  return new Promise((resolve,reject)=&gt;{
+    Promise.race([tryToAppend(aTag),timeout(1000)])
+    .then((appendSuccess)=&gt;{
+      if(appendSuccess){
+        resolve('loaded successfully');
+      } else {
+        reject('failed to load');
+      }
+    })
+  })
+}
+
+function tryToAppend(aTag){
+  return new Promise(function(resolve){
+    aTag.addEventListener('load',()=&gt;resolve(true))
+    document.head.appendChild(aTag);
+  })
+}
+
+function timeout(ms){
+  return new Promise((resolve)=&gt;{
+    setTimeout(()=&gt;resolve(false),ms)
+  })
+}
+
+
+
+
+// Peripheral functions for codeMirror. Codemirror sync events.
+/* There are two types of events to handle:
+ * When any user clicks anywhere in the mirror, 
+ * a message is socketized containing the line number.
+ * The server can match the identity of the send, and broadcast 
+ * the line number to be locked. 
+ * 
+ * On receiving the line number, the clients will use markText, readOnly
+ * 
+ * When an edit is made, the line number and the string are broadcast
+ * clients will clear the marktext, insert the line, and re-mark the text. 
+ */
+function broadcastPos(theMirror){
+  let lineOfCursor = theMirror.getDoc().getCursor().line;
+  let mirrorContainer = theMirror.display.wrapper.parentElement.id;
+  socket.emit('cursorActivity',{lineOfCursor, mirrorContainer});
+  // mark = theMirror.markText({line:lineOfCursor,ch:0},{line:lineOfCursor+1,ch:0},{css: 'background: lightblue',readOnly: true})
+  // console.log(lineOfCursor);
+}
+
+//this is fired on change
+function broadcastEdits(theMirror,changeObj){
+  //remote changes have an undefined origin. Only fire socket when change is local.
+  if(changeObj.origin){
+    let mirrorContainer = theMirror.display.wrapper.parentElement.id;
+    let changeFrom = changeObj.from;
+    let changeTo = changeObj.to;
+    let newContent = changeObj.text;
+    socket.emit('mirrorChange',{changeFrom, changeTo,newContent,mirrorContainer});
+  }
+}
+
+socket.on('mirrorChange', data =&gt; {
+
+  console.log(data);
+  let {changeFrom, changeTo, newContent, mirrorContainer} = data;
+  let leaf = document.getElementById(mirrorContainer);
+  let theMirror = leaf.cm
+  theMirror.getDoc().replaceRange(newContent,changeFrom,changeTo)
+})
+
+console.log(document.readyState)
+
+window.addEventListener('load', ()=&gt;{
+  
+  console.log(document.readyState)
+
+    console.log('codemirror.js loaded')
+    let mirrors = Array.from(document.getElementsByClassName('codemirrorContainer'))
+    console.log(mirrors);
+    mirrors.forEach(mirrorContainer =&gt; {
+      let textArea = mirrorContainer.getElementsByTagName('TEXTAREA')[0];
+      mirrorContainer.cm = CodeMirror.fromTextArea(textArea, {lineNumbers: true});
+      mirrorContainer.cm.on('change',broadcastEdits);
+      mirrorContainer.cm.on('cursorActivity',broadcastPos) //Will pass the cm object  
+    })
+})
+
+console.log(document.readyState)
+</textarea></div></body>

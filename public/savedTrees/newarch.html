@@ -1,0 +1,45 @@
+<head>
+    <!--<link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">-->
+    <link rel="stylesheet" href="/styles/style.css">
+    <script src="/js/constructors/Leaf.js" defer=""></script>
+    <script src="/js/constructors/Terminal.js" defer=""></script>
+    <script src="/js/socket.io.js" defer=""></script>
+    <script src="/js/socketevents.js" defer=""></script>
+    <script src="/js/customCommands.js" defer=""></script>
+    <script src="/js/utils.js" defer=""></script>
+    <script id="repl"></script>
+  <script src="/js/constructors/Codemirror.js" defer="true"></script><link rel="stylesheet" href="/lib/codemirror.css"><script src="/lib/codemirror.js" defer="true"></script><script src="/lib/mode/javascript/javascript.js" defer="true"></script><title>newarch</title></head>
+  <!--Giving body id body for consistency with certain functions that rely on div id-->
+  <body id="body" style="position: absolute; left: 0px; top: 0px; height: 1119px; width: 1875px;">
+
+<div tabindex="1" class="leaf terminal" id="newarch" listen="true" broadcast="true" history="1" protoprompt="localhost/root0 > " prompt="localhost/newarch > " style="left: 1089px; top: 228px; width: 400px; height: 300px; position: absolute; background: white;"><h3 class="entityHeader" style="top: 711.667px;">newarch<div class="removeButton"></div><div class="broadcastButton"></div><div class="listenButton"></div></h3><p class="prompt">localhost/root0 &gt; rename newarch</p><div class="result result" id="1482618888740">root0 has been renamed to newarch</div><p class="prompt">localhost/root0 &gt; create Codemirror</p><div class="query result" id="1482618891972">Constructor retrieved and invoked, Codemirror0 added to DOM</div><p class="prompt">localhost/root0 &gt; Codemirror0.style.width = 1000</p><div class="result result" id="1482619175030">1000</div><p class="prompt">localhost/root0 &gt; save</p><div class="result" id="newarch8" createdat="1482620390779">2.98 KB written successfully to newarch.html in 259ms</div><p class="prompt">localhost/root0 &gt; </p><div class="request" id="newarch10" createdat="1482680627813">3.175 KB written successfully to newarch.html at Sun Dec 25 2016 10:43:47 GMT-0500 (Eastern Standard Time)</div><p class="prompt">localhost/root0 &gt; save</p><div class="request" id="newarch12" createdat="1482683039914">3.397 KB written successfully to newarch.html at Sun Dec 25 2016 11:23:59 GMT-0500 (Eastern Standard Time)</div><p class="prompt">localhost/root0 &gt; create Codemirror</p><div class="query result" id="1482713028604">Constructor invoked, Codemirror1 added to DOM</div><p class="prompt">localhost/root0 &gt; rename Codemirror1 repl</p><div class="result result" id="1482713033915">Codemirror1 has been renamed to repl</div><p class="prompt">localhost/root0 &gt; repl.style.width = 1200</p><div class="result result" id="1482713249229">TypeError: Cannot set property 'width' of undefined</div><p class="prompt">localhost/root0 &gt; repl</p><div class="result result" id="1482713255165">[object HTMLCollection]</div><p class="prompt">localhost/root0 &gt; repl.childNodes</p><div class="result result" id="1482713261934">undefined</div><p class="prompt">localhost/root0 &gt; repl</p><div class="result result" id="1482713266368">[object HTMLCollection]</div><p class="prompt">localhost/root0 &gt;Object.keys(repl)</p><div class="result result" id="1482713280103">0,1,repl</div><p class="prompt">localhost/root0 &gt; jsrepl</p><div class="result result" id="1482713353918">[object HTMLDivElement]</div><p class="prompt">localhost/root0 &gt; jsrepl.style.width = 1200</p><div class="result result" id="1482713362257">1200</div><p class="prompt">localhost/root0 &gt; save</p><div class="result" id="newarch32" createdat="1482713875111">5.92 KB written successfully to newarch.html in 130ms</div><p class="prompt">localhost/root0 &gt; save</p><div class="request" id="newarch34" createdat="1482797745357">6.882 KB written successfully to newarch.html at Mon Dec 26 2016 19:15:45 GMT-0500 (Eastern Standard Time)</div><p class="prompt">localhost/root0 &gt; </p></div><div tabindex="1" class="leaf codemirrorContainer   " id="Codemirror0" listen="true" broadcast="true" style="left: 138px; top: 497px; width: 1000px; height: 400px; position: absolute; background: white;"><h3 class="entityHeader">Codemirror0<div class="editButton">R</div><div class="removeButton"></div><div class="broadcastButton"></div><div class="listenButton"></div></h3><textarea style="display: none;">Starting from scratch, 
+  constructed components will be web components
+  which can be rendered on their own as a standalone app
+  
+  - a javascript repl
+  - a serverside terminal emulator
+  - codemirror
+  - lookout: iframe, xml, html, really just something to pipe markup to.
+  - devops, view all socket events
+  
+  The superstructure is a graph of webcomponents (a tree of subtrees), with the webcomponents having 
+  a 'getter'/'setter' API for piping content up and down the tree. 
+  
+  Trees will be git-tracked. A git repo bound to the tree can be linked to to be replicated.
+  Additions to the tree will be easily merged. Only conflicts would be if a subtree was deleted and replaced. Merge conflicts.
+  
+  </textarea></div><div tabindex="1" class="leaf codemirrorContainer " id="jsrepl" listen="true" broadcast="true" prompt="localhost/jsrepl > " style="left: 50px; top: 50px; width: 1200px; height: 400px; position: absolute; background: white;"><h3 class="entityHeader">jsrepl<div class="editButton">R</div><div class="removeButton"></div><div class="broadcastButton"></div><div class="listenButton"></div></h3><textarea style="display: none;">Not only a javascript repl
+a DOM repl
+
+so, find ways to represent trees (try to be extensible)
+instead of a filepath as a 'working directory' - represent the position in the tree, which will serve as the 'this' for javascript
+
+Would be a weird enough place on its own, being able to modify itself
+
+so there's JS that renders each new line, but you'd be free to execute DOM manipulations and modify the results
+
+"set root" like NERDTree
+
+Much more useful once the DOMrepl exists inside (or aside) a XHTML doc, where scripts can be prototyped 
+
+</textarea></div><div tabindex="1" class="leaf terminal" id="root0" listen="true" broadcast="true" history="0" protoprompt="localhost/root0 > " style="left: 1296px; top: 136px; width: 400px; height: 300px; position: absolute; background: white;"><h3 class="entityHeader" style="top: 138.333px;">root0<div class="removeButton"></div><div class="broadcastButton"></div><div class="listenButton"></div></h3><p class="prompt">localhost/root0 &gt; git status</p><div class="result" id="1482714281831">On branch master<br>Your branch is up-to-date with 'origin/master'.<br>Untracked files:<br>  (use "git add &lt;file&gt;..." to include in what will be committed)<br><br>	example.js<br>	test.txt<br>	test/<br>	testdir/<br>	testdirtest.txt<br>	user/<br><br>nothing added to commit but untracked files present (use "git add" to track)<br></div><p class="prompt">localhost/root0 &gt; </p></div></body>

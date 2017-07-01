@@ -1,0 +1,94 @@
+<head>
+    <!--<link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">-->
+    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="stylesheet" href="/styles/menustyle.css">
+    <script src="/js/constructors/Leaf.js" defer=""></script>
+    <script src="/js/constructors/Terminal.js" defer=""></script>
+    <script src="/js/socket.io.js" defer=""></script>
+    <script src="/js/socketevents.js" defer=""></script>
+    <script src="/js/customCommands.js" defer=""></script>
+    <script src="/js/utils.js" defer=""></script>
+    <script id="repl"></script>
+  <link href="/styles/menuStyle.css"><script src="/js/constructors/Codemirror.js" defer="true"></script><link rel="stylesheet" href="/codemirrorlib/codemirror.css"><script src="/codemirrorlib/codemirror.js" defer="true"></script><title>botsplain</title><link href="/styles/menuStyle.css"><script src="/codemirrormode/meta.js" defer="true"></script></head>
+  <!--Giving body id body for consistency with certain functions that rely on div id-->
+  <body id="body" style="position: absolute; left: 0px; top: 0px; height: 1209px; width: 999px;">
+
+<div showmenu="false" broadcast="true" listen="true" style="left: 57px; top: 13px; width: 800px; height: 400px; position: absolute; background: white;" tabindex="1" class="leaf codemirrorContainer                                     " id="botsplaining" target="undefined" protoprompt="localhost/botsplaining"><div class="entityHeader">
+    <table>
+      <tbody><tr>
+        <td class="headerTitle">botsplaining &gt; undefined</td>
+      </tr>
+    </tbody></table>
+    <div class="menuButton"></div>
+    <div class="removeButton"></div>
+    <div class="menu">
+      <ul>
+        <li tabindex="2"> Edit <div class="editButton"></div></li>
+        <li tabindex="2"> Broadcast <div class="broadcastButton"></div> </li>
+        <li tabindex="2"> Listen <div class="listenButton"></div> </li>
+        <li tabindex="2"> Save <div class="saveButton"></div> </li>
+      </ul>
+    </div>
+  </div><textarea style="display: none;">Follow a conversation script, which has pre-written responses for keywords
+
+
+
+"I'm pretty agreeable wouldnt you say
+"sure / umm yeah / i guess so" 
+"I heard you say sure, and I understand that that is another word for you - synonynms are no problem"
+I can detect the polarity of a sentence, so I don't confuse "I like pizza" with "I don't like pizza"
+
+Bot: 
+"I’m really good at determining location. 
+"If its the type of name you can google, I can probably get its location too"
+"I’m ok at 
+
+"I can tie an action to a keyword, and listen for that keyword within your sentences"</textarea></div><div showmenu="false" broadcast="true" listen="true" style="left: 991px; top: 148px; width: 400px; height: 300px; position: absolute; background: white;" tabindex="1" class="leaf terminal" id="botsplain" history="0" protoprompt="localhost/botsplain"><div class="entityHeader">
+    <table>
+      <tbody><tr>
+        <td class="headerTitle">botsplain</td>
+      </tr>
+    </tbody></table>
+    <div class="menuButton"></div>
+    <div class="removeButton"></div>
+    <div class="menu">
+      <ul>
+        <li tabindex="2"> Edit <div class="editButton"></div></li>
+        <li tabindex="2"> Broadcast <div class="broadcastButton"></div> </li>
+        <li tabindex="2"> Listen <div class="listenButton"></div> </li>
+        <li tabindex="2"> Save <div class="saveButton"></div> </li>
+      </ul>
+    </div>
+  </div><div class="terminalContainer"><div class="promptContainer"><span class="prompt">localhost/root1<span class="arrow"></span></span><div class="input">rename Codemirror0 botsplaining</div></div><div class="result result" id="1483823086849">Codemirror0 has been renamed to botsplaining</div><div class="promptContainer"><span class="prompt">localhost/root1<span class="arrow"></span></span><div class="input">save</div></div><div class="result" id="root12" createdat="1483823231625">4.69 KB written successfully to root1.html in 168ms</div><div class="promptContainer"><span class="prompt">localhost/root1<span class="arrow"></span></span><div class="input">rename botsplain</div></div><div class="result result" id="1483823235651">root1 has been renamed to botsplain</div><div class="promptContainer"><span class="prompt">localhost/botsplain<span class="arrow"></span></span><div class="input">save</div></div><div class="request" id="botsplain2" createdat="1483823236444">4.905 KB written successfully to botsplain.html at Sat Jan 07 2017 16:07:16 GMT-0500 (Eastern Standard Time)</div><div class="promptContainer"><span class="prompt">localhost/botsplain<span class="arrow"></span></span><div class="input">save</div></div><div class="result" id="botsplain2" createdat="1483823286631">5.96 KB written successfully to botsplain.html in 44ms</div><div class="promptContainer"><span class="prompt">localhost/botsplain<span class="arrow"></span></span><div class="input">create Codemirror</div></div><div class="query result" id="1483823336459">Constructor invoked, Codemirror0 added to DOM</div><div class="promptContainer"><span class="prompt">localhost/botsplain<span class="arrow"></span></span><div class="input">save</div></div><div class="result" id="botsplain2" createdat="1483825273067">6.47 KB written successfully to botsplain.html in 173ms</div><div class="promptContainer"><span class="prompt">localhost/botsplain<span class="arrow"></span></span><div class="input">save</div></div><div class="result" id="botsplain2" createdat="1483826525082">7.24 KB written successfully to botsplain.html in 208ms</div><div class="promptContainer"><span class="prompt">localhost/botsplain<span class="arrow"></span></span><div class="input">save</div></div><div class="request" id="botsplain2" createdat="1483833968930">7.232 KB written successfully to botsplain.html at Sat Jan 07 2017 19:06:08 GMT-0500 (Eastern Standard Time)</div><div class="promptContainer"><span class="prompt">localhost/botsplain<span class="arrow"></span></span><div class="input"></div></div></div></div><div showmenu="false" broadcast="true" listen="true" style="left: 175px; top: 467px; width: 750px; height: 400px; position: absolute; background: white;" tabindex="1" class="leaf codemirrorContainer              " id="Codemirror0" target="undefined"><div class="entityHeader">
+    <table>
+      <tbody><tr>
+        <td class="headerTitle">Codemirror0</td>
+      </tr>
+    </tbody></table>
+    <div class="menuButton"></div>
+    <div class="removeButton"></div>
+    <div class="menu">
+      <ul>
+        <li tabindex="2">Evaluate<div class="editButton"></div></li>
+        <li tabindex="2"> Broadcast <div class="broadcastButton"></div> </li>
+        <li tabindex="2"> Listen <div class="listenButton"></div> </li>
+        <li tabindex="2"> Save <div class="saveButton"></div> </li>
+      </ul>
+    </div>
+  </div><textarea style="display: none;">lots of bots try to be general, and people assume they can do things
+they cant and that's frustrating
+
+New tools often don't give you a starting off point - you try the first thing that comes to mind and 
+you're frustrated when it doesn't work
+
+Amy.xi worked well because it was targeted to a specific issue it was good at
+
+Goal:
+	Explain what bots are good at, 
+    'at what point a query is too complex for a bot'
+    what strategies they can use to respond to input
+    Explain what bots CANNOT do - "where the wall is"
+    	- followup questions (unless it was scripted, and I'm only listened for a limited set of responses)
+        - 
+    
+    </textarea></div></body>

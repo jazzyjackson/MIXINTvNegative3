@@ -1,0 +1,139 @@
+<head>
+    <!--<link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">-->
+    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="stylesheet" href="/styles/menustyle.css">
+    <script src="/js/constructors/Leaf.js" defer=""></script>
+    <script src="/js/constructors/Terminal.js" defer=""></script>
+    <script src="/js/socket.io.js" defer=""></script>
+    <script src="/js/socketevents.js" defer=""></script>
+    <script src="/js/customCommands.js" defer=""></script>
+    <script src="/js/utils.js" defer=""></script>
+    
+    <script id="repl"></script>
+  <script src="/js/constructors/Codemirror.js" defer="true"></script><link rel="stylesheet" href="/codemirrorlib/codemirror.css"><script src="/codemirrorlib/codemirror.js" defer="true"></script><script id="loadscript">
+      let scriptArray = Array.from(document.getElementsByTagName('script'));
+      let loadingArray = [];
+      let firstTerminalIcanFind;
+      
+      scriptArray.forEach(scriptNode => {
+        // console.log(scriptNode)
+        let src = scriptNode.getAttribute('src');
+        if(src){
+          let loadingDiv = document.createElement('div');
+          loadingDiv.className = 'result'
+          loadingDiv.textContent = `Loading ${src}... `
+          loadingArray.push(loadingDiv)
+          scriptNode.addEventListener('load', () => {
+            loadingDiv.textContent += ' done.'
+            console.log('done with ',src)
+          })
+        }
+      })
+      document.addEventListener('readystatechange', () => {
+        console.log('readyStateChange')
+        switch(document.readyState){
+          case 'interactive': 
+            firstTerminalIcanFind = document.querySelector('.terminalContainer');
+            loadingArray.forEach(divNode => {
+              firstTerminalIcanFind.appendChild(divNode)
+            });
+            let aPotentialName = location.pathname;
+            aPotentialName = aPotentialName.match(/\/\w+\.|\/\w+$/);
+            aPotentialName = aPotentialName && aPotentialName[0].match(/\w+/);
+            aPotentialName = aPotentialName && aPotentialName[0];
+            let potentialTerminal = document.getElementById("root0");
+            //if the document has a name AND there is NOT already a terminal with that name
+            if(aPotentialName && potentialTerminal){
+              potentialTerminal.id = aPotentialName;
+              let thisHeader = potentialTerminal.querySelector('.entityHeader')
+              let thisTitle = thisHeader.querySelector('.headerTitle')
+              thisTitle.textContent = aPotentialName;
+              potentialTerminal.setAttribute('protoPrompt', 'localhost/' + aPotentialName);
+              Array.from(potentialTerminal.getElementsByClassName('promptContainer'), function(node){
+                node.firstChild.innerHTML = `localhost/${aPotentialName}<span class="arrow"></span>`;
+              })
+            }
+            break;
+          case 'complete':
+            let readyDiv = document.createElement('div')
+            readyDiv.className = 'result'
+            readyDiv.textContent = 'OK Ready.'
+            readyDiv.style.textAlign = 'right'
+            firstTerminalIcanFind.appendChild(readyDiv)
+            initPrompt(firstTerminalIcanFind);
+            break;
+        }
+      })
+      window.addEventListener('load', () => {
+        
+      })
+      let scriptReArranger = new MutationObserver((info,thisMute)=>{
+        console.log("something has changed!", info)
+        thisMute.disconnect();
+        // mvoeThisScript();
+        let thisScript = document.getElementById("loadscript");
+        thisScript.remove();
+        document.head.appendChild(thisScript)
+        thisMute.observe(document.head, {childList: true})
+        //this gets caught in an infinite loop.
+      })
+      scriptReArranger.observe(document.head, {childList: true})
+      // function moveThisScript(){
+      //   let thisScript = document.getElementById("loadscript");
+      //   thisScript.remove();
+      //   document.head.appendChild(thisScript)
+      // }
+
+    </script></head>
+  <!--Giving body id body for consistency with certain functions that rely on div id-->
+  <body id="body" style="position: absolute; left: 0px; top: 0px; height: 626px; width: 1152px;">
+    
+  
+
+<div showmenu="false" broadcast="true" listen="true" style="left: 150px; top: 150px; width: 800px; height: 400px; position: absolute;background: white" tabindex="1" class="leaf codemirrorContainer         " id="Codemirror0"><div class="entityHeader">
+    <table>
+      <tbody><tr>
+        <td class="headerTitle">Codemirror0</td>
+      </tr>
+    </tbody></table>
+    <div class="menuButton"></div>
+    <div class="removeButton"></div>
+    <div class="menu">
+      <ul>
+        <li tabindex="2"> Edit <div class="editButton"></div></li>
+        <li tabindex="2"> Broadcast <div class="broadcastButton"></div> </li>
+        <li tabindex="2"> Listen <div class="listenButton"></div> </li>
+        <li tabindex="2"> Save <div class="saveButton"></div> </li>
+      </ul>
+    </div>
+  </div><textarea style="display: none;">Bitbucket is atlassian
+Jira is atlassian
+
+atlassian is id
+
+so this is all tech team stuff, ira stuff
+
+otherwise,
+macbook is paige
+email is paige
+
+oVPN is 195*
+SSH is AWW
+Bitbucket is JIRA
+Jira is JIRA</textarea></div><div showmenu="false" broadcast="true" listen="true" style="left: 633px; top: 74px; width: 400px; height: 300px; position: absolute;background: white" tabindex="1" class="leaf terminal" id="accounts" history="0" protoprompt="localhost/accounts"><div class="entityHeader">
+    <table>
+      <tbody><tr>
+        <td class="headerTitle">accounts</td>
+      </tr>
+    </tbody></table>
+    <div class="menuButton"></div>
+    <div class="removeButton"></div>
+    <div class="menu">
+      <ul>
+        <li tabindex="2"> Edit <div class="editButton"></div></li>
+        <li tabindex="2"> Broadcast <div class="broadcastButton"></div> </li>
+        <li tabindex="2"> Listen <div class="listenButton"></div> </li>
+        <li tabindex="2"> Save <div class="saveButton"></div> </li>
+      </ul>
+    </div>
+  </div><div class="terminalContainer"><div class="promptContainer"><span class="prompt">localhost/accounts<span class="arrow"></span></span><div class="input">save</div></div><div class="request" id="accounts2" createdat="1493219884988">6.119 KB written successfully to accounts.html at Wed Apr 26 2017 11:18:04 GMT-0400 (EDT)</div><div class="promptContainer"><span class="prompt">localhost/accounts<span class="arrow"></span></span><div class="input"></div></div><div class="result">Loading /js/constructors/Leaf.js...  done.</div><div class="result">Loading /js/constructors/Terminal.js...  done.</div><div class="result">Loading /js/socket.io.js...  done.</div><div class="result">Loading /js/socketevents.js...  done.</div><div class="result">Loading /js/customCommands.js...  done.</div><div class="result">Loading /js/utils.js...  done.</div><div class="result">Loading /js/constructors/Codemirror.js...  done.</div><div class="result">Loading /codemirrorlib/codemirror.js...  done.</div><div class="result" style="text-align: right;">OK Ready.</div><div class="promptContainer"><span class="prompt">localhost/accounts<span class="arrow"></span></span><div class="input">save</div></div><div class="request" id="accounts2" createdat="1493304134514">7.287 KB written successfully to accounts.html at Thu Apr 27 2017 10:42:14 GMT-0400 (EDT)</div><div class="promptContainer"><span class="prompt">localhost/accounts<span class="arrow"></span></span><div class="input"></div></div><div class="result">Loading /js/constructors/Leaf.js...  done.</div><div class="result">Loading /js/constructors/Terminal.js...  done.</div><div class="result">Loading /js/socket.io.js...  done.</div><div class="result">Loading /js/socketevents.js...  done.</div><div class="result">Loading /js/customCommands.js...  done.</div><div class="result">Loading /js/utils.js...  done.</div><div class="result">Loading /js/constructors/Codemirror.js...  done.</div><div class="result">Loading /codemirrorlib/codemirror.js...  done.</div><div class="result" style="text-align: right;">OK Ready.</div><div class="promptContainer"><span class="prompt">localhost/accounts<span class="arrow"></span></span><div class="input">save</div></div><div class="request" id="accounts2" createdat="1494276626147">8.32 KB written successfully to accounts.html at Mon May 08 2017 16:50:26 GMT-0400 (EDT)</div><div class="promptContainer"><span class="prompt">localhost/accounts<span class="arrow"></span></span><div class="input"></div></div><div class="result">Loading /js/constructors/Leaf.js...  done.</div><div class="result">Loading /js/constructors/Terminal.js...  done.</div><div class="result">Loading /js/socket.io.js...  done.</div><div class="result">Loading /js/socketevents.js...  done.</div><div class="result">Loading /js/customCommands.js...  done.</div><div class="result">Loading /js/utils.js...  done.</div><div class="result">Loading /js/constructors/Codemirror.js...  done.</div><div class="result">Loading /codemirrorlib/codemirror.js...  done.</div><div class="result" style="text-align: right;">OK Ready.</div><div class="promptContainer"><span class="prompt">localhost/accounts<span class="arrow"></span></span><div class="input">save</div></div><div class="request" id="accounts2" createdat="1494277537379">9.338 KB written successfully to accounts.html at Mon May 08 2017 17:05:37 GMT-0400 (EDT)</div><div class="promptContainer"><span class="prompt">localhost/accounts<span class="arrow"></span></span><div class="input"></div></div><div class="result">Loading /js/constructors/Leaf.js...  done.</div><div class="result">Loading /js/constructors/Terminal.js...  done.</div><div class="result">Loading /js/socket.io.js...  done.</div><div class="result">Loading /js/socketevents.js...  done.</div><div class="result">Loading /js/customCommands.js...  done.</div><div class="result">Loading /js/utils.js...  done.</div><div class="result">Loading /js/constructors/Codemirror.js...  done.</div><div class="result">Loading /codemirrorlib/codemirror.js...  done.</div><div class="result" style="text-align: right;">OK Ready.</div><div class="promptContainer"><span class="prompt">localhost/accounts<span class="arrow"></span></span><div class="input">save</div></div><div class="request" id="accounts2" createdat="1494277789654">10.359 KB written successfully to accounts.html at Mon May 08 2017 17:09:49 GMT-0400 (EDT)</div><div class="promptContainer"><span class="prompt">localhost/accounts<span class="arrow"></span></span><div class="input"></div></div><div class="result">Loading /js/constructors/Leaf.js...  done.</div><div class="result">Loading /js/constructors/Terminal.js...  done.</div><div class="result">Loading /js/socket.io.js...  done.</div><div class="result">Loading /js/socketevents.js...  done.</div><div class="result">Loading /js/customCommands.js...  done.</div><div class="result">Loading /js/utils.js...  done.</div><div class="result">Loading /js/constructors/Codemirror.js...  done.</div><div class="result">Loading /codemirrorlib/codemirror.js...  done.</div><div class="result" style="text-align: right;">OK Ready.</div><div class="promptContainer"><span class="prompt">localhost/accounts<span class="arrow"></span></span><div class="input">save</div></div><div class="request" id="accounts2" createdat="1494601517478">11.382 KB written successfully to accounts.html at Fri May 12 2017 11:05:17 GMT-0400 (EDT)</div><div class="promptContainer"><span class="prompt">localhost/accounts<span class="arrow"></span></span><div class="input"></div></div></div></div></body>

@@ -1,0 +1,366 @@
+<head>
+    <!--<link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">-->
+    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="stylesheet" href="/styles/menustyle.css">
+    <script src="/js/constructors/Leaf.js" defer=""></script>
+    <script src="/js/constructors/Terminal.js" defer=""></script>
+    <script src="/js/socket.io.js" defer=""></script>
+    <script src="/js/socketevents.js" defer=""></script>
+    <script src="/js/customCommands.js" defer=""></script>
+    <script src="/js/utils.js" defer=""></script>
+    
+    <script id="repl"></script>
+  <script src="/js/constructors/Codemirror.js" defer="true"></script><link rel="stylesheet" href="/codemirrorlib/codemirror.css"><script src="/codemirrorlib/codemirror.js" defer="true"></script><title>thedream</title><script id="loadscript">
+      let scriptArray = Array.from(document.getElementsByTagName('script'));
+      let loadingArray = [];
+      let firstTerminalIcanFind;
+      
+      scriptArray.forEach(scriptNode => {
+        // console.log(scriptNode)
+        let src = scriptNode.getAttribute('src');
+        if(src){
+          let loadingDiv = document.createElement('div');
+          loadingDiv.className = 'result'
+          loadingDiv.textContent = `Loading ${src}... `
+          loadingArray.push(loadingDiv)
+          scriptNode.addEventListener('load', () => {
+            loadingDiv.textContent += ' done.'
+            console.log('done with ',src)
+          })
+        }
+      })
+      document.addEventListener('readystatechange', () => {
+        console.log('readyStateChange')
+        switch(document.readyState){
+          case 'interactive': 
+            firstTerminalIcanFind = document.querySelector('.terminalContainer');
+            loadingArray.forEach(divNode => {
+              firstTerminalIcanFind.appendChild(divNode)
+            });
+            let aPotentialName = location.pathname;
+            aPotentialName = aPotentialName.match(/\/\w+\.|\/\w+$/);
+            aPotentialName = aPotentialName && aPotentialName[0].match(/\w+/);
+            aPotentialName = aPotentialName && aPotentialName[0];
+            let potentialTerminal = document.getElementById("root0");
+            //if the document has a name AND there is NOT already a terminal with that name
+            if(aPotentialName && potentialTerminal){
+              potentialTerminal.id = aPotentialName;
+              let thisHeader = potentialTerminal.querySelector('.entityHeader')
+              let thisTitle = thisHeader.querySelector('.headerTitle')
+              thisTitle.textContent = aPotentialName;
+              potentialTerminal.setAttribute('protoPrompt', 'localhost/' + aPotentialName);
+              Array.from(potentialTerminal.getElementsByClassName('promptContainer'), function(node){
+                node.firstChild.innerHTML = `localhost/${aPotentialName}<span class="arrow"></span>`;
+              })
+            }
+            break;
+          case 'complete':
+            let readyDiv = document.createElement('div')
+            readyDiv.className = 'result'
+            readyDiv.textContent = 'OK Ready.'
+            readyDiv.style.textAlign = 'right'
+            firstTerminalIcanFind.appendChild(readyDiv)
+            initPrompt(firstTerminalIcanFind);
+            break;
+        }
+      })
+      window.addEventListener('load', () => {
+        
+      })
+      let scriptReArranger = new MutationObserver((info,thisMute)=>{
+        console.log("something has changed!", info)
+        thisMute.disconnect();
+        // mvoeThisScript();
+        let thisScript = document.getElementById("loadscript");
+        thisScript.remove();
+        document.head.appendChild(thisScript)
+        thisMute.observe(document.head, {childList: true})
+        //this gets caught in an infinite loop.
+      })
+      scriptReArranger.observe(document.head, {childList: true})
+      // function moveThisScript(){
+      //   let thisScript = document.getElementById("loadscript");
+      //   thisScript.remove();
+      //   document.head.appendChild(thisScript)
+      // }
+
+    </script></head>
+  <!--Giving body id body for consistency with certain functions that rely on div id-->
+  <body id="body" style="position: absolute; left: 0px; top: 0px; height: 830px; width: 1372px;">
+    <div showmenu="false" broadcast="true" listen="true" style="left: 36px; top: 79px; width: 400px; height: 300px; position: absolute; background: white;" tabindex="1" class="leaf terminal" id="thedream" history="0" protoprompt="localhost/thedream"><div class="entityHeader">
+    <table>
+      <tbody><tr>
+        <td class="headerTitle">thedream</td>
+      </tr>
+    </tbody></table>
+    <div class="menuButton"></div>
+    <div class="removeButton"></div>
+    <div class="menu">
+      <ul>
+        <li tabindex="2"> Edit <div class="editButton"></div></li>
+        <li tabindex="2"> Broadcast <div class="broadcastButton"></div> </li>
+        <li tabindex="2"> Listen <div class="listenButton"></div> </li>
+        <li tabindex="2"> Save <div class="saveButton"></div> </li>
+      </ul>
+    </div>
+  </div><div class="terminalContainer" history="1"><div class="promptContainer"><span class="prompt">localhost/thedream<span class="arrow"></span></span><div class="input"></div></div><div class="result">Loading /js/constructors/Leaf.js...  done.</div><div class="result">Loading /js/constructors/Terminal.js...  done.</div><div class="result">Loading /js/socket.io.js...  done.</div><div class="result">Loading /js/socketevents.js...  done.</div><div class="result">Loading /js/customCommands.js...  done.</div><div class="result">Loading /js/utils.js...  done.</div><div class="result" style="text-align: right;">OK Ready.</div><div class="promptContainer"><span class="prompt">localhost/thedream<span class="arrow"></span></span><div class="input">create Codemirropr</div></div><div class="query result" id="1497491048719">I couldn't find a constructor for Codemirropr</div><div class="promptContainer"><span class="prompt">localhost/thedream<span class="arrow"></span></span><div class="input">create Codemirror</div></div><div class="query result" id="1497491052919">Constructor retrieved and invoked, Codemirror0 added to DOM</div><div class="promptContainer"><span class="prompt">localhost/thedream<span class="arrow"></span></span><div class="input">save</div></div><div class="result" id="thedream2" createdat="1497491058126">7.49 KB written successfully to thedream.html in 568ms</div><div class="promptContainer"><span class="prompt">localhost/thedream<span class="arrow"></span></span><div class="input">save</div></div><div class="result" id="thedream2" createdat="1497491461401">9.5 KB written successfully to thedream.html in 563ms</div><div class="promptContainer"><span class="prompt">localhost/thedream<span class="arrow"></span></span><div class="input">save</div></div><div class="result" id="thedream2" createdat="1497491560640">10.1 KB written successfully to thedream.html in 213ms</div><div class="promptContainer"><span class="prompt">localhost/thedream<span class="arrow"></span></span><div class="input">create Codemirror</div></div><div class="query result" id="1497491716727">Constructor invoked, Codemirror1 added to DOM</div><div class="promptContainer"><span class="prompt">localhost/thedream<span class="arrow"></span></span><div class="input">save</div></div><div class="result" id="thedream2" createdat="1497491965147">12.4 KB written successfully to thedream.html in 600ms</div><div class="promptContainer"><span class="prompt">localhost/thedream<span class="arrow"></span></span><div class="input">save</div></div><div class="result" id="thedream2" createdat="1497492101274">13.04 KB written successfully to thedream.html in 555ms</div><div class="promptContainer"><span class="prompt">localhost/thedream<span class="arrow"></span></span><div class="input">create Codemirror</div></div><div class="query result" id="1497492209416">Constructor invoked, Codemirror2 added to DOM</div><div class="promptContainer"><span class="prompt">localhost/thedream<span class="arrow"></span></span><div class="input">save</div></div><div class="result" id="thedream2" createdat="1497492521078">15.66 KB written successfully to thedream.html in 575ms</div><div class="promptContainer"><span class="prompt">localhost/thedream<span class="arrow"></span></span><div class="input">save</div></div><div class="result" id="thedream2" createdat="1497492655898">16.61 KB written successfully to thedream.html in 550ms</div><div class="promptContainer"><span class="prompt">localhost/thedream<span class="arrow"></span></span><div class="input">save</div></div><div class="result" id="thedream2" createdat="1497492669204">16.91 KB written successfully to thedream.html in 214ms</div><div class="promptContainer"><span class="prompt">localhost/thedream<span class="arrow"></span></span><div class="input">save</div></div><div class="result" id="thedream2" createdat="1497492693520">17.22 KB written successfully to thedream.html in 202ms</div><div class="promptContainer"><span class="prompt">localhost/thedream<span class="arrow"></span></span><div class="input">save</div></div><div class="result" id="thedream2" createdat="1497492729971">17.62 KB written successfully to thedream.html in 207ms</div><div class="promptContainer"><span class="prompt">localhost/thedream<span class="arrow"></span></span><div class="input">create Codemirror</div></div><div class="query result" id="1497493258231">Constructor invoked, Codemirror3 added to DOM</div><div class="promptContainer"><span class="prompt">localhost/thedream<span class="arrow"></span></span><div class="input">save</div></div><div class="result" id="thedream2" createdat="1497493488479">20.13 KB written successfully to thedream.html in 760ms</div><div class="promptContainer"><span class="prompt">localhost/thedream<span class="arrow"></span></span><div class="input">create Codemirror</div></div><div class="query result" id="1497493800255">Constructor invoked, Codemirror4 added to DOM</div><div class="promptContainer"><span class="prompt">localhost/thedream<span class="arrow"></span></span><div class="input">save</div></div><div class="result" id="thedream2" createdat="1497493909921">22.11 KB written successfully to thedream.html in 541ms</div><div class="promptContainer"><span class="prompt">localhost/thedream<span class="arrow"></span></span><div class="input">create Codemirror</div></div><div class="query result" id="1497496024871">Constructor invoked, Codemirror5 added to DOM</div><div class="promptContainer"><span class="prompt">localhost/thedream<span class="arrow"></span></span><div class="input">save</div></div><div class="request" id="thedream2" createdat="1497496141627">23.687 KB written successfully to thedream.html at Wed Jun 14 2017 23:09:01 GMT-0400 (Eastern Daylight Time)</div><div class="promptContainer"><span class="prompt">localhost/thedream<span class="arrow"></span></span><div class="input"></div></div></div></div>
+  
+
+<div showmenu="false" broadcast="true" listen="true" style="left: 615px; top: 95px; width: 800px; height: 400px; position: absolute; background: white;" tabindex="1" class="leaf codemirrorContainer   " id="Codemirror0"><div class="entityHeader">
+    <table>
+      <tbody><tr>
+        <td class="headerTitle">Codemirror0</td>
+      </tr>
+    </tbody></table>
+    <div class="menuButton"></div>
+    <div class="removeButton"></div>
+    <div class="menu">
+      <ul>
+        <li tabindex="2">Evaluate<div class="editButton"></div></li>
+        <li tabindex="2"> Broadcast <div class="broadcastButton"></div> </li>
+        <li tabindex="2"> Listen <div class="listenButton"></div> </li>
+        <li tabindex="2"> Save <div class="saveButton"></div> </li>
+      </ul>
+    </div>
+  </div><textarea style="display: none;">Oh and the file transfers are going to be so much tinier when diffing the git repos
+Update the workspace with 12kB or so to update the meta.json on disk
+
+So the dream for ConvoLOS, being a machine and natural language interpreter first,
+allow for very cloud-like activity whether you're transmitting from your laptop to 
+your local network or if your interpreter is hosted to a cloud container, facing the world!
+
+Network routing will be intrinsic, giving you total control of the paths and capabilities
+accessible to guest users of your computer (really thats what made BBS so great, you had
+hosts and guests, and people really invited you to their world, their space
+
+all the corporate websites, the web 2.yawn that allow you to add comments aren't inviting you 
+onto the server, the are handling specific requests, and allowing you access to, perhaps, make a comment
+but otherwise even customizing your view is frowned upon
+why, there's even a contingent that considers blocking ads immoral! 
+As if I shouldn't have control of which domains open a connection with my computer
+before sending me kilobytes of cookies I didn't ask for
+
+My computer is to fill data retrieval requests.
+It's also a place friends and strangers can connect to and share a virtual environment
+
+It just so happens that the virtual environment has a lot of wizbang tricks, like opening cameras,
+and streaming video, and transcribing voices, and customization of local environment
+and customizations of global environment
+
+and an understanding of permissions and encryption and so on
+they were not really principles back in web 1.0, you gave up all responsibility
+of securing your site to a sysadmin who never heard of AES and SSL, let alone 0 days!
+
+So Convolos offers a place to pipe functions through one another
+and customize a computer, with servers and agents.
+
+And think more functionally
+Practice representing problems in ways that imply the solution
+Practice noticing another possible configuration
+
+There is a design of input structure and output structure that makes the algorithm obvious
+</textarea></div><div showmenu="false" broadcast="true" listen="true" style="left: 231px; top: 384px; width: 800px; height: 400px; position: absolute; background: white;" tabindex="1" class="leaf codemirrorContainer    " id="Codemirror1"><div class="entityHeader">
+    <table>
+      <tbody><tr>
+        <td class="headerTitle">Codemirror1</td>
+      </tr>
+    </tbody></table>
+    <div class="menuButton"></div>
+    <div class="removeButton"></div>
+    <div class="menu">
+      <ul>
+        <li tabindex="2">Evaluate<div class="editButton"></div></li>
+        <li tabindex="2"> Broadcast <div class="broadcastButton"></div> </li>
+        <li tabindex="2"> Listen <div class="listenButton"></div> </li>
+        <li tabindex="2"> Save <div class="saveButton"></div> </li>
+      </ul>
+    </div>
+  </div><textarea style="display: none;">Quit job
+Start freelancing
+offer slight discount if user doesn't mind me broadcasting the creation and setup of their web application
+their app idea even - 
+
+a steep discount if they don't mind their code being duplicated
+This should allow a proof of concept distributed internet - users of websites becomes git remotes, 
+and the original domain name is proxy'd to those users to fulfill requests. If you can make 
+it easy to deploy whatever it is load balancers do... 
+I'm pretty sure they're pure bandwidth cost
+
+So it will save my server money when users provide mirrors
+And I can deliver video at much lower cost than google pays
+
+I don't know why bittorrenttv didn't work out
+maybe they were too keen to get mainstream legal appeal
+I wonder what their algorithm is like...
+
+but no matter! git clone to get the first copy, and there is suddenly identity and authenticity
+built into a file
+
+trivial things will be trivial to deploy
+So it should be fun to help people deploy
+
+Photo library. Videeo library that lets you pay per download. Music website that lets you pay per download. Stripe takes 3% to bandcamp's 15% of digital sales!
+Of course, they're a community...so it's all about eyeballs
+
+But hey, allow people to hook into your server and make your media a part of their media...
+
+mix it up with attribution and cryptowallets</textarea></div><div showmenu="false" broadcast="true" listen="true" style="left: 343px; top: 82px; width: 800px; height: 400px; position: absolute; background: white;" tabindex="1" class="leaf codemirrorContainer      " id="Codemirror2"><div class="entityHeader">
+    <table>
+      <tbody><tr>
+        <td class="headerTitle">Codemirror2</td>
+      </tr>
+    </tbody></table>
+    <div class="menuButton"></div>
+    <div class="removeButton"></div>
+    <div class="menu">
+      <ul>
+        <li tabindex="2">Evaluate<div class="editButton"></div></li>
+        <li tabindex="2"> Broadcast <div class="broadcastButton"></div> </li>
+        <li tabindex="2"> Listen <div class="listenButton"></div> </li>
+        <li tabindex="2"> Save <div class="saveButton"></div> </li>
+      </ul>
+    </div>
+  </div><textarea style="display: none;">Establish a way to use a cheap cloud server as a cloud-mirror
+So, spin up a virtual machine, route domain name to static IP address...
+Show any computer that hits that IP as a node that can be streamed to...
+
+Set up endpoint nodes to route requests... (load balancer node, authentication node...)
+
+Show that it works just as well as a hologram, using abstracted representation of nodes, data visualize bandwidth and regional connections
+
+Showing cubic bezeirs from geocoordinate to API endpoint, for live holographic view of traffic.
+Will be really cool to see out the corner of your eye... Monitor incoming bandwidth for different tasks
+
+When you hook up an iframe, proxy that ish, track those bytes
+If node proxy keeps the headers and cookies in tact? How will it know? Anyway figure out how to
+count bytes with streams and you'll have all kinds of cool knowledge about the consumption of your system
+
+Operating System as functional state machine
+declarative operating system
+prescriptive operating system
+
+The operating system reached its current state through a long series of transformations, which its possible to keep a complete log of
+git commits, precisely stamped GET POST DELETE PUT and start-process and process-exit - extensively detailed recorded of how the computer came to be
+
+But yeah
+You'll have some especially useful functionality if you can tie in the cloud server as a git remote 
+to a laptop, so that localhost changes are immediately available online,
+except that you can set your server to be at a different commit than your localhost
+and commit away on a feature branch, test on localhost, and as soon as you merge to production and push,
+your changes are live in an exact copy of the local environment
+
+you can watch traffic problems
+and response code problems
+and auto revert to an earlier commit
+
+chatbot will keep facts as it reads log messages
+"commit 123123 handled 3000 requests per minute, used this much bandwidth, had no errors" and so on
+
+I want to be able to trust my computer
+and share my code
+and trust the code that is being shared - authenticated files to copy, get the md5 hash over https 
+from the source of the data, tiny piece of data, to go fetch file from mirror</textarea></div><div showmenu="false" broadcast="true" listen="true" style="left: 328px; top: 250px; width: 800px; height: 400px; position: absolute; background: white;" tabindex="1" class="leaf codemirrorContainer " id="Codemirror3"><div class="entityHeader">
+    <table>
+      <tbody><tr>
+        <td class="headerTitle">Codemirror3</td>
+      </tr>
+    </tbody></table>
+    <div class="menuButton"></div>
+    <div class="removeButton"></div>
+    <div class="menu">
+      <ul>
+        <li tabindex="2">Evaluate<div class="editButton"></div></li>
+        <li tabindex="2"> Broadcast <div class="broadcastButton"></div> </li>
+        <li tabindex="2"> Listen <div class="listenButton"></div> </li>
+        <li tabindex="2"> Save <div class="saveButton"></div> </li>
+      </ul>
+    </div>
+  </div><textarea style="display: none;">Web 2.0 Allowed strangers to save things onto your server
+code
+user generated content
+geocities and myspace, let people customize their online space
+eventually homogenized, and the pervasive centralized social networks
+encourage extremely heavy bandwidth use, to the detriment of our carbon cloud output
+
+Web 3.0 is a git network
+Every file you download, will be able to update itself to the latest version
+that file can be a song, or a video, or a JSON structure representing the comments to a video
+
+Owner of the sever can approve comments before they're written to disk, and as soon as they're written
+to disk
+
+multiple people can easily moderate as long as the have credentials to the domain server, which controls the global version. 
+It's like the golden disk.
+The master copy
+Except it can be updated, and forked and merged.
+
+Remote collaborates can take your original file, remix it, add their verse... a thousand branches that can be merged back to master
+
+wow wow wow collaborative song writing is going to get crazy
+
+all those storytelling games where people take it somewhere unexpected
+
+this is the scaffolding on which to grow collective decision making</textarea></div><div showmenu="false" broadcast="true" listen="true" style="left: 150px; top: 150px; width: 800px; height: 400px; position: absolute;background: white" tabindex="1" class="leaf codemirrorContainer    " id="Codemirror4"><div class="entityHeader">
+    <table>
+      <tbody><tr>
+        <td class="headerTitle">Codemirror4</td>
+      </tr>
+    </tbody></table>
+    <div class="menuButton"></div>
+    <div class="removeButton"></div>
+    <div class="menu">
+      <ul>
+        <li tabindex="2">Evaluate<div class="editButton"></div></li>
+        <li tabindex="2"> Broadcast <div class="broadcastButton"></div> </li>
+        <li tabindex="2"> Listen <div class="listenButton"></div> </li>
+        <li tabindex="2"> Save <div class="saveButton"></div> </li>
+      </ul>
+    </div>
+  </div><textarea style="display: none;">Comparison with torrents
+
+torrents were a distributed peer 2 peer file sharing that remade and inspired in everyone's minds
+what was possible with an internet to every house
+
+file sharing, without the need for any centralized authority, except the telecoms that is
+(even then, the sky's the limit, peer to peer radio and point to point networks)
+
+They don't have to be mesh nets
+Just subnets
+
+a request doesnt have to be streamed through long chains of peers, it just has to be connected to one
+dial one up in its subnet
+
+Anyway
+
+lowering the bandwidth demands of a society will go along way to allowing for more creative network infrastructure
+
+</textarea></div><div showmenu="false" broadcast="true" listen="true" style="left: 207px; top: 397px; width: 800px; height: 400px; position: absolute; background: white;" tabindex="1" class="leaf codemirrorContainer   " id="Codemirror5"><div class="entityHeader">
+    <table>
+      <tbody><tr>
+        <td class="headerTitle">Codemirror5</td>
+      </tr>
+    </tbody></table>
+    <div class="menuButton"></div>
+    <div class="removeButton"></div>
+    <div class="menu">
+      <ul>
+        <li tabindex="2">Evaluate<div class="editButton"></div></li>
+        <li tabindex="2"> Broadcast <div class="broadcastButton"></div> </li>
+        <li tabindex="2"> Listen <div class="listenButton"></div> </li>
+        <li tabindex="2"> Save <div class="saveButton"></div> </li>
+      </ul>
+    </div>
+  </div><textarea style="display: none;">The fabulous thing about functional programming, 
+especially when piping output from one to another - 
+your error message can happen very locally to a process.
+
+The error can point to exactly the line of code that caused the problem
+
+yeah
+lighttable and elm and eve have an interesting thing going on.
+Mine is gonna be like that but "deployed by default"
+your data pipelines are available
+
+When you pipe, those are separate processes, yeah?
+
+So you can totally live stream the memory consumption of each function... Even across hundreds of requests.</textarea></div></body>

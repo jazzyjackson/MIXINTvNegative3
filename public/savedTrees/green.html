@@ -1,0 +1,265 @@
+<head>
+    <!--<link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">-->
+    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="stylesheet" href="/styles/menustyle.css">
+    <script src="/js/constructors/Leaf.js" defer=""></script>
+    <script src="/js/constructors/Terminal.js" defer=""></script>
+    <script src="/js/socket.io.js" defer=""></script>
+    <script src="/js/socketevents.js" defer=""></script>
+    <script src="/js/customCommands.js" defer=""></script>
+    <script src="/js/utils.js" defer=""></script>
+    
+    <script id="repl"></script>
+  <script src="/js/constructors/Codemirror.js" defer="true"></script><link rel="stylesheet" href="/codemirrorlib/codemirror.css"><script src="/codemirrorlib/codemirror.js" defer="true"></script><script id="loadscript">
+      let scriptArray = Array.from(document.getElementsByTagName('script'));
+      let loadingArray = [];
+      let firstTerminalIcanFind;
+      
+      scriptArray.forEach(scriptNode => {
+        // console.log(scriptNode)
+        let src = scriptNode.getAttribute('src');
+        if(src){
+          let loadingDiv = document.createElement('div');
+          loadingDiv.className = 'result'
+          loadingDiv.textContent = `Loading ${src}... `
+          loadingArray.push(loadingDiv)
+          scriptNode.addEventListener('load', () => {
+            loadingDiv.textContent += ' done.'
+            console.log('done with ',src)
+          })
+        }
+      })
+      document.addEventListener('readystatechange', () => {
+        console.log('readyStateChange')
+        switch(document.readyState){
+          case 'interactive': 
+            firstTerminalIcanFind = document.querySelector('.terminalContainer');
+            loadingArray.forEach(divNode => {
+              firstTerminalIcanFind.appendChild(divNode)
+            });
+            let aPotentialName = location.pathname;
+            aPotentialName = aPotentialName.match(/\/\w+\.|\/\w+$/);
+            aPotentialName = aPotentialName && aPotentialName[0].match(/\w+/);
+            aPotentialName = aPotentialName && aPotentialName[0];
+            let potentialTerminal = document.getElementById("root0");
+            //if the document has a name AND there is NOT already a terminal with that name
+            if(aPotentialName && potentialTerminal){
+              potentialTerminal.id = aPotentialName;
+              let thisHeader = potentialTerminal.querySelector('.entityHeader')
+              let thisTitle = thisHeader.querySelector('.headerTitle')
+              thisTitle.textContent = aPotentialName;
+              potentialTerminal.setAttribute('protoPrompt', 'localhost/' + aPotentialName);
+              Array.from(potentialTerminal.getElementsByClassName('promptContainer'), function(node){
+                node.firstChild.innerHTML = `localhost/${aPotentialName}<span class="arrow"></span>`;
+              })
+            }
+            break;
+          case 'complete':
+            let readyDiv = document.createElement('div')
+            readyDiv.className = 'result'
+            readyDiv.textContent = 'OK Ready.'
+            readyDiv.style.textAlign = 'right'
+            firstTerminalIcanFind.appendChild(readyDiv)
+            initPrompt(firstTerminalIcanFind);
+            break;
+        }
+      })
+      window.addEventListener('load', () => {
+        
+      })
+      let scriptReArranger = new MutationObserver((info,thisMute)=>{
+        console.log("something has changed!", info)
+        thisMute.disconnect();
+        // mvoeThisScript();
+        let thisScript = document.getElementById("loadscript");
+        thisScript.remove();
+        document.head.appendChild(thisScript)
+        thisMute.observe(document.head, {childList: true})
+        //this gets caught in an infinite loop.
+      })
+      scriptReArranger.observe(document.head, {childList: true})
+      // function moveThisScript(){
+      //   let thisScript = document.getElementById("loadscript");
+      //   thisScript.remove();
+      //   document.head.appendChild(thisScript)
+      // }
+
+    </script></head>
+  <!--Giving body id body for consistency with certain functions that rely on div id-->
+  <body id="body" style="position: absolute; left: 0px; top: 0px; height: 826px; width: 1440px;">
+    <div showmenu="false" broadcast="true" listen="true" style="left: 150px; top: 150px; width: 400px; height: 300px; position: absolute;background: white" tabindex="1" class="leaf terminal" id="green" history="0" protoprompt="localhost/green"><div class="entityHeader">
+    <table>
+      <tbody><tr>
+        <td class="headerTitle">green</td>
+      </tr>
+    </tbody></table>
+    <div class="menuButton"></div>
+    <div class="removeButton"></div>
+    <div class="menu">
+      <ul>
+        <li tabindex="2"> Edit <div class="editButton"></div></li>
+        <li tabindex="2"> Broadcast <div class="broadcastButton"></div> </li>
+        <li tabindex="2"> Listen <div class="listenButton"></div> </li>
+        <li tabindex="2"> Save <div class="saveButton"></div> </li>
+      </ul>
+    </div>
+  </div><div class="terminalContainer"><div class="promptContainer"><span class="prompt">localhost/green<span class="arrow"></span></span><div class="input"></div></div><div class="result">Loading /js/constructors/Leaf.js...  done.</div><div class="result">Loading /js/constructors/Terminal.js...  done.</div><div class="result">Loading /js/socket.io.js...  done.</div><div class="result">Loading /js/socketevents.js...  done.</div><div class="result">Loading /js/customCommands.js...  done.</div><div class="result">Loading /js/utils.js...  done.</div><div class="result" style="text-align: right;">OK Ready.</div><div class="promptContainer"><span class="prompt">localhost/green<span class="arrow"></span></span><div class="input">create Codemirror</div></div><div class="query result" id="1490029915830">Constructor retrieved and invoked, Codemirror0 added to DOM</div><div class="promptContainer"><span class="prompt">localhost/green<span class="arrow"></span></span><div class="input">save</div></div><div class="request" id="green2" createdat="1490029919480">16.106 KB written successfully to green.html at Mon Mar 20 2017 13:11:59 GMT-0400 (EDT)</div><div class="promptContainer"><span class="prompt">localhost/green<span class="arrow"></span></span><div class="input"></div></div></div></div>
+  
+
+<div showmenu="false" broadcast="true" listen="true" style="left: 533px; top: 298px; width: 800px; height: 400px; position: absolute; background: white;" tabindex="1" class="leaf codemirrorContainer " id="Codemirror0"><div class="entityHeader">
+    <table>
+      <tbody><tr>
+        <td class="headerTitle">Codemirror0</td>
+      </tr>
+    </tbody></table>
+    <div class="menuButton"></div>
+    <div class="removeButton"></div>
+    <div class="menu">
+      <ul>
+        <li tabindex="2">Evaluate<div class="editButton"></div></li>
+        <li tabindex="2"> Broadcast <div class="broadcastButton"></div> </li>
+        <li tabindex="2"> Listen <div class="listenButton"></div> </li>
+        <li tabindex="2"> Save <div class="saveButton"></div> </li>
+      </ul>
+    </div>
+  </div><textarea style="display: none;">&lt;html&gt;&lt;head&gt;
+&lt;!-- Could eventually be the sort of wizard intro page for my version of chatscripts
+ sure, users first time visiting the editor, start them at a welcome tutorial panel
+ to introduce how to think in this language, and as a place to prototype things.
+ yeah for sure this would include some tools 
+ Linked to original  manuals in each little topic. So this tool pane could be these groups (minimizable) of explanation and prototyping tools. So if you need an explanation, its right there, if you want to read more, that's right there too. A good place to go back to. best friend panel.
+--&gt;
+&lt;script defer="" src="./static/walkthroughAPI.js"&gt;&lt;/script&gt;
+&lt;style&gt; 
+    body {
+        background: lightgrey;
+        padding: 0;
+    }
+    .container {
+        width: 70%;
+        background: white;
+        margin: 0 auto;
+        padding: 30px 5%;
+    }
+    #hero  {
+        overflow: auto;
+        width: 90%;
+        height: 500px;
+        box-shadow: 2px 2px 10px rgba(0,0,0,.25) inset, -2px -2px 10px white inset;
+    }
+    #heroinput input {
+        width: 75%;
+        height: 2em;
+        font-size: 1.8em;
+        border: none;
+        border-bottom: 1px solid darkblue;
+        outline: 0;
+
+    }
+    #heroinput input:focus {
+        drop-shadow: 1px 1px 5px darkblue;
+    }
+    #posgraph {
+        margin-bottom: 86px;
+    }
+    #posgraph ul {
+        display: inline-flex;
+    }
+    #posgraph ul div {
+        width: 76px;
+        text-align: center;
+    }
+    #posgraph li {
+        display: inline-block;
+    }
+    #posgraph li .pos {
+        box-sizing: border-box;
+        transform: rotate(45deg);
+        transform-origin: 0 0;
+        position: relative;
+        top: -22px;
+        left: 42px;
+        padding: 4px 16px 3px 26px;
+        height: 24px;
+        background: linear-gradient(135deg, transparent, transparent 17px, lightblue 17px, lightblue 50%, transparent 50%), linear-gradient(to right, transparent, transparent 30%, lightblue 30%);
+    }
+    #conceptualization ul {
+        padding-left: 20%;
+        display: flex;
+        flex-wrap: wrap;
+        list-style: none;
+        position: relative;
+    }
+    #conceptualization li {
+        padding: 5px;
+        border: 1px solid black;
+        height: 1em;
+        margin: 3px;
+    }
+    #conceptualization ul h3 {
+        font-family: sans-serif;
+        position: absolute;
+        left: 20px;
+    }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div class="container"&gt;
+Should include things like: 
+&lt;li&gt; Top Level topics/macros &lt;/li&gt;
+&lt;li&gt; Responders vs Gambits &lt;/li&gt;
+&lt;li&gt; Pattern Matching / Memorization &lt;/li&gt;
+
+&lt;p&gt;
+ not just a chatbot, a utility bot, it can do stuff for you
+ quibbles aren't just for fun, they create a deep pool of responses so it doesn't run out of things to say
+ you might get bored of it but you won't get to "I don't know what to say" - and that helps with its believability. If you believe it, you'll use it more.
+ its good to have a locally relevant help responder for each topic to help the user understand why it missed
+ &lt;/p&gt;&lt;p&gt;
+ &lt;/p&gt;&lt;h1&gt; A look inside the language machine &lt;/h1&gt;
+ &lt;div id="heroinput"&gt;&lt;form&gt;&lt;input type="text" placeholder="Type something here to see what I think."&gt;&lt;/form&gt;&lt;/div&gt;
+ &lt;div id="hero"&gt;&lt;div id="posgraph"&gt;
+                &lt;ul&gt;&lt;div&gt;&lt;li&gt;
+                        &lt;div class="token"&gt;what &lt;/div&gt;
+                        &lt;pre class="pos"&gt;Pronoun object&lt;/pre&gt;
+                    &lt;/li&gt;&lt;/div&gt;&lt;div&gt;&lt;li&gt;
+                        &lt;div class="token"&gt;do &lt;/div&gt;
+                        &lt;pre class="pos"&gt;present&lt;/pre&gt;
+                    &lt;/li&gt;&lt;/div&gt;&lt;div&gt;&lt;li&gt;
+                        &lt;div class="token"&gt;you &lt;/div&gt;
+                        &lt;pre class="pos"&gt;Pronoun subject&lt;/pre&gt;
+                    &lt;/li&gt;&lt;/div&gt;&lt;div&gt;&lt;li&gt;
+                        &lt;div class="token"&gt;think &lt;/div&gt;
+                        &lt;pre class="pos"&gt;Verb infinitive&lt;/pre&gt;
+                    &lt;/li&gt;&lt;/div&gt;
+                &lt;/ul&gt;
+            &lt;/div&gt;&lt;div id="conceptualization"&gt;&lt;ul class="concept" style="
+"&gt;&lt;h3&gt;what&lt;/h3&gt;&lt;li&gt;~pronoun&lt;/li&gt;&lt;li&gt;~pronoun&lt;/li&gt;&lt;li&gt;~pronoun&lt;/li&gt;&lt;li&gt;~KINDERGARTEN&lt;/li&gt;&lt;li&gt;~mainobject&lt;/li&gt;&lt;li&gt;~qwords&lt;/li&gt;&lt;li&gt;~what&lt;/li&gt;&lt;/ul&gt;&lt;ul class="concept"&gt;&lt;h3&gt;do&lt;/h3&gt;&lt;li&gt;~aux&lt;/li&gt;&lt;li&gt;~aux&lt;/li&gt;&lt;li&gt;~KINDERGARTEN&lt;/li&gt;&lt;li&gt;~auxverblist&lt;/li&gt;&lt;li&gt;~act&lt;/li&gt;&lt;li&gt;~generic&lt;/li&gt;&lt;li&gt;~animate&lt;/li&gt;&lt;li&gt;~verblist&lt;/li&gt;&lt;/ul&gt;&lt;ul class="concept"&gt;&lt;h3&gt;you&lt;/h3&gt;&lt;li&gt;~pronoun&lt;/li&gt;&lt;li&gt;~pronoun&lt;/li&gt;&lt;li&gt;~pronoun&lt;/li&gt;&lt;li&gt;~KINDERGARTEN&lt;/li&gt;&lt;li&gt;~mainsubject&lt;/li&gt;&lt;li&gt;~omnivore&lt;/li&gt;&lt;/ul&gt;&lt;ul class="concept"&gt;&lt;h3&gt;think&lt;/h3&gt;&lt;li&gt;~verb&lt;/li&gt;&lt;li&gt;~verb&lt;/li&gt;&lt;li&gt;~verb&lt;/li&gt;&lt;li&gt;~GRADE&lt;/li&gt;&lt;li&gt;~mainverb&lt;/li&gt;&lt;li&gt;~sentenceend&lt;/li&gt;&lt;li&gt;~quotableverbs&lt;/li&gt;&lt;li&gt;~causal&lt;/li&gt;&lt;li&gt;~misc&lt;/li&gt;&lt;li&gt;~reasoning&lt;/li&gt;&lt;li&gt;~reasoning&lt;/li&gt;&lt;li&gt;~think&lt;/li&gt;&lt;li&gt;~mental&lt;/li&gt;&lt;li&gt;~animate&lt;/li&gt;&lt;li&gt;~verblist&lt;/li&gt;&lt;li&gt;~mental&lt;/li&gt;&lt;li&gt;~static&lt;/li&gt;&lt;li&gt;~opinion&lt;/li&gt;&lt;li&gt;~judgement&lt;/li&gt;&lt;li&gt;~opinion&lt;/li&gt;&lt;li&gt;~opinionset&lt;/li&gt;&lt;li&gt;~classactions&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2&gt;The Possibilities of Conversation Architecting with ChatScript&lt;/h2&gt;
+&lt;p&gt;This document is an explanation of the specific functionality and capabilities of the ChatScript engine, but to start generally:
+ChatScript uses any number of 'topic' files which use ChatScript syntax to describe how the bot should respond to any user input. &lt;/p&gt;
+
+&lt;p&gt;ChatScript's method of deciding what to say next is based on a very realistic model of human conversation. Here's what happens when you say something to the ChatScript engine. &lt;/p&gt;
+
+&lt;p&gt;ChatScript uses a natural language analysis engine to interpret your message. The extent of this analysis is:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt; &lt;h3&gt;Tokenization:&lt;/h3&gt; &lt;span&gt;Starts by parsing the input string, splitting on spaces, keeping quoted strings together as a single token. This also compares each word to a dictionary to find the 'canonical' word. This strips pluralization and time reference, so "said" becomes "say", "running" becomes "run" and so on. Other substitutions are made, such as "
+It even recognizes the implied 'YOU' in "Say Something To Me" - try it!
+For each token, the original word is retained alongside the canonical form so you can match against either. Generally you want to match canonical forms to be more flexible to user input.&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt; &lt;h3&gt;Part of Speech (POS) tagging:&lt;/h3&gt; &lt;span&gt;ChatScript tries to determine whether each token acts as a verb, a main subject, a prepositional phrase, etc ()&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt; &lt;h3&gt;Conceptualization:&lt;/h3&gt; &lt;span&gt;Where other conversation agents lean on machine learning to allow you to train phrases to match an intent, ChatScript goes the brute-force route and supplies a large dictionary of concepts. So "goodnight" becomes ~emogoodbye, but also &lt;/span&gt;&lt;/li&gt;
+
+&lt;li&gt; &lt;h3&gt;User files:&lt;/h3&gt; &lt;span&gt;What I haven't mentioned yet is that ChatScript maintains user sessions, and the communication protocol involves 3 things: "what bot do you want to talk to" , "who are you?" , and your message. So variables set inside the script are memorized on a per user basis, and the conversation can resume at any point in the future (ChatScript can handle an arbitrary number of simultaneous users, all talking to the same bot or different bots.) &lt;/span&gt;&lt;/li&gt;
+
+&lt;span&gt;Further reading: &lt;a href="#"&gt;ChatScript-Overview-of-Input-to-Output&lt;/a&gt;&lt;/span&gt;
+&lt;/ul&gt;
+&lt;p&gt;
+A simple text reply is the most basic way for a chatbot to interact with you - but it's a computer program, and can return whatever data you tell it to. Using ChatScript's ability to return data objects in JSON format, you can describe a set of information - some text to return to the user, and some code for the server to run, or some code for the user's web browser to run. 
+&lt;/p&gt;
+&lt;p&gt;
+We're using this method for easy interfacing with internal systems (Since ChatScript is running on our servers and has direct access). ChatScript provides an interface for running javascript inside chatscript, as well as making API calls to URLs, and connecting to psql databases, and making "Out of band" communication.
+&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;/body&gt;&lt;/html&gt;</textarea></div></body>

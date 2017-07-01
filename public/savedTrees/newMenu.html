@@ -1,0 +1,219 @@
+<head>
+    <!--<link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">-->
+    <link rel="stylesheet" href="/styles/style.css">
+    <script src="/js/constructors/Leaf.js" defer=""></script>
+    <script src="/js/constructors/Terminal.js" defer=""></script>
+    <script src="/js/socket.io.js" defer=""></script>
+    <script src="/js/socketevents.js" defer=""></script>
+    <script src="/js/customCommands.js" defer=""></script>
+    <script src="/js/utils.js" defer=""></script>
+    <script id="repl"></script>
+  <script src="/js/constructors/Tag.js" defer="true"></script><script src="/js/constructors/Codemirror.js" defer="true"></script><link rel="stylesheet" href="/lib/codemirror.css"><script src="/lib/codemirror.js" defer="true"></script><script src="/lib/mode/javascript/javascript.js" defer="true"></script><script src="/lib/mode/css/css.js" defer="true"></script><script src="/lib/mode/xml/xml.js" defer="true"></script><script src="/lib/mode/htmlmixed/htmlmixed.js" defer="true"></script><title>newMenu</title></head>
+  <!--Giving body id body for consistency with certain functions that rely on div id-->
+  <body id="body" style="position: absolute; left: 0px; top: 0px; height: 900px; width: 1600px;">
+
+<div tabindex="1" class="leaf tag" id="tag0" listen="true" broadcast="true" style="left: 994px; top: 192px; width: 400px; position: absolute; background: white; min-height: 100px;"><h3 class="entityHeader">tag0<div class="removeButton"></div></h3><div id="innertag0" target="undefined" style="width: 100%; height: 100%;">&lt;link rel="stylesheet" href="/styles/style.css"&gt;
+&lt;link rel="stylesheet" href="/styles/menuStyle.css"&gt;
+
+&lt;div class="menu"&gt;
+  &lt;ul&gt;
+    &lt;li&gt; &lt;span&gt; Broadcast &lt;div class="broadcastButton"&gt;&lt;/div&gt;&lt;/span&gt; &lt;/li&gt;
+    &lt;li&gt; &lt;span&gt; Listen &lt;div class="listenButton"&gt;&lt;/div&gt;&lt;/span&gt; &lt;/li&gt; 
+    &lt;li&gt; &lt;span&gt; Save &lt;div class="saveButton"&gt;&lt;/div&gt;&lt;/span&gt; &lt;/li&gt; 
+    &lt;li&gt; &lt;span&gt; Edit &lt;div class="editButton"&gt;&lt;/div&gt;&lt;/span&gt; &lt;/li&gt; 
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;style&gt;
+
+&lt;/style&gt;</div></div><div tabindex="1" class="leaf codemirrorContainer" id="Codemirror0" listen="true" broadcast="true" target="tag0" update="innertag0" style="left: 5px; top: 3px; width: 800px; height: 100vh; position: absolute; background: white;"><h3 class="entityHeader">Codemirror0 &gt; tag0<div class="editButton">R</div><div class="removeButton"></div><div class="saveButton"></div><div class="broadcastButton"></div><div class="listenButton"></div></h3><textarea style="display: none;">&lt;link rel="stylesheet" href="/styles/style.css"&gt;
+&lt;link rel="stylesheet" href="/styles/menuStyle.css"&gt;
+
+&lt;div class="menu"&gt;
+  &lt;ul&gt;
+    &lt;li&gt; &lt;span&gt; Broadcast &lt;div class="broadcastButton"&gt;&lt;/div&gt;&lt;/span&gt; &lt;/li&gt;
+    &lt;li&gt; &lt;span&gt; Listen &lt;div class="listenButton"&gt;&lt;/div&gt;&lt;/span&gt; &lt;/li&gt; 
+    &lt;li&gt; &lt;span&gt; Save &lt;div class="saveButton"&gt;&lt;/div&gt;&lt;/span&gt; &lt;/li&gt; 
+    &lt;li&gt; &lt;span&gt; Edit &lt;div class="editButton"&gt;&lt;/div&gt;&lt;/span&gt; &lt;/li&gt; 
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;style&gt;
+
+&lt;/style&gt;</textarea></div><div tabindex="1" class="leaf terminal" id="newMenu" listen="true" broadcast="true" history="8" protoprompt="localhost/root0 > " prompt="localhost/newMenu > " style="left: 951px; top: 508px; width: 400px; height: 300px; position: absolute; background: white;"><h3 class="entityHeader" style="top: 4298.33px;">newMenu<div class="removeButton"></div><div class="broadcastButton"></div><div class="listenButton"></div></h3><p class="prompt">localhost/root0 &gt; rename newMenu</p><div class="result result" id="1482734888275">root0 has been renamed to newMenu</div><p class="prompt">localhost/root0 &gt; save</p><div class="request" id="newMenu4" createdat="1482734890949">5.719 KB written successfully to newMenu.html at Mon Dec 26 2016 01:48:10 GMT-0500 (Eastern Standard Time)</div><p class="prompt">localhost/root0 &gt; save</p><div class="request" id="newMenu6" createdat="1482735502011">5.935 KB written successfully to newMenu.html at Mon Dec 26 2016 01:58:22 GMT-0500 (Eastern Standard Time)</div><p class="prompt">localhost/root0 &gt; Codemirror0</p><div class="result result" id="1482735521150">[object HTMLDivElement]</div><p class="prompt">localhost/root0 &gt; Codemirror0.style.height = '100vh'</p><div class="result result" id="1482735531431">100vh</div><p class="prompt">localhost/root0 &gt; save</p><div class="result" id="newMenu12" createdat="1482735585973">6.66 KB written successfully to newMenu.html in 81ms</div><p class="prompt">localhost/root0 &gt; save</p><div class="result" id="newMenu14" createdat="1482735728870">6.92 KB written successfully to newMenu.html in 385ms</div><p class="prompt">localhost/root0 &gt; files</p><div class="result directoryContainer" id="1482735745021"><p class="fs text" title="/app.js"> app.js </p> <p class="fs text" title="/example.js"> example.js </p> <p class="fs directory" title="/node_modules"> node_modules </p> <p class="fs unknown" title="/package.json"> package.json </p> <p class="fs directory" title="/public"> public </p> <p class="fs directory" title="/routes"> routes </p> <p class="fs directory" title="/sites"> sites </p> <p class="fs directory" title="/test"> test </p> <p class="fs text" title="/test.txt"> test.txt </p> <p class="fs directory" title="/testdir"> testdir </p> <p class="fs text" title="/testdirtest.txt"> testdirtest.txt </p> <p class="fs directory" title="/user"> user </p> </div><p class="prompt">localhost/root0 &gt;  ls /public</p><div class="result directoryContainer" id="1482735771249"><p class="fs directory" title="/public/images"> images </p> <p class="fs markup" title="/public/index.html"> index.html </p> <p class="fs directory" title="/public/js"> js </p> <p class="fs directory" title="/public/lib"> lib </p> <p class="fs directory" title="/public/savedTrees"> savedTrees </p> <p class="fs directory" title="/public/styles"> styles </p> </div><p class="prompt">localhost/root0 &gt;  ls /public/js</p><div class="result directoryContainer" id="1482735772653"><p class="fs directory" title="/public/js/constructors"> constructors </p> <p class="fs text" title="/public/js/customCommands.js"> customCommands.js </p> <p class="fs text" title="/public/js/keyevents.js"> keyevents.js </p> <p class="fs unknown" title="/public/js/npm-debug.log"> npm-debug.log </p> <p class="fs unknown" title="/public/js/socket.io.js"> socket.io.js </p> <p class="fs text" title="/public/js/socketevents.js"> socketevents.js </p> <p class="fs text" title="/public/js/utils.js"> utils.js </p> </div><p class="prompt">localhost/root0 &gt;  ls /public/js/constructors</p><div class="result directoryContainer" id="1482735774468"><p class="fs text" title="/public/js/constructors/Circle.js"> Circle.js </p> <p class="fs text" title="/public/js/constructors/Codemirror.js"> Codemirror.js </p> <p class="fs text" title="/public/js/constructors/Leaf.js"> Leaf.js </p> <p class="fs text" title="/public/js/constructors/Tag.js"> Tag.js </p> <p class="fs text" title="/public/js/constructors/Terminal.js"> Terminal.js </p> </div><p class="prompt">localhost/root0 &gt;  open /public/js/constructors/Leaf.js</p><div class="result" id="1482735776581">Maybe it worked</div><p class="prompt">localhost/root0 &gt; pwd</p><div class="result" id="1482735803702">/home/TextreePlot/public/savedTrees<br></div><p class="prompt">localhost/root0 &gt; cd ..</p><div class="request result" id="1482735809487">Running command on server...</div><p class="prompt">localhost/root0 &gt; pwd</p><div class="result" id="1482735810112">/home/TextreePlot/public<br></div><p class="prompt">localhost/root0 &gt; ls</p><div class="result" id="1482735811889">images<br>index.html<br>js<br>lib<br>savedTrees<br>styles<br></div><p class="prompt">localhost/root0 &gt; files</p><div class="result directoryContainer" id="1482735815179"><p class="fs text" title="/app.js"> app.js </p> <p class="fs text" title="/example.js"> example.js </p> <p class="fs directory" title="/node_modules"> node_modules </p> <p class="fs unknown" title="/package.json"> package.json </p> <p class="fs directory" title="/public"> public </p> <p class="fs directory" title="/routes"> routes </p> <p class="fs directory" title="/sites"> sites </p> <p class="fs directory" title="/test"> test </p> <p class="fs text" title="/test.txt"> test.txt </p> <p class="fs directory" title="/testdir"> testdir </p> <p class="fs text" title="/testdirtest.txt"> testdirtest.txt </p> <p class="fs directory" title="/user"> user </p> </div><p class="prompt">localhost/root0 &gt;  ls /public</p><div class="result directoryContainer" id="1482735818082"><p class="fs directory" title="/public/images"> images </p> <p class="fs markup" title="/public/index.html"> index.html </p> <p class="fs directory" title="/public/js"> js </p> <p class="fs directory" title="/public/lib"> lib </p> <p class="fs directory" title="/public/savedTrees"> savedTrees </p> <p class="fs directory" title="/public/styles"> styles </p> </div><p class="prompt">localhost/root0 &gt;  ls /public/styles</p><div class="result directoryContainer" id="1482735821101"><p class="fs text" title="/public/styles/style.css"> style.css </p> </div><p class="prompt">localhost/root0 &gt; pwd</p><div class="result" id="1482735823611">/home/TextreePlot/public<br></div><p class="prompt">localhost/root0 &gt; cd styles</p><div class="request result" id="1482735826520">Running command on server...</div><p class="prompt">localhost/root0 &gt; pwd</p><div class="result" id="1482735827337">/home/TextreePlot/public/styles<br></div><p class="prompt">localhost/root0 &gt; touch menuStyle.css</p><div class="result" id="1482735833907" style="color: red;">menuStyle.css { dev: 64769,<br>  mode: 33188,<br>  nlink: 1,<br>  uid: 0,<br>  gid: 0,<br>  rdev: 0,<br>  blksize: 4096,<br>  ino: 921374,<br>  size: 0,<br>  blocks: 0,<br>  atime: 2016-12-26T07:03:55.000Z,<br>  mtime: 2016-12-26T07:03:55.000Z,<br>  ctime: 2016-12-26T07:03:55.663Z,<br>  birthtime: 2016-12-26T07:03:55.663Z }<br></div><p class="prompt">localhost/root0 &gt;  ls /public/styles</p><div class="result" id="1482735840731" style="color: red;">ls: cannot access '/public/styles': No such file or directory<br></div><p class="prompt">localhost/root0 &gt; files</p><div class="result directoryContainer" id="1482735843743"><p class="fs text" title="/app.js"> app.js </p> <p class="fs text" title="/example.js"> example.js </p> <p class="fs directory" title="/node_modules"> node_modules </p> <p class="fs unknown" title="/package.json"> package.json </p> <p class="fs directory" title="/public"> public </p> <p class="fs directory" title="/routes"> routes </p> <p class="fs directory" title="/sites"> sites </p> <p class="fs directory" title="/test"> test </p> <p class="fs text" title="/test.txt"> test.txt </p> <p class="fs directory" title="/testdir"> testdir </p> <p class="fs text" title="/testdirtest.txt"> testdirtest.txt </p> <p class="fs directory" title="/user"> user </p> </div><p class="prompt">localhost/root0 &gt;  ls /public</p><div class="result directoryContainer" id="1482735845671"><p class="fs directory" title="/public/images"> images </p> <p class="fs markup" title="/public/index.html"> index.html </p> <p class="fs directory" title="/public/js"> js </p> <p class="fs directory" title="/public/lib"> lib </p> <p class="fs directory" title="/public/savedTrees"> savedTrees </p> <p class="fs directory" title="/public/styles"> styles </p> </div><p class="prompt">localhost/root0 &gt;  ls /public/styles</p><div class="result directoryContainer" id="1482735848439"><p class="fs text" title="/public/styles/menuStyle.css"> menuStyle.css </p> <p class="fs text" title="/public/styles/style.css"> style.css </p> </div><p class="prompt">localhost/root0 &gt;  open /public/styles/menuStyle.css</p><div class="result" id="1482735849938">Maybe it worked</div><p class="prompt">localhost/root0 &gt; git status</p><div class="result" id="1482735929374">On branch master<br>Your branch is up-to-date with 'origin/master'.<br>Untracked files:<br>  (use "git add &lt;file&gt;..." to include in what will be committed)<br><br>	../../example.js<br>	menuStyle.css<br>	../../test.txt<br>	../../test/<br>	../../testdir/<br>	../../testdirtest.txt<br>	../../user/<br><br>nothing added to commit but untracked files present (use "git add" to track)<br></div><p class="prompt">localhost/root0 &gt; git checkout -b radialMenu</p><div class="result" id="1482735949578" style="color: red;">"git checkout -b radialMenu" has not been whitelisted to run serverside</div><p class="prompt">localhost/root0 &gt; files</p><div class="result directoryContainer" id="1482735960330"><p class="fs text" title="/app.js"> app.js </p> <p class="fs text" title="/example.js"> example.js </p> <p class="fs directory" title="/node_modules"> node_modules </p> <p class="fs unknown" title="/package.json"> package.json </p> <p class="fs directory" title="/public"> public </p> <p class="fs directory" title="/routes"> routes </p> <p class="fs directory" title="/sites"> sites </p> <p class="fs directory" title="/test"> test </p> <p class="fs text" title="/test.txt"> test.txt </p> <p class="fs directory" title="/testdir"> testdir </p> <p class="fs text" title="/testdirtest.txt"> testdirtest.txt </p> <p class="fs directory" title="/user"> user </p> </div><p class="prompt">localhost/root0 &gt;  open /app.js</p><div class="result" id="1482735963935">Maybe it worked</div><p class="prompt">localhost/root0 &gt;  ls /routes</p><div class="result directoryContainer" id="1482735971139"><p class="fs text" title="/routes/index.js"> index.js </p> </div><p class="prompt">localhost/root0 &gt;  open /routes/index.js</p><div class="result" id="1482735972703">Maybe it worked</div><p class="prompt">localhost/root0 &gt; save</p><div class="request" id="newMenu70" createdat="1482735989076">20.886 KB written successfully to newMenu.html at Mon Dec 26 2016 02:06:29 GMT-0500 (Eastern Standard Time)</div><p class="prompt">localhost/root0 &gt; </p></div><div tabindex="1" class="leaf codemirrorContainer" id="Codemirror1" listen="true" broadcast="true" target="/routes/index.js" style="left: 92px; top: 295px; width: 800px; height: 400px; position: absolute; background: white;"><h3 class="entityHeader">Codemirror1 &gt; /routes/index.js<div class="editButton">R</div><div class="removeButton"></div><div class="saveButton"></div><div class="broadcastButton"></div><div class="listenButton"></div></h3><textarea style="display: none;">const express = require('express');
+const router = express.Router();
+const path = require('path');
+const fs = require('fs')
+const exec = require('child_process').exec
+
+router.use(express.static(path.join(__dirname, '..', '/public')));
+router.use(express.static(path.join(__dirname, '..', '/public/savedTrees')));
+router.use(express.static(path.join(__dirname, '..',  'public/savedTrees'),{index:false,extensions:['html']}));
+
+router.post('/savethis', (req,res,next)=&gt;{
+	var htmlString = req.body.content;
+	var fileName = req.body.fileName;
+	fs.writeFile(path.join(__dirname, '..',  '/public/savedTrees/', fileName), htmlString, err =&gt; {
+		if(err){
+			res.status(400).send(err);
+		} else {
+			let {size} = fs.statSync(path.join(__dirname, '..',  '/public/savedTrees/', fileName));
+			if(!(size === htmlString.length)){
+				console.log('Filesize mismatched string length, some characters were not 8 bit char. ')
+			}
+			console.log(`${size} bytes saved to disk.`)
+			console.log(`${htmlString.length} characters saved to disk.`)
+			console.log(`${formatBytes(size,1)} written successfully to ${fileName}`)
+			res.status(200).send(`${formatBytes(size,1)} written successfully to ${fileName}`);
+		}
+	})
+})
+
+router.post('/saveText', (req,res,next) =&gt; {
+	console.log(req.body);
+	fs.writeFile(path.join(__dirname, '../', req.body.filename ), req.body.text, err =&gt; {
+			err ? res.sendStatus(400) :	res.sendStatus(200);
+	})
+})
+
+router.post('/exec', (req,res,next)=&gt;{
+	/*
+	The process for running commands once they reach the server - these requests will be sent if they were included in the custom commands object, 
+	but this should also gaurd against arbitrary post requests (not from a faithful client, I mean)
+	So, there are some commands like 'cd' that require a special node routine
+	there are some commands that exist only on windows or linux, which should be matched according to server side OS: ls -&gt; dir, touch -&gt; type NUL &gt;&gt;, 
+	
+	*/
+	let command = req.body.command;
+	if(aCustomCommandMatches(command)){
+		if(process.env.OS &amp;&amp; process.env.OS.includes('Windows') &amp;&amp; ['touch','ls'].some(each =&gt; command.indexOf(each) === 0)){
+			switch(command.split(' ')[0]){
+				case 'ls': exec('dir', (err,stdout,stderr)=&gt;{
+						res.status(200).json({err,stdout,stderr});
+				}); break;
+				case 'touch': exec(`type NUL &gt;&gt; ${command.split(' ')[1]}`, (err,stdout,stderr)=&gt;{
+					res.status(200).json({err,stdout,stderr});
+				}); break;
+			}
+		//cd is a special case, running it doesn't work, process.chdir has to be used instead
+		} else if(command.indexOf('cd') === 0){
+				changeDir(command)
+		} else {
+				exec(command, (err,stdout,stderr)=&gt;{
+					res.status(200).json({err,stdout,stderr});
+				})
+		}
+	} else {
+		res.status(403).json({err: `"${command}" has not been whitelisted to run serverside`});
+	}
+	console.log(command)
+})
+
+function changeDir(command){
+		try{
+			process.chdir(command.split(' ')[1]);
+			res.status(200).json({stdout: process.cwd()})
+		} catch(e){
+			res.status(404).json({err: 'cd errored out'})
+		}
+}
+
+
+
+router.get('/readFile', (req,res,next) =&gt; {
+	console.log(req.query.pathname)
+	let pathname = req.query.pathname;
+	pathname = path.join(__dirname, '..', pathname);
+
+	fs.readFile(pathname, 'utf8', (err, data) =&gt; {
+		if(err){
+			console.log(err)
+			res.status(400).send(err);
+		} else {
+			res.json(data);
+		}
+	})
+})
+
+router.post('/fs', (req,res,next)=&gt;{
+
+	var pathname = '/';
+	if(req.body.pathname !== 'undefined'){
+			pathname = addSlashesIfNeedBe(req.body.pathname);
+	} 
+	
+  var dirtoread = path.join(__dirname, '..', pathname)
+
+	fs.readdir(dirtoread, function(err, files){
+
+		if(err){
+			res.status(204).send(err);
+		} else {
+			var result = {};
+			for(each in files){
+				var oneFile = files[each];
+				console.log(oneFile)
+				
+				if(oneFile[0] != '.'){             //if it's not hidden
+					if(fs.fstatSync(fs.openSync(path.join(dirtoread,oneFile),'r')).isDirectory()){ //if its a directory
+						result[files[each]] = 'directory';
+					} else if (oneFile.indexOf('.') === -1){
+							result[files[each]] = 'unknown';
+					} else {
+						switch(oneFile.split('.')[1].toLowerCase()){
+							case 'js': result[files[each]] = 'text'; break;
+							case 'css': result[files[each]] = 'text'; break;
+							case 'html': result[files[each]] = 'markup'; break;
+							case 'txt': result[files[each]] = 'text'; break;
+							case 'svg': result[files[each]] = 'markup'; break;
+							case 'png': result[files[each]] = 'image'; break;
+							case 'jpg': result[files[each]] = 'image'; break;
+							case 'gif': result[files[each]] = 'image'; break;
+							default: result[files[each]] = 'unknown'; break;
+						}
+					}
+				}
+			}
+
+			res.status(200).json({pathname, result});
+		// fileArr = fileArr.slice(1, fileArr.length - 1); //git rid of brackets
+		// fileArr = fileArr.split(','); //convert to array
+		// fileArr = fileArr.map(function(aFileName){return aFileName.slice(1,aFileName.length -1)});
+		}
+	})
+	
+})
+
+router.get('/:notYetAFile', function(req,res){
+   res.sendFile(path.join(__dirname, '..',  '/public/index.html'));
+})
+
+module.exports = router;
+
+function addSlashesIfNeedBe(aFilePath){
+		if(aFilePath[0] !== '/'){
+			aFilePath = '/' + aFilePath;
+		}
+		if(aFilePath[aFilePath.length - 1] !== '/'){
+			aFilePath += '/'
+		}
+		return aFilePath;
+	}
+// socket.client.conn.remoteAddress reports the Public IP of the origin of the message
+// socket.id reports the socket ID of the origin of the message. 
+
+//Probably ought to be a utility or something
+function aCustomCommandMatches(aPostedCommand){
+	let arrValid = ['cat', 'git log', 'git status','git fetch','git pull','git clone', 'git add', 'git commit', 'git push','mkdir','touch','pwd','cd','ls'];
+	return arrValid.some(validCommand =&gt; aPostedCommand.indexOf(validCommand) === 0)
+}
+
+//OK this one I ripped off stackoverflow: http://stackoverflow.com/questions/15900485/correct-way-to-convert-size-in-bytes-to-kb-mb-gb-in-javascript#18650828
+function formatBytes(bytes,decimals) {
+   if(bytes == 0) return '0 Byte';
+   var k = 1000; // or 1024 for binary
+   var dm = decimals + 1 || 3;
+   var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+   var i = Math.floor(Math.log(bytes) / Math.log(k));
+   return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+}</textarea></div></body>

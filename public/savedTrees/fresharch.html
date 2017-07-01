@@ -1,0 +1,41 @@
+<head>
+    <!--<link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">-->
+    <link rel="stylesheet" href="/styles/style.css">
+    <script src="/js/constructors/Leaf.js" defer=""></script>
+    <script src="/js/constructors/Terminal.js" defer=""></script>
+    <script src="/js/socket.io.js" defer=""></script>
+    <script src="/js/socketevents.js" defer=""></script>
+    <script src="/js/customCommands.js" defer=""></script>
+    <script src="/js/utils.js" defer=""></script>
+    <script id="repl"></script>
+  <script src="/js/constructors/Codemirror.js" defer="true"></script><link rel="stylesheet" href="/lib/codemirror.css"><script src="/lib/codemirror.js" defer="true"></script><script src="/lib/mode/javascript/javascript.js" defer="true"></script><title>fresharch</title></head>
+  <!--Giving body id body for consistency with certain functions that rely on div id-->
+  <body id="body" style="position: absolute; left: 0px; top: 0px; height: 895px; width: 1500px;">
+
+<div tabindex="1" class="leaf terminal" id="fresharch" listen="true" broadcast="true" history="1" protoprompt="localhost/root0 > " style="left: 883px; top: 487px; width: 400px; height: 300px; position: absolute; background: white;" prompt="localhost/fresharch > "><h3 class="entityHeader" style="top: 20px;">fresharch<div class="removeButton"></div><div class="broadcastButton"></div><div class="listenButton"></div></h3><p class="prompt">localhost/root0 &gt; create Codemirror</p><div class="query result" id="1481491763222">Constructor retrieved and invoked, Codemirror0 added to DOM</div><p class="prompt">localhost/root0 &gt; Codemirror0.style.width = '100cw'</p><div class="result result" id="1481491810091">100cw</div><p class="prompt">localhost/root0 &gt; Codemirror0.style.width = '100vw'</p><div class="result result" id="1481491812623">100vw</div><p class="prompt">localhost/root0 &gt; rename fresharch</p><div class="result result" id="1481493306099">root0 has been renamed to fresharch</div><p class="prompt">localhost/root0 &gt; </p><div class="request" id="fresharch10" createdat="1481493750527">4.033 KB written successfully to fresharch.html at Sun Dec 11 2016 17:02:30 GMT-0500 (Eastern Standard Time)</div><p class="prompt">localhost/root0 &gt; </p></div><div tabindex="1" class="leaf codemirrorContainer   " id="Codemirror0" listen="true" broadcast="true" style="left: -7px; top: 5px; width: 100vw; height: 400px; position: absolute; background: white;"><h3 class="entityHeader">Codemirror0<div class="editButton">R</div><div class="removeButton"></div><div class="broadcastButton"></div><div class="listenButton"></div></h3><textarea style="display: none;">the goal is to make it easy to create new sites, that could be edited from textreeplot and be routed to one way or another
+
+Such that, I can create a site, which is a git repo, and I can push and pull to that site without editing the textreeplot git folder
+So, if cloning textreeplot, that creates a git repo, and maybe it could create a folder that it ignores
+
+So: theres a sites folder
+its ignored
+
+you can make folders inside that if you want (maybe later I'll have a script to do it for you)
+you can git init and have seperate repos for that site
+                                              
+so, on 'create site' - create a folder with the site name, coltenj.com, create a routes file that initially does a serve static deal. creates an index.html.
+When the textree server boots (or maybe its watching the folder for changes - add that listener on boot), it creates properties of a sites object
+	- a route for each folder.
+    - do I need a js file describing that route? If I want it to be useful I guess so
+	- so basically this would serve to allow the creation and updating of a site without having to create the server, but still being able to descibe a custom API
+    
+    
+    
+
+If I have an html file that I can get to via iframe... 
+	I guess I can open an html file as innerHTML of a lookout, and then hit edit on that lookout, and my changes will be reflected immediately. But then, 
+      the codemirror will be referencing an html file that is served to a domain, so when I save that codemirror (maybe auto git commit) it will be done
+      
+
+
+</textarea></div></body>

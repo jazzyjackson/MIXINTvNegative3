@@ -1,0 +1,611 @@
+<head>
+    <!--<link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">-->
+    <link rel="stylesheet" href="/styles/style.css">
+    <script src="/js/constructors/Leaf.js" defer=""></script>
+    <script src="/js/constructors/Terminal.js" defer=""></script>
+    <script src="/js/socket.io.js" defer=""></script>
+    <script src="/js/socketevents.js" defer=""></script>
+    <script src="/js/customCommands.js" defer=""></script>
+    <script src="/js/utils.js" defer=""></script>
+    <script id="repl"></script>
+  <script src="/js/constructors/Codemirror.js" defer="true"></script><link rel="stylesheet" href="/lib/codemirror.css"><script src="/lib/codemirror.js" defer="true"></script><script src="/lib/mode/javascript/javascript.js" defer="true"></script></head>
+  <!--Giving body id body for consistency with certain functions that rely on div id-->
+  <body id="body" style="position: absolute; left: 0px; top: 0px; height: 895px; width: 1500px;">
+
+<div tabindex="1" class="leaf terminal" id="testtest" history="1" protoprompt="localhost/root0 > " style="left: 423px; top: 91px; width: 800px; height: 300px; position: absolute; background: white;" prompt="localhost/testtest > "><h3 class="entityHeader" style="top: 3694px;">testtest<div class="removeButton">X</div></h3><p class="prompt">localhost/root0 &gt;files</p><div class="result directoryContainer" id="1480043179522"><p class="fs text" title="/app.js"> app.js </p> <p class="fs text" title="/example.js"> example.js </p> <p class="fs directory" title="/node_modules"> node_modules </p> <p class="fs directory" title="/public"> public </p> <p class="fs text" title="/test.txt"> test.txt </p> <p class="fs directory" title="/testdir"> testdir </p> <p class="fs text" title="/testdirtest.txt"> testdirtest.txt </p> <p class="fs directory" title="/user"> user </p> </div><p class="prompt">localhost/root0 &gt; this.style.width = 800</p><div class="result result" id="1480043187789">800</div><p class="prompt">localhost/root0 &gt; this</p><div class="result result" id="1480043195909">[object HTMLDivElement]</div><p class="prompt">localhost/root0 &gt; files</p><div class="result directoryContainer" id="1480043198520"><p class="fs text" title="/app.js"> app.js </p> <p class="fs text" title="/example.js"> example.js </p> <p class="fs directory" title="/node_modules"> node_modules </p> <p class="fs directory" title="/public"> public </p> <p class="fs text" title="/test.txt"> test.txt </p> <p class="fs directory" title="/testdir"> testdir </p> <p class="fs text" title="/testdirtest.txt"> testdirtest.txt </p> <p class="fs directory" title="/user"> user </p> </div><p class="prompt">localhost/root0 &gt; ls -la</p><div class="result" id="1480043201750">total 52<br>drwxr-xr-x   7 root root  4096 Nov 14 05:59 .<br>drwxr-xr-x   5 root root  4096 Nov 12 00:12 ..<br>-rw-r--r--   1 root root  6971 Nov 12 00:18 app.js<br>-rw-r--r--   1 root root     0 Nov  2 13:17 example.js<br>drwxr-xr-x   8 root root  4096 Nov 18 17:54 .git<br>-rw-r--r--   1 root root    77 Nov 14 05:59 .gitignore<br>drwxr-xr-x 218 root root 12288 Oct 29 17:37 node_modules<br>-rw-r--r--   1 root root   726 Oct 29 19:13 package.json<br>drwxr-xr-x   7 root root  4096 Nov 14 17:17 public<br>drwxr-xr-x   2 root root  4096 Nov  1 02:17 testdir<br>-rw-r--r--   1 root root     0 Nov  1 02:17 testdirtest.txt<br>-rw-r--r--   1 root root     0 Nov  1 02:16 test.txt<br>drwxr-xr-x   2 root root  4096 Nov  2 13:17 user<br></div><p class="prompt">localhost/root0 &gt; git status</p><div class="result" id="1480043210760">On branch master<br>Your branch is up-to-date with 'origin/master'.<br>Untracked files:<br>  (use "git add &lt;file&gt;..." to include in what will be committed)<br><br>	example.js<br>	test.txt<br>	testdir/<br>	testdirtest.txt<br>	user/<br><br>nothing added to commit but untracked files present (use "git add" to track)<br></div><p class="prompt">localhost/root0 &gt; git fetch</p><div class="result" id="1480043216780" style="color: red;">error: cannot lock ref 'refs/remotes/origin/master': ref refs/remotes/origin/master is at 448cd85e83a0db4f0243c6b78b3b994fdda72aed but expected 0ca1030cf175880fd6396734ba4bd221046032f5<br>From https://github.com/jazzyjackson/TextreePlot<br> ! 0ca1030..448cd85  master     -&gt; origin/master  (unable to update local ref)<br></div><p class="prompt">localhost/root0 &gt; git fetch</p><div class="result" id="1480043223900">The command ran without error or output</div><p class="prompt">localhost/root0 &gt; files</p><div class="result directoryContainer" id="1480043234418"><p class="fs text" title="/app.js"> app.js </p> <p class="fs text" title="/example.js"> example.js </p> <p class="fs directory" title="/node_modules"> node_modules </p> <p class="fs directory" title="/public"> public </p> <p class="fs text" title="/test.txt"> test.txt </p> <p class="fs directory" title="/testdir"> testdir </p> <p class="fs text" title="/testdirtest.txt"> testdirtest.txt </p> <p class="fs directory" title="/user"> user </p> </div><p class="prompt">localhost/root0 &gt; git fetch</p><div class="result" id="1480043238518">The command ran without error or output</div><p class="prompt">localhost/root0 &gt; git status</p><div class="result" id="1480043242099">On branch master<br>Your branch is behind 'origin/master' by 3 commits, and can be fast-forwarded.<br>  (use "git pull" to update your local branch)<br>Untracked files:<br>  (use "git add &lt;file&gt;..." to include in what will be committed)<br><br>	example.js<br>	test.txt<br>	testdir/<br>	testdirtest.txt<br>	user/<br><br>nothing added to commit but untracked files present (use "git add" to track)<br></div><p class="prompt">localhost/root0 &gt; git pull</p><div class="result" id="1480043243728" style="color: red;">Updating 0ca1030..448cd85<br></div><p class="prompt">localhost/root0 &gt; git status</p><div class="result" id="1480043246700">On branch master<br>Your branch is up-to-date with 'origin/master'.<br>Untracked files:<br>  (use "git add &lt;file&gt;..." to include in what will be committed)<br><br>	example.js<br>	test.txt<br>	testdir/<br>	testdirtest.txt<br>	user/<br><br>nothing added to commit but untracked files present (use "git add" to track)<br></div><p class="prompt">localhost/root0 &gt; git rm *</p><div class="result" id="1480043249399" style="color: red;">"git rm *" has not been whitelisted to run serverside</div><p class="prompt">localhost/root0 &gt; files</p><div class="result directoryContainer" id="1480043252379"><p class="fs text" title="/app.js"> app.js </p> <p class="fs text" title="/example.js"> example.js </p> <p class="fs directory" title="/node_modules"> node_modules </p> <p class="fs directory" title="/public"> public </p> <p class="fs text" title="/test.txt"> test.txt </p> <p class="fs directory" title="/testdir"> testdir </p> <p class="fs text" title="/testdirtest.txt"> testdirtest.txt </p> <p class="fs directory" title="/user"> user </p> </div><p class="prompt">localhost/root0 &gt;  ls /public</p><div class="result directoryContainer" id="1480043254259"><p class="fs directory" title="/public/images"> images </p> <p class="fs text" title="/public/index.html"> index.html </p> <p class="fs directory" title="/public/js"> js </p> <p class="fs directory" title="/public/lib"> lib </p> <p class="fs directory" title="/public/savedTrees"> savedTrees </p> <p class="fs directory" title="/public/styles"> styles </p> </div><p class="prompt">localhost/root0 &gt;  open /app.js</p><div class="result" id="1480043257331">Maybe it worked</div><p class="prompt">localhost/root0 &gt;  ls /public/stylesCode</p><div class="result" id="1480043268999" style="color: red;">ls: cannot access '/public/stylesCode': No such file or directory<br></div><p class="prompt">localhost/root0 &gt; Codemirror0</p><div class="result result" id="1480043271429">[object HTMLDivElement]</div><p class="prompt">localhost/root0 &gt; Codemirror0.style.width </p><div class="result result" id="1480043318357">400px</div><p class="prompt">localhost/root0 &gt; files</p><div class="result directoryContainer" id="1480043319199"><p class="fs text" title="/app.js"> app.js </p> <p class="fs text" title="/example.js"> example.js </p> <p class="fs directory" title="/node_modules"> node_modules </p> <p class="fs directory" title="/public"> public </p> <p class="fs text" title="/test.txt"> test.txt </p> <p class="fs directory" title="/testdir"> testdir </p> <p class="fs text" title="/testdirtest.txt"> testdirtest.txt </p> <p class="fs directory" title="/user"> user </p> </div><p class="prompt">localhost/root0 &gt;  ls /public</p><div class="result directoryContainer" id="1480043335474"><p class="fs directory" title="/public/images"> images </p> <p class="fs text" title="/public/index.html"> index.html </p> <p class="fs directory" title="/public/js"> js </p> <p class="fs directory" title="/public/lib"> lib </p> <p class="fs directory" title="/public/savedTrees"> savedTrees </p> <p class="fs directory" title="/public/styles"> styles </p> </div><p class="prompt">localhost/root0 &gt;  ls /public/js</p><div class="result directoryContainer" id="1480043337172"><p class="fs directory" title="/public/js/constructors"> constructors </p> <p class="fs text" title="/public/js/customCommands.js"> customCommands.js </p> <p class="fs text" title="/public/js/keyevents.js"> keyevents.js </p> <p class="fs text" title="/public/js/socketevents.js"> socketevents.js </p> <p class="fs text" title="/public/js/utils.js"> utils.js </p> </div><p class="prompt">localhost/root0 &gt;  open /public/js/customCommands.js</p><div class="result" id="1480043339477">Maybe it worked</div><p class="prompt">localhost/root0 &gt;  ls /public/js/constructors</p><div class="result" id="1480043348998" style="color: red;">ls: cannot access '/public/js/constructors': No such file or directory<br></div><p class="prompt">localhost/root0 &gt; rename testtest</p><div class="result result" id="1480043353908">root0 has been renamed to testtest</div><p class="prompt">localhost/root0 &gt; save</p><div class="request" id="testtest54" createdat="1480043355857">35.24 KB written successfully to testtest.html at Thu Nov 24 2016 22:09:15 GMT-0500 (Eastern Standard Time)</div><p class="prompt">localhost/root0 &gt; save</p><div class="request" id="testtest56" createdat="1480043388686">35.467 KB written successfully to testtest.html at Thu Nov 24 2016 22:09:48 GMT-0500 (Eastern Standard Time)</div><p class="prompt">localhost/root0 &gt; </p></div><div tabindex="1" class="leaf terminal bob" id="root1" history="0" protoprompt="localhost/root1 > " style="left: 133px; top: 198px; width: 400px; height: 300px; position: absolute; background: white;"><h3 class="entityHeader">root1<div class="removeButton">X</div></h3><p class="prompt">localhost/root1 &gt; Math.pow(2,32)</p><div class="result result" id="1480043132221">4294967296</div><p class="prompt">localhost/root1 &gt; document.body.</p></div><div tabindex="1" class="leaf codemirrorContainer" id="Codemirror0" style="left: 639px; top: 271px; width: 400px; height: 400px; position: absolute; background: white;"><h3 class="entityHeader">Codemirror0 &gt; /app.js<div class="editButton">R</div><div class="removeButton">X</div></h3><textarea style="display: none;">const express = require('express');
+const app = express();
+const server = require('http').Server(app);
+const path = require('path');
+
+const fs = require('fs')
+const exec = require('child_process').exec
+
+const io = require('socket.io')(server);
+const serverlogging = require('morgan');
+const bodyParser = require('body-parser')
+app.use( bodyParser.json() );       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+  extended: true
+})); 
+
+
+let port = process.env.PORT || 3000;
+
+console.log(`Listening on ${port}`);
+var identities = {};
+server.listen(port);
+
+app.use(serverlogging('dev'));
+app.use(express.static(__dirname+ '/public'));
+app.use(express.static(__dirname + '/public/savedTrees'));
+app.use(express.static(path.join(__dirname, 'public/savedTrees'),{index:false,extensions:['html']}));
+
+app.post('/savethis', (req,res,next)=&gt;{
+	var htmlString = req.body.content;
+	var fileName = req.body.fileName;
+	fs.writeFile(path.join(__dirname, '/public/savedTrees/', fileName), htmlString, function(err){
+		if(err){
+			res.status(400).send(err);
+		} else {
+			let {size} = fs.statSync(path.join(__dirname, '/public/savedTrees/', fileName));
+			if(!(size === htmlString.length)){
+				console.log('Filesize mismatched string length, some characters were not 8 bit char. ')
+			}
+			console.log(`${size} bytes saved to disk.`)
+			console.log(`${htmlString.length} characters saved to disk.`)
+			console.log(`${formatBytes(size,1)} written successfully to ${fileName}`)
+			res.status(200).send(`${formatBytes(size,1)} written successfully to ${fileName}`);
+		}
+	})
+})
+
+
+app.post('/exec', (req,res,next)=&gt;{
+	let command = req.body.command;
+	if(aCustomCommandMatches(command)){
+		//cd is a special case, running it doesn't work, process.chdir has to be used instead
+		if(command.indexOf('cd') === 0){
+			try{
+				process.chdir(command.split(' ')[1]);
+				res.status(200).json({stdout: process.cwd()})
+			} catch(e){
+				res.status(404).json({err: 'cd errored out'})
+			}
+		} else {
+			exec(command, (err,stdout,stderr)=&gt;{
+				res.status(200).json({err,stdout,stderr});
+			})
+		}
+	} else {
+		res.status(403).json({err: `"${command}" has not been whitelisted to run serverside`});
+	}
+	console.log(command)
+})
+
+
+
+app.get('/readFile', (req,res,next) =&gt; {
+	console.log(req.query.pathname)
+	let pathname = req.query.pathname;
+	console.log(req.query.pathname);
+	console.log(pathname);
+	console.log(__dirname);
+	console.log(path.join(__dirname, pathname));
+
+	fs.readFile(path.join(__dirname, pathname), 'utf8' ,function(err,data){
+		if(err){
+			console.log(err)
+			res.status(400).send(err);
+		} else {
+			res.json(data);
+		}
+	})
+})
+
+app.post('/fs', (req,res,next)=&gt;{
+
+	var pathname = '/';
+	if(req.body.pathname !== 'undefined'){
+			pathname = addSlashesIfNeedBe(req.body.pathname);
+	} 
+	
+	fs.readdir(path.join(__dirname,pathname), function(err, files){
+		if(err){
+			res.status(204).send(err);
+		} else {
+			var result = {};
+			for(each in files){
+				var oneFile = files[each];
+				if(oneFile[0] != '.'){             //if it's not hidden
+					if(oneFile.indexOf('.') === -1){ //and if there's no extension
+						result[files[each]] = 'directory';
+					} else {
+						switch(oneFile.split('.')[1].toLowerCase()){
+							case 'js': result[files[each]] = 'text'; break;
+							case 'css': result[files[each]] = 'text'; break;
+							case 'html': result[files[each]] = 'text'; break;
+							case 'txt': result[files[each]] = 'text'; break;
+							case 'svg': result[files[each]] = 'image'; break;
+							case 'png': result[files[each]] = 'image'; break;
+							case 'jpg': result[files[each]] = 'image'; break;
+							case 'gif': result[files[each]] = 'image'; break;
+						}
+					}
+				}
+			}
+
+			res.status(200).json({pathname, result});
+		// fileArr = fileArr.slice(1, fileArr.length - 1); //git rid of brackets
+		// fileArr = fileArr.split(','); //convert to array
+		// fileArr = fileArr.map(function(aFileName){return aFileName.slice(1,aFileName.length -1)});
+		}
+	})
+	
+})
+
+app.get('/:notYetAFile', function(req,res){
+   res.sendfile('./public/index.html');
+})
+
+io.on('connection', function(socket){
+		identities[socket.id] = {ip: socket.client.conn.remoteAddress.split(':').slice(-1)[0], name: null};
+    socket.on('event', function (data){
+      socket.broadcast.to(identities[socket.id].room).emit('event',data);
+    });
+		socket.on('filesaveResult', function (data){
+      socket.broadcast.to(identities[socket.id].room).emit('filesaveResult',data);
+    });
+		socket.on('remoteRunFile', function(data){
+			socket.broadcast.to(identities[socket.id].room).emit('remoteRunFile', data)
+		})
+		socket.on('cursorActivity', function(data){
+			socket.broadcast.to(identities[socket.id].room).emit('cursorActivity', data)
+		})
+		socket.on('mirrorChange', function(data){
+			socket.broadcast.to(identities[socket.id].room).emit('mirrorChange', data)
+		})
+
+		socket.on('subscribe', function(data){
+			socket.join(data.room);
+			identities[socket.id].room = data.room;
+			console.log(identities[socket.id])
+		})
+		
+
+		socket.on('identityRequest', function(req){
+			//I think each client's identity request will come in separately, when one user asks whoami and hits enter, the local browser will evaluate that and emit an identity request, so this message shouldn't be broadcast.
+			//req is the incoming message. socket is the particular connection.	
+			// console.log(identities[socket.id]);
+			socket.emit('identityResponse', {
+				placeHolderId: req.placeHolderId,
+				socketid: socket.id,
+				ipaddress: identities[socket.id].ip,
+				name: identities[socket.id].name
+			});
+		})
+
+
+		socket.on('timeRequest', function(req){
+			socket.emit('timeResponse', {
+				placeHolderId: req.placeHolderId,
+				serverTime: Date()
+			})
+		})
+
+    //events to implement: identityRequest, timeRequest
+})
+
+
+function addSlashesIfNeedBe(aFilePath){
+		if(aFilePath[0] !== '/'){
+			aFilePath = '/' + aFilePath;
+		}
+		if(aFilePath[aFilePath.length - 1] !== '/'){
+			aFilePath += '/'
+		}
+		return aFilePath;
+	}
+// socket.client.conn.remoteAddress reports the Public IP of the origin of the message
+// socket.id reports the socket ID of the origin of the message. 
+
+//Probably ought to be a utility or something
+function aCustomCommandMatches(aPostedCommand){
+	let arrValid = ['cat', 'git log', 'git status','git fetch','git pull','mkdir','touch','pwd','cd','ls'];
+	return arrValid.some(validCommand =&gt; aPostedCommand.indexOf(validCommand) === 0)
+}
+
+//OK this one I ripped off stackoverflow: http://stackoverflow.com/questions/15900485/correct-way-to-convert-size-in-bytes-to-kb-mb-gb-in-javascript#18650828
+function formatBytes(bytes,decimals) {
+   if(bytes == 0) return '0 Byte';
+   var k = 1000; // or 1024 for binary
+   var dm = decimals + 1 || 3;
+   var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+   var i = Math.floor(Math.log(bytes) / Math.log(k));
+   return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+}</textarea></div><div tabindex="1" class="leaf codemirrorContainer" id="Codemirror1" style="left: 50px; top: 50px; width: 400px; height: 400px; position: absolute; background: white;"><h3 class="entityHeader">Codemirror1 &gt; /public/js/customCommands.js<div class="editButton">R</div><div class="removeButton">X</div></h3><textarea style="display: none;">var customCommands = {
+	whoami: whoami, 
+	whatami: whatami,
+	whereami: whereami, 
+	howami: howami, 
+	whenami: whenami,
+	rename: rename,
+	save: save,
+	list: ls,
+	files: ls,
+	create: create,
+	open: open,
+	git: exec,
+	mkdir: exec,
+	ls: exec,
+	touch: exec,
+	pwd: exec,
+	cd: exec,
+	cat: exec
+	
+
+};
+
+
+function exec(aTerminal, ArrArray,options){
+
+		let requestElement = createResult('request', 'Running command on server...');
+		let command = options.potentialCommand + ' ' + ArrArray.join(' ');
+		fetch(`http://${window.location.host}/exec`, {
+			method: 'POST',
+			body: 'command=' + encodeURIComponent(command),
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded'
+			}
+		})
+		.then(res =&gt; res.json())
+		.then(resObj =&gt; {
+			console.log(resObj)
+			requestElement.className = 'result'
+			requestElement.innerText = resObj.stdout ? resObj.stdout : ( resObj.stderr ? resObj.stderr : resObj.err)
+			if(resObj.stderr || resObj.err){
+				requestElement.style.color = 'red';
+			}
+			if(requestElement.innerText === ""){
+				requestElement.innerText = 'The command ran without error or output'
+			}
+			aTerminal.scrollTop = aTerminal.scrollHeight;
+		})
+		return requestElement;
+}
+
+function open(aTerminal, ArrArray){
+	var requestElement = createResult('request', 'Looking for files...');
+	requestElement.id = Date.now();
+	let pathname = ArrArray[0];
+	fetch('http://' + window.location.host + '/readFile' + '?pathname='+encodeURIComponent(pathname))
+	.then(res =&gt; res.json())
+	.then(resObj =&gt; {
+		console.log(resObj);
+		create(aTerminal, ['Codemirror',resObj,pathname])
+		requestElement.className = 'result';
+		requestElement.innerText = 'Maybe it worked';
+		aTerminal.scrollTop = aTerminal.scrollHeight;
+
+	})
+
+	return requestElement;
+
+}
+
+function ls(aTerminal, ArrArray){
+	var requestElement = createResult('request', 'Looking for files...');
+	requestElement.id = Date.now();
+	
+	fetch('http://' + window.location.host + '/fs', {
+		method: 'POST',
+		body: 'pathname=' + ArrArray[0],
+		headers: {
+			'Content-Type': 'application/x-www-form-urlencoded'
+		}
+	})
+	.then(res =&gt; res.json())
+	.then(resObj =&gt; {
+		let dirString = buildDirDisplay(resObj);
+		requestElement.innerHTML = 'dirString Placeholder'; //setting the innerHTML of an empty element is sketch, apparently!
+		requestElement.innerHTML = dirString;
+
+		addDblClickListeners(requestElement);
+		requestElement.className = 'result directoryContainer';
+		aTerminal.scrollTop = aTerminal.scrollHeight;
+	})
+
+	return requestElement;
+}
+
+//OPEN will call create, passing the terminal, + ['CodeMirror','String of file'] as arg.
+//wow how on earth did this work. create takes a terminal that its called from and an array of options? Maybe that should be an options object
+function create(aTerminal, ArrArray){
+	//So first up, figure out the name of the things we're creating. Here its assumed to be the first element of the ArrAray
+	let newEntity = ArrArray[0];
+	//create Placeholder object
+	let result = createResult('query', 'Waiting for constructor to be available');
+	//checks if the consturctor function is in the global scope. Constructor functions bear the same name as their source file, so 'newEntity' represents a filename and a function name.
+	if(window[newEntity] === undefined){
+		//if the constructor function of that name doesn't exist, create a script tag and set its src as this pathname and then append that script to the head
+		let newScript = document.createElement('script');
+		let pathname = '/js/constructors/' + newEntity + '.js';
+		newScript.setAttribute('src', pathname);
+		newScript.setAttribute('defer','true')
+		document.head.appendChild(newScript);
+
+		//loading the script is asynchronous, the constructor cannot be called immediately
+		//timerID is a reference to the timer that is attempting to invoke the constructor every 10 milliseconds
+		//once it succeeds in invoking the constructor, it clearsInterval of itself, so it stops trying
+
+		let timerID = setInterval(() =&gt; {
+			if(window[newEntity]){
+				let newConstructor = new window[newEntity](...ArrArray.slice(1));
+				let newComponent = newConstructor.render();
+				document.body.appendChild(newComponent);
+				clearInterval(timerID);
+				result.innerText = `Constructor retrieved and invoked, ${newComponent.id} added to DOM`
+			}
+		}, 10)
+		//after one second, the timerID is cleared whether it exists or not.
+		//if the constructor still isnt available, the result inner Text is updated and a mean girls reference is printed to the console.
+		//furthermore, the script tag that was generated to load the constructor src is removed from the DOM if it never worked out.
+
+		setTimeout(()=&gt;{
+			if(!window[newEntity]){
+				console.log(`Stop trying to make ${newEntity} happen, it's not going to happen`)
+				result.innerText = `I couldn't find a constructor for ${newEntity}`
+				document.head.removeChild(newScript);
+			}
+			clearInterval(timerID);
+		},1000)
+
+	} else {
+		//OK, the construcotr DOES exist on the global scope, so invoke it with the new keyword and pass 2nd and 3rd elements of the array to it as args
+		let newConstructor = new window[newEntity](...ArrArray.slice(1)) 
+		try{
+			let newComponent = newConstructor.render()
+			document.body.appendChild(newComponent)
+			result.innerText = `Constructor invoked, ${newComponent.id} added to DOM`
+		}catch(e){
+			result.innerText = `${newEntity} was not undefined, but it also didn't return a DOM node from a render function, so I don't know what's up.`
+		}
+	}
+
+
+	return result;
+
+}
+
+function buildDirDisplay(resObj){
+	let fileObj = resObj.result;
+	let pathname = resObj.pathname;
+	let resultString = '';
+	for(each in fileObj){
+		resultString += `&lt;p class="fs ${fileObj[each]}" title="${pathname + each}"&gt; ${each} &lt;/p&gt; `
+	}
+	return resultString;
+}
+
+
+function rename(aTerminal, ArrArray){
+	var newId;
+	var targetElement = aTerminal;
+	switch(ArrArray.length){
+		case 1: newId = ArrArray[0]; break;
+		case 2: newId = ArrArray[1]; targetElement = document.getElementById(ArrArray[0]); break;
+		default: return createResult('error result', 'rename takes one or two arguments.');
+	}
+	try {
+		var oldId = targetElement.id;
+	} catch(e) {
+		console.error(`${ArrArray[0]} doesn't appear to an element. Use an existing id.`)
+		console.error(e);
+		return createResult('result', `${ArrArray[0]} doesn't appear to an element. Use an existing id.`);
+	}
+	targetElement.id = newId;
+	targetElement.firstChild.firstChild.textContent = targetElement.id;
+	targetElement.setAttribute('prompt', 'localhost/' + targetElement.id + " &gt; ");
+	return createResult('result', oldId + ' has been renamed to ' + targetElement.id);
+}
+
+function save(aTerminal, ArrArray, options){
+	if(ArrArray.length &gt; 0){
+		return createResult ('error result', 'save does not take arguments');
+	}
+	/* SOOOOO HACCCKYYYYY */
+	saveCodeMirrorContent();
+	let deadTree = document.documentElement.innerHTML; //a dead tree is a string
+	let liveTree = document.createElement('html');
+	liveTree.innerHTML = deadTree; //but the string is brought back into a DOM. Zombie tree, really.
+	collapseCodeMirrors(liveTree); //traverse the zombie tree, modifying before saving.
+	
+	var requestElement = createResult('request','Attempting to send file, waiting on response');
+	requestElement.setAttribute('createdAt', Date.now())
+	//builds a unique id from the terminals id and the number of nodes (which should only get bigger). 
+	requestElement.id = String(aTerminal.id) + aTerminal.childNodes.length;
+
+  //OK so at this time, 'save' was just invoked as a command. The request element has not yet been handed back to the command reducer so its not on the real DOM yet.
+	//So in order to get the result of this operation saved to disk, we gotta:
+	//take the zombie tree before its saved, 
+	//grab the terminal the terminal in the zombie tree with the same id as the live tree from which it was invokved
+	//append the requestElement (via ref passed to function, it doesnt exist on the zombie tree yet)
+	appendSaveTime(liveTree,aTerminal.id,requestElement)
+
+  //save is called with an options object. When invoked with keystroke, isLocal is true, when invoked via socket message, isLocal is false or undefined.
+	if(options.isLocal){
+		fetch('http://' + window.location.host + '/savethis', {
+			method: 'POST',
+			headers: {
+				"Content-Type": "application/x-www-form-urlencoded"
+			},
+			body: ('content=' + encodeURIComponent(liveTree.innerHTML) +
+			      '&amp;fileName=' + aTerminal.id + '.html')
+		})
+		.then(res =&gt; res.text())
+		.then(result =&gt; {
+			//requestelement has an attribute recounting its creation time in ms. Subtract current time by this time to find out how longs its been since this function started.
+			let starttime = requestElement.getAttribute('createdAt')
+			let roundTripTime = Date.now() - starttime;
+			//append that time to the string placed inside the resulting div (overwriting previous message 'attempting to save') and swap out className for result. Allows for conditional styling.
+			requestElement.innerText = `${result} in ${roundTripTime}ms`;
+			requestElement.className = 'result';
+			//appendResult is a socket creator. Fires a message named filesaveresult, payload is the innerText plus the id of the request element...
+			appendResult(requestElement.innerText, requestElement.id, aTerminal.id);
+			window.history.pushState({},null,`http://${window.location.host}/savedTrees/${aTerminal.id}.html${location.search}`)
+			fireSubscribe();
+			//sets documnent.head text tag inner text to current terminal id. 
+			updateTitleText(aTerminal.id);
+		})
+	}
+	//if the save command was triggered via socket message, just return the request div, with the matching id.
+	return requestElement;
+
+}
+
+function collapseCodeMirrors(liveTree){
+	let mirrors = Array.from(liveTree.getElementsByClassName('codemirrorContainer'));
+	mirrors.forEach(aMirrorContainer =&gt; {
+		let cm = aMirrorContainer.getElementsByClassName('CodeMirror')[0];
+		cm.remove();
+	})
+}
+
+function appendSaveTime(liveTree,updateTerminalId,elementToClone){
+	//BOGUS! getElementById only works when you have a document, and an html element is NOT a document
+	// let terminalToAppendTo = liveTree.getElementById(updateTerminalId)
+	// I'll use querySelector instead
+	let terminalToAppendTo = liveTree.querySelector(`#${updateTerminalId}`)
+	let fileToSaveSize = formatBytes(liveTree.innerHTML.length,-1);
+	//it screwed things up to try modifing the element that was being attached to the actualy dom. bad move in an async world. clone it instead.
+	let elementToAppend = elementToClone.cloneNode();
+	elementToAppend.innerText = `${fileToSaveSize} written successfully to ${updateTerminalId}.html at ${new Date()}`;
+	terminalToAppendTo.appendChild(elementToAppend);
+	initPrompt(terminalToAppendTo)
+}
+
+function updateTitleText(newName){
+		let possibleCurrentTitle = document.getElementsByTagName('TITLE')[0];
+		if(!possibleCurrentTitle){
+			possibleCurrentTitle = document.head.appendChild(document.createElement('title'));
+		}
+		possibleCurrentTitle.innerText = newName;
+}
+
+function saveCodeMirrorContent(){
+		let mirrors = Array.from(document.getElementsByClassName('codemirrorContainer'));
+		mirrors.forEach(aMirrorContainer =&gt; {
+			let cm = aMirrorContainer.cm;
+			cm.save();
+			let textArea = aMirrorContainer.getElementsByTagName('TEXTAREA')[0];
+			textArea.innerHTML = textArea.value;
+		})
+}
+
+
+function createResult(className, innerText){
+  var placeHolder = document.createElement('div');
+	placeHolder.className = className ? className : 'result'; //default className
+	placeHolder.id = Date.now();
+	placeHolder.innerHTML = innerText ? innerText : ' '; // default innerText
+  return placeHolder;
+}
+
+function whoami(aLeaf){
+//build a response placeholder, progress bar dealio
+//create an id for that placeholder. Probably a span. 
+//emit the request and pass the id of the placeholder
+//return the placeholder. Later, when the response is
+//received, the id will be returned as a part of the 
+//payload so that the information can be stuffed back
+//into the placeholder correspondant with that id.
+	var placeHolder = createResult('query');
+	socket.emit('identityRequest', {placeHolderId: placeHolder.id});	
+	return placeHolder;
+}
+
+socket.on('identityResponse', function(socket){
+	var roundTripTime = Date.now() - socket.placeHolderId; 
+	var requestElement = document.getElementById(socket.placeHolderId);
+  requestElement.className = 'result';
+	requestElement.innerHTML = (socket.ipaddress === '1') ? 'localhost' : socket.ipaddress;	
+});
+
+function whatami(aLeaf){
+	return createResult('result', aLeaf.id + ' is a ' + aLeaf.toString() + ' with classes "' + aLeaf.className + '"');
+	//grab class name. id. just attributes of the terminal. 
+}
+
+function whereami(aLeaf){
+	return createResult('result', aLeaf.id + " is " + aLeaf.style.left + " from the left and " + aLeaf.style.top + " from the top of its parent element, " + aLeaf.parentElement.tagName + ".");
+	//just grab x y coordinates. Maybe find oneself in the dom. Which child?
+}
+
+function howami(aLeaf){
+ // maybe each consturctor has a mthod, such that, the DIV from which the question is asked could simply call its own method, perhaps printing its identifying information. The constructor function, the file, the person who created it. Bare minimum, the div contains an attribute, a reference to its constructor, which exists in the global scope, so it can be printed by name. As for filename...
+}
+
+function whenami(){
+	var placeHolder = createResult('query');
+	socket.emit('timeRequest', {placeHolderId: placeHolder.id});	
+	return placeHolder;
+}
+
+socket.on('timeResponse', function(socket){
+	var roundTripTime = Date.now() - socket.placeHolderId; //currenttime in ms was used for id.
+	var requestElement = document.getElementById(socket.placeHolderId);
+  	requestElement.className = 'result';
+	requestElement.innerHTML = 'Server time is: ' + socket.serverTime;	
+	var localtimeResult = requestElement.cloneNode();
+	var roundtripResult = requestElement.cloneNode();
+	localtimeResult.innerHTML = 'Local time is:' + Date();
+	roundtripResult.innerHTML = 'Round trip time to ' + window.location.host + ' was ' + roundTripTime + 'ms.';
+	requestElement.parentNode.insertBefore(localtimeResult, requestElement);
+	requestElement.parentNode.insertBefore(roundtripResult, localtimeResult);
+	requestElement.parentNode.scrollTop = requestElement.parentNode.scrollHeight;
+});
+
+function runFile(event){
+	//targetTerminal determines what the container element of a file is, for purposes of appending the result and socketizing the target to sync others
+	//event.path returns an array of elements the event bubbled up through, from the event.target to the window. Filter it down to one element. 
+	// This will work as long as you don't have a terminal within a terminal 
+	let targetTerminal = event.path.filter(el =&gt; el.className &amp;&amp; el.className.includes('terminal'))[0];
+	//the title attribute of the event target is the pathname of the file displayed.
+	let targetPath = event.target.title;
+	//this is for generating the equivelant command that could be typed. Maybe I should just generate that text as if it were typed and execute???
+	let prompt = targetTerminal.getAttribute('protoPrompt');
+  //Huh. open FILE is like create Codemirror FILETEXT. prints ls when re-executing list...
+	if(event.target.className &amp;&amp; event.target.className.includes('directory')){
+		targetTerminal.lastChild.innerText = `${prompt} ls ${targetPath}`
+	} else if(event.target.className &amp;&amp; event.target.className.includes('text')){
+		targetTerminal.lastChild.innerText = `${prompt} open ${targetPath}`
+	} 
+
+	//Oh yeah, it does these things whether you single clicked or double clicked, but then checks for double click before executing.
+	if(event.type === 'dblclick'){
+		if(event.target.className &amp;&amp; event.target.className.includes('directory')){
+			//socketizing with custom command (which I belive is just bounced), and the socket object includes the id of the terminal, the name of a function, and a pathname.
+			socket.emit('remoteRunFile', { terminal: targetTerminal.id, func: 'ls', path: targetPath});
+			//Similar action, just different if you're opening or listing. runs ls - oh, from here ls is just a shortcut for the function name, not a property of the customCommands object.'
+			let listResult = ls(targetTerminal, [targetPath]);
+			targetTerminal.appendChild(listResult);
+			initPrompt(targetTerminal);
+		} else if(event.target.className &amp;&amp; event.target.className.includes('text')){
+			socket.emit('remoteRunFile', { terminal: targetTerminal.id, func: 'open', path: targetPath});
+
+			let fileOpenResult = open(targetTerminal, [targetPath]);
+			targetTerminal.appendChild(fileOpenResult);
+			initPrompt(targetTerminal);
+		}
+	}
+
+
+}
+
+
+
+function addDblClickListeners(directoryElement){
+	let listOfFiles = Array.from(directoryElement.getElementsByClassName('fs'));
+	listOfFiles.forEach(el =&gt; el.addEventListener('dblclick', runFile));
+	listOfFiles.forEach(el =&gt; el.addEventListener('click', runFile));
+}
+</textarea></div></body>

@@ -1,0 +1,5 @@
+var nested = Array.from(new Array(10), (outerEach, outerIndex) => 
+	outerEach = Array.from(new Array(5), (innerEach, innerIndex) => 
+    	innerEach = outerIndex * innerIndex
+    )
+)

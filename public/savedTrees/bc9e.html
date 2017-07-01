@@ -1,0 +1,210 @@
+<head>
+    <!--<link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">-->
+    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="stylesheet" href="/styles/menustyle.css">
+    <script src="/js/constructors/Leaf.js" defer=""></script>
+    <script src="/js/constructors/Terminal.js" defer=""></script>
+    <script src="/js/socket.io.js" defer=""></script>
+    <script src="/js/socketevents.js" defer=""></script>
+    <script src="/js/customCommands.js" defer=""></script>
+    <script src="/js/utils.js" defer=""></script>
+    
+    
+  <script src="/js/constructors/Tag.js" defer="true"></script><script src="/js/constructors/Codemirror.js" defer="true"></script><link rel="stylesheet" href="/codemirrorlib/codemirror.css"><script src="/codemirrorlib/codemirror.js" defer="true"></script><script src="/codemirrormode/meta.js" defer="true"></script><script src="/codemirrormode/javascript/javascript.js" defer="true"></script><script src="/codemirrormode/css/css.js" defer="true"></script><script src="/codemirrormode/xml/xml.js" defer="true"></script><script src="/codemirrormode/htmlmixed/htmlmixed.js" defer="true"></script><script id="repl">
+function newImage(){
+  var url = `https://raw.githubusercontent.com/jazzyjackson/coltenj.com/master/img/${myRandom(0,25)}.PNG`;
+  var width = myRandom(200,800)
+  var posX = myRandom(0, screen.width - width)
+  var posY = myRandom(0, screen.height)
+  var imgString = `<img src=${url} width=${width} style="position: absolute; left: ${posX}; top: ${posY}"/>`
+  var tempNode = document.createElement('div');
+  tempNode.innerHTML = imgString;
+  tempNode.firstChild.addEventListener('mouseover', event => event.target.remove());
+  document.body.appendChild(tempNode.firstChild);
+  return "Attached something"
+}
+
+function myRandom(min,max){
+	var range = max - min;
+    var numString = min + Math.ceil(Math.random() * range)
+    return (numString < 10) ? "0" + numString : numString;
+
+}</script><title>bc9e</title><script id="loadscript">
+      let scriptArray = Array.from(document.getElementsByTagName('script'));
+      let loadingArray = [];
+      let firstTerminalIcanFind;
+      
+      scriptArray.forEach(scriptNode => {
+        // console.log(scriptNode)
+        let src = scriptNode.getAttribute('src');
+        if(src){
+          let loadingDiv = document.createElement('div');
+          loadingDiv.className = 'result'
+          loadingDiv.textContent = `Loading ${src}... `
+          loadingArray.push(loadingDiv)
+          scriptNode.addEventListener('load', () => {
+            loadingDiv.textContent += ' done.'
+            console.log('done with ',src)
+          })
+        }
+      })
+      document.addEventListener('readystatechange', () => {
+        console.log('readyStateChange')
+        switch(document.readyState){
+          case 'interactive': 
+            firstTerminalIcanFind = document.querySelector('.terminalContainer');
+            loadingArray.forEach(divNode => {
+              firstTerminalIcanFind.appendChild(divNode)
+            });
+            let aPotentialName = location.pathname;
+            aPotentialName = aPotentialName.match(/\/\w+\.|\/\w+$/);
+            aPotentialName = aPotentialName && aPotentialName[0].match(/\w+/);
+            aPotentialName = aPotentialName && aPotentialName[0];
+            let potentialTerminal = document.getElementById("root0");
+            //if the document has a name AND there is NOT already a terminal with that name
+            if(aPotentialName && potentialTerminal){
+              potentialTerminal.id = aPotentialName;
+              let thisHeader = potentialTerminal.querySelector('.entityHeader')
+              let thisTitle = thisHeader.querySelector('.headerTitle')
+              thisTitle.textContent = aPotentialName;
+              potentialTerminal.setAttribute('protoPrompt', 'localhost/' + aPotentialName);
+              Array.from(potentialTerminal.getElementsByClassName('promptContainer'), function(node){
+                node.firstChild.innerHTML = `localhost/${aPotentialName}<span class="arrow"></span>`;
+              })
+            }
+            break;
+          case 'complete':
+            let readyDiv = document.createElement('div')
+            readyDiv.className = 'result'
+            readyDiv.textContent = 'OK Ready.'
+            readyDiv.style.textAlign = 'right'
+            firstTerminalIcanFind.appendChild(readyDiv)
+            initPrompt(firstTerminalIcanFind);
+            break;
+        }
+      })
+      window.addEventListener('load', () => {
+        
+      })
+      let scriptReArranger = new MutationObserver((info,thisMute)=>{
+        console.log("something has changed!", info)
+        thisMute.disconnect();
+        // mvoeThisScript();
+        let thisScript = document.getElementById("loadscript");
+        thisScript.remove();
+        document.head.appendChild(thisScript)
+        thisMute.observe(document.head, {childList: true})
+        //this gets caught in an infinite loop.
+      })
+      scriptReArranger.observe(document.head, {childList: true})
+      // function moveThisScript(){
+      //   let thisScript = document.getElementById("loadscript");
+      //   thisScript.remove();
+      //   document.head.appendChild(thisScript)
+      // }
+
+    </script></head>
+  <!--Giving body id body for consistency with certain functions that rely on div id-->
+  <body id="body" style="position: absolute; left: 108px; top: 87px; height: 720px; width: 1280px;">
+    
+  
+
+<div showmenu="false" broadcast="true" listen="true" style="left: -55px; top: 188px; width: 400px; height: 300px; position: absolute; background: white;" tabindex="1" class="leaf terminal" id="bc9e" history="0" protoprompt="localhost/bc9e"><div class="entityHeader">
+    <table>
+      <tbody><tr>
+        <td class="headerTitle">bc9e</td>
+      </tr>
+    </tbody></table>
+    <div class="menuButton"></div>
+    <div class="removeButton"></div>
+    <div class="menu">
+      <ul>
+        
+        <li tabindex="2"> Broadcast <div class="broadcastButton"></div> </li>
+        <li tabindex="2"> Listen <div class="listenButton"></div> </li>
+        
+      </ul>
+    </div>
+  </div><div class="terminalContainer" history="32"><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">newImage()</div></div><div class="result result" id="1485576918019"></div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">newImage()</div></div><div class="result result" id="1485576925878"></div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">newImage()</div></div><div class="result result" id="1485576938201"></div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">newImage()</div></div><div class="result result" id="1485576945164"></div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">newImage()</div></div><div class="result result" id="1485577148908">Attached something</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">newImage()</div></div><div class="result result" id="1485577156315">Attached something</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">newImage()</div></div><div class="result result" id="1485577157284">Attached something</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">newImage()</div></div><div class="result result" id="1485577159086">Attached something</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">newImage()</div></div><div class="result result" id="1485577159808">Attached something</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">newImage()</div></div><div class="result result" id="1485577162319">Attached something</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">newImage()</div></div><div class="result result" id="1485577163374">Attached something</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">newImage()</div></div><div class="result result" id="1485577164948">Attached something</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">newImage()</div></div><div class="result result" id="1485577165848">Attached something</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">2</div></div><div class="result result" id="1485577193424">2</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">3</div></div><div class="result result" id="1485577194190">3</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">String(3)</div></div><div class="result result" id="1485577198393">3</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">String(3, 2)</div></div><div class="result result" id="1485577203164">3</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">"0" + 3</div></div><div class="result result" id="1485577332115">03</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">newImage()</div></div><div class="result result" id="1485577463952">Attached something</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">newImage()</div></div><div class="result result" id="1485577465533">Attached something</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">newImage()</div></div><div class="result result" id="1485577466537">Attached something</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">newImage()</div></div><div class="result result" id="1485577478443">Attached something</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">newImage()</div></div><div class="result result" id="1485577479197">Attached something</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">newImage()</div></div><div class="result result" id="1485577479912">Attached something</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">newImage()</div></div><div class="result result" id="1485577480613">Attached something</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">newImage()</div></div><div class="result result" id="1485577481313">Attached something</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">newImage()</div></div><div class="result result" id="1485577482029">Attached something</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">newImage()</div></div><div class="result result" id="1485577482752">Attached something</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">newImage()</div></div><div class="result result" id="1485577483468">Attached something</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">newImage()</div></div><div class="result result" id="1485577484601">Attached something</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">newImage()</div></div><div class="result result" id="1485577485456">Attached something</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">newImage()</div></div><div class="result result" id="1485577487738">Attached something</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">newImage()</div></div><div class="result result" id="1485577496798">Attached something</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">newImage()</div></div><div class="result result" id="1485577497970">Attached something</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">newImage()</div></div><div class="result result" id="1485577521022">Attached something</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">newImage()</div></div><div class="result result" id="1485577521708">Attached something</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">newImage()</div></div><div class="result result" id="1485577522492">Attached something</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">newImage()</div></div><div class="result result" id="1485577523161">Attached something</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">newImage()</div></div><div class="result result" id="1485577523832">Attached something</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">newImage()</div></div><div class="result result" id="1485577524561">Attached something</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">newImage()</div></div><div class="result result" id="1485577525240">Attached something</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">newImage()</div></div><div class="result result" id="1485577525941">Attached something</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">files</div></div><div class="result directoryContainer" id="1485577541559"><p class="fs text" title="/app.js"> app.js <a href="download?pathname=%2Fapp.js"></a> </p><p class="fs markup" title="/grabvideo.html"> grabvideo.html <a href="download?pathname=%2Fgrabvideo.html"></a> </p><p class="fs directory" title="/node_modules"> node_modules <a href="download?pathname=%2Fnode_modules"></a> </p><p class="fs text" title="/package.json"> package.json <a href="download?pathname=%2Fpackage.json"></a> </p><p class="fs directory" title="/public"> public <a href="download?pathname=%2Fpublic"></a> </p><p class="fs directory" title="/routes"> routes <a href="download?pathname=%2Froutes"></a> </p><p class="fs directory" title="/sites"> sites <a href="download?pathname=%2Fsites"></a> </p><p class="fs directory" title="/test"> test <a href="download?pathname=%2Ftest"></a> </p><p class="fs directory" title="/testdir"> testdir <a href="download?pathname=%2Ftestdir"></a> </p><p class="fs directory" title="/user"> user <a href="download?pathname=%2Fuser"></a> </p></div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">pwd</div></div><div class="result" id="1485577545150">/home/TextreePlot/sites/coltenj.com<br></div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">ls</div></div><div class="result" id="1485577546155">img<br>index.html<br>routes<br></div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">touch ads.html</div></div><div class="result" id="1485577552181" style="color: red;">ads.html { dev: 64769,<br>  mode: 33188,<br>  nlink: 1,<br>  uid: 0,<br>  gid: 0,<br>  rdev: 0,<br>  blksize: 4096,<br>  ino: 1176706,<br>  size: 0,<br>  blocks: 0,<br>  atime: 2017-01-28T04:25:53.000Z,<br>  mtime: 2017-01-28T04:25:53.000Z,<br>  ctime: 2017-01-28T04:25:53.247Z,<br>  birthtime: 2017-01-28T04:25:53.247Z }<br></div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">ls</div></div><div class="result" id="1485577554404">ads.html<br>img<br>index.html<br>routes<br></div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">files</div></div><div class="result directoryContainer" id="1485577557103"><p class="fs text" title="/app.js"> app.js <a href="download?pathname=%2Fapp.js"></a> </p><p class="fs markup" title="/grabvideo.html"> grabvideo.html <a href="download?pathname=%2Fgrabvideo.html"></a> </p><p class="fs directory" title="/node_modules"> node_modules <a href="download?pathname=%2Fnode_modules"></a> </p><p class="fs text" title="/package.json"> package.json <a href="download?pathname=%2Fpackage.json"></a> </p><p class="fs directory" title="/public"> public <a href="download?pathname=%2Fpublic"></a> </p><p class="fs directory" title="/routes"> routes <a href="download?pathname=%2Froutes"></a> </p><p class="fs directory" title="/sites"> sites <a href="download?pathname=%2Fsites"></a> </p><p class="fs directory" title="/test"> test <a href="download?pathname=%2Ftest"></a> </p><p class="fs directory" title="/testdir"> testdir <a href="download?pathname=%2Ftestdir"></a> </p><p class="fs directory" title="/user"> user <a href="download?pathname=%2Fuser"></a> </p></div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">list /sites</div></div><div class="result directoryContainer" id="1485577558916"><p class="fs directory" title="/sites/coltenj.com"> coltenj.com <a href="download?pathname=%2Fsites%2Fcoltenj.com"></a> </p></div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">list /sites/coltenj.com</div></div><div class="result directoryContainer" id="1485577562023"><p class="fs markup" title="/sites/coltenj.com/ads.html"> ads.html <a href="download?pathname=%2Fsites%2Fcoltenj.com%2Fads.html"></a> </p><p class="fs directory" title="/sites/coltenj.com/img"> img <a href="download?pathname=%2Fsites%2Fcoltenj.com%2Fimg"></a> </p><p class="fs markup" title="/sites/coltenj.com/index.html"> index.html <a href="download?pathname=%2Fsites%2Fcoltenj.com%2Findex.html"></a> </p><p class="fs directory" title="/sites/coltenj.com/routes"> routes <a href="download?pathname=%2Fsites%2Fcoltenj.com%2Froutes"></a> </p></div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">mirror /sites/coltenj.com/ads.html</div></div><div class="result" id="1485577563669">Tag created with contents of /sites/coltenj.com/ads.html</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">newImage()</div></div><div class="result result" id="1485577641462">Attached something</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">newImage()</div></div><div class="result result" id="1485577649169">Attached something</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">newImage()</div></div><div class="result result" id="1485577669739">TypeError: Cannot read property 'addEventListener' of undefined</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">newImage()</div></div><div class="result result" id="1485577672070">TypeError: Cannot read property 'addEventListener' of undefined</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">newImage()</div></div><div class="result result" id="1485577686714">Attached something</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">newImage()</div></div><div class="result result" id="1485577689401">Attached something</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">newImage()</div></div><div class="result result" id="1485577691920">Attached something</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">newImage()</div></div><div class="result result" id="1485577694139">Attached something</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">newImage()</div></div><div class="result result" id="1485577695476">Attached something</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">ls</div></div><div class="result" id="1485577713445">ads.html<br>img<br>index.html<br>routes<br></div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">touch randomAds.js</div></div><div class="result" id="1485577721304" style="color: red;">randomAds.js { dev: 64769,<br>  mode: 33188,<br>  nlink: 1,<br>  uid: 0,<br>  gid: 0,<br>  rdev: 0,<br>  blksize: 4096,<br>  ino: 1177561,<br>  size: 0,<br>  blocks: 0,<br>  atime: 2017-01-28T04:28:42.000Z,<br>  mtime: 2017-01-28T04:28:42.000Z,<br>  ctime: 2017-01-28T04:28:42.247Z,<br>  birthtime: 2017-01-28T04:28:42.247Z }<br></div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">files</div></div><div class="result directoryContainer" id="1485577731618"><p class="fs text" title="/app.js"> app.js <a href="download?pathname=%2Fapp.js"></a> </p><p class="fs markup" title="/grabvideo.html"> grabvideo.html <a href="download?pathname=%2Fgrabvideo.html"></a> </p><p class="fs directory" title="/node_modules"> node_modules <a href="download?pathname=%2Fnode_modules"></a> </p><p class="fs text" title="/package.json"> package.json <a href="download?pathname=%2Fpackage.json"></a> </p><p class="fs directory" title="/public"> public <a href="download?pathname=%2Fpublic"></a> </p><p class="fs directory" title="/routes"> routes <a href="download?pathname=%2Froutes"></a> </p><p class="fs directory" title="/sites"> sites <a href="download?pathname=%2Fsites"></a> </p><p class="fs directory" title="/test"> test <a href="download?pathname=%2Ftest"></a> </p><p class="fs directory" title="/testdir"> testdir <a href="download?pathname=%2Ftestdir"></a> </p><p class="fs directory" title="/user"> user <a href="download?pathname=%2Fuser"></a> </p></div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">list /sites</div></div><div class="result directoryContainer" id="1485577733871"><p class="fs directory" title="/sites/coltenj.com"> coltenj.com <a href="download?pathname=%2Fsites%2Fcoltenj.com"></a> </p></div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">list /sites/coltenj.com</div></div><div class="result directoryContainer" id="1485577735314"><p class="fs markup" title="/sites/coltenj.com/ads.html"> ads.html <a href="download?pathname=%2Fsites%2Fcoltenj.com%2Fads.html"></a> </p><p class="fs directory" title="/sites/coltenj.com/img"> img <a href="download?pathname=%2Fsites%2Fcoltenj.com%2Fimg"></a> </p><p class="fs markup" title="/sites/coltenj.com/index.html"> index.html <a href="download?pathname=%2Fsites%2Fcoltenj.com%2Findex.html"></a> </p><p class="fs text" title="/sites/coltenj.com/randomAds.js"> randomAds.js <a href="download?pathname=%2Fsites%2Fcoltenj.com%2FrandomAds.js"></a> </p><p class="fs directory" title="/sites/coltenj.com/routes"> routes <a href="download?pathname=%2Fsites%2Fcoltenj.com%2Froutes"></a> </p></div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">mirror /sites/coltenj.com/randomAds.js</div></div><div class="result" id="1485577736689">Attempting to mirror /sites/coltenj.com/randomAds.js</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">mirror /sites/coltenj.com/ads.html</div></div><div class="result" id="1485577764440">Tag created with contents of /sites/coltenj.com/ads.html</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input"></div></div><div class="result result" id="1485579072698">undefined</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">newImage()</div></div><div class="result result" id="1485579075566">Attached something</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">git status</div></div><div class="result" id="1485579932633">On branch master<br>Your branch is up-to-date with 'origin/master'.<br>Untracked files:<br>  (use "git add &lt;file&gt;..." to include in what will be committed)<br><br>	public/js/constructors/Clock.js<br>	test/<br>	testdir/<br>	user/<br><br>nothing added to commit but untracked files present (use "git add" to track)<br></div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">pwd</div></div><div class="result" id="1485579933585">/home/TextreePlot<br></div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">cd sites/coltenj.com</div></div><div class="request result" id="1485579941976">Running command on server...</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">pwd</div></div><div class="result" id="1485579943056">/home/TextreePlot/sites/coltenj.com<br></div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">git status</div></div><div class="result" id="1485579945459">On branch master<br>Your branch is up-to-date with 'origin/master'.<br>Untracked files:<br>  (use "git add &lt;file&gt;..." to include in what will be committed)<br><br>	ads.html<br>	randomAds.js<br><br>nothing added to commit but untracked files present (use "git add" to track)<br></div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">git add ads.html</div></div><div class="result" id="1485579952726">The command ran without error or output</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">git commit -m "Happy with it"</div></div><div class="result" id="1485579958065">[master a329b7c] Happy with it<br> Committer: root &lt;root@coltenj.com&gt;<br>Your name and email address were configured automatically based<br>on your username and hostname. Please check that they are accurate.<br>You can suppress this message by setting them explicitly. Run the<br>following command and follow the instructions in your editor to edit<br>your configuration file:<br><br>    git config --global --edit<br><br>After doing this, you may fix the identity used for this commit with:<br><br>    git commit --amend --reset-author<br><br> 1 file changed, 49 insertions(+)<br> create mode 100644 ads.html<br></div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">git push origin master</div></div><div class="request result" id="1485579961778">Running command on server...</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">git status</div></div><div class="result" id="1485579985173">On branch master<br>Your branch is ahead of 'origin/master' by 1 commit.<br>  (use "git push" to publish your local commits)<br>Untracked files:<br>  (use "git add &lt;file&gt;..." to include in what will be committed)<br><br>	randomAds.js<br><br>nothing added to commit but untracked files present (use "git add" to track)<br></div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input">git push</div></div><div class="request result" id="1485580000154">Running command on server...</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input"></div></div><div class="request" id="bc9e2" createdat="1485585623225">32.861 KB written successfully to bc9e.html at Sat Jan 28 2017 01:40:23 GMT-0500 (Eastern Standard Time)</div><div class="promptContainer"><span class="prompt">localhost/bc9e<span class="arrow"></span></span><div class="input"></div></div></div></div><div showmenu="false" broadcast="true" listen="true" style="left: -72px; top: 55px; width: 800px; height: 400px; position: absolute; background: white;" tabindex="1" class="leaf codemirrorContainer                                                              CodeMirrorContainer-focused" id="Codemirror1" target="/sites/coltenj.com/ads.html" update="innertag0"><div class="entityHeader">
+    <table>
+      <tbody><tr>
+        <td class="headerTitle">Codemirror1 &gt; /sites/coltenj.com/ads.html</td>
+      </tr>
+    </tbody></table>
+    <div class="menuButton"></div>
+    <div class="removeButton"></div>
+    <div class="menu">
+      <ul>
+        <li tabindex="2">Evaluate<div class="editButton"></div></li>
+        <li tabindex="2"> Broadcast <div class="broadcastButton"></div> </li>
+        <li tabindex="2"> Listen <div class="listenButton"></div> </li>
+        <li tabindex="2"> Save <div class="saveButton"></div> </li>
+      </ul>
+    </div>
+  </div><textarea style="display: none;">&lt;body&gt;
+&lt;/body&gt;
+&lt;style&gt;
+  body {
+    overflow: hidden;
+  }
+  img {
+    transition: all 1s;
+    opacity: 1;
+  }
+&lt;/style&gt;
+&lt;script&gt;
+function newImage(imageIndex){
+  var url = `/img/${imageIndex}.PNG`;
+  var width = myRandom(200,800)
+  var posX = myRandom(0, screen.width - width)
+  var posY = myRandom(0, screen.height)
+  var imgString = `&lt;img src=${url} width=${width} style="position: absolute; left: ${posX}; top: ${posY}"/&gt;`
+  var tempNode = document.createElement('div');
+  tempNode.innerHTML = imgString;
+  tempNode.firstChild.addEventListener('mouseover', event =&gt; destroyGracefully(event.target));
+  tempNode.firstChild.addEventListener('touchmove', event =&gt; destroyGracefully(event.target));
+  document.body.appendChild(tempNode.firstChild);
+  return "Attached something";
+}
+
+  
+function destroyGracefully(imgElement){
+  imgElement.style.transition = "all 1s"
+  imgElement.style.zIndex = Number(imgElement.style.zIndex) &gt; 9999 ? 0 : Number(imgElement.style.zIndex) + 1;
+  imgElement.style.left = 0;
+  imgElement.style.width = '100%';
+  imgElement.style.top = (screen.height / 2) - (imgElement.getBoundingClientRect().height / 2);
+  imgElement.style.opacity = 0;
+  setTimeout(()=&gt;{
+    imgElement.style.zIndex = Number(imgElement.style.zIndex) + 1;
+    imgElement.style.transition = "all 0s"
+    imgElement.style.width = myRandom(200,800)
+    imgElement.style.left = myRandom(0, screen.width - imgElement.style.width)
+    imgElement.style.top = myRandom(0, screen.height)
+    imgElement.style.opacity = 1;
+  }, 1000)
+  
+}
+
+function myRandom(min,max){
+	var range = max - min;
+    return min + Math.ceil(Math.random() * range)
+  
+}
+  
+for(var i = 1; i &lt;= 25; i++){
+  let numString = (i &lt; 10) ? "0" + i : i;
+  newImage(numString);
+}
+  
+setInterval(()=&gt;{
+	let randomImg = document.getElementsByTagName('img')[myRandom(0,25)];
+    if(randomImg.style.opacity = 1){
+      randomImg.style.transition = "all 0s"
+      randomImg.style.width = myRandom(200,800)
+      randomImg.style.left = myRandom(0, screen.width - randomImg.style.width)
+      randomImg.style.top = myRandom(0, screen.height)
+    }
+}, 150)
+
+&lt;/script&gt;</textarea></div><img src="https://raw.githubusercontent.com/jazzyjackson/coltenj.com/master/img/09.PNG" width="771" style="position: absolute; left: 281; top: 1055"></body>

@@ -1,0 +1,85 @@
+<head>
+    <!--<link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">-->
+    <link rel="stylesheet" href="/styles/style.css">
+    <script src="/js/constructors/Leaf.js" defer=""></script>
+    <script src="/js/constructors/Terminal.js" defer=""></script>
+    <script src="/js/socket.io.js" defer=""></script>
+    <script src="/js/socketevents.js" defer=""></script>
+    <script src="/js/customCommands.js" defer=""></script>
+    <script src="/js/utils.js" defer=""></script>
+    <script id="repl"></script>
+  <script src="/js/constructors/Codemirror.js" defer="true"></script><link rel="stylesheet" href="/lib/codemirror.css"><script src="/lib/codemirror.js" defer="true"></script><script src="/lib/mode/javascript/javascript.js" defer="true"></script><title>socket2file</title></head>
+  <!--Giving body id body for consistency with certain functions that rely on div id-->
+  <body id="body" style="position: absolute; left: 0px; top: 0px; height: 895px; width: 1500px;">
+
+<div tabindex="1" class="leaf terminal" id="socket2file" listen="true" broadcast="true" history="1" protoprompt="localhost/root0 > " prompt="localhost/socket2file > " style="left: 918px; top: 504px; width: 400px; height: 300px; position: absolute; background: white;"><h3 class="entityHeader" style="top: 692px;">socket2file<div class="removeButton"></div><div class="broadcastButton"></div><div class="listenButton"></div></h3><p class="prompt">localhost/root0 &gt; create Codemirror</p><div class="query result" id="1480383997549">Constructor retrieved and invoked, Codemirror0 added to DOM</div><p class="prompt">localhost/root0 &gt; rename socket2file</p><div class="result result" id="1480384833777">root0 has been renamed to socket2file</div><p class="prompt">localhost/root0 &gt; save</p><div class="request" id="socket2file6" createdat="1480384834704">2.76 KB written successfully to socket2file.html at Mon Nov 28 2016 21:00:34 GMT-0500 (Eastern Standard Time)</div><p class="prompt">localhost/root0 &gt; Codemirror0.style.width = 800</p><div class="result result" id="1480385105192">800</div><p class="prompt">localhost/root0 &gt; Codemirror0.style.height = 800</p><div class="result result" id="1480385110677">800</div><p class="prompt">localhost/root0 &gt; save</p><div class="result" id="socket2file12" createdat="1480385116970">3.49 KB written successfully to socket2file.html in 1403ms</div><p class="prompt">localhost/root0 &gt; save</p><div class="result" id="socket2file14" createdat="1480385402367">3.97 KB written successfully to socket2file.html in 55ms</div><p class="prompt">localhost/root0 &gt; save</p><div class="request" id="socket2file16" createdat="1480388294857">4.291 KB written successfully to socket2file.html at Mon Nov 28 2016 21:58:14 GMT-0500 (Eastern Standard Time)</div><p class="prompt">localhost/root0 &gt; save</p><div class="request" id="socket2file18" createdat="1480396058939">4.764 KB written successfully to socket2file.html at Tue Nov 29 2016 00:07:38 GMT-0500 (Eastern Standard Time)</div><p class="prompt">localhost/root0 &gt; create Codemirror</p><div class="query result" id="1480482034714">Constructor invoked, Codemirror1 added to DOM</div><p class="prompt">localhost/root0 &gt; </p><div class="request" id="socket2file22" createdat="1480482357830">6.645 KB written successfully to socket2file.html at Wed Nov 30 2016 00:05:57 GMT-0500 (Eastern Standard Time)</div><p class="prompt">localhost/root0 &gt; </p><div class="request" id="socket2file24" createdat="1480482532415">7.044 KB written successfully to socket2file.html at Wed Nov 30 2016 00:08:52 GMT-0500 (Eastern Standard Time)</div><p class="prompt">localhost/root0 &gt; </p><div class="request" id="socket2file26" createdat="1480482543763">7.261 KB written successfully to socket2file.html at Wed Nov 30 2016 00:09:03 GMT-0500 (Eastern Standard Time)</div><p class="prompt">localhost/root0 &gt; </p></div><div tabindex="1" class="leaf codemirrorContainer  " id="Codemirror0" listen="false" broadcast="false" style="left: 67px; top: 15px; width: 800px; height: 800px; position: absolute; background: white;"><h3 class="entityHeader">Codemirror0<div class="editButton">R</div><div class="removeButton"></div><div class="broadcastButton"></div><div class="listenButton"></div></h3><textarea style="display: none;">What should happen:
+
+nothing, at first.
+A new custom command called record
+hashes the room name and current time
+fires a socket event called record with that hash (now set to location.search or something)
+server: grabs room name. creates file from hash.
+
+there's a folder for savedTrees
+I guess there's a folder for loggedTrees
+
+necessarily saves the file first. just uses that html hash
+creates file in logged trees with that hash. (this is a good thing because the hash can be checked against the saved file to see if it still matches)
+
+flips a boolean in the socket router
+subsequent socket messages will be written to the filestream
+
+on disconnect, or on received 'stop' message, filesteam.close()
+
+maybe append the hash to the url and save... have an automatic prevention of overwriting the necessary file.
+                                            
+
+I'm gonig to save the page, which could return a hash...
+So, if save is called with the option {recording: true}
+it computes a hash and appends to the filename.hash.html
+
+later, when the logs route is hit, with a hash, like
+
+textreeplot.xyz/logs/2ff3e1
+or
+textreeplot.xyz/savedTrees/root0.html?log=2ff3e1
+
+and it would fetch the page with that hash and the log named that.
+
+YA
+
+so serverside
+
+theres an identities object, for each socket, logs ip, name, room
+
+I get a flag to start recording activity in a room
+I need to know if that room is recording.
+
+so there's a room object. Will probably come in handy later.
+
+I was thinking it might be a problem for recording a room if different users are out of sync
+but I think, whoever is recording would expect the result to reflect their screen the closet
+(for example a teacher broadcasting to a room)
+so it makes sense to capture original position of just the person who fired ' record ' (I think the local: true options object does should be passed fro record -&gt; save, although I should really find a way to just use isTrusted: true)
+I also want to capture sockets TO the original recorder, in the case of 
+</textarea></div><div tabindex="1" class="leaf codemirrorContainer   " id="Codemirror1" listen="true" broadcast="true" style="left: 931px; top: 38px; width: 400px; height: 400px; position: absolute; background: white;"><h3 class="entityHeader">Codemirror1<div class="editButton">R</div><div class="removeButton"></div><div class="broadcastButton"></div><div class="listenButton"></div></h3><textarea style="display: none;">all the money is digital
+how much of the internet is actually on our computers vs in the cloud
+(where the fuck is the internet?)
+
+Co-location adds value to mesh net
+no one cares about your mesh network if theres no content
+the bottleneck on meshnets is when people pull data from outside the meshnet
+
+My speculation
+is that as the automatic colocation improves
+(which is beneficial to the ISPs etc)
+it will become so cheap and easy
+that people won't need the mainframes anymore
+
+You used to get server blades shipped
+unbox them 
+install them yourself into the rack you were renting
+set them up, reconfigure your server
+
+now you just change a variable
+it's like 1/1000000th as much labor as it used to be.</textarea></div></body>

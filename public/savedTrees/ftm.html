@@ -1,0 +1,167 @@
+<head>
+    <link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">
+    <link rel="stylesheet" href="/styles/style.css">
+    <script src="/js/constructors/Terminal.js" defer=""></script>
+    <script src="/js/socket.io.js" defer=""></script>
+    <script src="/js/socketevents.js" defer=""></script>
+    <script src="/js/customCommands.js" defer=""></script>
+    <script src="/js/clickevents.js" defer=""></script>
+    <script src="/js/keyevents.js" defer=""></script>
+  <script src="/js/constructors/Codemirror.js"></script><link rel="stylesheet" href="/lib/codemirror.css"><script src="/lib/codemirror.js" defer="true"></script><script src="/lib/mode/javascript/javascript.js" defer="true"></script></head>
+  <body>
+
+<div tabindex="1" class="leaf terminal" history="0" id="ftm" protoprompt="localhost/root0 > " prompt="localhost/ftm > " style="left: 616px; top: 318px; position: absolute;"><h3 class="entityHeader" style="top: 5704px;">ftm</h3><p class="prompt">localhost/root0 &gt; rename forthemusic</p><div class="result result" id="1477931997970">root0 has been renamed to forthemusic</div><p class="prompt">localhost/root0 &gt; rename ftm</p><div class="result result" id="1477932003543">forthemusic has been renamed to ftm</div><p class="prompt">localhost/root0 &gt;create Codemirror</p><div class="query result" id="1477932081846">Constructor retrieved and invoked, untitled0 added to DOM</div><p class="prompt">localhost/root0 &gt; ls</p><div class="result directoryContainer" id="1477932098973"><p class="fs text" title="/app.js"> app.js </p> <p class="fs directory" title="/node_modules"> node_modules </p> <p class="fs directory" title="/public"> public </p> </div><p class="prompt">localhost/root0 &gt;  ls /public</p><div class="result directoryContainer" id="1477932117173"><p class="fs directory" title="/public/images"> images </p> <p class="fs text" title="/public/index.html"> index.html </p> <p class="fs directory" title="/public/js"> js </p> <p class="fs directory" title="/public/lib"> lib </p> <p class="fs directory" title="/public/savedTrees"> savedTrees </p> <p class="fs directory" title="/public/styles"> styles </p> </div><p class="prompt">localhost/root0 &gt;  ls /node_modules</p><div class="result directoryContainer" id="1477932120827"><p class="fs directory" title="/node_modules/abbrev"> abbrev </p> <p class="fs directory" title="/node_modules/accepts"> accepts </p> <p class="fs directory" title="/node_modules/after"> after </p> <p class="fs directory" title="/node_modules/ansi-regex"> ansi-regex </p> <p class="fs directory" title="/node_modules/ansi-styles"> ansi-styles </p> <p class="fs directory" title="/node_modules/anymatch"> anymatch </p> <p class="fs directory" title="/node_modules/arr-diff"> arr-diff </p> <p class="fs directory" title="/node_modules/arr-flatten"> arr-flatten </p> <p class="fs directory" title="/node_modules/array-flatten"> array-flatten </p> <p class="fs directory" title="/node_modules/array-unique"> array-unique </p> <p class="fs directory" title="/node_modules/arrify"> arrify </p> <p class="fs directory" title="/node_modules/async-each"> async-each </p> <p class="fs directory" title="/node_modules/backo2"> backo2 </p> <p class="fs directory" title="/node_modules/balanced-match"> balanced-match </p> <p class="fs directory" title="/node_modules/base64-arraybuffer"> base64-arraybuffer </p> <p class="fs directory" title="/node_modules/base64id"> base64id </p> <p class="fs directory" title="/node_modules/basic-auth"> basic-auth </p> <p class="fs directory" title="/node_modules/benchmark"> benchmark </p> <p class="fs directory" title="/node_modules/better-assert"> better-assert </p> <p class="fs directory" title="/node_modules/binary-extensions"> binary-extensions </p> <p class="fs directory" title="/node_modules/blob"> blob </p> <p class="fs directory" title="/node_modules/body-parser"> body-parser </p> <p class="fs directory" title="/node_modules/brace-expansion"> brace-expansion </p> <p class="fs directory" title="/node_modules/braces"> braces </p> <p class="fs directory" title="/node_modules/buffer-shims"> buffer-shims </p> <p class="fs directory" title="/node_modules/bytes"> bytes </p> <p class="fs directory" title="/node_modules/callsite"> callsite </p> <p class="fs directory" title="/node_modules/chalk"> chalk </p> <p class="fs directory" title="/node_modules/chokidar"> chokidar </p> <p class="fs directory" title="/node_modules/component-bind"> component-bind </p> <p class="fs directory" title="/node_modules/component-emitter"> component-emitter </p> <p class="fs directory" title="/node_modules/component-inherit"> component-inherit </p> <p class="fs directory" title="/node_modules/concat-map"> concat-map </p> <p class="fs directory" title="/node_modules/configstore"> configstore </p> <p class="fs directory" title="/node_modules/content-disposition"> content-disposition </p> <p class="fs directory" title="/node_modules/content-type"> content-type </p> <p class="fs directory" title="/node_modules/cookie"> cookie </p> <p class="fs directory" title="/node_modules/cookie-signature"> cookie-signature </p> <p class="fs directory" title="/node_modules/core-util-is"> core-util-is </p> <p class="fs directory" title="/node_modules/debug"> debug </p> <p class="fs directory" title="/node_modules/deep-extend"> deep-extend </p> <p class="fs directory" title="/node_modules/depd"> depd </p> <p class="fs directory" title="/node_modules/destroy"> destroy </p> <p class="fs directory" title="/node_modules/duplexer"> duplexer </p> <p class="fs directory" title="/node_modules/duplexify"> duplexify </p> <p class="fs directory" title="/node_modules/ee-first"> ee-first </p> <p class="fs directory" title="/node_modules/encodeurl"> encodeurl </p> <p class="fs directory" title="/node_modules/end-of-stream"> end-of-stream </p> <p class="fs directory" title="/node_modules/es6-promise"> es6-promise </p> <p class="fs directory" title="/node_modules/escape-html"> escape-html </p> <p class="fs directory" title="/node_modules/escape-string-regexp"> escape-string-regexp </p> <p class="fs directory" title="/node_modules/etag"> etag </p> <p class="fs directory" title="/node_modules/event-stream"> event-stream </p> <p class="fs directory" title="/node_modules/expand-brackets"> expand-brackets </p> <p class="fs directory" title="/node_modules/expand-range"> expand-range </p> <p class="fs directory" title="/node_modules/express"> express </p> <p class="fs directory" title="/node_modules/extglob"> extglob </p> <p class="fs directory" title="/node_modules/filename-regex"> filename-regex </p> <p class="fs directory" title="/node_modules/fill-range"> fill-range </p> <p class="fs directory" title="/node_modules/finalhandler"> finalhandler </p> <p class="fs directory" title="/node_modules/for-in"> for-in </p> <p class="fs directory" title="/node_modules/for-own"> for-own </p> <p class="fs directory" title="/node_modules/forwarded"> forwarded </p> <p class="fs directory" title="/node_modules/fresh"> fresh </p> <p class="fs directory" title="/node_modules/from"> from </p> <p class="fs directory" title="/node_modules/glob-base"> glob-base </p> <p class="fs directory" title="/node_modules/glob-parent"> glob-parent </p> <p class="fs directory" title="/node_modules/got"> got </p> <p class="fs directory" title="/node_modules/graceful-fs"> graceful-fs </p> <p class="fs directory" title="/node_modules/has-ansi"> has-ansi </p> <p class="fs directory" title="/node_modules/has-binary"> has-binary </p> <p class="fs directory" title="/node_modules/has-cors"> has-cors </p> <p class="fs directory" title="/node_modules/http-errors"> http-errors </p> <p class="fs directory" title="/node_modules/iconv-lite"> iconv-lite </p> <p class="fs directory" title="/node_modules/ignore-by-default"> ignore-by-default </p> <p class="fs directory" title="/node_modules/imurmurhash"> imurmurhash </p> <p class="fs directory" title="/node_modules/indexof"> indexof </p> <p class="fs directory" title="/node_modules/infinity-agent"> infinity-agent </p> <p class="fs directory" title="/node_modules/inherits"> inherits </p> <p class="fs directory" title="/node_modules/ini"> ini </p> <p class="fs text" title="/node_modules/ipaddr.js"> ipaddr.js </p> <p class="fs directory" title="/node_modules/is-binary-path"> is-binary-path </p> <p class="fs directory" title="/node_modules/is-buffer"> is-buffer </p> <p class="fs directory" title="/node_modules/is-dotfile"> is-dotfile </p> <p class="fs directory" title="/node_modules/is-equal-shallow"> is-equal-shallow </p> <p class="fs directory" title="/node_modules/is-extendable"> is-extendable </p> <p class="fs directory" title="/node_modules/is-extglob"> is-extglob </p> <p class="fs directory" title="/node_modules/is-finite"> is-finite </p> <p class="fs directory" title="/node_modules/is-glob"> is-glob </p> <p class="fs directory" title="/node_modules/is-npm"> is-npm </p> <p class="fs directory" title="/node_modules/is-number"> is-number </p> <p class="fs directory" title="/node_modules/is-posix-bracket"> is-posix-bracket </p> <p class="fs directory" title="/node_modules/is-primitive"> is-primitive </p> <p class="fs directory" title="/node_modules/is-redirect"> is-redirect </p> <p class="fs directory" title="/node_modules/is-stream"> is-stream </p> <p class="fs directory" title="/node_modules/isarray"> isarray </p> <p class="fs directory" title="/node_modules/isobject"> isobject </p> <p class="fs directory" title="/node_modules/json3"> json3 </p> <p class="fs directory" title="/node_modules/kind-of"> kind-of </p> <p class="fs directory" title="/node_modules/latest-version"> latest-version </p> <p class="fs directory" title="/node_modules/lowercase-keys"> lowercase-keys </p> <p class="fs directory" title="/node_modules/map-stream"> map-stream </p> <p class="fs directory" title="/node_modules/media-typer"> media-typer </p> <p class="fs directory" title="/node_modules/merge-descriptors"> merge-descriptors </p> <p class="fs directory" title="/node_modules/methods"> methods </p> <p class="fs directory" title="/node_modules/micromatch"> micromatch </p> <p class="fs directory" title="/node_modules/mime"> mime </p> <p class="fs directory" title="/node_modules/mime-db"> mime-db </p> <p class="fs directory" title="/node_modules/mime-types"> mime-types </p> <p class="fs directory" title="/node_modules/minimatch"> minimatch </p> <p class="fs directory" title="/node_modules/minimist"> minimist </p> <p class="fs directory" title="/node_modules/mkdirp"> mkdirp </p> <p class="fs directory" title="/node_modules/morgan"> morgan </p> <p class="fs directory" title="/node_modules/ms"> ms </p> <p class="fs directory" title="/node_modules/negotiator"> negotiator </p> <p class="fs directory" title="/node_modules/nested-error-stacks"> nested-error-stacks </p> <p class="fs directory" title="/node_modules/nodemon"> nodemon </p> <p class="fs directory" title="/node_modules/nopt"> nopt </p> <p class="fs directory" title="/node_modules/normalize-path"> normalize-path </p> <p class="fs directory" title="/node_modules/number-is-nan"> number-is-nan </p> <p class="fs directory" title="/node_modules/object-assign"> object-assign </p> <p class="fs directory" title="/node_modules/object-component"> object-component </p> <p class="fs directory" title="/node_modules/on-finished"> on-finished </p> <p class="fs directory" title="/node_modules/on-headers"> on-headers </p> <p class="fs directory" title="/node_modules/once"> once </p> <p class="fs directory" title="/node_modules/options"> options </p> <p class="fs directory" title="/node_modules/os-homedir"> os-homedir </p> <p class="fs directory" title="/node_modules/os-tmpdir"> os-tmpdir </p> <p class="fs directory" title="/node_modules/osenv"> osenv </p> <p class="fs directory" title="/node_modules/package-json"> package-json </p> <p class="fs directory" title="/node_modules/parse-glob"> parse-glob </p> <p class="fs directory" title="/node_modules/parsejson"> parsejson </p> <p class="fs directory" title="/node_modules/parseqs"> parseqs </p> <p class="fs directory" title="/node_modules/parseuri"> parseuri </p> <p class="fs directory" title="/node_modules/parseurl"> parseurl </p> <p class="fs directory" title="/node_modules/path-is-absolute"> path-is-absolute </p> <p class="fs directory" title="/node_modules/path-to-regexp"> path-to-regexp </p> <p class="fs directory" title="/node_modules/pause-stream"> pause-stream </p> <p class="fs directory" title="/node_modules/pinkie"> pinkie </p> <p class="fs directory" title="/node_modules/pinkie-promise"> pinkie-promise </p> <p class="fs directory" title="/node_modules/prepend-http"> prepend-http </p> <p class="fs directory" title="/node_modules/preserve"> preserve </p> <p class="fs directory" title="/node_modules/process-nextick-args"> process-nextick-args </p> <p class="fs directory" title="/node_modules/proxy-addr"> proxy-addr </p> <p class="fs directory" title="/node_modules/ps-tree"> ps-tree </p> <p class="fs directory" title="/node_modules/qs"> qs </p> <p class="fs directory" title="/node_modules/randomatic"> randomatic </p> <p class="fs directory" title="/node_modules/range-parser"> range-parser </p> <p class="fs directory" title="/node_modules/raw-body"> raw-body </p> <p class="fs directory" title="/node_modules/rc"> rc </p> <p class="fs directory" title="/node_modules/read-all-stream"> read-all-stream </p> <p class="fs directory" title="/node_modules/readable-stream"> readable-stream </p> <p class="fs directory" title="/node_modules/readdirp"> readdirp </p> <p class="fs directory" title="/node_modules/regex-cache"> regex-cache </p> <p class="fs directory" title="/node_modules/registry-url"> registry-url </p> <p class="fs directory" title="/node_modules/repeat-element"> repeat-element </p> <p class="fs directory" title="/node_modules/repeat-string"> repeat-string </p> <p class="fs directory" title="/node_modules/repeating"> repeating </p> <p class="fs directory" title="/node_modules/semver"> semver </p> <p class="fs directory" title="/node_modules/semver-diff"> semver-diff </p> <p class="fs directory" title="/node_modules/send"> send </p> <p class="fs directory" title="/node_modules/serve-static"> serve-static </p> <p class="fs directory" title="/node_modules/set-immediate-shim"> set-immediate-shim </p> <p class="fs directory" title="/node_modules/setprototypeof"> setprototypeof </p> <p class="fs directory" title="/node_modules/slide"> slide </p> <p class="fs directory" title="/node_modules/split"> split </p> <p class="fs directory" title="/node_modules/statuses"> statuses </p> <p class="fs directory" title="/node_modules/stream-combiner"> stream-combiner </p> <p class="fs directory" title="/node_modules/stream-shift"> stream-shift </p> <p class="fs directory" title="/node_modules/string-length"> string-length </p> <p class="fs directory" title="/node_modules/string_decoder"> string_decoder </p> <p class="fs directory" title="/node_modules/strip-ansi"> strip-ansi </p> <p class="fs directory" title="/node_modules/strip-json-comments"> strip-json-comments </p> <p class="fs directory" title="/node_modules/supports-color"> supports-color </p> <p class="fs directory" title="/node_modules/through"> through </p> <p class="fs directory" title="/node_modules/timed-out"> timed-out </p> <p class="fs directory" title="/node_modules/to-array"> to-array </p> <p class="fs directory" title="/node_modules/touch"> touch </p> <p class="fs directory" title="/node_modules/type-is"> type-is </p> <p class="fs directory" title="/node_modules/ultron"> ultron </p> <p class="fs directory" title="/node_modules/undefsafe"> undefsafe </p> <p class="fs directory" title="/node_modules/unpipe"> unpipe </p> <p class="fs directory" title="/node_modules/update-notifier"> update-notifier </p> <p class="fs directory" title="/node_modules/util-deprecate"> util-deprecate </p> <p class="fs directory" title="/node_modules/utils-merge"> utils-merge </p> <p class="fs directory" title="/node_modules/uuid"> uuid </p> <p class="fs directory" title="/node_modules/vary"> vary </p> <p class="fs directory" title="/node_modules/wrappy"> wrappy </p> <p class="fs directory" title="/node_modules/write-file-atomic"> write-file-atomic </p> <p class="fs directory" title="/node_modules/ws"> ws </p> <p class="fs directory" title="/node_modules/wtf-8"> wtf-8 </p> <p class="fs directory" title="/node_modules/xdg-basedir"> xdg-basedir </p> <p class="fs directory" title="/node_modules/xmlhttprequest-ssl"> xmlhttprequest-ssl </p> <p class="fs directory" title="/node_modules/yeast"> yeast </p> </div><p class="prompt">localhost/root0 &gt;  open /app.js</p><div class="result" id="1477932125593">Maybe it worked</div><p class="prompt">localhost/root0 &gt; save</p></div><div tabindex="1" class="leaf codemirrorContainer" id="untitled0" style="left: 1058px; top: 116px; position: absolute; width: 400px; height: 400px;"><h3 class="entityHeader">untitled0</h3><textarea style="display: none;"></textarea></div><div tabindex="1" class="leaf codemirrorContainer" id="/app.js" style="left: 172px; top: 99px; position: absolute; width: 400px; height: 400px;"><h3 class="entityHeader">/app.js</h3><textarea style="display: none;">var express = require('express');
+var app = express();
+var server = require('http').Server(app);
+var path = require('path');
+
+var fs = require('fs')
+
+var io = require('socket.io')(server);
+var serverlogging = require('morgan');
+var bodyParser = require('body-parser')
+app.use( bodyParser.json() );       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+  extended: true
+})); 
+
+
+
+
+var identities = {};
+server.listen(80);
+
+app.use(serverlogging('dev'));
+app.use(express.static(__dirname+ '/public'));
+app.use(express.static(__dirname + '/public/savedTrees'));
+//app.get('/', function(req,res){
+//    res.sendfile('./public/index.html');
+//    
+//})
+
+app.post('/savethis', function(req,res,next){
+	var htmlString = req.body.content;
+	var fileName = req.body.fileName;
+	fs.writeFile(path.join(__dirname, '/public/savedTrees/', fileName), htmlString, function(err){
+		if(err){
+			res.status(400).send(err);
+		} else {
+			res.status(200).send(fileName + ' written successfully');
+		}
+	})
+})
+
+app.get('/readFile', (req,res,next) =&gt; {
+	console.log(req.query.pathname)
+	let pathname = req.query.pathname;
+	console.log(req.query.pathname);
+	console.log(pathname);
+	console.log(__dirname);
+	console.log(path.join(__dirname, pathname));
+
+	fs.readFile(path.join(__dirname, pathname), 'utf8' ,function(err,data){
+		if(err){
+			console.log(err)
+			res.status(400).send(err);
+		} else {
+			res.json(data);
+		}
+	})
+})
+
+app.post('/fs', function(req,res,next){
+
+	var pathname = '/';
+	if(req.body.pathname !== 'undefined'){
+			pathname = addSlashesIfNeedBe(req.body.pathname);
+	} 
+	
+	fs.readdir(path.join(__dirname,pathname), function(err, files){
+		if(err){
+			res.status(204).send(err);
+		} else {
+			var result = {};
+			for(each in files){
+				var oneFile = files[each];
+				if(oneFile[0] != '.'){             //if it's not hidden
+					if(oneFile.indexOf('.') === -1){ //and if there's no extension
+						result[files[each]] = 'directory';
+					} else {
+						switch(oneFile.split('.')[1]){
+							case 'js': result[files[each]] = 'text'; break;
+							case 'css': result[files[each]] = 'text'; break;
+							case 'html': result[files[each]] = 'text'; break;
+							case 'svg': result[files[each]] = 'image'; break;
+							case 'png': result[files[each]] = 'image'; break;
+							case 'jpg': result[files[each]] = 'image'; break;
+							case 'gif': result[files[each]] = 'image'; break;
+						}
+					}
+				}
+			}
+
+			res.status(200).json({pathname, result});
+		// fileArr = fileArr.slice(1, fileArr.length - 1); //git rid of brackets
+		// fileArr = fileArr.split(','); //convert to array
+		// fileArr = fileArr.map(function(aFileName){return aFileName.slice(1,aFileName.length -1)});
+		}
+	})
+	
+})
+
+
+io.on('connection', function(socket){
+		identities[socket.id] = {ip: socket.client.conn.remoteAddress.split(':').slice(-1)[0], name: null};
+    socket.on('event', function (data){
+      socket.broadcast.emit('event',data);
+    });
+		socket.on('filesaveResult', function (data){
+      socket.broadcast.emit('filesaveResult',data);
+    });
+		socket.on('remoteRunFile', function(data){
+			socket.broadcast.emit('remoteRunFile', data)
+		})
+		socket.on('cursorActivity', function(data){
+			socket.broadcast.emit('cursorActivity', data)
+		})
+		socket.on('mirrorChange', function(data){
+			socket.broadcast.emit('mirrorChange', data)
+		})
+		
+
+		socket.on('identityRequest', function(req){
+			//I think each client's identity request will come in separately, when one user asks whoami and hits enter, the local browser will evaluate that and emit an identity request, so this message shouldn't be broadcast.
+			//req is the incoming message. socket is the particular connection.	
+			// console.log(identities[socket.id]);
+			socket.emit('identityResponse', {
+				placeHolderId: req.placeHolderId,
+				socketid: socket.id,
+				ipaddress: identities[socket.id].ip,
+				name: identities[socket.id].name
+			});
+		})
+
+
+		socket.on('timeRequest', function(req){
+			socket.emit('timeResponse', {
+				placeHolderId: req.placeHolderId,
+				serverTime: Date()
+			})
+		})
+
+    //events to implement: identityRequest, timeRequest
+})
+
+
+function addSlashesIfNeedBe(aFilePath){
+		if(aFilePath[0] !== '/'){
+			aFilePath = '/' + aFilePath;
+		}
+		if(aFilePath[aFilePath.length - 1] !== '/'){
+			aFilePath += '/'
+		}
+		return aFilePath;
+	}
+// socket.client.conn.remoteAddress reports the Public IP of the origin of the message
+// socket.id reports the socket ID of the origin of the message. 
+</textarea></div></body>

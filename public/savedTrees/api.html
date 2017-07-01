@@ -1,0 +1,50 @@
+<head>
+    <!--<link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">-->
+    <link rel="stylesheet" href="/styles/style.css">
+    <script src="/js/constructors/Leaf.js" defer=""></script>
+    <script src="/js/constructors/Terminal.js" defer=""></script>
+    <script src="/js/socket.io.js" defer=""></script>
+    <script src="/js/socketevents.js" defer=""></script>
+    <script src="/js/customCommands.js" defer=""></script>
+    <script src="/js/utils.js" defer=""></script>
+  <script src="/js/constructors/Codemirror.js" defer="true"></script><link rel="stylesheet" href="/lib/codemirror.css"><script src="/lib/codemirror.js" defer="true"></script><script src="/lib/mode/javascript/javascript.js" defer="true"></script></head>
+  <body>
+
+<div style="left: 864px; top: 62px; width: 400px; height: 300px; position: absolute; background: none 0% 0% repeat scroll white;" tabindex="1" class="leaf terminal" id="api" history="0" protoprompt="localhost/root0 > " prompt="localhost/api > "><h3 class="entityHeader" style="top: 339.61px;">api</h3><p class="prompt">localhost/root0 &gt; rename api</p><div class="result result" id="1478187212576">root0 has been renamed to api</div><p class="prompt">localhost/root0 &gt; create Codemirror</p><div class="query result" id="1478211445731">Constructor retrieved and invoked, untitled0 added to DOM</div><p class="prompt">localhost/root0 &gt; create Codemirror</p><div class="query result" id="1478211493220">Constructor invoked, untitled1 added to DOM</div><p class="prompt">localhost/root0 &gt; untitled0.style.width = '800px'</p><div class="result result" id="1478211532100">800px</div><p class="prompt">localhost/root0 &gt; untitled1.style.width = '800px'</p><div class="result result" id="1478211541280">800px</div><p class="prompt">localhost/root0 &gt; save</p><div class="result" id="api12" createdat="1478211765488">api.html written successfully in 358ms</div><p class="prompt">localhost/root0 &gt; save</p><div class="result" id="api14" createdat="1478211923039">api.html written successfully in 46ms</div><p class="prompt">localhost/root0 &gt; save</p><div class="result" id="api16" createdat="1478212295783">api.html written successfully in 37ms</div><p class="prompt">localhost/root0 &gt; untitled0.style.height = '800px'</p><div class="result result" id="1478212345179">800px</div><p class="prompt">localhost/root0 &gt; save</p><div class="result" id="api20" createdat="1478212356643">api.html written successfully in 346ms</div><p class="prompt">localhost/root0 &gt; rename untitled0 updateCart</p><div class="result result" id="1478212399799">untitled0 has been renamed to updateCart</div><p class="prompt">localhost/root0 &gt; save</p><div class="result" id="api24" createdat="1478212492337">api.html written successfully in 48ms</div><p class="prompt">localhost/root0 &gt; save</p></div><div tabindex="1" class="leaf codemirrorContainer" id="updateCart" style="left: 50px; top: 50px; width: 800px; height: 800px; position: absolute; background: white;" prompt="localhost/updateCart > "><h3 class="entityHeader">updateCart</h3><textarea style="display: none;">REQUEST - contains userID and eventID
+PASSPORT - contains a unique order id (or if it does not,
+           a new order will be created and attached to the cookie)
+
+DATA HITTING SERVER - (eventID, orderID, userID)
+
+THIS IS ONE ROUTE THAT HAPPENS WHEN YOU CLICK "BUY TICKET"
+
+For new guest, SERVER NEEDS TO:
+- Create new order
+- TICKET - FindOneWhere(order_id == null &amp; event_id=-= eventID)
+- Ticket.setOrder( new order )
+- update cookie with order.id
+- send back order object update "currentOrder" in redux store
+
+
+For returning guest, SERVER NEEDS TO:
+- Find order by order_id on cookie
+- TICKET - FindOneWhere(order_id == null &amp; event_id == eventID)
+- Ticket.setOrder( existing order )
+- send back order object update "currentOrder" in redux store
+
+
+For a logged-in user, SERVER NEEDS TO:
+- ORDER - FindorCreate( where: user_id == userId &amp;&amp; status="in-cart")
+- TICKET - FindOneWhere(order_id == null &amp; event_id == eventID)
+- Ticket.setOrder( new or existing order )
+- update cookie with order.id
+- send back order object update "currentOrder" in redux store
+</textarea></div><div tabindex="1" class="leaf codemirrorContainer" id="untitled1" style="left: 869px; top: 389px; width: 800px; height: 400px; position: absolute; background: white;"><h3 class="entityHeader">untitled1</h3><textarea style="display: none;">HIT BUY
+we fire an action ? to put in cart
+an ajax PUT sends the event.id of the event being bought, plus the user id from the state
+
+Passport middleware recognizes a cookie
+
+A custom ticket route (PUT api/tickets/) received req.body
+
+</textarea></div></body>

@@ -1,0 +1,180 @@
+<head>
+    <!--<link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">-->
+    <link rel="stylesheet" href="/styles/style.css">
+    <script src="/js/constructors/Leaf.js" defer=""></script>
+    <script src="/js/constructors/Terminal.js" defer=""></script>
+    <script src="/js/socket.io.js" defer=""></script>
+    <script src="/js/socketevents.js" defer=""></script>
+    <script src="/js/customCommands.js" defer=""></script>
+    <script src="/js/utils.js" defer=""></script>
+  <script src="/js/constructors/Codemirror.js" defer="true"></script><link rel="stylesheet" href="/lib/codemirror.css"><script src="/lib/codemirror.js" defer="true"></script><script src="/lib/mode/javascript/javascript.js" defer="true"></script></head>
+  <body>
+
+<div tabindex="1" class="leaf terminal" id="regex" history="3" protoprompt="localhost/root0 > " prompt="localhost/regex > " style="left: 850px; top: 419px; width: 400px; height: 300px; position: absolute; background: white;"><h3 class="entityHeader" style="top: 900.629px;">regex</h3><p class="prompt">localhost/root0 &gt; rename regex</p><div class="result result" id="1478310281201">root0 has been renamed to regex</div><p class="prompt">localhost/root0 &gt; create Codemirror</p><div class="query result" id="1478310287660">Constructor retrieved and invoked, untitled0 added to DOM</div><p class="prompt">localhost/root0 &gt; save</p><div class="result" id="regex6" createdat="1478310584417">regex.html written successfully in 63ms</div><p class="prompt">localhost/root0 &gt; create Codemirror</p><div class="query result" id="1478310611794">Constructor invoked, untitled1 added to DOM</div><p class="prompt">localhost/root0 &gt; save</p><div class="result" id="regex10" createdat="1478311476824">regex.html written successfully in 167ms</div><p class="prompt">localhost/root0 &gt; untitled0.style.width = '800px'</p><div class="result result" id="1478311974679">800px</div><p class="prompt">localhost/root0 &gt; untitled0.style.width = '1200px'</p><div class="result result" id="1478311991199">1200px</div><p class="prompt">localhost/root0 &gt; save</p><div class="result" id="regex16" createdat="1478312226790">regex.html written successfully in 48ms</div><p class="prompt">localhost/root0 &gt; save</p><div class="result" id="regex18" createdat="1478315521693">regex.html written successfully in 74ms</div><p class="prompt">localhost/root0 &gt; save</p><div class="result" id="regex20" createdat="1478317132544">regex.html written successfully in 78ms</div><p class="prompt">localhost/root0 &gt; save</p><div class="result" id="regex22" createdat="1478319237957">regex.html written successfully in 56ms</div><p class="prompt">localhost/root0 &gt; save</p><div class="result" id="regex24" createdat="1478319703943">regex.html written successfully in 98ms</div><p class="prompt">localhost/root0 &gt; save</p><div class="result" id="regex26" createdat="1478321715612">regex.html written successfully in 66ms</div><p class="prompt">localhost/root0 &gt; create Codemirror</p><div class="query result" id="1478321718235">Constructor invoked, untitled2 added to DOM</div><p class="prompt">localhost/root0 &gt; save</p><div class="result" id="regex30" createdat="1478322018741">regex.html written successfully in 445ms</div><p class="prompt">localhost/root0 &gt; </p><div class="result result" id="1478325377540">undefined</div><p class="prompt">localhost/root0 &gt; create Codemirror</p><div class="query result" id="1478326062347">Constructor invoked, untitled3 added to DOM</div><p class="prompt">localhost/root0 &gt; save</p><div class="result" id="regex36" createdat="1478326237315">regex.html written successfully in 724ms</div><p class="prompt">localhost/root0 &gt;save</p><div class="request result" id="regex38" createdat="1478326512626">Attempting to send file, waiting on response</div><p class="prompt">localhost/root0 &gt; save</p><div class="result" id="regex40" createdat="1478461121685">regex.html written successfully in 367ms</div><p class="prompt">localhost/root0 &gt; rename untitled3 quoteProperties</p><div class="result result" id="1478461172415">untitled3 has been renamed to quoteProperties</div><p class="prompt">localhost/root0 &gt; rename untitled1 kabobToCamel</p><div class="result result" id="1478461201495">untitled1 has been renamed to kabobToCamel</div><p class="prompt">localhost/root0 &gt; rename untitled2 allCommands</p><div class="result result" id="1478461216894">untitled2 has been renamed to allCommands</div><p class="prompt">localhost/root0 &gt; rename untitled0 blogNotes</p><div class="result result" id="1478461229674">untitled0 has been renamed to blogNotes</div><p class="prompt">localhost/root0 &gt; save</p></div><div tabindex="1" class="leaf codemirrorContainer" id="blogNotes" style="left: 447px; top: 12px; width: 1200px; height: 400px; position: absolute; background: white;" prompt="localhost/blogNotes > "><h3 class="entityHeader">blogNotes</h3><textarea style="display: none;">Hollyyy moly
+
+So in an svg exported by inkscape,
+  tags have inline style attributes, which are strings of the form
+  style="key: property"
+
+But JSX doesnt parse attributes that way.
+	JSX needs the style attributes to be objects of the style
+    style={key: property}
+
+so to find what we need to replace
+:%s/style=".*"
+:%s/       searches the whole document
+style="    for a string that looks like that
+.*         followed by any number of any characters
+"          until you hit another quote
+
+great, but how can we replace it with the original contents?
+captured groups!
+  with escaped parens, a submatch is automatically assigned a number, such that it can be referenced later
+
+so inside the quotes, instead of just ".*" we do "\(.*\)" and whatever match is inside the quotes will be assigned one
+
+so we can replace style=".*" 
+             with style={.*} by referencing that captured group with \1
+
+:%s/style="\(.*\)"/style=\{\1\}
+
+OK great except I have to replace all the semicolons with commas LMAO
+
+style={stop-color:#e6e6e6;stop-opacity:1;}
+       
+I need to match kabob-case props
+       replace them with camelCase
+inside those objects (capture innerText?)
+
+       (it's here that I feel a little `mad`, laughing at the difficulty of the problem)
+       
+       
+it is of the form
+word chars, hyphen, word chars
+       OR
+word chars
+       followed by :
+       followed by any chars
+       followed by ;
+       suchlike
+       style={(captureBeforeHyphen)-(capture char to uppercase)[some other letters to capture:some letters to capture];
+       replace with
+       style={\1\U\2\E\3}
+
+questions
+is word|word-word:word;
+unique enough?
+  probably not...
+
+so some progres
+[{;]\w\+-?\w*:[^;]+
+matches where it 
+    [{;]     starts with just one bracket OR semicolon
+    \w\+      followed by at least one word character
+    -\?       followed optionally by a hyphen
+    \w*      followed by any number of word characters
+    :        followed by a colon
+    [^;]+    followed by at least one of any characters that are not semicolon
+      
+      OK seems like VIM requires you to use \+ not just + like perl
+      
+      [{;]\w\+ -\?\w*:[^;]\+      /yolo/g transforms
+      style={stop-color:#e6e6e6;stop-opacity:1;}
+      							into
+         style=yoloyolo;}
+     
+     
+     so its consuming the bracket...oh, the first character it takes.
+     
+     So first lets just replace it with camelcase... (maybe later I can do an OR)
+     So determine capture groups
+     
+     ([{;]\w\+)
+     -\?			I dont want to preserve the hyphen
+     (\w\?)		If there is a character after the hypen, I want to capture it, but its ok if theres not
+     (:[^;]\+)    Then theres the colon and everything that follows it, and I do want to preserve all that.
+       
+     I want to preserve whatever character it started matching on, and all the characters that follow it up to hypen or colon
+     
+     so
+     
+     ([{;]\w+)-\?(\w\?)
+     \([{;]\w\+\)-\?\(\w\?\)
+        
+     then we replace with captured group 1 + uppercase capturegroup 2
+        
+     \1\U\2
+        
+     converts the SHIT out of kabob-case -&gt; camelCase (when they are elements of an object) - leaves semicolons in tact tho.
+     :%s/\([{;]\w\+\)-\?\(\w\?\)/\1\U\2/g
+
+        
+       
+     
+       
+       
+     
+     
+      
+      
+
+    
+       </textarea></div><div tabindex="1" class="leaf codemirrorContainer" id="kabobToCamel" style="left: 27px; top: 358px; width: 400px; height: 400px; position: absolute; background: white;" prompt="localhost/kabobToCamel > "><h3 class="entityHeader">kabobToCamel</h3><textarea style="display: none;">Round two:
+
+Inkscape svgs are saved with property accessors like
+
+inkscape:collect
+
+but JSX wants all these to be like
+
+inkscapeCollect
+
+so I need to match
+a word boundry, followed by only characters, capture that, colon, then capture the first letter after that
+
+replace it with the first capture group, followed by the second capture group made uppercase
+
+\U causes all trailing characters to be uppercase
+\E cancels it
+
+weird
+\s\b[a-z]*:\w
+was good in regexr, with \b standing for a word boundry, but I guess vim wants a \&lt;
+SO
+whitespace, word boundary, any letters any number of times, colon, a character
+\s\&lt;[a-z]*:\w
+
+our capture groups:
+\s\&lt;([a-z]*):(\w)
+
+
+and replace it with
+first captured group, and an uppercase version of the second captured Group
+
+\1\U\2
+
+
+except you have to escape the parens
+
+:%s/\s\&lt;\([a-z]*\):\(\w\)/\1\U\2</textarea></div><div tabindex="1" class="leaf codemirrorContainer" id="allCommands" style="left: 30px; top: 26px; width: 400px; height: 400px; position: absolute; background: white;" prompt="localhost/allCommands > "><h3 class="entityHeader">allCommands</h3><textarea style="display: none;">		replacing quotes after style with double curly braces after style
+:%s/style="\(.*\)"/style=\{{\1\}}/g
+		converts kabob-case to camelCase when that pair is on a line by itself
+:%s/\s\&lt;\([a-z]*\):\(\w\)/\1\U\2
+		converts kabob-case to camelCase inside of curly braces
+:%s/\([{;]\w\+\)-\?\(\w\?\)/\1\U\2/g
+        does that multiple times before converting to commas
+        convert semicolons to commas inside of curly braces following style
+:%s/style={{\zs.\{-}\ze}}/\=substitute(submatch(0), ';', ',','g')/
+       At this point there's a trailing comma where there use to be a terminating semicolon. One last expression to delete those, event tho it's valid JS, I don't want to take chances with JSX
+:%s/\(style={.*\),}/\1}
+       I don't know man!
+       some I missed. properties have to be strings.
+:%s/[{,]\w\+:\zs\([^},]\+\)\ze[,}]/'\1'/g
+       deleted metadata
+</textarea></div><div tabindex="1" class="leaf codemirrorContainer" id="quoteProperties" style="left: 436px; top: 412px; width: 400px; height: 400px; position: absolute; background: white;" prompt="localhost/quoteProperties > "><h3 class="entityHeader">quoteProperties</h3><textarea style="display: none;">[{,]\w\+: 	start with either a bracket or a comma
+  			followed by at least one word character followed by a colon
+\zs			then start the match
+\([^},]\+\) capture any number of characters as long as they're not closing bracket or comma
+\ze			end the match
+[,}]		as long as the next character is a comma or a closing bracket
+/'\1'/g     and surround the captured group with single quotes</textarea></div></body>

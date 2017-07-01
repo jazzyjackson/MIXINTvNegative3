@@ -1,0 +1,141 @@
+<head>
+    <!--<link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">-->
+    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="stylesheet" href="/styles/menustyle.css">
+    <script src="/js/constructors/Leaf.js" defer=""></script>
+    <script src="/js/constructors/Terminal.js" defer=""></script>
+    <script src="/js/socket.io.js" defer=""></script>
+    <script src="/js/socketevents.js" defer=""></script>
+    <script src="/js/customCommands.js" defer=""></script>
+    <script src="/js/utils.js" defer=""></script>
+    <script id="repl"></script>
+  <link href="/styles/menuStyle.css"><title>countclockula</title><script src="/js/constructors/Codemirror.js" defer="true"></script><link rel="stylesheet" href="/codemirrorlib/codemirror.css"><script src="/codemirrorlib/codemirror.js" defer="true"></script><script src="/codemirrormode/meta.js" defer="true"></script><script src="/codemirrormode/clike/clike.js" defer="true"></script></head>
+  <!--Giving body id body for consistency with certain functions that rely on div id-->
+  <body id="body" style="position: absolute; left: 0px; top: 0px; height: 982px; width: 1600px;">
+
+<div showmenu="false" broadcast="true" listen="true" style="left: 899px; top: 90px; width: 400px; height: 300px; position: absolute; background: white;" tabindex="1" class="leaf terminal" id="countclockula" history="0" protoprompt="localhost/countclockula"><div class="entityHeader">
+    <table>
+      <tbody><tr>
+        <td class="headerTitle">countclockula</td>
+      </tr>
+    </tbody></table>
+    <div class="menuButton"></div>
+    <div class="removeButton"></div>
+    <div class="menu">
+      <ul>
+        
+        <li tabindex="2"> Broadcast <div class="broadcastButton"></div> </li>
+        <li tabindex="2"> Listen <div class="listenButton"></div> </li>
+        
+      </ul>
+    </div>
+  </div><div class="terminalContainer"><div class="promptContainer"><span class="prompt">localhost/root0<span class="arrow"></span></span><div class="input">rename countclockula</div></div><div class="result result" id="1483986549093">root0 has been renamed to countclockula</div><div class="promptContainer"><span class="prompt">localhost/countclockula<span class="arrow"></span></span><div class="input">save</div></div><div class="result" id="countclockula2" createdat="1483986550117">2.27 KB written successfully to countclockula.html in 71ms</div><div class="promptContainer"><span class="prompt">localhost/countclockula<span class="arrow"></span></span><div class="input">files</div></div><div class="result directoryContainer" id="1483986555970"><p class="fs text" title="/app.js"> app.js </p> <p class="fs directory" title="/node_modules"> node_modules </p> <p class="fs text" title="/package.json"> package.json </p> <p class="fs directory" title="/public"> public </p> <p class="fs directory" title="/routes"> routes </p> <p class="fs directory" title="/sites"> sites </p> <p class="fs directory" title="/test"> test </p> <p class="fs directory" title="/testdir"> testdir </p> <p class="fs directory" title="/user"> user </p> </div><div class="promptContainer"><span class="prompt">localhost/countclockula<span class="arrow"></span></span><div class="input">cd test</div></div><div class="request result" id="1483986558996">Running command on server...</div><div class="promptContainer"><span class="prompt">localhost/countclockula<span class="arrow"></span></span><div class="input">files</div></div><div class="result directoryContainer" id="1483986561884"><p class="fs text" title="/app.js"> app.js </p> <p class="fs directory" title="/node_modules"> node_modules </p> <p class="fs text" title="/package.json"> package.json </p> <p class="fs directory" title="/public"> public </p> <p class="fs directory" title="/routes"> routes </p> <p class="fs directory" title="/sites"> sites </p> <p class="fs directory" title="/test"> test </p> <p class="fs directory" title="/testdir"> testdir </p> <p class="fs directory" title="/user"> user </p> </div><div class="promptContainer"><span class="prompt">localhost/countclockula<span class="arrow"></span></span><div class="input">ls /test</div></div><div class="result directoryContainer" id="1483986563886"><p class="fs text" title="/test/clock.c"> clock.c </p> <p class="fs text" title="/test/clock.ino"> clock.ino </p> <p class="fs text" title="/test/first.txt"> first.txt </p> </div><div class="promptContainer"><span class="prompt">localhost/countclockula<span class="arrow"></span></span><div class="input">pwd</div></div><div class="result" id="1483986565957">/home/TextreePlot/test<br></div><div class="promptContainer"><span class="prompt">localhost/countclockula<span class="arrow"></span></span><div class="input">open /test/clock.c</div></div><div class="result" id="1483986570277">Maybe it worked</div><div class="promptContainer"><span class="prompt">localhost/countclockula<span class="arrow"></span></span><div class="input">save</div></div><div class="request" id="countclockula2" createdat="1483986677626">8.34 KB written successfully to countclockula.html at Mon Jan 09 2017 13:31:17 GMT-0500 (Eastern Standard Time)</div><div class="promptContainer"><span class="prompt">localhost/countclockula<span class="arrow"></span></span><div class="input"></div></div></div></div><div showmenu="false" broadcast="true" listen="true" style="left: 54px; top: 76px; width: 800px; height: 400px; position: absolute; background: white;" tabindex="1" class="leaf codemirrorContainer   " id="Codemirror0" target="/test/clock.c"><div class="entityHeader">
+    <table>
+      <tbody><tr>
+        <td class="headerTitle">Codemirror0 &gt; /test/clock.c</td>
+      </tr>
+    </tbody></table>
+    <div class="menuButton"></div>
+    <div class="removeButton"></div>
+    <div class="menu">
+      <ul>
+        <li tabindex="2">Evaluate<div class="editButton"></div></li>
+        <li tabindex="2"> Broadcast <div class="broadcastButton"></div> </li>
+        <li tabindex="2"> Listen <div class="listenButton"></div> </li>
+        <li tabindex="2"> Save <div class="saveButton"></div> </li>
+      </ul>
+    </div>
+  </div><textarea style="display: none;">#include &lt;Time.h&gt;
+#include &lt;TimeLib.h&gt;
+
+#include &lt;Adafruit_NeoPixel.h&gt;
+#ifdef __AVR__
+  #include &lt;avr/power.h&gt;
+#endif
+#define PI_PIN 8
+#define NUM_PI_PIXELS      13
+#define CLOCK_PIN 10
+#define NUM_CLOCK_PIXELS 66
+
+byte piDigits[] = {
+  0,3,2,9,5,4,4,9,4,7,9,0,2,8,5,0,1,5,7,3,9,9,3,9,6,1,7,9,1,4,8,8,2,0,5,9,7,2,3,8,3,3,4,6,2,6,4,8,3,2,3,9,7,9,8,5,3,5,6,2,9,5,1,4,1,3
+};
+
+#define NUM_DIGITS sizeof(piDigits)
+
+Adafruit_NeoPixel piPixels = Adafruit_NeoPixel(NUM_PI_PIXELS, PI_PIN, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel clockPixels = Adafruit_NeoPixel(NUM_CLOCK_PIXELS, CLOCK_PIN,  NEO_GRB + NEO_KHZ800);
+
+int previousSecond = 0;
+
+void setup() {
+  Serial.begin(9600);
+  int hour=5;
+  int minute=35;
+  int second=34;
+  int day=30;
+  int month=11;
+  int year=2016;
+  setTime(hour,minute,second,day,month,year);
+  piPixels.begin(); 
+  clockPixels.begin();
+}
+void loop() {
+  // Flash Pi on every second
+  int currentSecond = second();
+  if(previousSecond != currentSecond) {
+    // TODO: Get more precision with blinks
+    flashPi();
+    previousSecond = currentSecond;
+  }
+  
+  // Show numbers coresponding to time
+  int currentHour = hour();
+  int currentMinute= minute();
+  if(currentHour &gt;= 1 &amp;&amp; currentHour &lt;= 9) {
+    // 1 digit -&gt; Orange 
+    // Light appropriate pixel
+   int pixelToLight;
+   for (int i= 0; i &lt; NUM_DIGITS; i++){
+      if(piDigits[i] == currentHour) {
+        pixelToLight = i;
+        break;
+      }
+   }
+   for(int i = 0; i &lt; NUM_CLOCK_PIXELS; i++) {
+     clockPixels.setPixelColor(i, 0);
+   }
+   clockPixels.setPixelColor(pixelToLight, clockPixels.Color(225,34,4));
+   clockPixels.show();
+    // Minutes -&gt; Turqoise Purple
+  }
+  else {
+    // 2 digits -&gt; Red Yellow
+    // Minutes -&gt; Green Blue 
+  }
+
+  
+
+//  for(int i = 0; i &lt; NUM_CLOCK_PIXELS; i++) {
+//   clockPixels.setPixelColor(i, clockPixels.Color(0,150,0));
+//   clockPixels.show();
+//  }
+  delay(500);
+}
+
+void flashPi() {
+  for(int i=0;i&lt;NUM_PI_PIXELS;i++){
+    // pixels.Color takes RGB values, from 0,0,0 up to 255,255,255
+    piPixels.setPixelColor(i, piPixels.Color(0,150,0)); // Moderately bright green color.
+    piPixels.show(); // This sends the updated pixel color to the hardware.
+  }
+  delay(100);
+
+  for(int i=0;i&lt;NUM_PI_PIXELS;i++){
+    // pixels.Color takes RGB values, from 0,0,0 up to 255,255,255
+    piPixels.setPixelColor(i,0);
+    piPixels.show(); // This sends the updated pixel color to the hardware.
+  }
+}
+
+</textarea></div></body>

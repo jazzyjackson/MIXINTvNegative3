@@ -1,8 +1,1 @@
 /node_modules/
-/public/savedTrees/
-/public/loggedTrees/
-*~
-*.un~
-*.sw*
-/.vscode/
-/ssl/
