@@ -64,6 +64,8 @@ app.use('/', (req,res,next) => {
 	host = host.replace(/test./,'')
 	//same result should happen whether or not www. existed at the beggining (hence \b for word boundary)
 	host = host.replace(/\bwww\./,'');
+	
+	host = process.env.host || host
 
 	if(sites[host]){
 	//	console.log(sites)
